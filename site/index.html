@@ -28,9 +28,16 @@
 <main>
   <p id="last-updated"></p>
 
+  <div id="points-banner" style="display:none" class="points-banner">
+    <span id="pts-total" class="pts-total">0 pts</span>
+    <span id="pts-meta" class="pts-meta"></span>
+    <span id="pts-avg" class="pts-avg" style="display:none"></span>
+  </div>
+
   <div class="filters">
     <span class="chip active" data-filter="all">Todos</span>
     <span class="chip" data-filter="upcoming">Próximos</span>
+    <span class="chip" data-filter="finished">Finalizados</span>
     <span class="chip" data-filter="group">Fase de Grupos</span>
     <span class="chip" data-filter="knockout">Eliminatorias</span>
   </div>

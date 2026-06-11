@@ -15,35 +15,50 @@ const FLAGS = {
   "Turkey":"🇹🇷","USA":"🇺🇸","Uruguay":"🇺🇾","Uzbekistan":"🇺🇿",
 };
 
-const DAYS_ES = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+const DAYS_ES   = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
 const MONTHS_ES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto",
                    "septiembre","octubre","noviembre","diciembre"];
+
+// Result windows: minutes after kickoff before a match can be considered over
+const RESULT_DELAY_GROUP    = 120;
+const RESULT_DELAY_KNOCKOUT = 210;
 
 function flag(name) { return FLAGS[name] || "🏳️"; }
 
 function formatDate(dateStr) {
-  // dateStr = "2026-06-11"
   const [y, m, d] = dateStr.split("-").map(Number);
   const dt = new Date(y, m - 1, d);
   return `${DAYS_ES[dt.getDay()]} ${d} de ${MONTHS_ES[m-1]}`;
 }
 
 function formatTime(timeUtc) {
-  // Show in local browser time
-  const dt = new Date(timeUtc);
-  return dt.toLocaleTimeString("es", { hour: "2-digit", minute: "2-digit" });
+  return new Date(timeUtc).toLocaleTimeString("es", { hour: "2-digit", minute: "2-digit" });
 }
 
-function matchStatus(timeUtc) {
-  const now = Date.now();
-  const start = new Date(timeUtc).getTime();
-  const diff = now - start; // ms since kick-off
-  if (diff > 0 && diff < 130 * 60 * 1000) return "live";   // < 130 min after start
-  if (diff >= 130 * 60 * 1000) return "past";
-  return "upcoming";
+function matchStatus(timeUtc, phase) {
+  const diff = Date.now() - new Date(timeUtc).getTime();
+  if (diff < 0) return "upcoming";
+  const window = (phase === "knockout" ? RESULT_DELAY_KNOCKOUT : RESULT_DELAY_GROUP) * 60 * 1000;
+  return diff < window ? "live" : "past-pending";
+}
+
+function quinielaPoints(predH, predA, actH, actA, phase) {
+  if (phase === "group") {
+    if (predH === actH && predA === actA) return 5;
+    const pw = Math.sign(predH - predA), aw = Math.sign(actH - actA);
+    if (pw === aw && (predH === actH || predA === actA)) return 3;
+    if (pw === aw) return 2;
+    if (predH === actH || predA === actA) return 1;
+    return 0;
+  } else {
+    if (predH === actH && predA === actA) return 3;
+    if (Math.sign(predH - predA) === Math.sign(actH - actA)) return 1;
+    return 0;
+  }
 }
 
 function eptsBadgeClass(ep) {
+  if (!ep) return "low";
   if (ep >= 2.0) return "";
   if (ep >= 1.2) return "medium";
   return "low";
@@ -67,56 +82,87 @@ function probBars(probs) {
     </div>`;
 }
 
-function renderCard(m, filter) {
-  const status = matchStatus(m.time_utc);
-  if (filter === "upcoming" && status !== "upcoming") return "";
-  if (filter === "group" && m.phase !== "group") return "";
-  if (filter === "knockout" && m.phase !== "knockout") return "";
+function renderCard(m, filter, locked, result) {
+  const status = matchStatus(m.time_utc, m.phase);
+  const hasResult = result && result.status === "final";
+
+  if (filter === "upcoming"  && status !== "upcoming") return "";
+  if (filter === "finished"  && !hasResult)             return "";
+  if (filter === "group"     && m.phase !== "group")    return "";
+  if (filter === "knockout"  && m.phase !== "knockout") return "";
 
   const isTbd = m.tbd || !m.prediction;
-  const pred = m.prediction || {};
+  const pred  = m.prediction || {};
 
-  const statusPill = status === "live"
-    ? `<span class="status-pill live">En curso</span>`
-    : status === "past"
-    ? `<span class="status-pill past">Finalizado</span>`
-    : "";
+  // Choose card class
+  let cardClass = "match-card";
+  if      (hasResult)             cardClass += " completed";
+  else if (status === "live")     cardClass += " live";
+  else if (status === "past-pending") cardClass += " past-pending";
 
-  const scoreHtml = isTbd
-    ? `<div class="score-main"><span>?</span><span class="score-sep">-</span><span>?</span></div>
-       <span class="status-pill tbd">Por definir</span>`
-    : `<div class="score-main">
-         <span>${pred.home}</span>
-         <span class="score-sep">-</span>
-         <span>${pred.away}</span>
-       </div>
-       <span class="score-label">predicción</span>
-       ${statusPill || `<span class="score-epts ${eptsBadgeClass(pred.expected_pts)}">~${pred.expected_pts?.toFixed(2)} pts</span>`}`;
+  // Build score block
+  let scoreHtml;
+  if (isTbd) {
+    scoreHtml = `
+      <div class="score-main"><span>?</span><span class="score-sep">-</span><span>?</span></div>
+      <span class="status-pill tbd">Por definir</span>`;
 
-  const groupLabel = m.group
+  } else if (hasResult) {
+    // Completed match: show result + locked prediction + points
+    const lp   = locked;
+    const pts  = lp ? quinielaPoints(lp.home, lp.away, result.home_score, result.away_score, m.phase) : null;
+    const ptsHtml = pts !== null
+      ? `<span class="pts-earned p${pts}">+${pts} pts</span>`
+      : "";
+    const predHtml = lp
+      ? `<div class="score-pred-row">Pred: <strong>${lp.home}-${lp.away}</strong></div>`
+      : "";
+    const epHtml = lp && lp.expected_pts != null
+      ? `<div class="score-result-row" style="font-size:.67rem;color:var(--text-muted)">esp. ${lp.expected_pts.toFixed(2)} pts</div>`
+      : "";
+    scoreHtml = `
+      <div class="score-main">${result.home_score}<span class="score-sep">-</span>${result.away_score}</div>
+      <div class="score-result-row">resultado</div>
+      ${predHtml}
+      ${ptsHtml}
+      ${epHtml}`;
+
+  } else {
+    // Upcoming or live: show prediction (locked if past kickoff, current if not)
+    const displayPred = (status !== "upcoming" && locked) ? locked : pred;
+    const ph = displayPred.home !== undefined ? displayPred.home : pred.home;
+    const pa = displayPred.away !== undefined ? displayPred.away : pred.away;
+    const ep = displayPred.expected_pts ?? pred.expected_pts;
+    const statusPill = status === "live"
+      ? `<span class="status-pill live">En curso</span>`
+      : status === "past-pending"
+      ? `<span class="status-pill past">Finalizado</span>`
+      : "";
+    scoreHtml = `
+      <div class="score-main">${ph}<span class="score-sep">-</span>${pa}</div>
+      <span class="score-label">predicción</span>
+      ${statusPill || `<span class="score-epts ${eptsBadgeClass(ep)}">~${ep?.toFixed(2)} pts</span>`}`;
+  }
+
+  const groupLabel  = m.group
     ? `<span class="match-group">${m.group}</span>`
     : `<span class="match-group">${m.round}</span>`;
-
-  const phaseBadge = m.phase === "knockout"
+  const phaseBadge  = m.phase === "knockout"
     ? `<span class="match-phase-badge knockout">Eliminatoria</span>`
     : `<span class="match-phase-badge">Grupos</span>`;
-
   const srcBadge = !isTbd
     ? `<span class="src-badge ${m.source === 'historical_fallback' ? 'fallback' : ''}">${m.source === 'kalshi' ? 'Kalshi' : 'Histórico'}</span>`
     : "";
 
-  const homeIsTbd = !FLAGS[m.home];
-  const awayIsTbd = !FLAGS[m.away];
-
   return `
-  <div class="match-card ${status === 'past' ? 'past' : ''} ${status === 'live' ? 'live' : ''}">
+  <div class="${cardClass}">
     <div class="match-meta">
       <span class="match-time">${formatTime(m.time_utc)}</span>
       ${groupLabel}
       ${phaseBadge}
     </div>
     <div class="team-home">
-      <span class="team-name ${homeIsTbd ? 'tbd' : ''}">${m.home}</span>
+      <span class="team-name ${!FLAGS[m.home] ? 'tbd' : ''}">${m.home}</span>
       <span class="team-flag">${flag(m.home)}</span>
     </div>
     <div class="score-block">
@@ -124,7 +170,7 @@ function renderCard(m, filter) {
     </div>
     <div class="team-away">
       <span class="team-flag">${flag(m.away)}</span>
-      <span class="team-name ${awayIsTbd ? 'tbd' : ''}">${m.away}</span>
+      <span class="team-name ${!FLAGS[m.away] ? 'tbd' : ''}">${m.away}</span>
     </div>
     <div class="prob-col">
       ${probBars(m.probabilities)}
@@ -133,20 +179,21 @@ function renderCard(m, filter) {
   </div>`;
 }
 
-function renderAll(data, filter) {
+function renderAll(matches, filter, lockedMap, resultsMap) {
   const container = document.getElementById("matches");
   if (!container) return;
 
-  // Group by date
   const byDate = {};
-  for (const m of data.matches) {
+  for (const m of matches) {
     if (!byDate[m.date]) byDate[m.date] = [];
     byDate[m.date].push(m);
   }
 
   let html = "";
-  for (const [date, matches] of Object.entries(byDate).sort()) {
-    const cards = matches.map(m => renderCard(m, filter)).join("");
+  for (const [date, ms] of Object.entries(byDate).sort()) {
+    const cards = ms.map(m =>
+      renderCard(m, filter, lockedMap[String(m.id)], resultsMap[String(m.id)])
+    ).join("");
     if (!cards.trim()) continue;
     html += `
     <div class="date-section">
@@ -154,24 +201,55 @@ function renderAll(data, filter) {
       ${cards}
     </div>`;
   }
-  container.innerHTML = html || "<p style='color:var(--text-muted);text-align:center;padding:40px'>No hay partidos para mostrar.</p>";
+  container.innerHTML = html ||
+    "<p style='color:var(--text-muted);text-align:center;padding:40px'>No hay partidos para mostrar.</p>";
 }
 
 async function init() {
-  let data;
-  try {
-    const res = await fetch("data/predictions.json");
-    data = await res.json();
-  } catch (e) {
-    document.getElementById("matches").innerHTML = "<p style='color:red;padding:24px'>Error cargando predicciones.</p>";
+  const [predRes, lockedRes, resultsRes] = await Promise.allSettled([
+    fetch("data/predictions.json").then(r => r.json()),
+    fetch("data/locked_predictions.json").then(r => r.json()).catch(() => ({ matches: {} })),
+    fetch("data/results.json").then(r => r.json()).catch(() => ({ matches: {} })),
+  ]);
+
+  if (predRes.status !== "fulfilled") {
+    document.getElementById("matches").innerHTML =
+      "<p style='color:red;padding:24px'>Error cargando predicciones.</p>";
     return;
   }
 
-  // Updated badge
+  const data      = predRes.value;
+  const lockedMap = (lockedRes.status === "fulfilled" ? lockedRes.value.matches : {}) || {};
+  const resultsMap= (resultsRes.status === "fulfilled" ? resultsRes.value.matches : {}) || {};
+
+  // Update timestamp
   const updEl = document.getElementById("last-updated");
   if (updEl && data.generated_at) {
-    const d = new Date(data.generated_at);
-    updEl.textContent = `Actualizado: ${d.toLocaleString("es")}`;
+    updEl.textContent = `Actualizado: ${new Date(data.generated_at).toLocaleString("es")}`;
+  }
+
+  // Compute points
+  let totalPts = 0, gamesPlayed = 0;
+  for (const m of data.matches) {
+    const lp = lockedMap[String(m.id)];
+    const rs = resultsMap[String(m.id)];
+    if (lp && rs && rs.status === "final") {
+      totalPts += quinielaPoints(lp.home, lp.away, rs.home_score, rs.away_score, m.phase);
+      gamesPlayed++;
+    }
+  }
+
+  // Show points banner
+  if (gamesPlayed > 0) {
+    const banner = document.getElementById("points-banner");
+    banner.style.display = "flex";
+    document.getElementById("pts-total").textContent = `${totalPts} pts`;
+    const avg = (totalPts / gamesPlayed).toFixed(2);
+    document.getElementById("pts-meta").textContent =
+      `· ${gamesPlayed} partido${gamesPlayed !== 1 ? "s" : ""} jugado${gamesPlayed !== 1 ? "s" : ""}`;
+    const avgEl = document.getElementById("pts-avg");
+    avgEl.textContent = `${avg} pts/partido`;
+    avgEl.style.display = "";
   }
 
   let activeFilter = "all";
@@ -181,7 +259,7 @@ async function init() {
     document.querySelectorAll(".chip").forEach(c => {
       c.classList.toggle("active", c.dataset.filter === f);
     });
-    renderAll(data, f);
+    renderAll(data.matches, f, lockedMap, resultsMap);
   }
 
   document.querySelectorAll(".chip").forEach(chip => {

@@ -19,7 +19,7 @@ API_BASE = "https://api.elections.kalshi.com/trade-api/v2"
 CACHE_PATH = Path(__file__).parent.parent / "data" / "kalshi_cache.json"
 # Pre-game entries are considered stale after 90 min; once kickoff passes they are
 # locked permanently so in-game/post-game prices never overwrite the prediction.
-CACHE_TTL = 5400  # 90 minutes
+CACHE_TTL = 5400  # 90 minutes — covers the 1.5h-before-kickoff → kickoff window
 
 # Schedule → Kalshi 3-letter codes (several differ from FIFA/ISO)
 TEAM_CODES = {

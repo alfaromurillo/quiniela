@@ -301,6 +301,71 @@ main { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
 .stat-card .num { font-size: 1.6rem; font-weight: 800; color: var(--blue-mid); }
 .stat-card .lbl { font-size: .75rem; color: var(--text-muted); margin-top: 2px; }
 
+/* ── Points banner ── */
+.points-banner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: var(--card-bg);
+  border: 2px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 14px 20px;
+  margin-bottom: 20px;
+}
+.points-banner .pts-total {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--blue-mid);
+}
+.points-banner .pts-meta {
+  font-size: .88rem;
+  color: var(--text-muted);
+}
+.points-banner .pts-avg {
+  font-size: .8rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 20px;
+  background: #e8f5e9;
+  color: #2e7d32;
+  margin-left: 8px;
+}
+
+/* ── Completed match card ── */
+.match-card.completed { opacity: 1; }
+.match-card.past-pending { opacity: .6; }
+
+/* Score block extras for completed matches */
+.score-result-row {
+  font-size: .68rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .3px;
+  font-weight: 600;
+  margin-top: 2px;
+}
+.score-pred-row {
+  font-size: .75rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.score-pred-row strong { color: var(--text); }
+
+/* Points-earned badges */
+.pts-earned {
+  display: inline-block;
+  font-size: .78rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-top: 3px;
+}
+.pts-earned.p5 { background: #1b5e20; color: #fff; }
+.pts-earned.p3 { background: #c8e6c9; color: #1b5e20; }
+.pts-earned.p2 { background: #bbdefb; color: #0d47a1; }
+.pts-earned.p1 { background: #fff8e1; color: #e65100; }
+.pts-earned.p0 { background: #fce4ec; color: #b71c1c; }
+
 /* ── Responsive ── */
 @media (max-width: 640px) {
   .match-card {

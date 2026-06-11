@@ -2,14 +2,17 @@ name: Actualizar predicciones
 
 on:
   schedule:
-    # 1.5 h before every possible UTC kickoff time (derived from schedule.json)
-    - cron: '30 14-23 * * *'  # 14:30–23:30 on the :30  (covers 16:00–01:00 kickoffs)
-    - cron: '30 0,1,2 * * *'  # 00:30, 01:30, 02:30     (covers 02:00–04:00 kickoffs)
-    - cron: '0 0 * * *'        # 00:00                    (covers 01:30 kickoff)
-    - cron: '0 19 * * *'       # 19:00                    (covers 20:30 kickoff)
-    - cron: '0 22 * * *'       # 22:00                    (covers 23:30 kickoff)
-    - cron: '0 23 * * *'       # 23:00                    (covers 00:30 kickoff)
-    # Final daily update — midnight Costa Rica (UTC-6) = 06:00 UTC
+    # 1.5 h before every possible UTC kickoff time (derived from schedule.json).
+    # Prediction is shown at 1:30 before kickoff so it can be manually entered
+    # into the quiniela before the 1:00-before deadline.
+    # Also covers result-fetch windows (2 h group / 3.5 h knockout after kickoff).
+    - cron: '30 14-23 * * *'    # 14:30–23:30 on :30  (1.5 h before 16:00–01:00)
+    - cron: '30 0,1,2 * * *'    # 00:30, 01:30, 02:30  (1.5 h before 02:00–04:00; result windows)
+    - cron: '0 0 * * *'          # 00:00                 (1.5 h before 01:30)
+    - cron: '0 19 * * *'         # 19:00                 (1.5 h before 20:30)
+    - cron: '0 22 * * *'         # 22:00                 (1.5 h before 23:30)
+    - cron: '0 23 * * *'         # 23:00                 (1.5 h before 00:30)
+    # Final daily update — midnight Costa Rica (UTC-6 = 06:00 UTC)
     - cron: '0 6 * * *'
   workflow_dispatch:  # allow manual trigger
 
@@ -37,11 +40,17 @@ jobs:
       - name: Run prediction pipeline
         run: python model/predict.py
 
-      - name: Commit updated predictions
+      - name: Fetch match results
+        run: python model/results.py
+
+      - name: Commit updated data
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add site/data/predictions.json data/kalshi_cache.json
+          git add site/data/predictions.json \
+                  site/data/locked_predictions.json \
+                  site/data/results.json \
+                  data/kalshi_cache.json
           if git diff --staged --quiet; then
             echo "No changes to predictions."
           else
