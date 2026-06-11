@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiniela Mundial 2026 — Predicciones</title>
+  <link rel="stylesheet" href="assets/style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div>
+      <h1>⚽ Quiniela Mundial 2026</h1>
+      <span>Predicciones optimizadas por puntos esperados</span>
+    </div>
+  </div>
+  <nav>
+    <a href="index.html" class="active">Partidos</a>
+    &nbsp;
+    <a href="modelo.html">Metodología</a>
+  </nav>
+</header>
+
+<main>
+  <p id="last-updated"></p>
+
+  <div class="filters">
+    <span class="chip active" data-filter="all">Todos</span>
+    <span class="chip" data-filter="upcoming">Próximos</span>
+    <span class="chip" data-filter="group">Fase de Grupos</span>
+    <span class="chip" data-filter="knockout">Eliminatorias</span>
+  </div>
+
+  <div id="matches">
+    <p style="text-align:center;padding:40px;color:var(--text-muted)">Cargando predicciones…</p>
+  </div>
+</main>
+
+<script src="assets/main.js"></script>
+</body>
+</html>

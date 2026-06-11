@@ -1,0 +1,69 @@
+name: Actualizar predicciones
+
+on:
+  schedule:
+    # Twice daily during WC (Jun 11 – Jul 19, 2026): 11:30 UTC and 23:30 UTC
+    - cron: '30 11 * * *'
+    - cron: '30 23 * * *'
+  workflow_dispatch:  # allow manual trigger
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run prediction pipeline
+        run: python model/predict.py
+
+      - name: Commit updated predictions
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add site/data/predictions.json
+          if git diff --staged --quiet; then
+            echo "No changes to predictions."
+          else
+            git commit -m "chore: update predictions $(date -u '+%Y-%m-%d %H:%M UTC')"
+            git push
+          fi
+
+  deploy:
+    needs: update
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: main  # pull the freshly pushed commit
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

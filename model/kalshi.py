@@ -6,22 +6,22 @@ Market types per match:
   KXWCTOTAL-{date}{team1}{team2} → total goals over N.5 (-1 to -6)
   KXWCSPREAD-{date}{team1}{team2}→ spread markets (-HOME2/-HOME3/-HOME4/-AWAY2/-AWAY3)
 
-Date format: 26JUN11 (year=26, month abbreviated, day 2-digit zero-padded)
+Date code rule: Kalshi uses Eastern Time (UTC-4) date. Derived from time_utc in schedule.json.
 """
 import re
 import json
 import time
 import requests
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 
 API_BASE = "https://api.elections.kalshi.com/trade-api/v2"
 CACHE_PATH = Path(__file__).parent.parent / "data" / "kalshi_cache.json"
 CACHE_TTL = 3600  # seconds
 
-# Mapping from schedule team names to Kalshi 3-letter codes
+# Schedule → Kalshi 3-letter codes (several differ from FIFA/ISO)
 TEAM_CODES = {
-    "Algeria": "ALG",
+    "Algeria": "DZA",
     "Argentina": "ARG",
     "Australia": "AUS",
     "Austria": "AUT",
@@ -41,8 +41,8 @@ TEAM_CODES = {
     "France": "FRA",
     "Germany": "GER",
     "Ghana": "GHA",
-    "Haiti": "HAI",
-    "Iran": "IRN",
+    "Haiti": "HTI",
+    "Iran": "IRI",
     "Iraq": "IRQ",
     "Ivory Coast": "CIV",
     "Japan": "JPN",
@@ -71,31 +71,38 @@ TEAM_CODES = {
     "Uzbekistan": "UZB",
 }
 
-MONTHS = {1:"JAN",2:"FEB",3:"MAR",4:"APR",5:"MAY",6:"JUN",7:"JUL",8:"AUG",9:"SEP",10:"OCT",11:"NOV",12:"DEC"}
+MONTHS = {1:"JAN",2:"FEB",3:"MAR",4:"APR",5:"MAY",6:"JUN",
+          7:"JUL",8:"AUG",9:"SEP",10:"OCT",11:"NOV",12:"DEC"}
 
 
-def _date_code(date_str: str) -> str:
-    """'2026-06-11' → '26JUN11'"""
-    d = datetime.strptime(date_str, "%Y-%m-%d")
-    return f"{str(d.year)[2:]}{MONTHS[d.month]}{d.day:02d}"
+def _date_code(time_utc: str) -> str:
+    """'2026-06-12T02:00:00Z' → '26JUN11'  (converts UTC → Eastern Time UTC-4)"""
+    d = datetime.strptime(time_utc, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+    et = d - timedelta(hours=4)
+    return f"{str(et.year)[2:]}{MONTHS[et.month]}{et.day:02d}"
 
 
-def _midprice(market: dict) -> float | None:
-    """Return midpoint of bid/ask, or None if unavailable."""
+def _midprice(market: dict, use_last: bool = False) -> float | None:
+    """Bid/ask midpoint; falls back to last_price for settled/live markets when use_last=True."""
     bid = market.get("yes_bid_dollars")
     ask = market.get("yes_ask_dollars")
     if bid is None or ask is None:
         return None
     b, a = float(bid), float(ask)
+    if a - b > 0.30:
+        if use_last:
+            last = market.get("last_price_dollars")
+            if last is not None:
+                lp = float(last)
+                if 0.02 < lp < 0.98:
+                    return lp
+        return None
     if a <= 0 or b >= 1:
         return None
-    if a - b > 0.30:
-        return None  # too wide spread → unreliable
     return (b + a) / 2
 
 
 def _fetch_event(event_ticker: str) -> list[dict]:
-    """Fetch markets for a Kalshi event. Returns list of market dicts."""
     url = f"{API_BASE}/events/{event_ticker}?with_nested_markets=true"
     try:
         r = requests.get(url, timeout=10)
@@ -107,23 +114,22 @@ def _fetch_event(event_ticker: str) -> list[dict]:
 
 
 def _parse_game(markets: list[dict], home_code: str, away_code: str) -> dict | None:
-    """Extract normalised win/draw/loss probs from KXWCGAME markets."""
+    """Extract normalised P(home_win), P(draw), P(away_win)."""
     probs = {}
     for m in markets:
-        ticker = m["ticker"]
-        if ticker.endswith(f"-{home_code}"):
+        t = m["ticker"]
+        if t.endswith(f"-{home_code}"):
             p = _midprice(m)
             if p is not None:
                 probs["home_win"] = p
-        elif ticker.endswith(f"-{away_code}"):
+        elif t.endswith(f"-{away_code}"):
             p = _midprice(m)
             if p is not None:
                 probs["away_win"] = p
-        elif ticker.endswith("-TIE"):
+        elif t.endswith("-TIE"):
             p = _midprice(m)
             if p is not None:
                 probs["draw"] = p
-
     if len(probs) != 3:
         return None
     total = sum(probs.values())
@@ -134,35 +140,38 @@ def _parse_game(markets: list[dict], home_code: str, away_code: str) -> dict | N
 
 def _parse_totals(markets: list[dict]) -> dict | None:
     """
-    Extract P(total_goals == n) for n in 0..6+ from KXWCTOTAL markets.
-    Markets: -1=over0.5, -2=over1.5, ..., -6=over5.5
+    Derive P(total_goals==n) from KXWCTOTAL markets.
+    -1=over0.5, -2=over1.5, …, -6=over5.5
     """
-    thresholds = {}  # n_minus_half → P(total > n-0.5)
+    thresholds = {}
     for m in markets:
-        ticker = m["ticker"]
-        match = re.search(r"-(\d+)$", ticker)
+        match = re.search(r"-(\d+)$", m["ticker"])
         if match:
-            idx = int(match.group(1))  # 1-6 → over 0.5 to over 5.5
-            p = _midprice(m)
+            idx = int(match.group(1))
+            p = _midprice(m, use_last=True)
             if p is not None:
                 thresholds[idx] = p
 
     if not thresholds:
         return None
 
-    # P(total == n) = P(over n-0.5) - P(over n+0.5)
-    # For n=0: 1 - P(over 0.5)
-    result = {}
-    p_over = {i: thresholds.get(i, 0.0) for i in range(1, 7)}
-    result[0] = 1.0 - p_over.get(1, 0.95)
-    for n in range(1, 6):
-        result[n] = p_over.get(n, 0.0) - p_over.get(n + 1, 0.0)
-    result[6] = p_over.get(6, 0.0)  # 6+ goals
+    # Fill missing lower thresholds (monotone: P(over n) >= P(over n+1))
+    for i in range(5, 0, -1):
+        if i not in thresholds and (i + 1) in thresholds:
+            thresholds[i] = thresholds[i + 1]
+    # Fill missing upper thresholds with decay
+    for i in range(2, 7):
+        if i not in thresholds and (i - 1) in thresholds:
+            thresholds[i] = thresholds[i - 1] * 0.4
 
-    # Clamp negatives and normalise
-    result = {k: max(0.0, v) for k, v in result.items()}
+    p_over = {i: thresholds.get(i, 0.0) for i in range(1, 7)}
+    result = {
+        0: max(0.0, 1.0 - p_over[1]),
+        **{n: max(0.0, p_over[n] - p_over.get(n + 1, 0.0)) for n in range(1, 6)},
+        6: max(0.0, p_over[6]),
+    }
     total = sum(result.values())
-    if total < 0.1:
+    if total < 0.05:
         return None
     return {k: v / total for k, v in result.items()}
 
@@ -182,40 +191,24 @@ def _save_cache(data: dict):
 
 def fetch_match_probs(match: dict) -> dict:
     """
-    Fetch Kalshi probabilities for a single match dict (from schedule.json).
-    Returns:
-      {
-        "home_win": float, "draw": float, "away_win": float,
-        "total_goals": {0: p, 1: p, ..., 6: p},  # optional
-        "source": "kalshi" | "historical_fallback"
-      }
-    Falls back to None values if market unavailable.
+    Fetch Kalshi probabilities for one match from schedule.json.
+    Returns {home_win, draw, away_win, total_goals, source}.
     """
-    home = match["home"]
-    away = match["away"]
-    date_str = match["date"]
-    home_code = TEAM_CODES.get(home)
-    away_code = TEAM_CODES.get(away)
-
+    home_code = TEAM_CODES.get(match["home"])
+    away_code = TEAM_CODES.get(match["away"])
     if not home_code or not away_code:
         return _fallback_probs()
 
-    date_code = _date_code(date_str)
+    date_code = _date_code(match["time_utc"])
     game_ticker = f"KXWCGAME-{date_code}{home_code}{away_code}"
     total_ticker = f"KXWCTOTAL-{date_code}{home_code}{away_code}"
 
     cache = _load_cache()
-    cache_key = game_ticker
+    if game_ticker in cache:
+        return cache[game_ticker]
 
-    if cache_key in cache and "_ts" in cache:
-        cached = cache[cache_key]
-        return cached
-
-    game_markets = _fetch_event(game_ticker)
-    game_probs = _parse_game(game_markets, home_code, away_code)
-
-    total_markets = _fetch_event(total_ticker)
-    total_goals = _parse_totals(total_markets)
+    game_probs = _parse_game(_fetch_event(game_ticker), home_code, away_code)
+    total_goals = _parse_totals(_fetch_event(total_ticker))
 
     if game_probs is None:
         result = _fallback_probs()
@@ -228,13 +221,12 @@ def fetch_match_probs(match: dict) -> dict:
             "source": "kalshi",
         }
 
-    cache[cache_key] = result
+    cache[game_ticker] = result
     _save_cache(cache)
     return result
 
 
 def _fallback_probs() -> dict:
-    """Historical WC base rates when Kalshi data unavailable."""
     return {
         "home_win": 0.40,
         "draw": 0.25,
@@ -242,22 +234,3 @@ def _fallback_probs() -> dict:
         "total_goals": {0: 0.08, 1: 0.20, 2: 0.27, 3: 0.24, 4: 0.13, 5: 0.05, 6: 0.03},
         "source": "historical_fallback",
     }
-
-
-def fetch_all_probs(schedule: list[dict]) -> dict:
-    """
-    Fetch probabilities for all group-stage matches (knockout TBD teams skipped).
-    Returns dict keyed by match id.
-    """
-    results = {}
-    for match in schedule:
-        mid = match["id"]
-        # Skip knockout matches with TBD teams
-        if match["phase"] == "knockout" and (
-            match["home"].startswith("W") or match["home"][0].isdigit()
-        ):
-            results[mid] = _fallback_probs()
-            continue
-        results[mid] = fetch_match_probs(match)
-        time.sleep(0.1)  # be polite to the API
-    return results

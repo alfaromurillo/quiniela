@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Metodología — Quiniela Mundial 2026</title>
+  <link rel="stylesheet" href="assets/style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div>
+      <h1>⚽ Quiniela Mundial 2026</h1>
+      <span>Predicciones optimizadas por puntos esperados</span>
+    </div>
+  </div>
+  <nav>
+    <a href="index.html">Partidos</a>
+    &nbsp;
+    <a href="modelo.html" class="active">Metodología</a>
+  </nav>
+</header>
+
+<div class="content-page">
+
+  <h2>Objetivo</h2>
+  <p>
+    El modelo <strong>no predice el marcador más probable</strong> de un partido. En cambio, predice el marcador que
+    <strong>maximiza los puntos esperados</strong> bajo las reglas de la quiniela. En muchos casos estos coinciden,
+    pero cuando las distribuciones de probabilidad son difusas (partidos equilibrados), la estrategia óptima
+    puede diferir del marcador con mayor probabilidad individual.
+  </p>
+
+  <h2>Reglas de puntaje</h2>
+
+  <h3>Fase de grupos</h3>
+  <table>
+    <thead><tr><th>Acierto</th><th>Puntos</th></tr></thead>
+    <tbody>
+      <tr><td>Marcador exacto</td><td><strong>5 pts</strong></td></tr>
+      <tr><td>Ganador/empate correcto <em>y</em> goles de un equipo correctos</td><td><strong>3 pts</strong></td></tr>
+      <tr><td>Ganador/empate correcto (sin goles correctos)</td><td><strong>2 pts</strong></td></tr>
+      <tr><td>Goles de un equipo correctos, ganador equivocado</td><td><strong>1 pt</strong></td></tr>
+      <tr><td>Ningún acierto</td><td><strong>0 pts</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Ronda eliminatoria</h3>
+  <p>Solo se cuentan los goles en tiempo reglamentario + prórroga (120 min). Si el partido se define por penales,
+  se considera empate para efectos de la quiniela.</p>
+  <table>
+    <thead><tr><th>Acierto</th><th>Puntos</th></tr></thead>
+    <tbody>
+      <tr><td>Marcador exacto en 120 min</td><td><strong>3 pts</strong></td></tr>
+      <tr><td>Ganador/empate correcto (goles incorrectos)</td><td><strong>1 pt</strong></td></tr>
+      <tr><td>Ningún acierto</td><td><strong>0 pts</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Fuentes de datos</h2>
+
+  <h3>1. Mercados de predicción: Kalshi</h3>
+  <p>
+    <a href="https://kalshi.com/category/sports/soccer/fifa-world-cup/world-cup/games" target="_blank">Kalshi</a>
+    es un mercado de predicción regulado en EEUU. Para cada partido del Mundial 2026 ofrece tres tipos de mercado:
+  </p>
+  <table>
+    <thead><tr><th>Tipo</th><th>Ticker</th><th>Información</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Resultado</td>
+        <td><code>KXWCGAME-…</code></td>
+        <td>Probabilidad de victoria local, empate, victoria visitante</td>
+      </tr>
+      <tr>
+        <td>Total de goles</td>
+        <td><code>KXWCTOTAL-…</code></td>
+        <td>P(más de 0.5), P(más de 1.5), …, P(más de 5.5 goles)</td>
+      </tr>
+      <tr>
+        <td>Diferencia (spread)</td>
+        <td><code>KXWCSPREAD-…</code></td>
+        <td>P(equipo gana por más de 1.5, 2.5, 3.5 goles)</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    Los precios de Kalshi son probabilidades implícitas del mercado, actualizadas en tiempo real.
+    No se requiere autenticación para consultar datos públicos de mercado.
+    Los datos se actualizan automáticamente cada día a las 12:00 UTC.
+  </p>
+
+  <h3>2. Datos históricos: Mundial 2022</h3>
+  <p>
+    Se utilizan los 64 partidos del Mundial de Qatar 2022 (fuente:
+    <a href="https://github.com/openfootball/worldcup.json" target="_blank">openfootball/worldcup.json</a>)
+    para construir distribuciones empíricas de marcadores condicionadas al resultado y la fase del torneo.
+  </p>
+  <div class="stat-grid" id="stats-grid">
+    <div class="stat-card"><div class="num">64</div><div class="lbl">Partidos WC 2022</div></div>
+    <div class="stat-card"><div class="num">36</div><div class="lbl">Victorias locales</div></div>
+    <div class="stat-card"><div class="num">12</div><div class="lbl">Empates</div></div>
+    <div class="stat-card"><div class="num">16</div><div class="lbl">Victorias visitante</div></div>
+  </div>
+
+  <h2>Modelo probabilístico</h2>
+
+  <h3>Paso 1 — Distribución condicional de marcadores</h3>
+  <p>
+    Para cada combinación de (resultado, fase) — por ejemplo "victoria local en grupos" —
+    se calcula la frecuencia empírica de cada marcador en el Mundial 2022. Se aplica
+    suavizado de Laplace (+1 a cada celda) sobre la cuadrícula 0–5 goles por equipo,
+    para asignar probabilidad positiva a marcadores no observados.
+  </p>
+
+  <h3>Paso 2 — Integración de señales Kalshi</h3>
+  <p>La distribución conjunta de marcadores se construye en dos etapas:</p>
+  <div class="formula-box">
+P(home=a, away=b)  =  P(resultado) × P(a,b | resultado, fase)
+                                          ↑ datos históricos WC 2022
+
+Luego se repondera por el total de goles:
+P(home=a, away=b)  ∝  P(a,b) × P_Kalshi(total = a+b) / P_hist(total = a+b)
+  </div>
+  <p>
+    El numerador <code>P_Kalshi(total = a+b)</code> se deriva de la cadena de mercados
+    sobre/bajo: <code>P(total=n) = P(&gt;n−0.5) − P(&gt;n+0.5)</code>.
+    Este paso ajusta cuántos goles totales esperamos, manteniendo la distribución
+    histórica de cómo se reparten entre los equipos dado ese total.
+  </p>
+
+  <h3>Paso 3 — Maximización de puntos esperados</h3>
+  <p>
+    Se evalúa cada posible predicción <code>(a, b)</code> con <code>a, b ∈ {0,…,5}</code>
+    (36 candidatos) y se elige la que maximiza:
+  </p>
+  <div class="formula-box">
+E[pts | predigo (a,b)] = Σ_{x,y} P(x,y) × puntos(a,b,x,y)
+
+donde puntos(a,b,x,y) aplica las reglas de la quiniela según la fase.
+  </div>
+  <p>
+    Este paso es crucial: en partidos equilibrados, puede ser mejor predecir
+    <code>1-0</code> en lugar del marcador más probable <code>0-0</code>, porque
+    acertar el ganador (2 pts) tiene mayor peso esperado que el riesgo de exacto con empate.
+  </p>
+
+  <h2>Limitaciones conocidas</h2>
+  <ul style="margin-left:20px;line-height:2">
+    <li>Los datos históricos se basan solo en el Mundial 2022 (64 partidos). Con más ediciones se mejora la estimación.</li>
+    <li>Kalshi no ofrece mercados de marcadores exactos, por lo que la distribución interna de goles sigue siendo histórica.</li>
+    <li>Los mercados de Kalshi en vivo reflejan el estado actual del partido, no la probabilidad pre-partido.</li>
+    <li>Las fases eliminatorias con equipos "por definir" usan tasas base históricas hasta que se confirmen los cruces.</li>
+  </ul>
+
+  <h2>Código fuente</h2>
+  <p>
+    Todo el código está disponible en
+    <a href="https://github.com/alfaromurillo/quiniela" target="_blank">github.com/alfaromurillo/quiniela</a>.
+    Las predicciones se actualizan automáticamente cada día mediante GitHub Actions.
+  </p>
+
+</div>
+
+</body>
+</html>
