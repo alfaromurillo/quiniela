@@ -142,18 +142,33 @@
     <em>ganador–perdedor</em>:
   </p>
 
-  <p>Para cada fase $\phi \in \{\text{grupos},\,\text{eliminatoria}\}$ definimos:</p>
-  <ul>
-    <li>
-      $\tilde{P}_\phi(w, l)$: frecuencia empírica del marcador $(w, l)$ con $w > l$
-      (ganador–perdedor), suavizada con Laplace (+1 por celda) sobre la cuadrícula
-      $\{(w,l) : 0 \le l < w \le 5\}$.
-    </li>
-    <li>
-      $\tilde{P}^{\mathrm{emp}}_\phi(g)$: frecuencia empírica de empates $g$–$g$,
-      suavizada con Laplace (+1) sobre $g \in \{0,\ldots,5\}$.
-    </li>
-  </ul>
+  <p>Para cada fase $\phi \in \{\text{grupos},\,\text{eliminatoria}\}$ usamos un
+  <strong>suavizado bayesiano con prior Poisson producto</strong> en lugar del suavizado
+  de Laplace uniforme. El prior asigna mayor pseudoconteo a marcadores más probables
+  en el fútbol, de modo que 2-2 $\gg$ 5-4 $\gg$ 5-5 para celdas con cero observaciones.</p>
+
+  <p>El prior para victorias canónicas $(w, l)$ con $w > l$ es:</p>
+
+  $$P_{\mathrm{prior}}(w,l) \propto \frac{\lambda_w^w}{w!}\cdot\frac{\lambda_l^l}{l!}$$
+
+  <p>El prior para empates $g$-$g$ es:</p>
+
+  $$P_{\mathrm{prior}}(g,g) \propto \left(\frac{\lambda_d^g}{g!}\right)^2$$
+
+  <p>Los parámetros $\lambda_w$ (goles del ganador), $\lambda_l$ (goles del perdedor)
+  y $\lambda_d$ (goles por equipo en empate) se estiman por MLE desde los datos de
+  Qatar 2022. Para fase de grupos: $\lambda_w \approx 2.29$, $\lambda_l \approx 0.55$,
+  $\lambda_d \approx 0.60$.</p>
+
+  <p>El suavizado queda:</p>
+
+  $$\tilde{P}_\phi(w,l) \propto n_\phi(w,l) + \kappa \cdot P_{\mathrm{prior}}(w,l)$$
+
+  <p>donde $n_\phi(w,l)$ es el conteo observado, $P_{\mathrm{prior}}$ está normalizado
+  sobre la cuadrícula $\{(w,l): 0 \le l < w \le 5\}$ (15 celdas), y $\kappa = 5$
+  pseudo-observaciones totales. La distribución de empates se define análogamente.
+  Las celdas con conteo observado mayor a cero quedan casi sin cambio; las celdas
+  vacías reciben probabilidad proporcional al prior.</p>
 
   <p>La distribución base es:</p>
 

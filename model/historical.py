@@ -6,13 +6,45 @@ home_win/away_win into a single "winner" distribution expressed as
 (winner_goals, loser_goals). This removes spurious home/away bias.
 The three true host nations of WC 2026 (USA, Mexico, Canada) have any
 home advantage already priced into the Kalshi market probabilities.
+
+Smoothing: Poisson product prior instead of uniform Laplace.
+  For wins:  P_prior(w, l) ∝ λ_w^w/w! · λ_l^l/l!
+  For draws: P_prior(g, g) ∝ (λ_d^g/g!)²
+  Parameters λ estimated by MLE from WC 2022 data.
+  SMOOTH_KAPPA total pseudo-observations are spread over cells
+  proportionally to the prior, so 2-2 >> 5-4 >> 5-5 for zero-count
+  cells, while observed cells remain close to their empirical rate.
 """
 import json
+import math
 from collections import defaultdict
 from pathlib import Path
 
 DATA_DIR = Path(__file__).parent.parent / "data"
-MAX_GOALS = 5  # search grid: 0..MAX_GOALS goals per team
+MAX_GOALS    = 5    # prediction grid: 0..MAX_GOALS goals per team
+SMOOTH_KAPPA = 5.0  # total pseudo-observations added via the prior
+
+
+def _pois(k: int, lam: float) -> float:
+    """Unnormalised Poisson PMF: lam^k / k!"""
+    return lam**k / math.factorial(k)
+
+
+def _poisson_prior(cells: list[tuple], *lams: float) -> dict:
+    """
+    Normalised Poisson product prior over a list of cells.
+    Each cell is a tuple of goals; lams[i] is the rate for dimension i.
+    E.g. for win cells (w, l): lams = (λ_w, λ_l).
+    For draw cells (g, g): pass g once with lam = λ_d and square it.
+    """
+    raw = {}
+    for cell in cells:
+        if len(lams) == 1:            # draw: (g,g), use λ_d twice
+            raw[cell] = _pois(cell[0], lams[0]) ** 2
+        else:                         # win: (w,l)
+            raw[cell] = _pois(cell[0], lams[0]) * _pois(cell[1], lams[1])
+    total = sum(raw.values())
+    return {s: v / total for s, v in raw.items()}
 
 
 def _result(home, away):
@@ -56,9 +88,23 @@ def build_distributions():
 
     dist = {}
     for phase in ["group", "knockout"]:
-        # Laplace smoothing (+1 per cell)
-        nw = {s: win_counts[phase].get(s, 0) + 1 for s in all_win_cells}
-        nd = {s: draw_counts[phase].get(s, 0) + 1 for s in all_draw_cells}
+        wc = win_counts[phase]
+        dc = draw_counts[phase]
+
+        # MLE Poisson parameters (all observed goals, including out-of-grid)
+        n_wins  = sum(wc.values())
+        n_draws = sum(dc.values())
+        lam_w = max(sum(w * c for (w, l), c in wc.items()) / n_wins,  0.5) if n_wins  else 2.0
+        lam_l = max(sum(l * c for (w, l), c in wc.items()) / n_wins,  0.1) if n_wins  else 0.6
+        lam_d = max(sum(g * c for (g, _), c in dc.items()) / n_draws, 0.1) if n_draws else 0.6
+
+        # Normalised Poisson product prior over the prediction grid cells
+        wp = _poisson_prior(all_win_cells,  lam_w, lam_l)
+        dp = _poisson_prior(all_draw_cells, lam_d)
+
+        # Smooth: observed count + κ × prior (κ total pseudo-observations)
+        nw = {s: wc.get(s, 0) + SMOOTH_KAPPA * wp[s] for s in all_win_cells}
+        nd = {s: dc.get(s, 0) + SMOOTH_KAPPA * dp[s] for s in all_draw_cells}
         tw, td = sum(nw.values()), sum(nd.values())
         dist[phase] = {
             "neutral_win": {s: v / tw for s, v in nw.items()},
