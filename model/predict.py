@@ -66,11 +66,16 @@ def run():
         p_home = kalshi["home_win"]
         p_draw = kalshi["draw"]
         p_away = kalshi["away_win"]
-        total_goals = kalshi.get("total_goals")
+        total_goals  = kalshi.get("total_goals")
+        spread_home  = kalshi.get("spread_home")
+        spread_away  = kalshi.get("spread_away")
         source = kalshi.get("source", "unknown")
 
         # Build joint scoreline distribution
-        score_dist = scoreline_probs(p_home, p_draw, p_away, phase, total_goals)
+        score_dist = scoreline_probs(
+            p_home, p_draw, p_away, phase,
+            total_goals, spread_home, spread_away,
+        )
 
         # Find best prediction
         best = best_prediction(score_dist, phase)

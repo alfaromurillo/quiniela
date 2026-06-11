@@ -2,9 +2,8 @@ name: Actualizar predicciones
 
 on:
   schedule:
-    # Twice daily during WC (Jun 11 – Jul 19, 2026): 11:30 UTC and 23:30 UTC
-    - cron: '30 11 * * *'
-    - cron: '30 23 * * *'
+    # Every 2 hours (covers 1.5h before matches + 06:00 UTC = midnight Costa Rica)
+    - cron: '0 */2 * * *'
   workflow_dispatch:  # allow manual trigger
 
 permissions:
@@ -27,6 +26,9 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements.txt
+
+      - name: Clear Kalshi cache
+        run: rm -f data/kalshi_cache.json
 
       - name: Run prediction pipeline
         run: python model/predict.py

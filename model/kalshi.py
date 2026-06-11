@@ -176,6 +176,56 @@ def _parse_totals(markets: list[dict]) -> dict | None:
     return {k: v / total for k, v in result.items()}
 
 
+def _parse_spread(markets: list[dict], home_code: str, away_code: str,
+                  p_home_win: float, p_away_win: float) -> tuple[dict | None, dict | None]:
+    """
+    Parse KXWCSPREAD markets into margin-probability dicts.
+    Returns (spread_home, spread_away) where each is {k: P(team wins by exactly k goals)}
+    with k=4 meaning "4 or more goals".
+    """
+    # Collect raw spread thresholds: P(team wins by > k.5)
+    raw = {"home": {}, "away": {}}
+    for m in markets:
+        t = m["ticker"]
+        p = _midprice(m, use_last=True)
+        if p is None:
+            continue
+        # HOME markets: end in {HOME_CODE}2 / {HOME_CODE}3 / {HOME_CODE}4
+        for k in (2, 3, 4):
+            if t.endswith(f"-{home_code}{k}"):
+                raw["home"][k] = p
+            elif t.endswith(f"-{away_code}{k}"):
+                raw["away"][k] = p
+
+    def to_exact(thresholds: dict, p_win: float) -> dict | None:
+        if not thresholds or p_win < 0.01:
+            return None
+        over = {1: p_win, 2: thresholds.get(2, 0.0),
+                3: thresholds.get(3, 0.0), 4: thresholds.get(4, 0.0)}
+        # Fill missing lower thresholds monotonically (upward)
+        for k in (3, 2):
+            if over[k] == 0.0 and over[k + 1] > 0.0:
+                over[k] = over[k + 1]
+        # Clip to enforce monotone decreasing (noisy markets can invert)
+        over[4] = min(over[4], over[3])
+        over[3] = min(over[3], over[2])
+        over[2] = min(over[2], over[1])
+        exact = {
+            1: max(0.0, over[1] - over[2]),
+            2: max(0.0, over[2] - over[3]),
+            3: max(0.0, over[3] - over[4]),
+            4: max(0.0, over[4]),
+        }
+        total = sum(exact.values())
+        if total < 0.01:
+            return None
+        return {k: v / total for k, v in exact.items()}
+
+    sh = to_exact(raw["home"], p_home_win)
+    sa = to_exact(raw["away"], p_away_win)
+    return sh, sa
+
+
 def _load_cache() -> dict:
     if CACHE_PATH.exists():
         data = json.loads(CACHE_PATH.read_text())
@@ -192,7 +242,7 @@ def _save_cache(data: dict):
 def fetch_match_probs(match: dict) -> dict:
     """
     Fetch Kalshi probabilities for one match from schedule.json.
-    Returns {home_win, draw, away_win, total_goals, source}.
+    Returns {home_win, draw, away_win, total_goals, spread_home, spread_away, source}.
     """
     home_code = TEAM_CODES.get(match["home"])
     away_code = TEAM_CODES.get(match["away"])
@@ -200,24 +250,36 @@ def fetch_match_probs(match: dict) -> dict:
         return _fallback_probs()
 
     date_code = _date_code(match["time_utc"])
-    game_ticker = f"KXWCGAME-{date_code}{home_code}{away_code}"
-    total_ticker = f"KXWCTOTAL-{date_code}{home_code}{away_code}"
+    game_ticker   = f"KXWCGAME-{date_code}{home_code}{away_code}"
+    total_ticker  = f"KXWCTOTAL-{date_code}{home_code}{away_code}"
+    spread_ticker = f"KXWCSPREAD-{date_code}{home_code}{away_code}"
 
     cache = _load_cache()
     if game_ticker in cache:
-        return cache[game_ticker]
+        result = cache[game_ticker]
+        # JSON serialises int keys as strings; restore them for spread dicts
+        for key in ("spread_home", "spread_away"):
+            if result.get(key):
+                result[key] = {int(k): v for k, v in result[key].items()}
+        return result
 
-    game_probs = _parse_game(_fetch_event(game_ticker), home_code, away_code)
+    game_probs  = _parse_game(_fetch_event(game_ticker), home_code, away_code)
     total_goals = _parse_totals(_fetch_event(total_ticker))
 
     if game_probs is None:
         result = _fallback_probs()
     else:
+        spread_home, spread_away = _parse_spread(
+            _fetch_event(spread_ticker), home_code, away_code,
+            game_probs["home_win"], game_probs["away_win"],
+        )
         result = {
-            "home_win": game_probs["home_win"],
-            "draw": game_probs["draw"],
-            "away_win": game_probs["away_win"],
+            "home_win":    game_probs["home_win"],
+            "draw":        game_probs["draw"],
+            "away_win":    game_probs["away_win"],
             "total_goals": total_goals,
+            "spread_home": spread_home,
+            "spread_away": spread_away,
             "source": "kalshi",
         }
 
