@@ -8,6 +8,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$']],
+        displayMath: [['$$', '$$']],
+        tags: 'none'
+      },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
 </head>
 <body>
 
@@ -74,94 +85,182 @@
       <tr>
         <td>Resultado</td>
         <td><code>KXWCGAME-…</code></td>
-        <td>Probabilidad de victoria local, empate, victoria visitante</td>
+        <td>$p_H$ = victoria local, $p_D$ = empate, $p_A$ = victoria visitante</td>
       </tr>
       <tr>
         <td>Total de goles</td>
         <td><code>KXWCTOTAL-…</code></td>
-        <td>P(más de 0.5), P(más de 1.5), …, P(más de 5.5 goles)</td>
+        <td>$P_K(\text{total} > 0.5),\; P_K(\text{total} > 1.5),\; \ldots,\; P_K(\text{total} > 5.5)$</td>
       </tr>
       <tr>
         <td>Diferencia (spread)</td>
         <td><code>KXWCSPREAD-…</code></td>
-        <td>P(equipo gana por más de 1.5, 2.5, 3.5 goles)</td>
+        <td>$P_K(\text{equipo gana por} > 1.5),\; {>}2.5,\; {>}3.5$</td>
       </tr>
     </tbody>
   </table>
   <p>
     Los precios de Kalshi son probabilidades implícitas del mercado, actualizadas en tiempo real.
-    No se requiere autenticación para consultar datos públicos de mercado.
-    Los datos se actualizan automáticamente cada día a las 12:00 UTC.
+    No se requiere autenticación para consultar datos públicos.
+    Las predicciones se actualizan automáticamente cada dos horas mediante GitHub Actions.
   </p>
 
   <h3>2. Datos históricos: Mundial 2022</h3>
   <p>
     Se utilizan los 64 partidos del Mundial de Qatar 2022 (fuente:
     <a href="https://github.com/openfootball/worldcup.json" target="_blank">openfootball/worldcup.json</a>)
-    para construir distribuciones empíricas de marcadores condicionadas al resultado y la fase del torneo.
+    para construir distribuciones empíricas de marcadores condicionadas a la fase del torneo.
   </p>
-  <div class="stat-grid" id="stats-grid">
+  <div class="stat-grid">
     <div class="stat-card"><div class="num">64</div><div class="lbl">Partidos WC 2022</div></div>
-    <div class="stat-card"><div class="num">36</div><div class="lbl">Victorias locales</div></div>
+    <div class="stat-card"><div class="num">52</div><div class="lbl">Partidos con victoria</div></div>
     <div class="stat-card"><div class="num">12</div><div class="lbl">Empates</div></div>
-    <div class="stat-card"><div class="num">16</div><div class="lbl">Victorias visitante</div></div>
+    <div class="stat-card"><div class="num">36</div><div class="lbl">Cuadrícula de marcadores</div></div>
   </div>
 
   <h2>Modelo probabilístico</h2>
 
-  <h3>Paso 1 — Distribución condicional de marcadores</h3>
   <p>
-    Para cada combinación de (resultado, fase) — por ejemplo "victoria local en grupos" —
-    se calcula la frecuencia empírica de cada marcador en el Mundial 2022. Se aplica
-    suavizado de Laplace (+1 a cada celda) sobre la cuadrícula 0–5 goles por equipo,
-    para asignar probabilidad positiva a marcadores no observados.
+    Denotamos $H$ y $A$ los goles del equipo local y visitante, respectivamente.
+    El modelo construye la distribución conjunta $P(H=a, A=b)$ para $(a,b) \in \{0,\ldots,5\}^2$
+    en cuatro pasos secuenciales.
   </p>
 
-  <h3>Paso 2 — Integración de señales Kalshi</h3>
-  <p>La distribución conjunta de marcadores se construye en dos etapas:</p>
-  <div class="formula-box">
-P(home=a, away=b)  =  P(resultado) × P(a,b | resultado, fase)
-                                          ↑ datos históricos WC 2022
+  <h3>Paso 1 — Distribución base (modelo de cancha neutral)</h3>
 
-Luego se repondera por el total de goles:
-P(home=a, away=b)  ∝  P(a,b) × P_Kalshi(total = a+b) / P_hist(total = a+b)
-  </div>
   <p>
-    El numerador <code>P_Kalshi(total = a+b)</code> se deriva de la cadena de mercados
-    sobre/bajo: <code>P(total=n) = P(&gt;n−0.5) − P(&gt;n+0.5)</code>.
+    Qatar 2022 fue completamente neutral (ningún equipo jugaba en casa), por lo que
+    tratar las victorias como "local" o "visitante" introduciría un sesgo artificial.
+    En cambio, colapsamos todas las victorias en una única distribución de
+    <em>ganador–perdedor</em>:
+  </p>
+
+  <p>Para cada fase $\phi \in \{\text{grupos},\,\text{eliminatoria}\}$ definimos:</p>
+  <ul>
+    <li>
+      $\tilde{P}_\phi(w, l)$: frecuencia empírica del marcador $(w, l)$ con $w > l$
+      (ganador–perdedor), suavizada con Laplace (+1 por celda) sobre la cuadrícula
+      $\{(w,l) : 0 \le l < w \le 5\}$.
+    </li>
+    <li>
+      $\tilde{P}^{\mathrm{emp}}_\phi(g)$: frecuencia empírica de empates $g$–$g$,
+      suavizada con Laplace (+1) sobre $g \in \{0,\ldots,5\}$.
+    </li>
+  </ul>
+
+  <p>La distribución base es:</p>
+
+  $$P_0(H=a,\,A=b) = \begin{cases}
+    p_H \cdot \tilde{P}_\phi(a,\,b) & \text{si } a > b \\[4pt]
+    p_D \cdot \tilde{P}^{\mathrm{emp}}_\phi(a) & \text{si } a = b \\[4pt]
+    p_A \cdot \tilde{P}_\phi(b,\,a) & \text{si } a < b
+  \end{cases}$$
+
+  <p>
+    donde $p_H, p_D, p_A$ son las probabilidades de Kalshi (mercado KXWCGAME), con
+    $p_H + p_D + p_A = 1$. La ventaja local de las selecciones anfitrionas (EE.UU.,
+    México, Canadá) en 2026 ya está incorporada en los precios de Kalshi, no en la
+    distribución histórica.
+  </p>
+
+  <h3>Paso 2 — Reponderación por total de goles (Kalshi KXWCTOTAL)</h3>
+
+  <p>
+    La cadena de mercados sobre/bajo permite recuperar la distribución marginal del
+    total de goles según Kalshi. De las probabilidades acumuladas
+    $q_n = P_K(\text{total} > n - 0.5)$ obtenemos:
+  </p>
+
+  $$P_K(T = n) = q_n - q_{n+1}, \qquad n = 0, 1, \ldots, 5$$
+
+  <p>
+    La distribución marginal implícita en $P_0$ es
+    $P_0(T = n) = \sum_{a+b=n} P_0(a,b)$.
+    Reponderamos celda a celda:
+  </p>
+
+  $$P_1(H=a,\,A=b) \;\propto\; P_0(a,\,b)\;\cdot\;\frac{P_K(T=a+b)}{P_0(T=a+b)}$$
+
+  <p>y renormalizamos para que $\sum_{a,b} P_1(a,b)=1$.</p>
+
+  <p>
     Este paso ajusta cuántos goles totales esperamos, manteniendo la distribución
-    histórica de cómo se reparten entre los equipos dado ese total.
+    histórica de cómo se reparten entre los dos equipos dado ese total.
   </p>
 
-  <h3>Paso 3 — Maximización de puntos esperados</h3>
-  <p>
-    Se evalúa cada posible predicción <code>(a, b)</code> con <code>a, b ∈ {0,…,5}</code>
-    (36 candidatos) y se elige la que maximiza:
-  </p>
-  <div class="formula-box">
-E[pts | predigo (a,b)] = Σ_{x,y} P(x,y) × puntos(a,b,x,y)
+  <h3>Paso 3 — Reponderación por diferencia de goles (Kalshi KXWCSPREAD)</h3>
 
-donde puntos(a,b,x,y) aplica las reglas de la quiniela según la fase.
-  </div>
   <p>
-    Este paso es crucial: en partidos equilibrados, puede ser mejor predecir
-    <code>1-0</code> en lugar del marcador más probable <code>0-0</code>, porque
-    acertar el ganador (2 pts) tiene mayor peso esperado que el riesgo de exacto con empate.
+    Los mercados de spread proveen $P_K(M_H > k - 0.5)$ para $k = 2, 3, 4$,
+    donde $M_H = H - A$ es la diferencia de goles (condicionada a victoria local).
+    Usando $P_K(M_H \ge 1) = p_H$ como umbral en $k=1$, calculamos las probabilidades
+    exactas de margen:
+  </p>
+
+  $$P_K(M_H = k) = P_K(M_H > k - 0.5) - P_K(M_H > k + 0.5), \qquad k = 1, 2, 3$$
+  $$P_K(M_H \ge 4) = P_K(M_H > 3.5)$$
+
+  <p>
+    Para garantizar que la cadena sea monótona decreciente a pesar del ruido del
+    mercado, se aplica un clip hacia abajo: $P_K(M_H > k - 0.5) \leftarrow
+    \min\bigl(P_K(M_H > k-0.5),\, P_K(M_H > k-1.5)\bigr)$.
+  </p>
+
+  <p>
+    Sea $k^*(a,b) = \min(a-b,\,4)$ el grupo de margen de la celda $(a,b)$ con $a > b$.
+    La reponderación es:
+  </p>
+
+  $$P_2(H=a,\,A=b) \;\propto\; P_1(a,\,b) \;\cdot\; r(a,b)$$
+
+  <p>donde el multiplicador de reponderación es:</p>
+
+  $$r(a,b) = \min\!\left(\frac{P_K(M_H = k^*(a,b))}{\displaystyle\sum_{(a',b'):\,k^*(a',b')=k^*(a,b)} P_1(a',b')},\; 4\right)$$
+
+  <p>
+    El cap de $4\times$ evita amplificaciones extremas cuando los mercados de spread
+    tienen liquidez baja. El procedimiento simétrico se aplica a la diferencia de goles
+    del visitante $M_A = A - H$ usando los mercados KXWCSPREAD del visitante.
+    Al finalizar, se renormaliza $P_2$.
+  </p>
+
+  <h3>Paso 4 — Maximización de puntos esperados</h3>
+
+  <p>
+    Dado el marcador real $(x, y)$ y la predicción $(a, b)$, la función
+    $\mathrm{pts}(a,b,x,y)$ asigna los puntos de la quiniela según las reglas de la
+    fase. La predicción óptima es:
+  </p>
+
+  $$\hat{s} = \underset{(a,\,b)\;\in\;\{0,\ldots,5\}^2}{\arg\max}\;
+    \mathbb{E}\bigl[\mathrm{pts}(a,b,H,A)\bigr]$$
+
+  <p>donde la esperanza se calcula sobre $P_2$:</p>
+
+  $$\mathbb{E}\bigl[\mathrm{pts}(a,b,H,A)\bigr]
+    = \sum_{x=0}^{5}\sum_{y=0}^{5} P_2(H=x,\,A=y)\;\cdot\;\mathrm{pts}(a,\,b,\,x,\,y)$$
+
+  <p>
+    Se evalúan los $6 \times 6 = 36$ candidatos posibles y se reporta el que maximiza
+    esta cantidad. Este paso es crucial: en partidos equilibrados puede ser mejor
+    predecir $1\text{–}0$ que $0\text{–}0$, porque acertar el ganador vale 2 pts
+    con mayor probabilidad que acertar el marcador exacto de un empate.
   </p>
 
   <h2>Limitaciones conocidas</h2>
   <ul style="margin-left:20px;line-height:2">
-    <li>Los datos históricos se basan solo en el Mundial 2022 (64 partidos). Con más ediciones se mejora la estimación.</li>
-    <li>Kalshi no ofrece mercados de marcadores exactos, por lo que la distribución interna de goles sigue siendo histórica.</li>
-    <li>Los mercados de Kalshi en vivo reflejan el estado actual del partido, no la probabilidad pre-partido.</li>
-    <li>Las fases eliminatorias con equipos "por definir" usan tasas base históricas hasta que se confirmen los cruces.</li>
+    <li>Los datos históricos se basan solo en 64 partidos (WC 2022). La distribución empírica de marcadores es poco densa; el suavizado de Laplace es necesario pero introduce su propio sesgo.</li>
+    <li>Kalshi no ofrece mercados de marcadores exactos, por lo que la distribución de goles <em>dado</em> un resultado sigue siendo enteramente histórica.</li>
+    <li>Los mercados de spread solo cubren márgenes de hasta 3.5 goles; márgenes mayores se agrupan en una sola categoría ($\ge 4$).</li>
+    <li>Los mercados de Kalshi en vivo reflejan el estado actual del partido en curso; se preserva la predicción pre-partido en esos casos.</li>
+    <li>Las fases eliminatorias con equipos "por definir" usan distribuciones históricas con probabilidades iguales hasta que se confirmen los cruces.</li>
   </ul>
 
   <h2>Código fuente</h2>
   <p>
     Todo el código está disponible en
     <a href="https://github.com/alfaromurillo/quiniela" target="_blank">github.com/alfaromurillo/quiniela</a>.
-    Las predicciones se actualizan automáticamente cada día mediante GitHub Actions.
+    Las predicciones se actualizan automáticamente cada dos horas mediante GitHub Actions.
   </p>
 
 </div>
