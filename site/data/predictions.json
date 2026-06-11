@@ -1,0 +1,4058 @@
+{
+  "generated_at": "2026-06-11T20:45:39.513263+00:00",
+  "matches": [
+    {
+      "id": 1,
+      "round": "Matchday 1",
+      "date": "2026-06-11",
+      "time_utc": "2026-06-11T19:00:00Z",
+      "time_local": "13:00 UTC-6",
+      "home": "Mexico",
+      "away": "South Africa",
+      "venue": "Mexico City",
+      "phase": "group",
+      "group": "Group A",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.99,
+        "draw": 0.005,
+        "away_win": 0.005,
+        "total_goals": {
+          "0": 0.5013,
+          "1": 0.0,
+          "2": 0.2707,
+          "3": 0.1654,
+          "4": 0.0501,
+          "5": 0.01,
+          "6": 0.0025
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 2,
+      "round": "Matchday 1",
+      "date": "2026-06-11",
+      "time_utc": "2026-06-12T02:00:00Z",
+      "time_local": "20:00 UTC-6",
+      "home": "South Korea",
+      "away": "Czech Republic",
+      "venue": "Guadalajara (Zapopan)",
+      "phase": "group",
+      "group": "Group A",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.3632,
+        "draw": 0.3134,
+        "away_win": 0.3234,
+        "total_goals": {
+          "0": 0.095,
+          "1": 0.21,
+          "2": 0.29,
+          "3": 0.2,
+          "4": 0.12,
+          "5": 0.05,
+          "6": 0.035
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 3,
+      "round": "Matchday 8",
+      "date": "2026-06-18",
+      "time_utc": "2026-06-18T16:00:00Z",
+      "time_local": "12:00 UTC-4",
+      "home": "Czech Republic",
+      "away": "South Africa",
+      "venue": "Atlanta",
+      "phase": "group",
+      "group": "Group A",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.5693,
+        "draw": 0.2525,
+        "away_win": 0.1782,
+        "total_goals": {
+          "0": 0.09,
+          "1": 0.225,
+          "2": 0.27,
+          "3": 0.21,
+          "4": 0.12,
+          "5": 0.045,
+          "6": 0.04
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 4,
+      "round": "Matchday 8",
+      "date": "2026-06-18",
+      "time_utc": "2026-06-19T01:00:00Z",
+      "time_local": "19:00 UTC-6",
+      "home": "Mexico",
+      "away": "South Korea",
+      "venue": "Guadalajara (Zapopan)",
+      "phase": "group",
+      "group": "Group A",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.5468,
+        "draw": 0.2611,
+        "away_win": 0.1921,
+        "total_goals": {
+          "0": 0.095,
+          "1": 0.245,
+          "2": 0.265,
+          "3": 0.19,
+          "4": 0.12,
+          "5": 0.045,
+          "6": 0.04
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 5,
+      "round": "Matchday 14",
+      "date": "2026-06-24",
+      "time_utc": "2026-06-25T01:00:00Z",
+      "time_local": "19:00 UTC-6",
+      "home": "Czech Republic",
+      "away": "Mexico",
+      "venue": "Mexico City",
+      "phase": "group",
+      "group": "Group A",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.196,
+        "draw": 0.2563,
+        "away_win": 0.5477,
+        "total_goals": {
+          "0": 0.095,
+          "1": 0.19,
+          "2": 0.28,
+          "3": 0.215,
+          "4": 0.13,
+          "5": 0.015,
+          "6": 0.075
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 6,
+      "round": "Matchday 14",
+      "date": "2026-06-24",
+      "time_utc": "2026-06-25T01:00:00Z",
+      "time_local": "19:00 UTC-6",
+      "home": "South Africa",
+      "away": "South Korea",
+      "venue": "Monterrey (Guadalupe)",
+      "phase": "group",
+      "group": "Group A",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.1759,
+        "draw": 0.2462,
+        "away_win": 0.5779,
+        "total_goals": {
+          "0": 0.09,
+          "1": 0.195,
+          "2": 0.28,
+          "3": 0.205,
+          "4": 0.145,
+          "5": 0.04,
+          "6": 0.045
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 7,
+      "round": "Matchday 2",
+      "date": "2026-06-12",
+      "time_utc": "2026-06-12T19:00:00Z",
+      "time_local": "15:00 UTC-4",
+      "home": "Canada",
+      "away": "Bosnia & Herzegovina",
+      "venue": "Toronto",
+      "phase": "group",
+      "group": "Group B",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.5323,
+        "draw": 0.2637,
+        "away_win": 0.204,
+        "total_goals": {
+          "0": 0.095,
+          "1": 0.21,
+          "2": 0.27,
+          "3": 0.21,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.035
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 8,
+      "round": "Matchday 3",
+      "date": "2026-06-13",
+      "time_utc": "2026-06-13T19:00:00Z",
+      "time_local": "12:00 UTC-7",
+      "home": "Qatar",
+      "away": "Switzerland",
+      "venue": "San Francisco Bay Area (Santa Clara)",
+      "phase": "group",
+      "group": "Group B",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.0647,
+        "draw": 0.1343,
+        "away_win": 0.801,
+        "total_goals": {
+          "0": 0.05,
+          "1": 0.15,
+          "2": 0.235,
+          "3": 0.23,
+          "4": 0.18,
+          "5": 0.09,
+          "6": 0.065
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 9,
+      "round": "Matchday 8",
+      "date": "2026-06-18",
+      "time_utc": "2026-06-18T19:00:00Z",
+      "time_local": "12:00 UTC-7",
+      "home": "Switzerland",
+      "away": "Bosnia & Herzegovina",
+      "venue": "Los Angeles (Inglewood)",
+      "phase": "group",
+      "group": "Group B",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.6119,
+        "draw": 0.2338,
+        "away_win": 0.1542,
+        "total_goals": {
+          "0": 0.075,
+          "1": 0.2,
+          "2": 0.255,
+          "3": 0.23,
+          "4": 0.14,
+          "5": 0.06,
+          "6": 0.04
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 10,
+      "round": "Matchday 8",
+      "date": "2026-06-18",
+      "time_utc": "2026-06-18T22:00:00Z",
+      "time_local": "15:00 UTC-7",
+      "home": "Canada",
+      "away": "Qatar",
+      "venue": "Vancouver",
+      "phase": "group",
+      "group": "Group B",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.7413,
+        "draw": 0.1741,
+        "away_win": 0.0846,
+        "total_goals": {
+          "0": 0.075,
+          "1": 0.18,
+          "2": 0.26,
+          "3": 0.225,
+          "4": 0.145,
+          "5": 0.065,
+          "6": 0.05
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 11,
+      "round": "Matchday 14",
+      "date": "2026-06-24",
+      "time_utc": "2026-06-24T19:00:00Z",
+      "time_local": "12:00 UTC-7",
+      "home": "Switzerland",
+      "away": "Canada",
+      "venue": "Vancouver",
+      "phase": "group",
+      "group": "Group B",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4472,
+        "draw": 0.2764,
+        "away_win": 0.2764,
+        "total_goals": {
+          "0": 0.09,
+          "1": 0.195,
+          "2": 0.28,
+          "3": 0.205,
+          "4": 0.135,
+          "5": 0.005,
+          "6": 0.09
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 12,
+      "round": "Matchday 14",
+      "date": "2026-06-24",
+      "time_utc": "2026-06-24T19:00:00Z",
+      "time_local": "12:00 UTC-7",
+      "home": "Bosnia & Herzegovina",
+      "away": "Qatar",
+      "venue": "Seattle",
+      "phase": "group",
+      "group": "Group B",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.5961,
+        "draw": 0.2414,
+        "away_win": 0.1626,
+        "total_goals": {
+          "0": 0.065,
+          "1": 0.2,
+          "2": 0.28,
+          "3": 0.195,
+          "4": 0.175,
+          "5": 0.01,
+          "6": 0.075
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 13,
+      "round": "Matchday 3",
+      "date": "2026-06-13",
+      "time_utc": "2026-06-13T22:00:00Z",
+      "time_local": "18:00 UTC-4",
+      "home": "Brazil",
+      "away": "Morocco",
+      "venue": "New York/New Jersey (East Rutherford)",
+      "phase": "group",
+      "group": "Group C",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.5879,
+        "draw": 0.2462,
+        "away_win": 0.1658,
+        "total_goals": {
+          "0": 0.08,
+          "1": 0.195,
+          "2": 0.26,
+          "3": 0.21,
+          "4": 0.14,
+          "5": 0.07,
+          "6": 0.045
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 14,
+      "round": "Matchday 3",
+      "date": "2026-06-13",
+      "time_utc": "2026-06-14T01:00:00Z",
+      "time_local": "21:00 UTC-4",
+      "home": "Haiti",
+      "away": "Scotland",
+      "venue": "Boston (Foxborough)",
+      "phase": "group",
+      "group": "Group C",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
+        "total_goals": {
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
+        }
+      },
+      "source": "historical_fallback",
+      "tbd": false
+    },
+    {
+      "id": 15,
+      "round": "Matchday 9",
+      "date": "2026-06-19",
+      "time_utc": "2026-06-19T22:00:00Z",
+      "time_local": "18:00 UTC-4",
+      "home": "Scotland",
+      "away": "Morocco",
+      "venue": "Boston (Foxborough)",
+      "phase": "group",
+      "group": "Group C",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.2161,
+        "draw": 0.2864,
+        "away_win": 0.4975,
+        "total_goals": {
+          "0": 0.09,
+          "1": 0.225,
+          "2": 0.28,
+          "3": 0.215,
+          "4": 0.11,
+          "5": 0.045,
+          "6": 0.035
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 16,
+      "round": "Matchday 9",
+      "date": "2026-06-19",
+      "time_utc": "2026-06-20T00:30:00Z",
+      "time_local": "20:30 UTC-4",
+      "home": "Brazil",
+      "away": "Haiti",
+      "venue": "Philadelphia",
+      "phase": "group",
+      "group": "Group C",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
+        "total_goals": {
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
+        }
+      },
+      "source": "historical_fallback",
+      "tbd": false
+    },
+    {
+      "id": 17,
+      "round": "Matchday 14",
+      "date": "2026-06-24",
+      "time_utc": "2026-06-24T22:00:00Z",
+      "time_local": "18:00 UTC-4",
+      "home": "Scotland",
+      "away": "Brazil",
+      "venue": "Miami (Miami Gardens)",
+      "phase": "group",
+      "group": "Group C",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.1457,
+        "draw": 0.1859,
+        "away_win": 0.6683,
+        "total_goals": {
+          "0": 0.06,
+          "1": 0.16,
+          "2": 0.25,
+          "3": 0.235,
+          "4": 0.165,
+          "5": 0.08,
+          "6": 0.05
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 18,
+      "round": "Matchday 14",
+      "date": "2026-06-24",
+      "time_utc": "2026-06-24T22:00:00Z",
+      "time_local": "18:00 UTC-4",
+      "home": "Morocco",
+      "away": "Haiti",
+      "venue": "Atlanta",
+      "phase": "group",
+      "group": "Group C",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
+        "total_goals": {
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
+        }
+      },
+      "source": "historical_fallback",
+      "tbd": false
+    },
+    {
+      "id": 19,
+      "round": "Matchday 2",
+      "date": "2026-06-12",
+      "time_utc": "2026-06-13T01:00:00Z",
+      "time_local": "18:00 UTC-7",
+      "home": "USA",
+      "away": "Paraguay",
+      "venue": "Los Angeles (Inglewood)",
+      "phase": "group",
+      "group": "Group D",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4925,
+        "draw": 0.2836,
+        "away_win": 0.2239,
+        "total_goals": {
+          "0": 0.095,
+          "1": 0.22,
+          "2": 0.28,
+          "3": 0.2,
+          "4": 0.12,
+          "5": 0.05,
+          "6": 0.035
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 20,
+      "round": "Matchday 3",
+      "date": "2026-06-13",
+      "time_utc": "2026-06-14T04:00:00Z",
+      "time_local": "21:00 UTC-7",
+      "home": "Australia",
+      "away": "Turkey",
+      "venue": "Vancouver",
+      "phase": "group",
+      "group": "Group D",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
+        "total_goals": {
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
+        }
+      },
+      "source": "historical_fallback",
+      "tbd": false
+    },
+    {
+      "id": 21,
+      "round": "Matchday 9",
+      "date": "2026-06-19",
+      "time_utc": "2026-06-19T19:00:00Z",
+      "time_local": "12:00 UTC-7",
+      "home": "USA",
+      "away": "Australia",
+      "venue": "Seattle",
+      "phase": "group",
+      "group": "Group D",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.5512,
+        "draw": 0.239,
+        "away_win": 0.2098,
+        "total_goals": {
+          "0": 0.08,
+          "1": 0.19,
+          "2": 0.26,
+          "3": 0.235,
+          "4": 0.125,
+          "5": 0.075,
+          "6": 0.035
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 22,
+      "round": "Matchday 9",
+      "date": "2026-06-19",
+      "time_utc": "2026-06-20T03:00:00Z",
+      "time_local": "20:00 UTC-7",
+      "home": "Turkey",
+      "away": "Paraguay",
+      "venue": "San Francisco Bay Area (Santa Clara)",
+      "phase": "group",
+      "group": "Group D",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4328,
+        "draw": 0.2935,
+        "away_win": 0.2736,
+        "total_goals": {
+          "0": 0.11,
+          "1": 0.215,
+          "2": 0.265,
+          "3": 0.21,
+          "4": 0.12,
+          "5": 0.05,
+          "6": 0.03
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 23,
+      "round": "Matchday 15",
+      "date": "2026-06-25",
+      "time_utc": "2026-06-26T02:00:00Z",
+      "time_local": "19:00 UTC-7",
+      "home": "Turkey",
+      "away": "USA",
+      "venue": "Los Angeles (Inglewood)",
+      "phase": "group",
+      "group": "Group D",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.3676,
+        "draw": 0.2549,
+        "away_win": 0.3775,
+        "total_goals": {
+          "0": 0.07,
+          "1": 0.165,
+          "2": 0.255,
+          "3": 0.23,
+          "4": 0.16,
+          "5": 0.065,
+          "6": 0.055
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 24,
+      "round": "Matchday 15",
+      "date": "2026-06-25",
+      "time_utc": "2026-06-26T02:00:00Z",
+      "time_local": "19:00 UTC-7",
+      "home": "Paraguay",
+      "away": "Australia",
+      "venue": "San Francisco Bay Area (Santa Clara)",
+      "phase": "group",
+      "group": "Group D",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4472,
+        "draw": 0.2864,
+        "away_win": 0.2663,
+        "total_goals": {
+          "0": 0.1,
+          "1": 0.21,
+          "2": 0.285,
+          "3": 0.21,
+          "4": 0.125,
+          "5": 0.025,
+          "6": 0.045
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 25,
+      "round": "Matchday 4",
+      "date": "2026-06-14",
+      "time_utc": "2026-06-14T17:00:00Z",
+      "time_local": "12:00 UTC-5",
+      "home": "Germany",
+      "away": "Curaçao",
+      "venue": "Houston",
+      "phase": "group",
+      "group": "Group E",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.9303,
+        "draw": 0.0448,
+        "away_win": 0.0249,
+        "total_goals": {
+          "0": 0.005,
+          "1": 0.06,
+          "2": 0.115,
+          "3": 0.195,
+          "4": 0.18,
+          "5": 0.17,
+          "6": 0.275
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 26,
+      "round": "Matchday 4",
+      "date": "2026-06-14",
+      "time_utc": "2026-06-14T23:00:00Z",
+      "time_local": "19:00 UTC-4",
+      "home": "Ivory Coast",
+      "away": "Ecuador",
+      "venue": "Philadelphia",
+      "phase": "group",
+      "group": "Group E",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.2709,
+        "draw": 0.33,
+        "away_win": 0.399,
+        "total_goals": {
+          "0": 0.145,
+          "1": 0.26,
+          "2": 0.28,
+          "3": 0.18,
+          "4": 0.09,
+          "5": 0.03,
+          "6": 0.015
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 27,
+      "round": "Matchday 10",
+      "date": "2026-06-20",
+      "time_utc": "2026-06-20T20:00:00Z",
+      "time_local": "16:00 UTC-4",
+      "home": "Germany",
+      "away": "Ivory Coast",
+      "venue": "Toronto",
+      "phase": "group",
+      "group": "Group E",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.6256,
+        "draw": 0.2118,
+        "away_win": 0.1626,
+        "total_goals": {
+          "0": 0.05,
+          "1": 0.195,
+          "2": 0.215,
+          "3": 0.245,
+          "4": 0.15,
+          "5": 0.085,
+          "6": 0.06
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 28,
+      "round": "Matchday 10",
+      "date": "2026-06-20",
+      "time_utc": "2026-06-21T00:00:00Z",
+      "time_local": "19:00 UTC-5",
+      "home": "Ecuador",
+      "away": "Curaçao",
+      "venue": "Kansas City",
+      "phase": "group",
+      "group": "Group E",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.8109,
+        "draw": 0.1244,
+        "away_win": 0.0647,
+        "total_goals": {
+          "0": 0.05,
+          "1": 0.14,
+          "2": 0.235,
+          "3": 0.235,
+          "4": 0.175,
+          "5": 0.1,
+          "6": 0.065
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 29,
+      "round": "Matchday 15",
+      "date": "2026-06-25",
+      "time_utc": "2026-06-25T20:00:00Z",
+      "time_local": "16:00 UTC-4",
+      "home": "Curaçao",
+      "away": "Ivory Coast",
+      "venue": "Philadelphia",
+      "phase": "group",
+      "group": "Group E",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.0746,
+        "draw": 0.1343,
+        "away_win": 0.791,
+        "total_goals": {
+          "0": 0.045,
+          "1": 0.17,
+          "2": 0.205,
+          "3": 0.24,
+          "4": 0.185,
+          "5": 0.085,
+          "6": 0.07
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 30,
+      "round": "Matchday 15",
+      "date": "2026-06-25",
+      "time_utc": "2026-06-25T20:00:00Z",
+      "time_local": "16:00 UTC-4",
+      "home": "Ecuador",
+      "away": "Germany",
+      "venue": "New York/New Jersey (East Rutherford)",
+      "phase": "group",
+      "group": "Group E",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.2079,
+        "draw": 0.2426,
+        "away_win": 0.5495,
+        "total_goals": {
+          "0": 0.06,
+          "1": 0.19,
+          "2": 0.265,
+          "3": 0.215,
+          "4": 0.155,
+          "5": 0.075,
+          "6": 0.04
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 31,
+      "round": "Matchday 4",
+      "date": "2026-06-14",
+      "time_utc": "2026-06-14T20:00:00Z",
+      "time_local": "15:00 UTC-5",
+      "home": "Netherlands",
+      "away": "Japan",
+      "venue": "Dallas (Arlington)",
+      "phase": "group",
+      "group": "Group F",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4826,
+        "draw": 0.2637,
+        "away_win": 0.2537,
+        "total_goals": {
+          "0": 0.07,
+          "1": 0.175,
+          "2": 0.26,
+          "3": 0.22,
+          "4": 0.15,
+          "5": 0.08,
+          "6": 0.045
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 32,
+      "round": "Matchday 4",
+      "date": "2026-06-14",
+      "time_utc": "2026-06-15T02:00:00Z",
+      "time_local": "20:00 UTC-6",
+      "home": "Sweden",
+      "away": "Tunisia",
+      "venue": "Monterrey (Guadalupe)",
+      "phase": "group",
+      "group": "Group F",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.5075,
+        "draw": 0.2764,
+        "away_win": 0.2161,
+        "total_goals": {
+          "0": 0.105,
+          "1": 0.21,
+          "2": 0.27,
+          "3": 0.21,
+          "4": 0.12,
+          "5": 0.055,
+          "6": 0.03
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 33,
+      "round": "Matchday 10",
+      "date": "2026-06-20",
+      "time_utc": "2026-06-20T17:00:00Z",
+      "time_local": "12:00 UTC-5",
+      "home": "Netherlands",
+      "away": "Sweden",
+      "venue": "Houston",
+      "phase": "group",
+      "group": "Group F",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.592,
+        "draw": 0.2239,
+        "away_win": 0.1841,
+        "total_goals": {
+          "0": 0.065,
+          "1": 0.165,
+          "2": 0.265,
+          "3": 0.22,
+          "4": 0.155,
+          "5": 0.075,
+          "6": 0.055
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 34,
+      "round": "Matchday 10",
+      "date": "2026-06-20",
+      "time_utc": "2026-06-21T04:00:00Z",
+      "time_local": "22:00 UTC-6",
+      "home": "Tunisia",
+      "away": "Japan",
+      "venue": "Monterrey (Guadalupe)",
+      "phase": "group",
+      "group": "Group F",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
+        "total_goals": {
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
+        }
+      },
+      "source": "historical_fallback",
+      "tbd": false
+    },
+    {
+      "id": 35,
+      "round": "Matchday 15",
+      "date": "2026-06-25",
+      "time_utc": "2026-06-25T23:00:00Z",
+      "time_local": "18:00 UTC-5",
+      "home": "Japan",
+      "away": "Sweden",
+      "venue": "Dallas (Arlington)",
+      "phase": "group",
+      "group": "Group F",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4627,
+        "draw": 0.2736,
+        "away_win": 0.2637,
+        "total_goals": {
+          "0": 0.09,
+          "1": 0.185,
+          "2": 0.265,
+          "3": 0.215,
+          "4": 0.15,
+          "5": 0.015,
+          "6": 0.08
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 36,
+      "round": "Matchday 15",
+      "date": "2026-06-25",
+      "time_utc": "2026-06-25T23:00:00Z",
+      "time_local": "18:00 UTC-5",
+      "home": "Tunisia",
+      "away": "Netherlands",
+      "venue": "Kansas City",
+      "phase": "group",
+      "group": "Group F",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.1343,
+        "draw": 0.204,
+        "away_win": 0.6617,
+        "total_goals": {
+          "0": 0.06,
+          "1": 0.175,
+          "2": 0.25,
+          "3": 0.24,
+          "4": 0.145,
+          "5": 0.08,
+          "6": 0.05
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 37,
+      "round": "Matchday 5",
+      "date": "2026-06-15",
+      "time_utc": "2026-06-15T19:00:00Z",
+      "time_local": "12:00 UTC-7",
+      "home": "Belgium",
+      "away": "Egypt",
+      "venue": "Seattle",
+      "phase": "group",
+      "group": "Group G",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.592,
+        "draw": 0.2438,
+        "away_win": 0.1642,
+        "total_goals": {
+          "0": 0.07,
+          "1": 0.195,
+          "2": 0.26,
+          "3": 0.21,
+          "4": 0.15,
+          "5": 0.07,
+          "6": 0.045
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 38,
+      "round": "Matchday 5",
+      "date": "2026-06-15",
+      "time_utc": "2026-06-16T01:00:00Z",
+      "time_local": "18:00 UTC-7",
+      "home": "Iran",
+      "away": "New Zealand",
+      "venue": "Los Angeles (Inglewood)",
+      "phase": "group",
+      "group": "Group G",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
+        "total_goals": {
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
+        }
+      },
+      "source": "historical_fallback",
+      "tbd": false
+    },
+    {
+      "id": 39,
+      "round": "Matchday 11",
+      "date": "2026-06-21",
+      "time_utc": "2026-06-21T19:00:00Z",
+      "time_local": "12:00 UTC-7",
+      "home": "Belgium",
+      "away": "Iran",
+      "venue": "Los Angeles (Inglewood)",
+      "phase": "group",
+      "group": "Group G",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
+        "total_goals": {
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
+        }
+      },
+      "source": "historical_fallback",
+      "tbd": false
+    },
+    {
+      "id": 40,
+      "round": "Matchday 11",
+      "date": "2026-06-21",
+      "time_utc": "2026-06-22T01:00:00Z",
+      "time_local": "18:00 UTC-7",
+      "home": "New Zealand",
+      "away": "Egypt",
+      "venue": "Vancouver",
+      "phase": "group",
+      "group": "Group G",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.196,
+        "draw": 0.2462,
+        "away_win": 0.5578,
+        "total_goals": {
+          "0": 0.08,
+          "1": 0.24,
+          "2": 0.265,
+          "3": 0.215,
+          "4": 0.11,
+          "5": 0.065,
+          "6": 0.025
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 41,
+      "round": "Matchday 16",
+      "date": "2026-06-26",
+      "time_utc": "2026-06-27T03:00:00Z",
+      "time_local": "20:00 UTC-7",
+      "home": "Egypt",
+      "away": "Iran",
+      "venue": "Seattle",
+      "phase": "group",
+      "group": "Group G",
+      "prediction": {
+        "home": 5,
+        "away": 5,
+        "expected_pts": 0.0,
+        "top3": [
+          {
+            "home": 5,
+            "away": 5,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 4,
+            "expected_pts": 0.0
+          },
+          {
+            "home": 5,
+            "away": 3,
+            "expected_pts": 0.0
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
+        "total_goals": {
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
+        }
+      },
+      "source": "historical_fallback",
+      "tbd": false
+    },
+    {
+      "id": 42,
+      "round": "Matchday 16",
+      "date": "2026-06-26",
+      "time_utc": "2026-06-27T03:00:00Z",
+      "time_local": "20:00 UTC-7",
+      "home": "New Zealand",
+      "away": "Belgium",
+      "venue": "Vancouver",
+      "phase": "group",
+      "group": "Group G",
+      "prediction": {
+        "home": 0,
+        "away": 2,
+        "expected_pts": 2.5624,
+        "top3": [
+          {
+            "home": 0,
+            "away": 2,
+            "expected_pts": 2.5624
+          },
+          {
+            "home": 1,
+            "away": 2,
+            "expected_pts": 2.4712
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 2.3887
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.0837,
+        "draw": 0.1527,
+        "away_win": 0.7635,
+        "total_goals": {
+          "0": 0.045,
+          "1": 0.165,
+          "2": 0.215,
+          "3": 0.235,
+          "4": 0.195,
+          "5": 0.075,
+          "6": 0.07
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 43,
+      "round": "Matchday 5",
+      "date": "2026-06-15",
+      "time_utc": "2026-06-15T16:00:00Z",
+      "time_local": "12:00 UTC-4",
+      "home": "Spain",
+      "away": "Cape Verde",
+      "venue": "Atlanta",
+      "phase": "group",
+      "group": "Group H",
+      "prediction": {
+        "home": 2,
+        "away": 1,
+        "expected_pts": 2.6921,
+        "top3": [
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 2.6921
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 2.6866
+          },
+          {
+            "home": 4,
+            "away": 0,
+            "expected_pts": 2.5118
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.9005,
+        "draw": 0.0647,
+        "away_win": 0.0348,
+        "total_goals": {
+          "0": 0.02,
+          "1": 0.095,
+          "2": 0.17,
+          "3": 0.22,
+          "4": 0.2,
+          "5": 0.14,
+          "6": 0.155
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 44,
+      "round": "Matchday 5",
+      "date": "2026-06-15",
+      "time_utc": "2026-06-15T22:00:00Z",
+      "time_local": "18:00 UTC-4",
+      "home": "Saudi Arabia",
+      "away": "Uruguay",
+      "venue": "Miami (Miami Gardens)",
+      "phase": "group",
+      "group": "Group H",
+      "prediction": {
+        "home": 0,
+        "away": 2,
+        "expected_pts": 2.4061,
+        "top3": [
+          {
+            "home": 0,
+            "away": 2,
+            "expected_pts": 2.4061
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 2.2729
+          },
+          {
+            "home": 1,
+            "away": 2,
+            "expected_pts": 2.2296
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.1232,
+        "draw": 0.202,
+        "away_win": 0.6749,
+        "total_goals": {
+          "0": 0.07,
+          "1": 0.195,
+          "2": 0.27,
+          "3": 0.21,
+          "4": 0.14,
+          "5": 0.07,
+          "6": 0.045
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 45,
+      "round": "Matchday 11",
+      "date": "2026-06-21",
+      "time_utc": "2026-06-21T16:00:00Z",
+      "time_local": "12:00 UTC-4",
+      "home": "Spain",
+      "away": "Saudi Arabia",
+      "venue": "Atlanta",
+      "phase": "group",
+      "group": "Group H",
+      "prediction": {
+        "home": 2,
+        "away": 0,
+        "expected_pts": 2.7047,
+        "top3": [
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 2.7047
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 2.6071
+          },
+          {
+            "home": 4,
+            "away": 0,
+            "expected_pts": 2.4349
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.8806,
+        "draw": 0.0846,
+        "away_win": 0.0348,
+        "total_goals": {
+          "0": 0.06,
+          "1": 0.09,
+          "2": 0.205,
+          "3": 0.225,
+          "4": 0.2,
+          "5": 0.12,
+          "6": 0.1
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 46,
+      "round": "Matchday 11",
+      "date": "2026-06-21",
+      "time_utc": "2026-06-21T22:00:00Z",
+      "time_local": "18:00 UTC-4",
+      "home": "Uruguay",
+      "away": "Cape Verde",
+      "venue": "Miami (Miami Gardens)",
+      "phase": "group",
+      "group": "Group H",
+      "prediction": {
+        "home": 2,
+        "away": 0,
+        "expected_pts": 2.3705,
+        "top3": [
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 2.3705
+          },
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 2.3337
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 2.1932
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.6884,
+        "draw": 0.196,
+        "away_win": 0.1156,
+        "total_goals": {
+          "0": 0.075,
+          "1": 0.185,
+          "2": 0.235,
+          "3": 0.235,
+          "4": 0.155,
+          "5": 0.065,
+          "6": 0.05
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 47,
+      "round": "Matchday 16",
+      "date": "2026-06-26",
+      "time_utc": "2026-06-27T00:00:00Z",
+      "time_local": "19:00 UTC-5",
+      "home": "Cape Verde",
+      "away": "Saudi Arabia",
+      "venue": "Houston",
+      "phase": "group",
+      "group": "Group H",
+      "prediction": {
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.6855,
+        "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.6855
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 1.5047
+          },
+          {
+            "home": 1,
+            "away": 2,
+            "expected_pts": 1.3944
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.3831,
+        "draw": 0.2836,
+        "away_win": 0.3333,
+        "total_goals": {
+          "0": 0.09,
+          "1": 0.2,
+          "2": 0.285,
+          "3": 0.2,
+          "4": 0.135,
+          "5": 0.06,
+          "6": 0.03
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 48,
+      "round": "Matchday 16",
+      "date": "2026-06-26",
+      "time_utc": "2026-06-27T00:00:00Z",
+      "time_local": "18:00 UTC-6",
+      "home": "Uruguay",
+      "away": "Spain",
+      "venue": "Guadalajara (Zapopan)",
+      "phase": "group",
+      "group": "Group H",
+      "prediction": {
+        "home": 0,
+        "away": 2,
+        "expected_pts": 2.1496,
+        "top3": [
+          {
+            "home": 0,
+            "away": 2,
+            "expected_pts": 2.1496
+          },
+          {
+            "home": 1,
+            "away": 2,
+            "expected_pts": 2.122
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 2.0345
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.1759,
+        "draw": 0.2362,
+        "away_win": 0.5879,
+        "total_goals": {
+          "0": 0.065,
+          "1": 0.18,
+          "2": 0.245,
+          "3": 0.245,
+          "4": 0.15,
+          "5": 0.06,
+          "6": 0.055
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 49,
+      "round": "Matchday 6",
+      "date": "2026-06-16",
+      "time_utc": "2026-06-16T19:00:00Z",
+      "time_local": "15:00 UTC-4",
+      "home": "France",
+      "away": "Senegal",
+      "venue": "New York/New Jersey (East Rutherford)",
+      "phase": "group",
+      "group": "Group I",
+      "prediction": {
+        "home": 1,
+        "away": 0,
+        "expected_pts": 2.3455,
+        "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 2.3455
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 2.3368
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 2.1631
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.6617,
+        "draw": 0.2139,
+        "away_win": 0.1244,
+        "total_goals": {
+          "0": 0.065,
+          "1": 0.2,
+          "2": 0.24,
+          "3": 0.23,
+          "4": 0.145,
+          "5": 0.075,
+          "6": 0.045
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 50,
+      "round": "Matchday 6",
+      "date": "2026-06-16",
+      "time_utc": "2026-06-16T22:00:00Z",
+      "time_local": "18:00 UTC-4",
+      "home": "Iraq",
+      "away": "Norway",
+      "venue": "Boston (Foxborough)",
+      "phase": "group",
+      "group": "Group I",
+      "prediction": {
+        "home": 0,
+        "away": 2,
+        "expected_pts": 2.6314,
+        "top3": [
+          {
+            "home": 0,
+            "away": 2,
+            "expected_pts": 2.6314
+          },
+          {
+            "home": 1,
+            "away": 2,
+            "expected_pts": 2.5161
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 2.3972
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.0647,
+        "draw": 0.1343,
+        "away_win": 0.801,
+        "total_goals": {
+          "0": 0.04,
+          "1": 0.135,
+          "2": 0.22,
+          "3": 0.22,
+          "4": 0.18,
+          "5": 0.12,
+          "6": 0.085
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 51,
+      "round": "Matchday 12",
+      "date": "2026-06-22",
+      "time_utc": "2026-06-22T21:00:00Z",
+      "time_local": "17:00 UTC-4",
+      "home": "France",
+      "away": "Iraq",
+      "venue": "Philadelphia",
+      "phase": "group",
+      "group": "Group I",
+      "prediction": {
+        "home": 2,
+        "away": 0,
+        "expected_pts": 2.7422,
+        "top3": [
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 2.7422
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 2.6557
+          },
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 2.4824
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.8706,
+        "draw": 0.0945,
+        "away_win": 0.0348,
+        "total_goals": {
+          "0": 0.03,
+          "1": 0.12,
+          "2": 0.205,
+          "3": 0.225,
+          "4": 0.19,
+          "5": 0.13,
+          "6": 0.1
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 52,
+      "round": "Matchday 12",
+      "date": "2026-06-22",
+      "time_utc": "2026-06-23T00:00:00Z",
+      "time_local": "20:00 UTC-4",
+      "home": "Norway",
+      "away": "Senegal",
+      "venue": "New York/New Jersey (East Rutherford)",
+      "phase": "group",
+      "group": "Group I",
+      "prediction": {
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.8288,
+        "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.8288
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 1.6991
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.5787
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4527,
+        "draw": 0.2637,
+        "away_win": 0.2836,
+        "total_goals": {
+          "0": 0.075,
+          "1": 0.19,
+          "2": 0.265,
+          "3": 0.22,
+          "4": 0.14,
+          "5": 0.065,
+          "6": 0.045
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 53,
+      "round": "Matchday 16",
+      "date": "2026-06-26",
+      "time_utc": "2026-06-26T19:00:00Z",
+      "time_local": "15:00 UTC-4",
+      "home": "Norway",
+      "away": "France",
+      "venue": "Boston (Foxborough)",
+      "phase": "group",
+      "group": "Group I",
+      "prediction": {
+        "home": 0,
+        "away": 2,
+        "expected_pts": 1.9592,
+        "top3": [
+          {
+            "home": 0,
+            "away": 2,
+            "expected_pts": 1.9592
+          },
+          {
+            "home": 1,
+            "away": 2,
+            "expected_pts": 1.943
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.8736
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.2239,
+        "draw": 0.2537,
+        "away_win": 0.5224,
+        "total_goals": {
+          "0": 0.07,
+          "1": 0.185,
+          "2": 0.26,
+          "3": 0.23,
+          "4": 0.145,
+          "5": 0.07,
+          "6": 0.04
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 54,
+      "round": "Matchday 16",
+      "date": "2026-06-26",
+      "time_utc": "2026-06-26T19:00:00Z",
+      "time_local": "15:00 UTC-4",
+      "home": "Senegal",
+      "away": "Iraq",
+      "venue": "Toronto",
+      "phase": "group",
+      "group": "Group I",
+      "prediction": {
+        "home": 2,
+        "away": 0,
+        "expected_pts": 2.4064,
+        "top3": [
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 2.4064
+          },
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 2.386
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 2.2079
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.6931,
+        "draw": 0.1931,
+        "away_win": 0.1139,
+        "total_goals": {
+          "0": 0.065,
+          "1": 0.195,
+          "2": 0.24,
+          "3": 0.22,
+          "4": 0.16,
+          "5": 0.08,
+          "6": 0.04
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 55,
+      "round": "Matchday 6",
+      "date": "2026-06-16",
+      "time_utc": "2026-06-17T01:00:00Z",
+      "time_local": "20:00 UTC-5",
+      "home": "Argentina",
+      "away": "Algeria",
+      "venue": "Kansas City",
+      "phase": "group",
+      "group": "Group J",
+      "prediction": {
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.7007,
+        "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.7007
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 1.5246
+          },
+          {
+            "home": 1,
+            "away": 2,
+            "expected_pts": 1.4648
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
+        "total_goals": {
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
+        }
+      },
+      "source": "historical_fallback",
+      "tbd": false
+    },
+    {
+      "id": 56,
+      "round": "Matchday 6",
+      "date": "2026-06-16",
+      "time_utc": "2026-06-17T04:00:00Z",
+      "time_local": "21:00 UTC-7",
+      "home": "Austria",
+      "away": "Jordan",
+      "venue": "San Francisco Bay Area (Santa Clara)",
+      "phase": "group",
+      "group": "Group J",
+      "prediction": {
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.7007,
+        "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.7007
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 1.5246
+          },
+          {
+            "home": 1,
+            "away": 2,
+            "expected_pts": 1.4648
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
+        "total_goals": {
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
+        }
+      },
+      "source": "historical_fallback",
+      "tbd": false
+    },
+    {
+      "id": 57,
+      "round": "Matchday 12",
+      "date": "2026-06-22",
+      "time_utc": "2026-06-22T17:00:00Z",
+      "time_local": "12:00 UTC-5",
+      "home": "Argentina",
+      "away": "Austria",
+      "venue": "Dallas (Arlington)",
+      "phase": "group",
+      "group": "Group J",
+      "prediction": {
+        "home": 1,
+        "away": 0,
+        "expected_pts": 2.1664,
+        "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 2.1664
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 2.1403
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.9772
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.5961,
+        "draw": 0.2414,
+        "away_win": 0.1626,
+        "total_goals": {
+          "0": 0.08,
+          "1": 0.185,
+          "2": 0.25,
+          "3": 0.225,
+          "4": 0.145,
+          "5": 0.075,
+          "6": 0.04
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 58,
+      "round": "Matchday 12",
+      "date": "2026-06-22",
+      "time_utc": "2026-06-23T03:00:00Z",
+      "time_local": "20:00 UTC-7",
+      "home": "Jordan",
+      "away": "Algeria",
+      "venue": "San Francisco Bay Area (Santa Clara)",
+      "phase": "group",
+      "group": "Group J",
+      "prediction": {
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.7007,
+        "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.7007
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 1.5246
+          },
+          {
+            "home": 1,
+            "away": 2,
+            "expected_pts": 1.4648
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
+        "total_goals": {
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
+        }
+      },
+      "source": "historical_fallback",
+      "tbd": false
+    },
+    {
+      "id": 59,
+      "round": "Matchday 17",
+      "date": "2026-06-27",
+      "time_utc": "2026-06-28T02:00:00Z",
+      "time_local": "21:00 UTC-5",
+      "home": "Algeria",
+      "away": "Austria",
+      "venue": "Kansas City",
+      "phase": "group",
+      "group": "Group J",
+      "prediction": {
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.7007,
+        "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.7007
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 1.5246
+          },
+          {
+            "home": 1,
+            "away": 2,
+            "expected_pts": 1.4648
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
+        "total_goals": {
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
+        }
+      },
+      "source": "historical_fallback",
+      "tbd": false
+    },
+    {
+      "id": 60,
+      "round": "Matchday 17",
+      "date": "2026-06-27",
+      "time_utc": "2026-06-28T02:00:00Z",
+      "time_local": "21:00 UTC-5",
+      "home": "Jordan",
+      "away": "Argentina",
+      "venue": "Dallas (Arlington)",
+      "phase": "group",
+      "group": "Group J",
+      "prediction": {
+        "home": 0,
+        "away": 2,
+        "expected_pts": 2.5839,
+        "top3": [
+          {
+            "home": 0,
+            "away": 2,
+            "expected_pts": 2.5839
+          },
+          {
+            "home": 1,
+            "away": 2,
+            "expected_pts": 2.4927
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 2.4083
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.0647,
+        "draw": 0.1144,
+        "away_win": 0.8209,
+        "total_goals": {
+          "0": 0.06,
+          "1": 0.145,
+          "2": 0.18,
+          "3": 0.23,
+          "4": 0.17,
+          "5": 0.14,
+          "6": 0.075
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 61,
+      "round": "Matchday 7",
+      "date": "2026-06-17",
+      "time_utc": "2026-06-17T17:00:00Z",
+      "time_local": "12:00 UTC-5",
+      "home": "Portugal",
+      "away": "DR Congo",
+      "venue": "Houston",
+      "phase": "group",
+      "group": "Group K",
+      "prediction": {
+        "home": 2,
+        "away": 0,
+        "expected_pts": 2.5432,
+        "top3": [
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 2.5432
+          },
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 2.3809
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 2.3773
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.7612,
+        "draw": 0.1642,
+        "away_win": 0.0746,
+        "total_goals": {
+          "0": 0.055,
+          "1": 0.15,
+          "2": 0.24,
+          "3": 0.22,
+          "4": 0.175,
+          "5": 0.085,
+          "6": 0.075
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 62,
+      "round": "Matchday 7",
+      "date": "2026-06-17",
+      "time_utc": "2026-06-18T02:00:00Z",
+      "time_local": "20:00 UTC-6",
+      "home": "Uzbekistan",
+      "away": "Colombia",
+      "venue": "Mexico City",
+      "phase": "group",
+      "group": "Group K",
+      "prediction": {
+        "home": 0,
+        "away": 2,
+        "expected_pts": 2.4959,
+        "top3": [
+          {
+            "home": 0,
+            "away": 2,
+            "expected_pts": 2.4959
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 2.3523
+          },
+          {
+            "home": 1,
+            "away": 2,
+            "expected_pts": 2.352
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.0945,
+        "draw": 0.194,
+        "away_win": 0.7114,
+        "total_goals": {
+          "0": 0.065,
+          "1": 0.185,
+          "2": 0.245,
+          "3": 0.23,
+          "4": 0.15,
+          "5": 0.075,
+          "6": 0.05
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 63,
+      "round": "Matchday 13",
+      "date": "2026-06-23",
+      "time_utc": "2026-06-23T17:00:00Z",
+      "time_local": "12:00 UTC-5",
+      "home": "Portugal",
+      "away": "Uzbekistan",
+      "venue": "Houston",
+      "phase": "group",
+      "group": "Group K",
+      "prediction": {
+        "home": 2,
+        "away": 0,
+        "expected_pts": 2.5124,
+        "top3": [
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 2.5124
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 2.4244
+          },
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 2.3458
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.799,
+        "draw": 0.1357,
+        "away_win": 0.0653,
+        "total_goals": {
+          "0": 0.065,
+          "1": 0.13,
+          "2": 0.19,
+          "3": 0.225,
+          "4": 0.17,
+          "5": 0.13,
+          "6": 0.09
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 64,
+      "round": "Matchday 13",
+      "date": "2026-06-23",
+      "time_utc": "2026-06-24T02:00:00Z",
+      "time_local": "20:00 UTC-6",
+      "home": "Colombia",
+      "away": "DR Congo",
+      "venue": "Guadalajara (Zapopan)",
+      "phase": "group",
+      "group": "Group K",
+      "prediction": {
+        "home": 1,
+        "away": 0,
+        "expected_pts": 2.4168,
+        "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 2.4168
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 2.383
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 2.1239
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.6683,
+        "draw": 0.2161,
+        "away_win": 0.1156,
+        "total_goals": {
+          "0": 0.085,
+          "1": 0.225,
+          "2": 0.265,
+          "3": 0.22,
+          "4": 0.115,
+          "5": 0.035,
+          "6": 0.055
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 65,
+      "round": "Matchday 17",
+      "date": "2026-06-27",
+      "time_utc": "2026-06-27T23:30:00Z",
+      "time_local": "19:30 UTC-4",
+      "home": "Colombia",
+      "away": "Portugal",
+      "venue": "Miami (Miami Gardens)",
+      "phase": "group",
+      "group": "Group K",
+      "prediction": {
+        "home": 1,
+        "away": 2,
+        "expected_pts": 1.7547,
+        "top3": [
+          {
+            "home": 1,
+            "away": 2,
+            "expected_pts": 1.7547
+          },
+          {
+            "home": 0,
+            "away": 2,
+            "expected_pts": 1.7034
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.6949
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.2794,
+        "draw": 0.2696,
+        "away_win": 0.451,
+        "total_goals": {
+          "0": 0.075,
+          "1": 0.225,
+          "2": 0.24,
+          "3": 0.235,
+          "4": 0.135,
+          "5": 0.01,
+          "6": 0.08
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 66,
+      "round": "Matchday 17",
+      "date": "2026-06-27",
+      "time_utc": "2026-06-27T23:30:00Z",
+      "time_local": "19:30 UTC-4",
+      "home": "DR Congo",
+      "away": "Uzbekistan",
+      "venue": "Atlanta",
+      "phase": "group",
+      "group": "Group K",
+      "prediction": {
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.7483,
+        "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.7483
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 1.5728
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4034
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4129,
+        "draw": 0.2836,
+        "away_win": 0.3035,
+        "total_goals": {
+          "0": 0.115,
+          "1": 0.205,
+          "2": 0.285,
+          "3": 0.205,
+          "4": 0.115,
+          "5": 0.01,
+          "6": 0.065
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 67,
+      "round": "Matchday 7",
+      "date": "2026-06-17",
+      "time_utc": "2026-06-17T20:00:00Z",
+      "time_local": "15:00 UTC-5",
+      "home": "England",
+      "away": "Croatia",
+      "venue": "Dallas (Arlington)",
+      "phase": "group",
+      "group": "Group L",
+      "prediction": {
+        "home": 1,
+        "away": 0,
+        "expected_pts": 2.1229,
+        "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 2.1229
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 2.034
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.8372
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.5567,
+        "draw": 0.2512,
+        "away_win": 0.1921,
+        "total_goals": {
+          "0": 0.09,
+          "1": 0.205,
+          "2": 0.26,
+          "3": 0.21,
+          "4": 0.135,
+          "5": 0.06,
+          "6": 0.04
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 68,
+      "round": "Matchday 7",
+      "date": "2026-06-17",
+      "time_utc": "2026-06-17T23:00:00Z",
+      "time_local": "19:00 UTC-4",
+      "home": "Ghana",
+      "away": "Panama",
+      "venue": "Toronto",
+      "phase": "group",
+      "group": "Group L",
+      "prediction": {
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.9104,
+        "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.9104
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 1.7148
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.5407
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4428,
+        "draw": 0.2736,
+        "away_win": 0.2836,
+        "total_goals": {
+          "0": 0.09,
+          "1": 0.23,
+          "2": 0.275,
+          "3": 0.195,
+          "4": 0.125,
+          "5": 0.055,
+          "6": 0.03
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 69,
+      "round": "Matchday 13",
+      "date": "2026-06-23",
+      "time_utc": "2026-06-23T20:00:00Z",
+      "time_local": "16:00 UTC-4",
+      "home": "England",
+      "away": "Ghana",
+      "venue": "Boston (Foxborough)",
+      "phase": "group",
+      "group": "Group L",
+      "prediction": {
+        "home": 2,
+        "away": 0,
+        "expected_pts": 2.4482,
+        "top3": [
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 2.4482
+          },
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 2.3572
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 2.3102
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.734,
+        "draw": 0.1626,
+        "away_win": 0.1034,
+        "total_goals": {
+          "0": 0.05,
+          "1": 0.165,
+          "2": 0.22,
+          "3": 0.23,
+          "4": 0.18,
+          "5": 0.09,
+          "6": 0.065
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 70,
+      "round": "Matchday 13",
+      "date": "2026-06-23",
+      "time_utc": "2026-06-23T23:00:00Z",
+      "time_local": "19:00 UTC-4",
+      "home": "Panama",
+      "away": "Croatia",
+      "venue": "Toronto",
+      "phase": "group",
+      "group": "Group L",
+      "prediction": {
+        "home": 0,
+        "away": 2,
+        "expected_pts": 2.2982,
+        "top3": [
+          {
+            "home": 0,
+            "away": 2,
+            "expected_pts": 2.2982
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 2.1764
+          },
+          {
+            "home": 1,
+            "away": 2,
+            "expected_pts": 2.1645
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.1269,
+        "draw": 0.2386,
+        "away_win": 0.6345,
+        "total_goals": {
+          "0": 0.085,
+          "1": 0.185,
+          "2": 0.265,
+          "3": 0.22,
+          "4": 0.135,
+          "5": 0.055,
+          "6": 0.055
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 71,
+      "round": "Matchday 17",
+      "date": "2026-06-27",
+      "time_utc": "2026-06-27T21:00:00Z",
+      "time_local": "17:00 UTC-4",
+      "home": "Panama",
+      "away": "England",
+      "venue": "New York/New Jersey (East Rutherford)",
+      "phase": "group",
+      "group": "Group L",
+      "prediction": {
+        "home": 0,
+        "away": 2,
+        "expected_pts": 2.5019,
+        "top3": [
+          {
+            "home": 0,
+            "away": 2,
+            "expected_pts": 2.5019
+          },
+          {
+            "home": 1,
+            "away": 2,
+            "expected_pts": 2.4286
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 2.2934
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.0945,
+        "draw": 0.1443,
+        "away_win": 0.7612,
+        "total_goals": {
+          "0": 0.065,
+          "1": 0.14,
+          "2": 0.205,
+          "3": 0.245,
+          "4": 0.18,
+          "5": 0.095,
+          "6": 0.07
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 72,
+      "round": "Matchday 17",
+      "date": "2026-06-27",
+      "time_utc": "2026-06-27T21:00:00Z",
+      "time_local": "17:00 UTC-4",
+      "home": "Croatia",
+      "away": "Ghana",
+      "venue": "Philadelphia",
+      "phase": "group",
+      "group": "Group L",
+      "prediction": {
+        "home": 1,
+        "away": 0,
+        "expected_pts": 2.2032,
+        "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 2.2032
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 2.155
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.9835
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.5961,
+        "draw": 0.2414,
+        "away_win": 0.1626,
+        "total_goals": {
+          "0": 0.075,
+          "1": 0.2,
+          "2": 0.255,
+          "3": 0.23,
+          "4": 0.135,
+          "5": 0.055,
+          "6": 0.05
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
+    },
+    {
+      "id": 73,
+      "round": "Round of 32",
+      "date": "2026-06-28",
+      "time_utc": "2026-06-28T19:00:00Z",
+      "time_local": "12:00 UTC-7",
+      "home": "2A",
+      "away": "2B",
+      "venue": "Los Angeles (Inglewood)",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 74,
+      "round": "Round of 32",
+      "date": "2026-06-29",
+      "time_utc": "2026-06-29T20:30:00Z",
+      "time_local": "16:30 UTC-4",
+      "home": "1E",
+      "away": "3A/B/C/D/F",
+      "venue": "Boston (Foxborough)",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 75,
+      "round": "Round of 32",
+      "date": "2026-06-29",
+      "time_utc": "2026-06-30T01:00:00Z",
+      "time_local": "19:00 UTC-6",
+      "home": "1F",
+      "away": "2C",
+      "venue": "Monterrey (Guadalupe)",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 76,
+      "round": "Round of 32",
+      "date": "2026-06-29",
+      "time_utc": "2026-06-29T17:00:00Z",
+      "time_local": "12:00 UTC-5",
+      "home": "1C",
+      "away": "2F",
+      "venue": "Houston",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 77,
+      "round": "Round of 32",
+      "date": "2026-06-30",
+      "time_utc": "2026-06-30T21:00:00Z",
+      "time_local": "17:00 UTC-4",
+      "home": "1I",
+      "away": "3C/D/F/G/H",
+      "venue": "New York/New Jersey (East Rutherford)",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 78,
+      "round": "Round of 32",
+      "date": "2026-06-30",
+      "time_utc": "2026-06-30T17:00:00Z",
+      "time_local": "12:00 UTC-5",
+      "home": "2E",
+      "away": "2I",
+      "venue": "Dallas (Arlington)",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 79,
+      "round": "Round of 32",
+      "date": "2026-06-30",
+      "time_utc": "2026-07-01T01:00:00Z",
+      "time_local": "19:00 UTC-6",
+      "home": "1A",
+      "away": "3C/E/F/H/I",
+      "venue": "Mexico City",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 80,
+      "round": "Round of 32",
+      "date": "2026-07-01",
+      "time_utc": "2026-07-01T16:00:00Z",
+      "time_local": "12:00 UTC-4",
+      "home": "1L",
+      "away": "3E/H/I/J/K",
+      "venue": "Atlanta",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 81,
+      "round": "Round of 32",
+      "date": "2026-07-01",
+      "time_utc": "2026-07-02T00:00:00Z",
+      "time_local": "17:00 UTC-7",
+      "home": "1D",
+      "away": "3B/E/F/I/J",
+      "venue": "San Francisco Bay Area (Santa Clara)",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 82,
+      "round": "Round of 32",
+      "date": "2026-07-01",
+      "time_utc": "2026-07-01T20:00:00Z",
+      "time_local": "13:00 UTC-7",
+      "home": "1G",
+      "away": "3A/E/H/I/J",
+      "venue": "Seattle",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 83,
+      "round": "Round of 32",
+      "date": "2026-07-02",
+      "time_utc": "2026-07-02T23:00:00Z",
+      "time_local": "19:00 UTC-4",
+      "home": "2K",
+      "away": "2L",
+      "venue": "Toronto",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 84,
+      "round": "Round of 32",
+      "date": "2026-07-02",
+      "time_utc": "2026-07-02T19:00:00Z",
+      "time_local": "12:00 UTC-7",
+      "home": "1H",
+      "away": "2J",
+      "venue": "Los Angeles (Inglewood)",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 85,
+      "round": "Round of 32",
+      "date": "2026-07-02",
+      "time_utc": "2026-07-03T03:00:00Z",
+      "time_local": "20:00 UTC-7",
+      "home": "1B",
+      "away": "3E/F/G/I/J",
+      "venue": "Vancouver",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 86,
+      "round": "Round of 32",
+      "date": "2026-07-03",
+      "time_utc": "2026-07-03T22:00:00Z",
+      "time_local": "18:00 UTC-4",
+      "home": "1J",
+      "away": "2H",
+      "venue": "Miami (Miami Gardens)",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 87,
+      "round": "Round of 32",
+      "date": "2026-07-03",
+      "time_utc": "2026-07-04T01:30:00Z",
+      "time_local": "20:30 UTC-5",
+      "home": "1K",
+      "away": "3D/E/I/J/L",
+      "venue": "Kansas City",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 88,
+      "round": "Round of 32",
+      "date": "2026-07-03",
+      "time_utc": "2026-07-03T18:00:00Z",
+      "time_local": "13:00 UTC-5",
+      "home": "2D",
+      "away": "2G",
+      "venue": "Dallas (Arlington)",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 89,
+      "round": "Round of 16",
+      "date": "2026-07-04",
+      "time_utc": "2026-07-04T21:00:00Z",
+      "time_local": "17:00 UTC-4",
+      "home": "W74",
+      "away": "W77",
+      "venue": "Philadelphia",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 90,
+      "round": "Round of 16",
+      "date": "2026-07-04",
+      "time_utc": "2026-07-04T17:00:00Z",
+      "time_local": "12:00 UTC-5",
+      "home": "W73",
+      "away": "W75",
+      "venue": "Houston",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 91,
+      "round": "Round of 16",
+      "date": "2026-07-05",
+      "time_utc": "2026-07-05T20:00:00Z",
+      "time_local": "16:00 UTC-4",
+      "home": "W76",
+      "away": "W78",
+      "venue": "New York/New Jersey (East Rutherford)",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 92,
+      "round": "Round of 16",
+      "date": "2026-07-05",
+      "time_utc": "2026-07-06T00:00:00Z",
+      "time_local": "18:00 UTC-6",
+      "home": "W79",
+      "away": "W80",
+      "venue": "Mexico City",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 93,
+      "round": "Round of 16",
+      "date": "2026-07-06",
+      "time_utc": "2026-07-06T19:00:00Z",
+      "time_local": "14:00 UTC-5",
+      "home": "W83",
+      "away": "W84",
+      "venue": "Dallas (Arlington)",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 94,
+      "round": "Round of 16",
+      "date": "2026-07-06",
+      "time_utc": "2026-07-07T00:00:00Z",
+      "time_local": "17:00 UTC-7",
+      "home": "W81",
+      "away": "W82",
+      "venue": "Seattle",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 95,
+      "round": "Round of 16",
+      "date": "2026-07-07",
+      "time_utc": "2026-07-07T16:00:00Z",
+      "time_local": "12:00 UTC-4",
+      "home": "W86",
+      "away": "W88",
+      "venue": "Atlanta",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 96,
+      "round": "Round of 16",
+      "date": "2026-07-07",
+      "time_utc": "2026-07-07T20:00:00Z",
+      "time_local": "13:00 UTC-7",
+      "home": "W85",
+      "away": "W87",
+      "venue": "Vancouver",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 97,
+      "round": "Quarter-final",
+      "date": "2026-07-09",
+      "time_utc": "2026-07-09T20:00:00Z",
+      "time_local": "16:00 UTC-4",
+      "home": "W89",
+      "away": "W90",
+      "venue": "Boston (Foxborough)",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 98,
+      "round": "Quarter-final",
+      "date": "2026-07-10",
+      "time_utc": "2026-07-10T19:00:00Z",
+      "time_local": "12:00 UTC-7",
+      "home": "W93",
+      "away": "W94",
+      "venue": "Los Angeles (Inglewood)",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 99,
+      "round": "Quarter-final",
+      "date": "2026-07-11",
+      "time_utc": "2026-07-11T21:00:00Z",
+      "time_local": "17:00 UTC-4",
+      "home": "W91",
+      "away": "W92",
+      "venue": "Miami (Miami Gardens)",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 100,
+      "round": "Quarter-final",
+      "date": "2026-07-11",
+      "time_utc": "2026-07-12T01:00:00Z",
+      "time_local": "20:00 UTC-5",
+      "home": "W95",
+      "away": "W96",
+      "venue": "Kansas City",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 101,
+      "round": "Semi-final",
+      "date": "2026-07-14",
+      "time_utc": "2026-07-14T19:00:00Z",
+      "time_local": "14:00 UTC-5",
+      "home": "W97",
+      "away": "W98",
+      "venue": "Dallas (Arlington)",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 102,
+      "round": "Semi-final",
+      "date": "2026-07-15",
+      "time_utc": "2026-07-15T19:00:00Z",
+      "time_local": "15:00 UTC-4",
+      "home": "W99",
+      "away": "W100",
+      "venue": "Atlanta",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    },
+    {
+      "id": 103,
+      "round": "Match for third place",
+      "date": "2026-07-18",
+      "time_utc": "2026-07-18T21:00:00Z",
+      "time_local": "17:00 UTC-4",
+      "home": "L101",
+      "away": "L102",
+      "venue": "Miami (Miami Gardens)",
+      "phase": "knockout",
+      "group": null,
+      "prediction": {
+        "home": 1,
+        "away": 0,
+        "expected_pts": 0.6803,
+        "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 0.6803
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 0.6176
+          },
+          {
+            "home": 3,
+            "away": 0,
+            "expected_pts": 0.5837
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
+        "total_goals": {
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
+        }
+      },
+      "source": "historical_fallback",
+      "tbd": false
+    },
+    {
+      "id": 104,
+      "round": "Final",
+      "date": "2026-07-19",
+      "time_utc": "2026-07-19T19:00:00Z",
+      "time_local": "15:00 UTC-4",
+      "home": "W101",
+      "away": "W102",
+      "venue": "New York/New Jersey (East Rutherford)",
+      "phase": "knockout",
+      "group": null,
+      "tbd": true
+    }
+  ]
+}
