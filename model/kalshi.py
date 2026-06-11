@@ -17,7 +17,9 @@ from datetime import datetime, timezone, timedelta
 
 API_BASE = "https://api.elections.kalshi.com/trade-api/v2"
 CACHE_PATH = Path(__file__).parent.parent / "data" / "kalshi_cache.json"
-CACHE_TTL = 3600  # seconds
+# Pre-game entries are considered stale after 90 min; once kickoff passes they are
+# locked permanently so in-game/post-game prices never overwrite the prediction.
+CACHE_TTL = 5400  # 90 minutes
 
 # Schedule → Kalshi 3-letter codes (several differ from FIFA/ISO)
 TEAM_CODES = {
@@ -229,39 +231,62 @@ def _parse_spread(markets: list[dict], home_code: str, away_code: str,
 def _load_cache() -> dict:
     if CACHE_PATH.exists():
         data = json.loads(CACHE_PATH.read_text())
-        if time.time() - data.get("_ts", 0) < CACHE_TTL:
-            return data
+        # Discard old single-timestamp format
+        if "_ts" in data and isinstance(data["_ts"], (int, float)):
+            return {}
+        return data
     return {}
 
 
 def _save_cache(data: dict):
-    data["_ts"] = time.time()
     CACHE_PATH.write_text(json.dumps(data, indent=2))
+
+
+def _clean_entry(entry: dict) -> dict:
+    """Strip internal fields and restore int keys for spread dicts."""
+    result = {k: v for k, v in entry.items() if k != "_ts"}
+    for key in ("spread_home", "spread_away"):
+        if result.get(key):
+            result[key] = {int(k): v for k, v in result[key].items()}
+    return result
 
 
 def fetch_match_probs(match: dict) -> dict:
     """
     Fetch Kalshi probabilities for one match from schedule.json.
     Returns {home_win, draw, away_win, total_goals, spread_home, spread_away, source}.
+
+    Cache policy:
+    - Once kickoff time has passed, the cached entry is locked permanently so
+      in-game/post-game prices never alter the prediction.
+    - Before kickoff, a cached entry is reused if it is less than 90 minutes old,
+      meaning the last pre-kickoff run (scheduled 1.5 h before the match) is the
+      one that sets the final prediction.
     """
     home_code = TEAM_CODES.get(match["home"])
     away_code = TEAM_CODES.get(match["away"])
     if not home_code or not away_code:
         return _fallback_probs()
 
-    date_code = _date_code(match["time_utc"])
+    date_code     = _date_code(match["time_utc"])
     game_ticker   = f"KXWCGAME-{date_code}{home_code}{away_code}"
     total_ticker  = f"KXWCTOTAL-{date_code}{home_code}{away_code}"
     spread_ticker = f"KXWCSPREAD-{date_code}{home_code}{away_code}"
 
+    kickoff = datetime.strptime(
+        match["time_utc"], "%Y-%m-%dT%H:%M:%SZ"
+    ).replace(tzinfo=timezone.utc)
+    now = datetime.now(timezone.utc)
+
     cache = _load_cache()
     if game_ticker in cache:
-        result = cache[game_ticker]
-        # JSON serialises int keys as strings; restore them for spread dicts
-        for key in ("spread_home", "spread_away"):
-            if result.get(key):
-                result[key] = {int(k): v for k, v in result[key].items()}
-        return result
+        entry = cache[game_ticker]
+        # Kickoff passed → prices locked, never re-fetch
+        if now >= kickoff:
+            return _clean_entry(entry)
+        # Pre-game → use cached prices if still within 90-minute window
+        if time.time() - entry.get("_ts", 0) < CACHE_TTL:
+            return _clean_entry(entry)
 
     game_probs  = _parse_game(_fetch_event(game_ticker), home_code, away_code)
     total_goals = _parse_totals(_fetch_event(total_ticker))
@@ -283,7 +308,9 @@ def fetch_match_probs(match: dict) -> dict:
             "source": "kalshi",
         }
 
-    cache[game_ticker] = result
+    entry = dict(result)
+    entry["_ts"] = time.time()
+    cache[game_ticker] = entry
     _save_cache(cache)
     return result
 

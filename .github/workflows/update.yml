@@ -2,8 +2,15 @@ name: Actualizar predicciones
 
 on:
   schedule:
-    # Every 2 hours (covers 1.5h before matches + 06:00 UTC = midnight Costa Rica)
-    - cron: '0 */2 * * *'
+    # 1.5 h before every possible UTC kickoff time (derived from schedule.json)
+    - cron: '30 14-23 * * *'  # 14:30–23:30 on the :30  (covers 16:00–01:00 kickoffs)
+    - cron: '30 0,1,2 * * *'  # 00:30, 01:30, 02:30     (covers 02:00–04:00 kickoffs)
+    - cron: '0 0 * * *'        # 00:00                    (covers 01:30 kickoff)
+    - cron: '0 19 * * *'       # 19:00                    (covers 20:30 kickoff)
+    - cron: '0 22 * * *'       # 22:00                    (covers 23:30 kickoff)
+    - cron: '0 23 * * *'       # 23:00                    (covers 00:30 kickoff)
+    # Final daily update — midnight Costa Rica (UTC-6) = 06:00 UTC
+    - cron: '0 6 * * *'
   workflow_dispatch:  # allow manual trigger
 
 permissions:
@@ -27,9 +34,6 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Clear Kalshi cache
-        run: rm -f data/kalshi_cache.json
-
       - name: Run prediction pipeline
         run: python model/predict.py
 
@@ -37,7 +41,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add site/data/predictions.json
+          git add site/data/predictions.json data/kalshi_cache.json
           if git diff --staged --quiet; then
             echo "No changes to predictions."
           else
