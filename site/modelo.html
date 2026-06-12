@@ -112,16 +112,17 @@
     el juego, los precios en vivo de Kalshi no alteran la predicción.
   </p>
 
-  <h3>2. Datos históricos: Mundial 2022</h3>
+  <h3>2. Datos históricos: WC 2014, 2018 y 2022</h3>
   <p>
-    Se utilizan los 64 partidos del Mundial de Qatar 2022 (fuente:
-    <a href="https://github.com/openfootball/worldcup.json" target="_blank">openfootball/worldcup.json</a>)
+    Se utilizan los 64 partidos de cada uno de los Mundiales 2014, 2018 y 2022
+    (fuente: <a href="https://github.com/openfootball/worldcup.json" target="_blank">openfootball/worldcup.json</a>)
     para construir distribuciones empíricas de marcadores condicionadas a la fase del torneo.
+    Los torneos más recientes pesan más (factor γ, ver sección siguiente).
   </p>
   <div class="stat-grid">
-    <div class="stat-card"><div class="num">64</div><div class="lbl">Partidos WC 2022</div></div>
-    <div class="stat-card"><div class="num">52</div><div class="lbl">Partidos con victoria</div></div>
-    <div class="stat-card"><div class="num">12</div><div class="lbl">Empates</div></div>
+    <div class="stat-card"><div class="num">3</div><div class="lbl">Mundiales (2014–2022)</div></div>
+    <div class="stat-card"><div class="num">192</div><div class="lbl">Partidos totales</div></div>
+    <div class="stat-card"><div class="num">≈163</div><div class="lbl">Juegos efectivos (con γ ≈ 0.84)</div></div>
     <div class="stat-card"><div class="num">36</div><div class="lbl">Cuadrícula de marcadores</div></div>
   </div>
 
@@ -136,10 +137,12 @@
   <h3>Paso 1 — Distribución base (modelo de cancha neutral)</h3>
 
   <p>
-    Qatar 2022 fue completamente neutral (ningún equipo jugaba en casa), por lo que
-    tratar las victorias como "local" o "visitante" introduciría un sesgo artificial.
-    En cambio, colapsamos todas las victorias en una única distribución de
-    <em>ganador–perdedor</em>:
+    Los tres mundiales históricos (2014, 2018, 2022) se jugaron en un único país sede,
+    por lo que casi todos los equipos jugaron en cancha neutral. No se distingue entre
+    local y visitante en los datos históricos: colapsamos todas las victorias en una
+    única distribución de <em>ganador–perdedor</em>.
+    La ventaja de cancha de los anfitriones 2026 (EE.UU., México, Canadá) queda
+    capturada en los precios de Kalshi, no en la distribución histórica.
   </p>
 
   <p>Para cada fase $\phi \in \{\text{grupos},\,\text{eliminatoria}\}$ usamos un
@@ -156,18 +159,20 @@
   $$P_{\mathrm{prior}}(g,g) \propto \left(\frac{\lambda_d^g}{g!}\right)^2$$
 
   <p>Los parámetros $\lambda_w$ (goles del ganador), $\lambda_l$ (goles del perdedor)
-  y $\lambda_d$ (goles por equipo en empate) se estiman por MLE desde los datos de
-  Qatar 2022. Para fase de grupos: $\lambda_w \approx 2.29$, $\lambda_l \approx 0.55$,
-  $\lambda_d \approx 0.60$.</p>
+  y $\lambda_d$ (goles por equipo en empate) se estiman por MLE desde los conteos
+  combinados $n_{\mathrm{hist}}$ (γ-ponderados), y se recalculan en cada ejecución
+  del pipeline.</p>
 
   <p>El suavizado queda:</p>
 
-  $$\tilde{P}_\phi(w,l) \propto n_\phi(w,l) + \kappa \cdot P_{\mathrm{prior}}(w,l)$$
+  $$\tilde{P}_\phi(w,l) \propto \hat{n}_\phi(w,l) + \kappa \cdot P_{\mathrm{prior}}(w,l)$$
 
-  <p>donde $n_\phi(w,l)$ es el conteo observado, $P_{\mathrm{prior}}$ está normalizado
-  sobre la cuadrícula $\{(w,l): 0 \le l < w \le 5\}$ (15 celdas), y $\kappa = 5$
+  <p>donde $\hat{n}_\phi(w,l)$ son los conteos efectivos combinados (históricos
+  γ-ponderados + WC 2026 con peso $(1+\delta)$, ver secciones siguientes),
+  $P_{\mathrm{prior}}$ está normalizado sobre la cuadrícula
+  $\{(w,l): 0 \le l &lt; w \le 5\}$ (15 celdas), y $\kappa = 5$
   pseudo-observaciones totales. La distribución de empates se define análogamente.
-  Las celdas con conteo observado mayor a cero quedan casi sin cambio; las celdas
+  Las celdas con conteo mayor a cero quedan casi sin cambio; las celdas
   vacías reciben probabilidad proporcional al prior.</p>
 
   <p>La distribución base es:</p>
@@ -175,7 +180,7 @@
   $$P_0(H=a,\,A=b) = \begin{cases}
     p_H \cdot \tilde{P}_\phi(a,\,b) & \text{si } a > b \\[4pt]
     p_D \cdot \tilde{P}^{\mathrm{emp}}_\phi(a) & \text{si } a = b \\[4pt]
-    p_A \cdot \tilde{P}_\phi(b,\,a) & \text{si } a < b
+    p_A \cdot \tilde{P}_\phi(b,\,a) & \text{si } a &lt; b
   \end{cases}$$
 
   <p>
@@ -252,7 +257,7 @@
   $$\hat{\delta} = \arg\max_{\delta \ge 0}\;\Bigl[
     \underbrace{\sum_{k=2}^{K}\;\sum_{i \in J_k}
       \log P\!\bigl(\mathrm{score}_i \;\big|\; \delta,\;
-      n_{2026,<k}\bigr)}_{\text{log-verosimilitud leave-one-jornada-out}}
+      n_{2026,&lt;k}\bigr)}_{\text{log-verosimilitud leave-one-jornada-out}}
     \;-\;\frac{\delta^2}{2\sigma^2}
   \Bigr]$$
 
@@ -267,9 +272,9 @@
     de resultado observado (victoria/empate):
   </p>
 
-  $$\log P(\mathrm{score}_i \mid \delta,\,n_{2026,<k}) =
-    \log \frac{\hat{n}_{2026,<k}(w,l;\,\delta)}
-              {\displaystyle\sum_{(w',l')} \hat{n}_{2026,<k}(w',l';\,\delta)}$$
+  $$\log P(\mathrm{score}_i \mid \delta,\,n_{2026,&lt;k}) =
+    \log \frac{\hat{n}_{2026,&lt;k}(w,l;\,\delta)}
+              {\displaystyle\sum_{(w',l')} \hat{n}_{2026,&lt;k}(w',l';\,\delta)}$$
 
   <p>
     El prior <strong>HalfNormal(σ = 1)</strong> concentra masa en δ ∈ [0, 2].
@@ -372,8 +377,8 @@
 
   <h2>Limitaciones conocidas</h2>
   <ul style="margin-left:20px;line-height:2">
-    <li>Los datos históricos se basan solo en 64 partidos (WC 2022). La distribución empírica es poco densa; el suavizado Poisson-producto ayuda pero el prior puede dominar en fases con pocos datos.</li>
-    <li>La estimación de δ requiere al menos dos jornadas completas (una de entrenamiento y una de prueba). Durante la jornada 1 el modelo opera con δ = 0, idéntico al baseline de 2022.</li>
+    <li>Los datos históricos cubren 192 partidos (WC 2014, 2018, 2022) con ≈163 juegos efectivos tras la ponderación γ. El suavizado Poisson-producto ayuda en fases con pocos datos (eliminatoria tardía).</li>
+    <li>La estimación de δ requiere al menos dos jornadas completas (una de entrenamiento y una de prueba). Durante la jornada 1 el modelo opera con δ = 0, idéntico al baseline histórico γ-ponderado.</li>
     <li>Kalshi no ofrece mercados de marcadores exactos, por lo que la distribución de goles <em>dado</em> un resultado sigue siendo enteramente histórica.</li>
     <li>Los mercados de spread solo cubren márgenes de hasta 3.5 goles; márgenes mayores se agrupan en una sola categoría ($\ge 4$).</li>
     <li>Los mercados de Kalshi en vivo reflejan el estado actual del partido en curso; se preserva la predicción pre-partido en esos casos.</li>
@@ -384,7 +389,8 @@
   <p>
     Todo el código está disponible en
     <a href="https://github.com/alfaromurillo/quiniela" target="_blank">github.com/alfaromurillo/quiniela</a>.
-    Las predicciones se actualizan automáticamente cada dos horas mediante GitHub Actions.
+    Las predicciones se actualizan automáticamente 1.5 horas antes de cada partido
+    y a la medianoche hora Costa Rica, mediante GitHub Actions.
   </p>
 
 </div>
