@@ -208,8 +208,10 @@ function renderAll(matches, filter, lockedMap, resultsMap) {
   const container = document.getElementById("matches");
   if (!container) return;
 
+  const sorted = [...matches].sort((a, b) => a.time_utc.localeCompare(b.time_utc));
+
   const byDate = {};
-  for (const m of matches) {
+  for (const m of sorted) {
     if (!byDate[m.date]) byDate[m.date] = [];
     byDate[m.date].push(m);
   }
