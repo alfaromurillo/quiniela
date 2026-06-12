@@ -29,7 +29,7 @@ ESPN_ALIASES: dict[str, list[str]] = {
     "Czech Republic":       ["Czech Republic", "Czechia"],
     "South Korea":          ["South Korea", "Republic of Korea"],
     "DR Congo":             ["DR Congo", "Congo DR", "Democratic Republic of Congo"],
-    "Bosnia & Herzegovina": ["Bosnia and Herzegovina", "Bosnia & Herzegovina"],
+    "Bosnia & Herzegovina": ["Bosnia and Herzegovina", "Bosnia & Herzegovina", "Bosnia-Herzegovina"],
     "Ivory Coast":          ["Ivory Coast", "Cote d'Ivoire", "Côte d'Ivoire"],
     "Turkey":               ["Turkey", "Türkiye"],
     "Iran":                 ["Iran", "Islamic Republic of Iran"],
