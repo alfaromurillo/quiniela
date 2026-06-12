@@ -29,23 +29,53 @@ plt.rcParams.update({
 })
 
 GOALS = list(range(6))   # 0..5
+MG = 5                   # MAX_GOALS
 
 
-def _scoreline_matrix(phase: str, gamma: float) -> np.ndarray:
-    """Return 6×6 matrix P[home, away] from historical + gamma weighting."""
+def _load_wc_matrices(path: Path) -> tuple[dict, dict]:
+    """
+    Parse a WC JSON file into count matrices and totals.
+    Returns (counts, totals) where counts[phase] is (MG+1)×(MG+1) int array
+    and totals[phase] is the number of matches in that phase.
+    Knockout scores use et (120 min) when available, else ft (90 min).
+    """
+    data = json.loads(path.read_text())
+    counts = {
+        "group":    np.zeros((MG+1, MG+1), dtype=int),
+        "knockout": np.zeros((MG+1, MG+1), dtype=int),
+    }
+    totals = {"group": 0, "knockout": 0}
+    KO_KEYS = ["round of 16", "round of 32", "quarter", "semi", "final"]
+    for m in data.get("matches", []):
+        sc_raw = m.get("score", {})
+        ft = sc_raw.get("ft")
+        if not ft or len(ft) != 2:
+            continue
+        rnd = m.get("round", "").lower()
+        phase = "knockout" if any(k in rnd for k in KO_KEYS) else "group"
+        if phase == "knockout":
+            et = sc_raw.get("et")
+            sc = et if (et and len(et) == 2) else ft
+        else:
+            sc = ft
+        h, a = int(sc[0]), int(sc[1])
+        if h <= MG and a <= MG:
+            counts[phase][h, a] += 1
+        totals[phase] += 1
+    return counts, totals
+
+
+def _model_matrix(phase: str, gamma: float) -> np.ndarray:
+    """Return (MG+1)×(MG+1) probability matrix from γ-weighted model (δ=0)."""
     from model.historical import build_distributions, scoreline_probs
     dist = build_distributions(gamma=gamma, delta=0.0)
-    # Use equal probabilities (1/3, 1/3, 1/3) to get the pure historical
-    # scoreline distribution without any Kalshi reweighting.
     sp = scoreline_probs(1/3, 1/3, 1/3, phase, dist=dist)
-    mat = np.zeros((6, 6))
+    mat = np.zeros((MG+1, MG+1))
     for (h, a), p in sp.items():
-        if h < 6 and a < 6:
-            mat[h][a] = p
-    total = mat.sum()
-    if total > 0:
-        mat /= total
-    return mat
+        if h <= MG and a <= MG:
+            mat[h, a] = p
+    s = mat.sum()
+    return mat / s if s > 0 else mat
 
 
 def _load_gamma() -> float:
@@ -55,41 +85,143 @@ def _load_gamma() -> float:
     return 0.84
 
 
-# ── Figure 1: Historical scoreline heatmaps ────────────────────
-def fig1_scoreline_dist():
+# ── Figure 1: Historical + model scoreline overview ────────────
+def fig1_historical_overview():
+    """
+    3 rows × 4 columns:
+      Left block  (cols 0–1): WC 2014/2018/2022 actual scoreline matrices,
+                               as proportions; annotated with n=Y (x.xx%).
+      Right block (cols 2–3): Row 0 = model estimate before WC 2026 (δ=0).
+                               Rows 1–2 = placeholders (fill after tournament).
+    Shared colour scale (proportions) across all non-placeholder panels.
+    """
     gamma = _load_gamma()
-    fig, axes = plt.subplots(1, 2, figsize=(10, 4.5))
 
-    for ax, phase, title in zip(
-        axes,
-        ["group", "knockout"],
-        ["Fase de grupos", "Fase eliminatoria"],
-    ):
-        mat = _scoreline_matrix(phase, gamma)
-        im = ax.imshow(mat * 100, origin="lower", aspect="equal",
-                       cmap="Blues", vmin=0)
-        ax.set_xticks(GOALS)
-        ax.set_yticks(GOALS)
-        ax.set_xlabel("Goles visitante")
-        ax.set_ylabel("Goles local")
-        ax.set_title(title)
-        # Annotate cells with percentage
+    WC_FILES = [
+        (2014, ROOT / "data" / "wc2014.json"),
+        (2018, ROOT / "data" / "wc2018.json"),
+        (2022, ROOT / "data" / "wc2022.json"),
+    ]
+    wc_data = [(yr, *_load_wc_matrices(p)) for yr, p in WC_FILES]
+
+    phases      = ["group", "knockout"]
+    phase_names = ["Fase de grupos", "Eliminación directa"]
+
+    # Model matrices for row 0 of right block
+    model_mats = {ph: _model_matrix(ph, gamma) for ph in phases}
+
+    # Shared vmax across historical proportions and model probabilities
+    vmax = 0.0
+    for _yr, counts, totals in wc_data:
+        for ph in phases:
+            tot = totals[ph]
+            if tot > 0:
+                vmax = max(vmax, counts[ph].max() / tot)
+    for ph in phases:
+        vmax = max(vmax, model_mats[ph].max())
+    vmax = round(vmax * 1.10, 2)  # 10 % headroom
+
+    # ── Layout ────────────────────────────────────────────────────
+    fig, axes = plt.subplots(3, 4, figsize=(15, 9.5))
+    plt.subplots_adjust(wspace=0.38, hspace=0.55,
+                        left=0.07, right=0.88, top=0.88, bottom=0.07)
+
+    cmap_hist  = "Blues"
+    cmap_model = "Greens"
+
+    def _draw_heatmap(ax, mat, cmap, title, ylabel):
+        im = ax.imshow(mat, origin="lower", aspect="equal",
+                       cmap=cmap, vmin=0, vmax=vmax)
+        ax.set_xticks(GOALS); ax.set_yticks(GOALS)
+        ax.set_xticklabels(GOALS, fontsize=6)
+        ax.set_yticklabels(GOALS, fontsize=6)
+        ax.set_xlabel("Goles visitante", fontsize=7)
+        ax.set_ylabel(ylabel, fontsize=7)
+        ax.set_title(title, fontsize=8, pad=3)
+        return im
+
+    # ── Left block: historical WC data ────────────────────────────
+    im_hist = None
+    for row, (yr, counts, totals) in enumerate(wc_data):
+        for col, (ph, ph_name) in enumerate(zip(phases, phase_names)):
+            ax = axes[row, col]
+            tot = totals[ph]
+            mat = counts[ph] / tot if tot > 0 else counts[ph].astype(float)
+            ylabel = f"WC {yr}\nGoles local" if col == 0 else "Goles local"
+            im_hist = _draw_heatmap(ax, mat, cmap_hist, ph_name, ylabel)
+
+            for h in GOALS:
+                for a in GOALS:
+                    n   = counts[ph][h, a]
+                    frc = n / tot if tot > 0 else 0.0
+                    if n == 0:
+                        continue
+                    txt   = f"n={n}\n({frc*100:.1f}%)"
+                    color = "white" if frc > vmax * 0.55 else "black"
+                    ax.text(a, h, txt, ha="center", va="center",
+                            fontsize=4.5, color=color, linespacing=1.3)
+
+    # ── Right block row 0: model estimate before WC 2026 ──────────
+    im_model = None
+    for col, (ph, ph_name) in enumerate(zip(phases, phase_names)):
+        ax = axes[0, 2 + col]
+        mat = model_mats[ph]
+        ylabel = f"Estimado inicio\nGoles local" if col == 0 else "Goles local"
+        im_model = _draw_heatmap(ax, mat, cmap_model, ph_name, ylabel)
+
         for h in GOALS:
             for a in GOALS:
-                val = mat[h][a] * 100
-                if val >= 0.5:
-                    ax.text(a, h, f"{val:.1f}", ha="center", va="center",
-                            fontsize=7,
-                            color="white" if val > 8 else "black")
-        plt.colorbar(im, ax=ax, label="Probabilidad (%)")
+                p = mat[h, a]
+                if p < 0.004:
+                    continue
+                txt   = f"({p*100:.1f}%)"
+                color = "white" if p > vmax * 0.55 else "black"
+                ax.text(a, h, txt, ha="center", va="center",
+                        fontsize=5.5, color=color)
 
-    fig.suptitle(
-        f"Distribución histórica de marcadores — WC 2014+2018+2022 "
-        f"($\\gamma \\approx {gamma:.2f}$)",
-        fontsize=12,
-    )
-    fig.tight_layout()
-    out = OUT_DIR / "fig1_scoreline_dist.eps"
+    # ── Right block rows 1–2: placeholders ────────────────────────
+    placeholder_rows = [
+        ("Estimado final", "Completar al final\nde la fase de grupos"),
+        ("WC 2026 — real", "Completar al final\ndel torneo"),
+    ]
+    for ri, (row_label, note) in enumerate(placeholder_rows):
+        for col, ph_name in enumerate(phase_names):
+            ax = axes[1 + ri, 2 + col]
+            ax.set_facecolor("#efefef")
+            ax.set_xticks([]); ax.set_yticks([])
+            for sp in ax.spines.values():
+                sp.set_edgecolor("#bbbbbb")
+            ax.set_title(ph_name, fontsize=8, pad=3, color="#777777")
+            ax.set_ylabel(row_label if col == 0 else "",
+                          fontsize=7, color="#777777")
+            ax.text(0.5, 0.5, note,
+                    ha="center", va="center", transform=ax.transAxes,
+                    fontsize=8, color="#999999", style="italic",
+                    multialignment="center")
+
+    # ── Block headers ──────────────────────────────────────────────
+    fig.text(0.27, 0.915,
+             "Datos históricos  (proporciones, n real por celda)",
+             ha="center", va="bottom", fontsize=10, fontweight="bold")
+    fig.text(0.73, 0.915,
+             f"Modelo estimado  ($\\gamma \\approx {gamma:.2f}$, $\\delta = 0$)",
+             ha="center", va="bottom", fontsize=10, fontweight="bold")
+
+    # ── Colorbars ─────────────────────────────────────────────────
+    # One Blues bar for historical block, one Greens bar for model block
+    # Place them stacked on the far right
+    cb_ax1 = fig.add_axes([0.895, 0.52, 0.012, 0.33])  # Blues
+    cb_ax2 = fig.add_axes([0.895, 0.15, 0.012, 0.33])  # Greens
+    if im_hist is not None:
+        cb1 = fig.colorbar(im_hist, cax=cb_ax1)
+        cb1.set_label("Proporción", fontsize=7)
+        cb1.ax.tick_params(labelsize=6)
+    if im_model is not None:
+        cb2 = fig.colorbar(im_model, cax=cb_ax2)
+        cb2.set_label("Probabilidad", fontsize=7)
+        cb2.ax.tick_params(labelsize=6)
+
+    out = OUT_DIR / "fig1_historical_overview.eps"
     fig.savefig(out, format="eps", bbox_inches="tight")
     plt.close(fig)
     print(f"  Saved: {out}")
@@ -105,7 +237,7 @@ def fig2_gamma_effect():
     fig, ax = plt.subplots(figsize=(7, 4))
     totals = range(0, 9)
     for gamma, label, color in zip(gammas, labels, colors):
-        mat = _scoreline_matrix("group", gamma)
+        mat = _model_matrix("group", gamma)
         marginal = [
             sum(mat[h][a] for h in GOALS for a in GOALS if h + a == t)
             for t in totals
@@ -255,7 +387,7 @@ def fig4_delta_evolution():
 # ── Main ───────────────────────────────────────────────────────
 if __name__ == "__main__":
     print("Generating figures for articulo/figures/...")
-    fig1_scoreline_dist()
+    fig1_historical_overview()
     fig2_gamma_effect()
     fig3_kalshi_reweight()
     fig4_delta_evolution()
