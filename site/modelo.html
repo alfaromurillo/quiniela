@@ -134,6 +134,53 @@
     en cuatro pasos secuenciales.
   </p>
 
+  <h3>Corrección del sesgo favorito-longshot (α)</h3>
+
+  <p>
+    Los mercados de predicción exhiben un <strong>sesgo favorito-longshot</strong>:
+    los equipos favoritos tienden a estar subvalorados y los candidatos débiles
+    sobrevalorados, en comparación con sus probabilidades reales.
+    Antes de usar las probabilidades de Kalshi $(p_H, p_D, p_A)$ en el modelo,
+    se aplica una transformación potencial que concentra la masa en los favoritos:
+  </p>
+
+  $$q_i = \frac{p_i^\alpha}{\displaystyle\sum_{j} p_j^\alpha}, \qquad i \in \{H, D, A\}$$
+
+  <p>
+    Con $\alpha > 1$ los favoritos ganan peso y los longshots lo pierden;
+    con $\alpha = 1$ no hay corrección. Las probabilidades corregidas
+    $q_H, q_D, q_A$ reemplazan a $p_H, p_D, p_A$ en la distribución base (Paso 1).
+    Las probabilidades <em>brutas</em> de Kalshi (sin corregir) se almacenan en
+    cada predicción para poder re-estimar α conforme llegan resultados.
+  </p>
+
+  <h4>Estimación de α — MAP secuencial</h4>
+
+  <p>
+    α se estima por máxima a posteriori sobre los partidos con resultado conocido.
+    Para cada partido completado con resultado $i^* \in \{H, D, A\}$, la
+    log-verosimilitud bajo α es $\log q_{i^*}(\alpha)$. El estimador MAP es:
+  </p>
+
+  $$\hat{\alpha} = \arg\max_{\alpha}\;\Bigl[
+    \sum_{\text{partidos}} \log q_{i^*}(\alpha)
+    \;-\; \frac{(\alpha - \alpha_0)^2}{2\,\sigma_\alpha^2}
+  \Bigr]$$
+
+  <p>
+    El prior <strong>Normal(α₀ = 1.10, σ = 0.20)</strong> está centrado en la
+    estimación de Whelan (2024) para mercados de apuestas competitivos.
+    Con pocos datos (menos de 2 partidos completados), el modelo devuelve
+    directamente α₀.
+  </p>
+
+  <div class="stat-grid">
+    <div class="stat-card"><div class="num">α₀ = 1.10</div><div class="lbl">Prior (Whelan 2024)</div></div>
+    <div class="stat-card"><div class="num">σ = 0.20</div><div class="lbl">Escala del prior</div></div>
+    <div class="stat-card"><div class="num">[0.5, 2.5]</div><div class="lbl">Rango de búsqueda</div></div>
+    <div class="stat-card"><div class="num">α = 1.10</div><div class="lbl">Valor inicial</div></div>
+  </div>
+
   <h3>Paso 1 — Distribución base (modelo de cancha neutral)</h3>
 
   <p>
@@ -379,6 +426,7 @@
   <ul style="margin-left:20px;line-height:2">
     <li>Los datos históricos cubren 192 partidos (WC 2014, 2018, 2022) con ≈163 juegos efectivos tras la ponderación γ. El suavizado Poisson-producto ayuda en fases con pocos datos (eliminatoria tardía).</li>
     <li>La estimación de δ requiere al menos dos jornadas completas (una de entrenamiento y una de prueba). Durante la jornada 1 el modelo opera con δ = 0, idéntico al baseline histórico γ-ponderado.</li>
+    <li>La estimación de α requiere al menos 2 partidos con resultado y precio de Kalshi. Hasta entonces se usa el prior α₀ = 1.10. Con pocos datos el prior domina; la estimación se vuelve más informativa conforme avanza el torneo.</li>
     <li>Kalshi no ofrece mercados de marcadores exactos, por lo que la distribución de goles <em>dado</em> un resultado sigue siendo enteramente histórica.</li>
     <li>Los mercados de spread solo cubren márgenes de hasta 3.5 goles; márgenes mayores se agrupan en una sola categoría ($\ge 4$).</li>
     <li>Los mercados de Kalshi en vivo reflejan el estado actual del partido en curso; se preserva la predicción pre-partido en esos casos.</li>
