@@ -243,9 +243,9 @@ def _save_cache(data: dict):
 
 
 def _clean_entry(entry: dict) -> dict:
-    """Strip internal fields and restore int keys for spread dicts."""
+    """Strip internal fields and restore int keys for numeric-keyed dicts."""
     result = {k: v for k, v in entry.items() if k != "_ts"}
-    for key in ("spread_home", "spread_away"):
+    for key in ("spread_home", "spread_away", "total_goals"):
         if result.get(key):
             result[key] = {int(k): v for k, v in result[key].items()}
     return result
