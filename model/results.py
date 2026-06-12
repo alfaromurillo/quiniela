@@ -26,6 +26,7 @@ RESULT_DELAY_KNOCKOUT = 210   # minutes
 # Map our schedule names → possible ESPN displayName values
 ESPN_ALIASES: dict[str, list[str]] = {
     "USA":                  ["United States", "USA"],
+    "Czech Republic":       ["Czech Republic", "Czechia"],
     "South Korea":          ["South Korea", "Republic of Korea"],
     "DR Congo":             ["DR Congo", "Congo DR", "Democratic Republic of Congo"],
     "Bosnia & Herzegovina": ["Bosnia and Herzegovina", "Bosnia & Herzegovina"],
