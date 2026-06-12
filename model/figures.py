@@ -220,6 +220,11 @@ def fig1_historical_overview():
                 ax.text(winner, loser, txt, ha="center", va="center",
                         fontsize=5.5, color=color)
 
+        # γ/δ annotation in the upper-left white region (loser > winner)
+        ax.text(0.04, 0.97, f"$\\gamma \\approx {gamma:.2f}$\n$\\delta = 0$",
+                transform=ax.transAxes, fontsize=6.5, color="#555555",
+                va="top", ha="left", linespacing=1.5)
+
     # ── Placeholders: rows 1–2 of model columns ────────────────
     # (r, c, bold_label, italic_note)
     placeholders = [
@@ -250,11 +255,9 @@ def fig1_historical_overview():
                 style="italic", multialignment="center")
 
     # ── Phase block headers (span two columns each) ────────────
-    fig.text(0.255, 0.915,
-             f"Fase de grupos  ($\\gamma \\approx {gamma:.2f}$, $\\delta = 0$)",
+    fig.text(0.255, 0.915, "Fase de grupos",
              ha="center", va="bottom", fontsize=10, fontweight="bold")
-    fig.text(0.715, 0.915,
-             f"Eliminación directa  ($\\gamma \\approx {gamma:.2f}$, $\\delta = 0$)",
+    fig.text(0.715, 0.915, "Eliminación directa",
              ha="center", va="bottom", fontsize=10, fontweight="bold")
 
     # ── Single shared colorbar ─────────────────────────────────
