@@ -109,23 +109,20 @@ function renderCard(m, filter, locked, result) {
 
   } else if (hasResult) {
     // Completed match: show result + locked prediction + points
-    const lp   = locked;
-    const pts  = lp ? quinielaPoints(lp.home, lp.away, result.home_score, result.away_score, m.phase) : null;
-    const ptsHtml = pts !== null
-      ? `<span class="pts-earned p${pts}">+${pts} pts</span>`
-      : "";
+    const lp  = locked;
+    const pts = lp ? quinielaPoints(lp.home, lp.away, result.home_score, result.away_score, m.phase) : null;
+    const ptsHtml = pts !== null ? `<span class="pts-earned p${pts}">+${pts} pts</span>` : "";
     const predHtml = lp
       ? `<div class="score-pred-row">Pred: <strong>${lp.home}-${lp.away}</strong></div>`
-      : "";
-    const epHtml = lp && lp.expected_pts != null
-      ? `<div class="score-result-row" style="font-size:.67rem;color:var(--text-muted)">esp. ${lp.expected_pts.toFixed(2)} pts</div>`
       : "";
     scoreHtml = `
       <div class="score-main">${result.home_score}<span class="score-sep">-</span>${result.away_score}</div>
       <div class="score-result-row">resultado</div>
       ${predHtml}
-      ${ptsHtml}
-      ${epHtml}`;
+      <div class="score-inline-row">
+        <span class="score-status-label">Finalizado</span>
+        ${ptsHtml}
+      </div>`;
 
   } else {
     // Upcoming or live: show prediction (locked if past kickoff, current if not)
@@ -138,10 +135,16 @@ function renderCard(m, filter, locked, result) {
       : status === "past-pending"
       ? `<span class="status-pill past">Finalizado</span>`
       : "";
+    const epRow = !statusPill && ep != null
+      ? `<div class="score-inline-row">
+          <span class="score-status-label">Esperado</span>
+          <span class="score-epts ${eptsBadgeClass(ep)}">~${ep.toFixed(2)} pts</span>
+        </div>`
+      : statusPill;
     scoreHtml = `
       <div class="score-main">${ph}<span class="score-sep">-</span>${pa}</div>
       <span class="score-label">predicción</span>
-      ${statusPill || `<span class="score-epts ${eptsBadgeClass(ep)}">~${ep?.toFixed(2)} pts</span>`}`;
+      ${epRow}`;
   }
 
   const groupLabel  = m.group
