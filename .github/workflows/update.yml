@@ -1,6 +1,8 @@
 name: Actualizar predicciones
 
 on:
+  push:
+    branches: [main]
   schedule:
     # 1.5 h before every possible UTC kickoff time (derived from schedule.json).
     # Prediction is shown at 1:30 before kickoff so it can be manually entered
@@ -24,6 +26,7 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
+    if: github.actor != 'github-actions[bot]'
 
     steps:
       - name: Checkout repo
