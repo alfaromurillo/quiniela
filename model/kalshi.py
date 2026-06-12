@@ -315,6 +315,21 @@ def fetch_match_probs(match: dict) -> dict:
     return result
 
 
+def _correct_bias(home_win: float, draw: float, away_win: float,
+                  alpha: float) -> tuple[float, float, float]:
+    """
+    Power transformation to correct favourite-longshot bias.
+    q_i = p_i^α / Σ p_j^α  (α > 1 shifts mass from longshots to favourites).
+    """
+    if abs(alpha - 1.0) < 1e-9:
+        return home_win, draw, away_win
+    qh, qd, qa = home_win ** alpha, draw ** alpha, away_win ** alpha
+    total = qh + qd + qa
+    if total < 1e-12:
+        return home_win, draw, away_win
+    return qh / total, qd / total, qa / total
+
+
 def _fallback_probs() -> dict:
     return {
         "home_win": 0.40,

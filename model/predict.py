@@ -11,11 +11,12 @@ from pathlib import Path
 ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT))
 
-from model.kalshi import fetch_match_probs, _fallback_probs
+from model.kalshi import fetch_match_probs, _fallback_probs, _correct_bias
 from model.historical import build_distributions, scoreline_probs
 from model.optimizer import best_prediction
 from model.learn import (load_canonical, count_2026, estimate_gamma,
-                          estimate_delta, SIGMA_GAMMA, SIGMA_DELTA)
+                          estimate_delta, estimate_alpha,
+                          SIGMA_GAMMA, SIGMA_DELTA, ALPHA_0, SIGMA_ALPHA)
 
 SCHEDULE_PATH  = ROOT / "data" / "schedule.json"
 OUT_PATH       = ROOT / "site" / "data" / "predictions.json"
@@ -42,11 +43,13 @@ def run():
     canonical        = load_canonical(results_json, schedule_data)
     gamma            = estimate_gamma()
     delta            = estimate_delta(canonical, gamma=gamma)
+    alpha            = estimate_alpha()
     extra_wins, extra_draws = count_2026(canonical)
     dist             = build_distributions(gamma=gamma, extra_wins=extra_wins,
                                            extra_draws=extra_draws, delta=delta)
     n_2026           = len(canonical)
-    print(f"Historical γ = {gamma:.3f}  |  WC 2026: {n_2026} results, δ = {delta:.3f}")
+    print(f"Historical γ = {gamma:.3f}  |  WC 2026: {n_2026} results, "
+          f"δ = {delta:.3f}  |  α = {alpha:.3f}")
 
     # ── Load existing locked predictions ──
     if LOCKED_PATH.exists():
@@ -93,13 +96,16 @@ def run():
 
         time.sleep(0.05)
 
-        p_home = kalshi["home_win"]
-        p_draw = kalshi["draw"]
-        p_away = kalshi["away_win"]
+        raw_home = kalshi["home_win"]
+        raw_draw = kalshi["draw"]
+        raw_away = kalshi["away_win"]
         total_goals  = kalshi.get("total_goals")
         spread_home  = kalshi.get("spread_home")
         spread_away  = kalshi.get("spread_away")
         source = kalshi.get("source", "unknown")
+
+        # Apply favourite-longshot bias correction before building distribution
+        p_home, p_draw, p_away = _correct_bias(raw_home, raw_draw, raw_away, alpha)
 
         # Build joint scoreline distribution using adaptive model
         score_dist = scoreline_probs(
@@ -141,9 +147,9 @@ def run():
                 "top3": best["top3"],
             },
             "probabilities": {
-                "home_win": round(p_home, 4),
-                "draw": round(p_draw, 4),
-                "away_win": round(p_away, 4),
+                "home_win": round(raw_home, 4),
+                "draw": round(raw_draw, 4),
+                "away_win": round(raw_away, 4),
                 "total_goals": {str(k): round(v, 4) for k, v in total_goals.items()} if total_goals else None,
             },
             "source": source,
@@ -168,9 +174,12 @@ def run():
         "generated_at":  ts,
         "gamma":         round(gamma, 4),
         "delta":         round(delta, 4),
+        "alpha":         round(alpha, 4),
         "n_games_2026":  n_2026,
         "sigma_gamma":   SIGMA_GAMMA,
         "sigma_delta":   SIGMA_DELTA,
+        "alpha_0":       ALPHA_0,
+        "sigma_alpha":   SIGMA_ALPHA,
     }, indent=2))
     print(f"Saved learning state → {LEARNING_PATH}")
 

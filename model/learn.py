@@ -27,6 +27,19 @@ GAMMA_STEPS  = 90     # grid: 0.10, 0.11, …, 1.00
 DELTA_MAX    = 8.0
 DELTA_STEPS  = 160    # grid: 0.00, 0.05, …, 8.00
 
+# α: favourite-longshot bias correction exponent.
+# Whelan (2024) finds this bias in competitive betting exchanges;
+# Bürgi et al. (2026) document it specifically for Kalshi.
+# α > 1 shifts mass from longshots to favourites; α = 1 means no correction.
+ALPHA_0      = 1.10
+SIGMA_ALPHA  = 0.20   # Normal prior scale for α
+ALPHA_MIN    = 0.50
+ALPHA_MAX    = 2.50
+ALPHA_STEPS  = 100    # grid step ≈ 0.02
+
+_PREDICTIONS_PATH = ROOT / "site" / "data" / "predictions.json"
+_RESULTS_PATH_ALPHA = ROOT / "site" / "data" / "results.json"
+
 JORNADA_ORDER = [
     "Matchday 1", "Matchday 2", "Matchday 3",
     "Round of 32", "Round of 16",
@@ -319,3 +332,84 @@ def estimate_delta(
             best_delta = delta
 
     return best_delta
+
+
+# ── α estimation ──────────────────────────────────────────────────────────────
+
+def estimate_alpha(
+    prior_center: float = ALPHA_0,
+    sigma: float = SIGMA_ALPHA,
+) -> float:
+    """
+    MAP estimate of α (favourite-longshot bias correction exponent).
+
+    For each completed WC 2026 match with kalshi outcome probabilities,
+    evaluates log q_{actual_result}(α) where q_i = p_i^α / Σ p_j^α.
+    Maximises total log-likelihood plus Normal(prior_center, σ²) log-prior.
+
+    Returns prior_center when fewer than 2 kalshi matches with results exist.
+    Reads raw (pre-correction) probabilities from predictions.json.
+    """
+    if not _PREDICTIONS_PATH.exists() or not _RESULTS_PATH_ALPHA.exists():
+        return prior_center
+
+    preds   = json.loads(_PREDICTIONS_PATH.read_text())
+    results = json.loads(_RESULTS_PATH_ALPHA.read_text())
+    match_results = results.get("matches", {})
+
+    # Collect (p_home, p_draw, p_away, outcome) for kalshi-sourced matches
+    data: list[tuple[float, float, float, str]] = []
+    for entry in preds.get("matches", []):
+        if entry.get("tbd"):
+            continue
+        if entry.get("source") != "kalshi":
+            continue
+        mid_str = str(entry["id"])
+        res = match_results.get(mid_str)
+        if not res or res.get("status") != "final":
+            continue
+        probs = entry.get("probabilities", {})
+        ph = probs.get("home_win")
+        pd = probs.get("draw")
+        pa = probs.get("away_win")
+        if ph is None or pd is None or pa is None:
+            continue
+        hs = res.get("home_score")
+        as_ = res.get("away_score")
+        if hs is None or as_ is None:
+            continue
+        hs, as_ = int(hs), int(as_)
+        if hs > as_:
+            outcome = "home_win"
+        elif hs < as_:
+            outcome = "away_win"
+        else:
+            outcome = "draw"
+        data.append((float(ph), float(pd), float(pa), outcome))
+
+    if len(data) < 2:
+        return prior_center
+
+    alpha_grid = [ALPHA_MIN + i * (ALPHA_MAX - ALPHA_MIN) / ALPHA_STEPS
+                  for i in range(ALPHA_STEPS + 1)]
+    best_alpha, best_lp = prior_center, -1e18
+
+    for alpha in alpha_grid:
+        lp = 0.0
+        for ph, pd, pa, outcome in data:
+            p_out = {"home_win": ph, "draw": pd, "away_win": pa}[outcome]
+            qh = ph ** alpha
+            qd = pd ** alpha
+            qa = pa ** alpha
+            denom = qh + qd + qa
+            if denom < 1e-12:
+                continue
+            q_out = p_out ** alpha / denom
+            lp += math.log(max(q_out, 1e-12))
+        # Normal(prior_center, σ²) prior
+        lp -= (alpha - prior_center) ** 2 / (2 * sigma ** 2)
+        if lp > best_lp:
+            best_lp    = lp
+            best_alpha = alpha
+
+    return best_alpha

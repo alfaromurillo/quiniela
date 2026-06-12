@@ -1,8 +1,11 @@
 {
-  "generated_at": "2026-06-12T19:26:52.519642+00:00",
+  "generated_at": "2026-06-12T18:05:02.978838+00:00",
   "gamma": 0.84,
   "delta": 0.0,
+  "alpha": 1.1,
   "n_games_2026": 2,
   "sigma_gamma": 0.3,
-  "sigma_delta": 1.0
+  "sigma_delta": 1.0,
+  "alpha_0": 1.1,
+  "sigma_alpha": 0.2
 }
