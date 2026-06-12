@@ -120,17 +120,17 @@ def fig1_historical_overview():
       y-axis = Goles perdedor (loser, 0–5)
       NaN / white = upper-left triangle (loser > winner, impossible)
 
-    Column layout (after col 2↔3 swap):
+    Column layout (phases grouped together):
       Col 0: Fase de grupos  — historical WC 2014/2018/2022
-      Col 1: Eliminación dir.— historical WC 2014/2018/2022
-      Col 2: Eliminación dir.— model estimate (row 0) + placeholders
-      Col 3: Fase de grupos  — model estimate (row 0) + placeholders
+      Col 1: Fase de grupos  — model estimate (row 0) + placeholders
+      Col 2: Eliminación dir.— historical WC 2014/2018/2022
+      Col 3: Eliminación dir.— model estimate (row 0) + placeholders
 
-    Placeholders (4 lower-right panels):
-      [row 1, col 2] = "WC 2026 KO real"        (fill after ~jul 19)
-      [row 1, col 3] = "Estimado fin mundial"    (fill after ~jul 19)
-      [row 2, col 2] = "Estimado fin de grupos"  (fill after ~jul 3)
-      [row 2, col 3] = "WC 2026 Grp real"        (fill after ~jul 3)
+    Placeholders in model columns (rows 1–2):
+      [row 1, col 1] = "WC 2026 Grp real"       (fill after ~jul 3)
+      [row 2, col 1] = "Estimado fin de grupos"  (fill after ~jul 3)
+      [row 1, col 3] = "Estimado fin del mundial"(fill after ~jul 19)
+      [row 2, col 3] = "WC 2026 KO real"         (fill after ~jul 19)
 
     Single Blues colormap; one shared colorbar on the right.
     """
@@ -146,7 +146,6 @@ def fig1_historical_overview():
     phases      = ["group", "knockout"]
     phase_names = {"group": "Fase de grupos", "knockout": "Eliminación directa"}
 
-    # Right block after column swap: col 2 = KO model, col 3 = Grp model
     model_mats = {ph: _model_matrix(ph, gamma) for ph in phases}
 
     # Shared vmax across historical proportions and model probabilities
@@ -177,19 +176,20 @@ def fig1_historical_overview():
         ax.set_title(title, fontsize=8, pad=3)
         return im
 
-    # ── Left block: historical WC data ────────────────────────
+    # ── Historical data: col 0 = Grp hist, col 2 = KO hist ────
     im_last = None
-    left_phases = ["group", "knockout"]   # col 0 = Grp, col 1 = KO
+    # (col_idx, phase): odd model cols (1, 3) are handled separately
+    hist_cols = [(0, "group"), (2, "knockout")]
 
     for row, (yr, counts, totals) in enumerate(wc_data):
-        for col_idx, ph in enumerate(left_phases):
-            ax  = axes[row, col_idx]
+        for col, ph in hist_cols:
+            ax  = axes[row, col]
             tot = totals[ph]
             arr = counts[ph]   # canonical, NaN for impossible cells
             prop = np.where(np.isnan(arr), np.nan, arr / tot) if tot > 0 else arr.copy()
 
-            ylabel = f"WC {yr}\nGoles perdedor" if col_idx == 0 else "Goles perdedor"
-            im_last = _draw_heatmap(ax, prop, phase_names[ph], ylabel)
+            ylabel = f"WC {yr}\nGoles perdedor" if col == 0 else "Goles perdedor"
+            im_last = _draw_heatmap(ax, prop, "Datos históricos", ylabel)
 
             for loser in GOALS:
                 for winner in GOALS:
@@ -202,15 +202,13 @@ def fig1_historical_overview():
                     ax.text(winner, loser, txt, ha="center", va="center",
                             fontsize=4.5, color=color, linespacing=1.3)
 
-    # ── Right block row 0: model estimate (δ=0, neutral probs) ─
-    # Column order after swap: col 2 = KO model, col 3 = Grp model
-    right_phases = ["knockout", "group"]   # col 2 = KO, col 3 = Grp
+    # ── Model estimate row 0: col 1 = Grp model, col 3 = KO model
+    model_cols = [(1, "group"), (3, "knockout")]
 
-    for rcol, ph in enumerate(right_phases):
-        ax  = axes[0, 2 + rcol]
+    for col, ph in model_cols:
+        ax  = axes[0, col]
         mat = model_mats[ph]
-        ylabel = "Estimado inicio\nGoles perdedor" if rcol == 0 else "Goles perdedor"
-        im_last = _draw_heatmap(ax, mat, phase_names[ph], ylabel)
+        im_last = _draw_heatmap(ax, mat, "Estimado inicio", "Goles perdedor")
 
         for loser in GOALS:
             for winner in GOALS:
@@ -222,31 +220,28 @@ def fig1_historical_overview():
                 ax.text(winner, loser, txt, ha="center", va="center",
                         fontsize=5.5, color=color)
 
-    # ── Right block rows 1–2: placeholders ────────────────────
-    # (r, c, phase_header, bold_label, italic_note)
+    # ── Placeholders: rows 1–2 of model columns ────────────────
+    # (r, c, bold_label, italic_note)
     placeholders = [
-        (1, 2, "Eliminación directa",
-         "WC 2026 KO real",
-         "Completar al final\ndel torneo (~jul 19)"),
-        (1, 3, "Fase de grupos",
-         "Estimado fin\ndel mundial",
-         "Completar al final\ndel torneo (~jul 19)"),
-        (2, 2, "Eliminación directa",
-         "Estimado fin\nde grupos",
-         "Completar al fin\nde la fase de grupos (~jul 3)"),
-        (2, 3, "Fase de grupos",
+        (1, 1,
          "WC 2026 Grp real",
          "Completar al fin\nde la fase de grupos (~jul 3)"),
+        (2, 1,
+         "Estimado fin\nde grupos",
+         "Completar al fin\nde la fase de grupos (~jul 3)"),
+        (1, 3,
+         "Estimado fin\ndel mundial",
+         "Completar al final\ndel torneo (~jul 19)"),
+        (2, 3,
+         "WC 2026 KO real",
+         "Completar al final\ndel torneo (~jul 19)"),
     ]
-    for r, c, ph_hdr, bold_lbl, italic_note in placeholders:
+    for r, c, bold_lbl, italic_note in placeholders:
         ax = axes[r, c]
         ax.set_facecolor("#efefef")
         ax.set_xticks([]); ax.set_yticks([])
         for sp in ax.spines.values():
             sp.set_edgecolor("#bbbbbb")
-        ax.set_title(ph_hdr, fontsize=8, pad=3, color="#777777")
-        if c == 2:
-            ax.set_ylabel("", fontsize=7, color="#777777")
         ax.text(0.5, 0.57, bold_lbl, ha="center", va="center",
                 transform=ax.transAxes, fontsize=9, color="#444444",
                 fontweight="bold", multialignment="center")
@@ -254,12 +249,12 @@ def fig1_historical_overview():
                 transform=ax.transAxes, fontsize=7.5, color="#999999",
                 style="italic", multialignment="center")
 
-    # ── Block headers ──────────────────────────────────────────
+    # ── Phase block headers (span two columns each) ────────────
     fig.text(0.255, 0.915,
-             "Datos históricos  (proporciones, n por celda)",
+             f"Fase de grupos  ($\\gamma \\approx {gamma:.2f}$, $\\delta = 0$)",
              ha="center", va="bottom", fontsize=10, fontweight="bold")
     fig.text(0.715, 0.915,
-             f"Modelo estimado  ($\\gamma \\approx {gamma:.2f}$, $\\delta = 0$)",
+             f"Eliminación directa  ($\\gamma \\approx {gamma:.2f}$, $\\delta = 0$)",
              ha="center", va="bottom", fontsize=10, fontweight="bold")
 
     # ── Single shared colorbar ─────────────────────────────────
