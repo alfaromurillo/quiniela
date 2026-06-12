@@ -18,6 +18,13 @@ python model/predict.py
 # Fetch completed match results from ESPN
 python model/results.py
 
+# Validate current predictions.json (runs automatically in workflow before commit)
+python model/sanity.py
+
+# Local preview of the site
+cd site && python3 -m http.server 8765 --bind 127.0.0.1
+# then open http://127.0.0.1:8765/
+
 # Quick model sanity check (no network, pure math)
 python -c "
 from model.historical import scoreline_probs
@@ -60,6 +67,7 @@ model/
   optimizer.py         # E[pts] calculator and argmax over 0–5 goal grid
   results.py           # Fetches WC 2026 final scores from ESPN public API
   predict.py           # Full pipeline: schedule → Kalshi → dist → predict → JSON
+  sanity.py            # Validates predictions.json before commit (hard fails on degenerate output)
 
 site/
   index.html           # Match predictions by date, points counter
@@ -72,7 +80,7 @@ site/
     results.json       # Final scores for completed matches (from ESPN)
     learning.json      # Current γ and δ estimates
 
-.github/workflows/update.yml  # Cron: 1.5h before each kickoff + midnight CR + result windows
+.github/workflows/update.yml  # Triggers: push to main (skip bot commits) + cron schedule
 ```
 
 ## Kalshi API details
@@ -136,3 +144,9 @@ results.json  ──→ learn.py → estimate_delta()  →  δ = 0..∞
 
 - **Knockout TBD**: Knockout matches are skipped until bracket resolves. Predictions generate automatically once team names are known. 31 knockout matches currently TBD.
 - **Modelo.html δ card**: The "δ = 0, valor inicial" stat card is hardcoded. Cosmetic — needs live value once δ starts being estimated (after jornada 2 completes).
+
+## Gotchas
+
+**ESPN team name aliases**: ESPN uses different display names from our schedule. Known mismatches: `"Czechia"` (not `"Czech Republic"`), `"Bosnia-Herzegovina"` (not `"Bosnia & Herzegovina"`). Add new aliases to `ESPN_ALIASES` in `model/results.py` as they appear. Symptom: `results.py` prints `"No result yet"` for a match that already finished. Fix: add the ESPN name to the alias list and re-run.
+
+**Kalshi cache JSON round-trip**: `total_goals` and spread dicts have `int` keys in Python but become `str` after JSON serialization. `_clean_entry()` in `kalshi.py` must convert all numeric-keyed dicts back to `int` on cache load. Failure mode: all predictions collapse to 5-5 with 0.00 expected pts. `sanity.py` catches this before it reaches GitHub Pages.
