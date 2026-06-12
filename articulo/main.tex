@@ -1,0 +1,919 @@
+% ============================================================
+%  Predicción óptima de marcadores en el Mundial 2026:
+%  integrando mercados de predicción con modelos bayesianos
+%  adaptativos
+%
+%  Revista de Matemática: Teoría y Aplicaciones (UCR/CIMPA)
+%  Autor: Jorge A. Alfaro-Murillo
+%  Compilar: pdflatex -synctex=1 main && bibtex main && pdflatex -synctex=1 main && pdflatex -synctex=1 main
+% ============================================================
+
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{natbib}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+% Para tabla de marcadores
+\usepackage{array}
+\usepackage{multirow}
+
+% URLs en referencias
+\usepackage{url}
+
+% ── Comandos de autor ──────────────────────────────────────────
+\newcommand{\TODO}[1]{\textbf{\color{red}[TODO: #1]}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+
+% ── Información del artículo ───────────────────────────────────
+\title{%
+  \textbf{Predicción óptima de marcadores en el Mundial 2026:
+  integrando mercados de predicción con modelos bayesianos
+  adaptativos}\\[6pt]
+  \large\textit{Optimal scoreline prediction for the 2026 World Cup:
+  integrating prediction markets with adaptive Bayesian models}
+}
+
+\author{%
+  Jorge A.\ Alfaro-Murillo\\
+  \small Centro de Investigación en Matemática Pura y Aplicada (CIMPA)\\
+  \small Universidad de Costa Rica\\
+  \small San José, Costa Rica\\
+  \small \href{mailto:jorge.alfaro@ucr.ac.cr}{jorge.alfaro@ucr.ac.cr}
+}
+
+\date{Versión: \today}
+
+\begin{document}
+
+\maketitle
+
+% ── MSC 2020 ──────────────────────────────────────────────────
+\noindent\textbf{MSC 2020:} 62F15, 62P25, 60G25, 91B82.
+
+\noindent\textbf{Palabras clave:} mercados de predicción,
+inferencia bayesiana, distribución de Poisson, predicción de
+marcadores, fútbol, Mundial 2026, quiniela, optimización.
+
+\noindent\textbf{Keywords:} prediction markets, Bayesian inference,
+Poisson distribution, scoreline prediction, soccer, World Cup 2026,
+betting pool, optimization.
+
+\bigskip\hrule\bigskip
+
+% ─────────────────────────────────────────────────────────────
+\begin{abstract}
+En una quiniela de fútbol, acertar el marcador exacto puede valer
+hasta cinco veces más que simplemente predecir el ganador.
+Esta asimetría en la regla de puntuación convierte la predicción
+de marcadores en un problema de optimización matemático no trivial:
+el marcador más probable no es necesariamente el más rentable.
+
+Este artículo presenta un modelo estadístico para el Mundial de
+Fútbol 2026 que maximiza los puntos esperados en una quiniela de
+marcadores exactos mediante la integración de dos fuentes de
+información complementarias.
+La primera fuente son los \emph{mercados de predicción}:
+Kalshi, una plataforma estadounidense regulada donde miles de
+participantes negocian contratos sobre cada resultado del torneo.
+Los precios de mercado agregan información dispersa de manera
+eficiente, ofreciendo estimaciones de probabilidad que superan
+en calibración a los pronósticos individuales de expertos.
+La segunda fuente son tres ediciones del Mundial (2014, 2018 y 2022),
+cuya distribución histórica de marcadores captura la estructura
+estadística del juego a nivel de selecciones nacionales.
+
+Ambas fuentes se integran mediante un modelo bayesiano adaptativo.
+Los parámetros de decaimiento temporal~$\gamma$ ---que mide cuánto
+pesa el historial reciente sobre el antiguo--- y de adaptación al
+torneo en curso~$\delta$ ---que mide cuánto peso adicional reciben
+los resultados del propio WC 2026--- se estiman por validación cruzada:
+$\gamma \approx 0.84$ pondera más el historial reciente,
+mientras que~$\delta$ crece conforme se acumulan resultados del
+propio Mundial 2026, reflejando las características propias del
+presente mundial como el número de equipos, el formato de grupos
+y el nivel general de los seleccionados participantes.
+Sobre la distribución resultante de marcadores se aplica un argumento
+de optimización explícito para encontrar la predicción que maximiza
+los puntos esperados bajo la regla de puntuación de la quiniela.
+
+\TODO{Completar con resultados numéricos al concluir la fase de grupos.}
+
+El código fuente del modelo y la plataforma web de seguimiento
+están disponibles públicamente en GitHub.
+\end{abstract}
+
+\bigskip
+
+% ── Abstract en inglés ────────────────────────────────────────
+\noindent\textbf{Abstract.}
+In a soccer quiniela, predicting the exact scoreline can be worth
+up to five times more than simply predicting the winner.
+This scoring-rule asymmetry turns scoreline prediction into a
+non-trivial mathematical optimization problem: the most likely
+scoreline is not necessarily the most valuable one.
+
+This paper presents a statistical model for the 2026 FIFA World Cup
+that maximizes expected points in an exact-scoreline betting pool
+by integrating two complementary information sources.
+The first is \emph{prediction markets}: Kalshi, a regulated
+U.S.\ platform where thousands of participants trade contracts on each
+tournament match.
+Market prices efficiently aggregate dispersed information, providing
+probability estimates that outperform individual expert forecasts
+in calibration.
+The second source is three editions of the World Cup (2014, 2018,
+2022), whose historical scoreline distributions capture the
+statistical structure of international tournament soccer.
+
+Both sources are integrated via an adaptive Bayesian model.
+Temporal decay $\gamma$ ---measuring how much recent tournaments
+outweigh older ones--- and current-tournament adaptation $\delta$
+---measuring the additional weight given to WC 2026 results---
+are estimated by cross-validation: $\gamma \approx 0.84$
+upweights recent history, while $\delta$ grows as 2026 results
+accumulate, reflecting the specific characteristics of the current
+tournament such as the number of teams, group format, and overall
+level of the participating squads.
+An explicit optimization argument then identifies the scoreline
+prediction that maximizes expected points under the quiniela scoring
+rule.
+
+\TODO{Insert numerical results upon conclusion of the group stage.}
+
+Model source code and live tracking website are publicly available
+on GitHub.
+
+\bigskip\hrule
+
+% ─────────────────────────────────────────────────────────────
+\section{Introducción}
+\label{sec:intro}
+
+La quiniela de fútbol es un fenómeno cultural ampliamente arraigado
+en América Latina y España \citep{aguero2024, lopez2022, bravo2026,
+lanacion2026arg}.
+En su variante de marcador exacto, los participantes pronostican el
+resultado preciso de cada partido de un torneo, acumulando puntos
+según la cercanía de su predicción al resultado real.
+La regla de puntuación habitual premia de manera desigual los distintos
+tipos de acierto, por ejemplo: acertar el marcador exacto vale cinco puntos,
+mientras que acertar únicamente al ganador vale solo dos.
+Esta asimetría introduce un problema de optimización que va más allá de
+simplemente predecir el resultado más probable: el marcador modal
+puede diferir del marcador que maximiza los puntos esperados.
+
+Formalicemos el problema.
+Sea $P(h, k)$ la distribución de probabilidad sobre los marcadores
+posibles de un partido, donde $h$ es el número de goles de un equipo
+y $k$ el del otro.
+Dado un sistema de puntuación $f(a, b, h, k)$ que asigna puntos
+cuando se predice $(a, b)$ y el marcador real es $(h, k)$, la
+predicción óptima es
+\[
+  (\hat{a}, \hat{b})
+  = \arg\max_{(a,b)} \E[\text{pts} \mid \text{predicción}(a,b)]
+  = \arg\max_{(a,b)} \sum_{h,k} f(a, b, h, k) \cdot P(h, k).
+\]
+El desafío central es estimar $P(h, k)$ con precisión para cada
+partido del torneo.
+
+\subsection*{Fuentes de información}
+
+Dos fuentes de información son naturalmente complementarias para
+este propósito:
+
+\textbf{Historial de Mundiales.}
+Las ediciones recientes del Mundial de Fútbol (2014, 2018 y 2022)
+proveen 192 partidos cuyos marcadores capturan la distribución
+estadística del juego entre selecciones nacionales de primer nivel.
+Esta distribución refleja la estructura del fútbol de alto rendimiento:
+la predominancia de marcadores bajos, la asimetría entre goles en
+tiempo regular y tiempo extra, y la diferencia entre la fase de grupos
+y la fase eliminatoria.
+
+\textbf{Mercados de predicción.}
+Los mercados de predicción son plataformas donde los participantes
+negocian contratos cuyo valor depende del resultado de eventos futuros.
+En el equilibrio, los precios de mercado convergen hacia las
+probabilidades colectivas del resultado, agregando la información
+dispersa de todos los participantes de manera análoga a cómo los
+mercados financieros agregan expectativas sobre el valor futuro de
+los activos \citep{arrow2008}.
+La evidencia empírica muestra que estos mercados son competitivos con
+las mejores herramientas de pronóstico disponibles \citep{spann2009}.
+
+Para el Mundial 2026 utilizamos \textbf{Kalshi}
+(\href{https://kalshi.com}{kalshi.com}), una plataforma de mercados
+de predicción regulada en Estados Unidos.
+Para cada partido del torneo, Kalshi ofrece tres tipos de mercados:
+resultado del partido (victoria local, empate, victoria visitante),
+total de goles y ventaja de goles, cada uno con alta liquidez y
+precios actualizados en tiempo real.
+
+\subsection*{Contribución}
+
+Este artículo hace tres contribuciones.
+Primero, integra precios de mercados de predicción de Kalshi con un
+modelo bayesiano de distribución de marcadores para obtener
+estimaciones $P(h,k)$ más precisas que cualquiera de las dos fuentes
+por separado.
+Segundo, aplica un argumento de optimización explícito bajo la regla
+de puntuación de quiniela para identificar la predicción de marcador
+que maximiza los puntos esperados.
+Tercero, implementa el modelo completo en una plataforma web pública
+con actualizaciones automáticas, y documenta el papel que jugó
+Claude Code —una herramienta de programación asistida por inteligencia
+artificial— en el desarrollo del sistema.
+
+Hasta donde sabemos, esta es la primera publicación académica que
+combina explícitamente precios de mercados de predicción con modelos
+bayesianos informados por datos históricos de torneos anteriores y
+actualizados secuencialmente conforme avanza el torneo en curso,
+con el objetivo de optimizar pronósticos en concursos de predicción
+deportiva con reglas de puntuación asimétricas.
+
+% ─────────────────────────────────────────────────────────────
+\section{Mercados de predicción}
+\label{sec:mercados}
+
+\subsection{Teoría y eficiencia}
+
+Un mercado de predicción es un mecanismo de agregación de
+información en el que los participantes negocian contratos
+contingentes sobre eventos futuros.
+Un contrato binario típico paga \$1 si el evento ocurre y \$0
+en caso contrario; su precio de mercado es, en equilibrio, la
+estimación colectiva de la probabilidad del evento \citep{surowiecki2004}.
+
+La eficiencia de los mercados de predicción descansa sobre un
+argumento de arbitraje: si el precio de mercado difiere
+sustancialmente de la probabilidad verdadera, existe una oportunidad
+de ganancia que agentes racionales explotarán hasta eliminarla.
+Este mecanismo es el mismo que da eficiencia a los mercados
+financieros clásicos, con la ventaja adicional de que los contratos
+tienen un horizonte de tiempo definido y una resolución objetiva.
+
+Empíricamente, una comparación para 678 partidos de la Bundesliga
+alemana muestra que los mercados de predicción son al menos tan
+precisos como las cuotas de bookmakers, y ambos superan claramente
+a los pronosticadores individuales \citep{spann2009}.
+Resultados similares se obtienen para el fútbol inglés medidos
+con el score de Brier \citep{forrest2005}.
+
+\subsection{Kalshi: arquitectura y mercados disponibles}
+
+Kalshi es una plataforma de mercados de predicción regulada por la
+Commodity Futures Trading Commission (CFTC) de Estados Unidos,
+fundada en 2018 y operativa desde 2021.
+Para el Mundial 2026, Kalshi ofrece tres familias de mercados
+por partido:
+
+\begin{enumerate}
+  \item \textbf{Resultado del partido} (\texttt{KXWCGAME-}):
+    submercados de victoria local, empate y victoria visitante.
+  \item \textbf{Total de goles} (\texttt{KXWCTOTAL-}):
+    submercados del tipo ``más de $n - 0.5$ goles'', para
+    $n = 1, 2, \ldots, 6$.
+  \item \textbf{Ventaja de goles} (\texttt{KXWCSPREAD-}):
+    submercados del tipo ``el equipo $X$ gana por más de $m - 0.5$
+    goles'', para distintos valores de $m$.
+\end{enumerate}
+
+Los precios se obtienen como el punto medio entre la mejor oferta de
+compra y la mejor oferta de venta (midprice) cuando el spread es menor
+de \$0.30; de lo contrario se descarta el mercado por falta de liquidez.
+
+\subsection{Sesgo favorito-longshot}
+
+Un hallazgo consistente en la literatura de mercados deportivos es el
+\emph{sesgo favorito-longshot}: los contratos sobre resultados
+probables (favoritos) están subvalorados, mientras que los contratos
+sobre resultados improbables (longshots) están sobrevalorados
+\citep{whelan2024}.
+Un análisis de más de 300{,}000 contratos de Kalshi documenta
+este sesgo: los contratos baratos ganan menos de lo implícito en
+su precio, y los contratos caros generan pequeños retornos
+positivos \citep{burgi2026}.
+El modelo incorpora una corrección explícita mediante una
+transformación de potencia que se describe en la Sección~\ref{sec:kalshi}.
+
+\subsection{Plataformas alternativas}
+
+Otras plataformas relevantes de mercados de predicción son:
+
+\textbf{Manifold Markets} (\href{https://manifold.markets}{manifold.markets}):
+plataforma de acceso global con dinero de juego (no real), con más de
+un millón de mercados sobre eventos de todo tipo.
+La ausencia de dinero real reduce los incentivos de corrección, pero
+también elimina barreras regulatorias y permite mercados sobre
+preguntas de nicho.
+
+\textbf{Metaculus} (\href{https://metaculus.com}{metaculus.com}):
+plataforma de pronóstico basada en torneos y reputación.
+Los datos del proyecto Calibration City \citep{manifund2024}
+sugieren que Metaculus obtiene scores de Brier de 0.084--0.111,
+comparables con los mejores forecasters individuales.
+
+\textbf{Polymarket}: plataforma de dinero real basada en blockchain,
+no disponible para usuarios en Estados Unidos.
+En las elecciones presidenciales de EE.UU.\ de 2024, Polymarket
+superó a las encuestas tradicionales en precisión \citep{cutting2025}.
+
+Para el Mundial 2026, Kalshi es la opción más adecuada por su
+liquidez en mercados deportivos, su regulación en EE.UU.\ y la
+disponibilidad de una API pública sin autenticación.
+
+% ─────────────────────────────────────────────────────────────
+\section{Modelo histórico de marcadores}
+\label{sec:historico}
+
+\subsection{Datos}
+
+Utilizamos los resultados de tres ediciones del Mundial de Fútbol:
+WC 2014 (Brasil), WC 2018 (Rusia) y WC 2022 (Catar), con 64 partidos
+cada una, para un total de 192 partidos.
+Los datos se obtienen de la base de datos de código abierto
+\textit{openfootball}.
+
+Para la \textbf{fase de grupos}, registramos el marcador al final de
+los 90 minutos reglamentarios.
+Para la \textbf{fase eliminatoria}, registramos el marcador al final
+de los 120 minutos cuando hay tiempo extra (prórroga), dado que la
+regla de puntuación de la quiniela considera todos los goles en ese
+período.
+Los partidos que se resuelven en tanda de penales se registran con
+el marcador de empate al final del tiempo extra, pues la quiniela
+instruye predecir empate en ese caso.
+
+Mantenemos distribuciones separadas para la fase de grupos y la fase
+eliminatoria, dado que los partidos eliminatorios tienden a ser más
+cerrados y a producir marcadores distintos a los de la fase de grupos
+\citep{groll2015}.
+
+\subsection{Ponderación temporal: parámetro \texorpdfstring{$\gamma$}{gamma}}
+
+Dada la evolución del nivel de juego entre ediciones del Mundial,
+el historial más reciente debe pesar más en la estimación.
+Definimos pesos de decaimiento geométrico: el WC 2022 tiene peso~1,
+el WC 2018 tiene peso~$\gamma$, y el WC 2014 tiene peso~$\gamma^2$,
+con $\gamma \in (0, 1]$.
+
+La muestra efectiva ponderada es
+\[
+  n_{\mathrm{eff}} = 64 \cdot (1 + \gamma + \gamma^2).
+\]
+
+Estimamos $\gamma$ por máxima verosimilitud con validación cruzada
+dejando fuera un torneo a la vez (\textit{leave-one-tournament-out}),
+con un prior $\gamma \sim \mathcal{N}(1, 0.3^2)$ truncado a $(0,1]$
+para regularizar hacia el caso sin decaimiento.
+La estimación resultante es $\hat{\gamma} \approx 0.84$, que implica
+una muestra efectiva de aproximadamente
+$64 \cdot (1 + 0.84 + 0.84^2) \approx 163$ partidos ponderados.
+
+\subsection{Suavizado mediante un prior de Poisson}
+
+Las estimaciones empíricas de frecuencias de marcadores exactos son
+inestables para muestras pequeñas: marcadores como 4-3 pueden no
+haber ocurrido en 192 partidos aunque tengan probabilidad positiva.
+Suavizamos la distribución histórica con un prior paramétrico.
+
+Definimos un prior de producto de Poisson:
+\[
+  P_{\mathrm{prior}}(h, k) \propto \frac{\lambda_h^h}{h!} \cdot
+  \frac{\lambda_k^k}{k!},
+\]
+donde $\lambda_h$ y $\lambda_k$ son las tasas medias de goles por
+equipo estimadas a partir de los datos ponderados combinados.
+La distribución suavizada combina la empírica y el prior con
+$\kappa = 5$ pseudoobservaciones:
+\[
+  \hat{P}(h, k)
+  = \frac{n_{\mathrm{eff}} \cdot P_{\mathrm{hist}}(h,k)
+         + \kappa \cdot P_{\mathrm{prior}}(h,k)}
+         {n_{\mathrm{eff}} + \kappa}.
+\]
+
+\subsection{Adaptación bayesiana al torneo en curso: parámetro
+  \texorpdfstring{$\delta$}{delta}}
+
+A medida que el propio WC 2026 produce resultados, esa información
+debe incorporarse a la distribución.
+Definimos un esquema de adaptación en el que cada partido del
+WC 2026 de la jornada $j$ contribuye con peso $(1 + \delta)$ relativo
+a los partidos históricos.
+La distribución combinada es entonces
+\[
+  \hat{P}_\delta(h,k)
+  \propto n_{\mathrm{eff}} \cdot \hat{P}(h,k)
+        + (1 + \delta) \cdot n_{2026} \cdot P_{2026}(h,k),
+\]
+donde $n_{2026}$ es el número de partidos del WC 2026 ya disputados
+y $P_{2026}(h,k)$ es su distribución empírica.
+
+Estimamos $\delta$ por máximo a posteriori, dejando fuera una jornada
+a la vez (\textit{leave-one-jornada-out}), con un prior
+$\delta \sim \text{HalfNormal}(\sigma = 1)$ que favorece la
+regularización hacia el historial cuando los datos del torneo actual
+son escasos.
+Al inicio del torneo, $\delta = 0$; crece conforme se acumulan
+resultados y la señal del WC 2026 justifica desviarse del historial.
+
+% ─────────────────────────────────────────────────────────────
+\section{Integración de los mercados de predicción}
+\label{sec:kalshi}
+
+La distribución histórica suavizada $\hat{P}_\delta(h,k)$ captura la
+estructura estadística del fútbol mundialista, pero no incorpora
+información específica del partido: las fortalezas relativas de los
+dos equipos, el contexto del grupo, el historial reciente.
+Esa información está contenida en los precios de Kalshi.
+
+\subsection{Corrección del sesgo favorito-longshot}
+\label{sec:alpha}
+
+Antes de usar los precios de Kalshi como probabilidades, aplicamos
+una corrección por el sesgo favorito-longshot descrito en la
+Sección~\ref{sec:mercados}.
+Denotamos con $p_W^0$, $p_D^0$, $p_A^0$ los precios brutos de Kalshi
+(normalizados para sumar 1).
+La corrección sigue la transformación de potencia
+\citep{whelan2024,burgi2026}:
+\begin{equation}
+  q_i = \frac{(p_i^0)^\alpha}{\sum_{j} (p_j^0)^\alpha},
+  \qquad i \in \{W, D, A\},
+  \label{eq:alpha}
+\end{equation}
+donde $\alpha > 1$ concentra masa en los favoritos y reduce la
+sobrevaloración de los longshots.
+
+\textbf{Inicialización.}
+El valor inicial $\alpha_0 = 1.10$ está calibrado con base en el análisis
+de mercados de intercambio competitivos en \cite{whelan2024}.
+
+\textbf{Estimación secuencial.}
+Tras cada jornada del Mundial, re-estimamos $\alpha$ por máximo
+a posteriori~(MAP) usando todos los partidos completados
+con datos de Kalshi hasta ese momento.
+Para el partido $i$ con precios brutos $p_W^{0,i}, p_D^{0,i}, p_A^{0,i}$
+y resultado $r_i \in \{W, D, A\}$, la log-verosimilitud de $\alpha$ es
+\[
+  \ell(\alpha) = \sum_{i} \log q_{r_i}(\alpha),
+\]
+con la prior gaussiana $\alpha \sim \mathrm{Normal}(\alpha_0,\, \sigma_\alpha^2)$,
+$\sigma_\alpha = 0.20$.
+El estimador MAP satisface
+\[
+  \hat{\alpha} = \arg\max_\alpha
+    \left[\ell(\alpha) - \frac{(\alpha - \alpha_0)^2}{2\sigma_\alpha^2}\right].
+\]
+Cuando hay pocos datos (menos de dos partidos con resultado kalshi),
+$\hat{\alpha} = \alpha_0$.
+La estimación actualizada se almacena junto con $\gamma$ y $\delta$,
+y se reporta en la Sección~\ref{sec:resultados}.
+
+\subsection{Condicionamiento al resultado del partido}
+
+Sean $p_W$, $p_D$, $p_A$ las probabilidades corregidas $q_W, q_D, q_A$
+de la ecuación~\eqref{eq:alpha}.
+Dividimos la distribución histórica en tres bloques:
+\[
+  Q_W(h,k) = \hat{P}_\delta(h,k) \cdot \mathbf{1}[h > k],
+  \quad
+  Q_D(h,k) = \hat{P}_\delta(h,k) \cdot \mathbf{1}[h = k],
+  \quad
+  Q_A(h,k) = \hat{P}_\delta(h,k) \cdot \mathbf{1}[h < k],
+\]
+y los reescalamos para que cada bloque sume la probabilidad de Kalshi
+correspondiente:
+\[
+  \tilde{P}_1(h,k)
+  = \frac{p_W \cdot Q_W(h,k)}{\sum_{h'>k'} Q_W(h',k')}
+  + \frac{p_D \cdot Q_D(h,k)}{\sum_{h'=k'} Q_D(h',k')}
+  + \frac{p_A \cdot Q_A(h,k)}{\sum_{h'<k'} Q_A(h',k')}.
+\]
+
+\subsection{Reajuste por total de goles}
+
+Los mercados de total de goles de Kalshi proveen probabilidades
+$q_n = \Prob(\text{total de goles} = n)$ para $n = 0, 1, \ldots, 6$.
+Reajustamos $\tilde{P}_1$ para que las marginales de total de goles
+coincidan con $q_n$:
+\[
+  \tilde{P}_2(h,k)
+  = \tilde{P}_1(h,k) \cdot \frac{q_{h+k}}
+    {\sum_{h'+k'=h+k} \tilde{P}_1(h',k')}.
+\]
+
+\subsection{Reajuste por ventaja de goles}
+
+Análogamente, los mercados de spread de Kalshi proveen, dado que
+el equipo local gana, las probabilidades $s_m^H$ de que lo haga
+por exactamente $m$ goles ($m = 1, 2, 3, 4+$), y, dado que
+gana el visitante, las correspondientes $s_m^A$.
+Aplicamos un reajuste adicional dentro de cada bloque de resultado:
+\[
+  P(h,k) \propto \tilde{P}_2(h,k) \cdot r(h,k),
+\]
+donde $r(h,k)$ es el factor de reajuste derivado de los mercados de
+spread.
+La distribución resultante $P(h,k)$ es la estimación final que se
+utiliza en la optimización.
+
+% ─────────────────────────────────────────────────────────────
+\section{Optimización de puntos de quiniela}
+\label{sec:optimizacion}
+
+\subsection{Regla de puntuación}
+
+La quiniela en cuestión usa las siguientes reglas de puntuación.
+Para la \textbf{fase de grupos}, con prioridad estricta
+(la primera regla aplicable gana):
+
+\begin{center}
+\begin{tabular}{lc}
+  \toprule
+  Condición & Puntos \\
+  \midrule
+  Marcador exacto & 5 \\
+  Ganador/empate correcto \emph{y} goles de un equipo correctos & 3 \\
+  Solo ganador/empate correcto & 2 \\
+  Solo goles de un equipo correctos (ganador incorrecto) & 1 \\
+  Ninguna condición anterior & 0 \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+Para la \textbf{fase eliminatoria} (incluyendo tiempo extra; penales
+equivalen a empate):
+\begin{center}
+\begin{tabular}{lc}
+  \toprule
+  Condición & Puntos \\
+  \midrule
+  Marcador exacto & 3 \\
+  Solo ganador/empate correcto & 1 \\
+  Otro & 0 \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Predicción óptima}
+
+Dada la distribución $P(h, k)$ y la función de puntuación $f$,
+los puntos esperados al predecir $(a, b)$ son
+\[
+  E(a, b) = \sum_{h=0}^{5} \sum_{k=0}^{5} f(a, b, h, k) \cdot P(h, k).
+\]
+La predicción óptima es
+\[
+  (\hat{a}, \hat{b})
+  = \arg\max_{(a,b) \in \{0,\ldots,5\}^2} E(a, b).
+\]
+
+Nótese que $(\hat{a}, \hat{b})$ puede diferir sustancialmente del
+marcador modal $\arg\max_{(h,k)} P(h,k)$.
+La razón es que la regla de puntuación asigna 3 puntos a acertar
+el ganador con goles de un equipo correctos, lo que favorece
+marcadores del tipo $1$-$0$, $2$-$0$, $0$-$1$, $0$-$2$ sobre
+marcadores bajos de empate como $0$-$0$.
+
+\paragraph{Ejemplo.}
+Para un partido donde $P(0,0) = 0.10$, $P(1,0) = 0.18$,
+$P(0,1) = 0.08$, $P(1,1) = 0.12$,
+la predicción $1$-$0$ puede tener mayor valor esperado que $0$-$0$
+incluso si $P(0,0) > P(1,0)$, porque $1$-$0$ también recibe 3 puntos
+cuando el resultado es $2$-$0$ o $3$-$0$.
+\TODO{Insertar ejemplo concreto del WC 2026 con tabla de E(a,b).}
+
+% ─────────────────────────────────────────────────────────────
+\section{Implementación y plataforma web}
+\label{sec:implementacion}
+
+\subsection{Arquitectura del sistema}
+
+El modelo se implementa en Python 3.11, organizado en un repositorio
+público en GitHub.
+Los componentes principales son:
+
+\begin{itemize}
+  \item \texttt{model/historical.py}: construcción de la distribución
+    histórica ponderada con parámetros $\gamma$ y $\delta$.
+  \item \texttt{model/kalshi.py}: obtención de precios de la API
+    pública de Kalshi, corrección por sesgo favorito-longshot y
+    aplicación de los tres reajustes sobre $P(h,k)$.
+  \item \texttt{model/optimizer.py}: cálculo de $E(a,b)$ y argmax.
+  \item \texttt{model/learn.py}: estimación de $\gamma$ y $\delta$
+    por validación cruzada.
+  \item \texttt{model/results.py}: obtención de resultados oficiales
+    del WC 2026 desde la API pública de ESPN.
+  \item \texttt{model/sanity.py}: validación automática de predicciones
+    antes de su publicación (detecta predicciones degeneradas).
+  \item \texttt{model/predict.py}: orquestador del pipeline completo.
+\end{itemize}
+
+La plataforma web es un sitio estático (HTML, JavaScript y CSS) sin
+servidor de aplicaciones.
+Las predicciones actualizadas se sirven como archivos JSON desde
+GitHub Pages, lo que elimina costos de infraestructura y garantiza
+alta disponibilidad.
+
+\subsection{Pipeline de actualización automática}
+
+Las predicciones se actualizan automáticamente mediante GitHub Actions,
+el sistema de integración continua de GitHub.
+El pipeline se activa en dos condiciones: por \textit{push} al
+repositorio (ante cambios manuales) y por un cronograma de
+\textit{cron} diseñado para cubrir todos los posibles horarios de
+inicio de los 104 partidos del torneo.
+
+Cada ejecución del pipeline sigue los pasos:
+\begin{enumerate}
+  \item Obtener precios de Kalshi para todos los partidos sin
+    resultado (con caché de 90 minutos; los precios se congelan
+    definitivamente al inicio del partido).
+  \item Estimar $\gamma$ y $\delta$ actualizados.
+  \item Calcular $P(h,k)$ y $(\hat{a},\hat{b})$ para cada partido.
+  \item Ejecutar \texttt{model/sanity.py}; abortar si hay errores.
+  \item Obtener resultados del WC 2026 desde la API de ESPN.
+  \item Publicar los archivos JSON actualizados y desplegar el sitio.
+\end{enumerate}
+
+\subsection{Desafíos técnicos resueltos}
+
+El desarrollo del sistema reveló varios problemas sutiles que
+documentamos aquí, pues son representativos de los desafíos de los
+sistemas de datos en tiempo real.
+
+\textbf{Serialización JSON y claves enteras.}
+Python usa enteros como claves de diccionario para las distribuciones
+de goles ($\{0: 0.08, 1: 0.20, \ldots\}$), pero el formato JSON
+solo admite cadenas como claves.
+Al recargar el caché desde disco, las claves se recuperan como cadenas
+(\texttt{"0"}, \texttt{"1"}, etc.), lo que hacía que todas las
+búsquedas retornaran cero y colapsaba las predicciones al valor
+degenerado 5-5.
+La solución fue convertir explícitamente las claves de vuelta a enteros
+al cargar el caché.
+
+\textbf{Nombres de equipos en la fuente de resultados.}
+La API de ESPN usa nombres de equipos que difieren de los nombres
+oficiales FIFA en varios casos (por ejemplo, ``Czechia'' en lugar
+de ``Czech Republic'', o ``Bosnia-Herzegovina'' con guion en lugar
+del ampersand oficial).
+El sistema de detección automática de alias alerta cuando un partido
+ha superado su ventana de resultado sin que se haya importado el
+marcador, permitiendo corregir rápidamente el mapeo de nombres.
+
+\textbf{Condición de carrera en el repositorio git.}
+El pipeline automático de GitHub Actions puede ejecutarse en paralelo
+con cambios manuales en el repositorio, generando conflictos al
+intentar hacer \textit{push}.
+Se resolvió ejecutando \texttt{git pull --rebase} antes de cada
+\textit{push} dentro del pipeline, lo que mantiene un historial
+lineal sin conflictos de fusión.
+
+\textbf{Entidades HTML en contextos matemáticos.}
+La página del modelo matemático del sitio web usa MathJax para
+renderizar expresiones LaTeX en el navegador.
+El carácter ``\texttt{<}'' en expresiones como
+$n_{2026,<k}$ era interpretado por el navegador como el inicio de
+una etiqueta HTML antes de que MathJax pudiera procesarlo.
+La solución fue usar la entidad HTML \texttt{\&lt;} dentro de las
+expresiones matemáticas de la página.
+
+\subsection{Desarrollo asistido por Claude Code}
+
+El sistema completo se desarrolló con el apoyo de Claude Code
+(anteriormente Anthropic API), una herramienta de programación
+asistida por inteligencia artificial.
+Claude Code actúa como un co-piloto de programación capaz de
+escribir, leer, editar y ejecutar código, navegar la base de código,
+y diagnosticar errores en tiempo real a partir de una descripción
+en lenguaje natural del problema.
+
+Esta modalidad de desarrollo facilitó varias tareas que
+habrían requerido tiempo considerable en el ciclo tradicional:
+
+\begin{itemize}
+  \item \textbf{Arquitectura inicial}: el diseño del pipeline de
+    datos (Kalshi → distribución → predicción → JSON → sitio web)
+    se concretó en pocas iteraciones de especificación y refinamiento
+    en lenguaje natural.
+  \item \textbf{Diagnóstico de errores}: los problemas descritos en
+    la sección anterior (serialización JSON, condición de carrera,
+    entidades HTML) se diagnosticaron mediante la descripción del
+    síntoma observable, sin necesidad de rastrear el error en el
+    código manualmente.
+  \item \textbf{Interfaz de usuario}: la plataforma web con soporte
+    para español, banderas de países y visualización de probabilidades
+    se desarrolló íntegramente a través de especificaciones en lenguaje
+    natural.
+  \item \textbf{Documentación}: los comentarios en el código, el
+    archivo CLAUDE.md con instrucciones para el agente, y las secciones
+    de metodología de la plataforma web se generaron y mantuvieron en
+    paralelo con el desarrollo.
+\end{itemize}
+
+El desarrollo asistido por IA no elimina la necesidad de supervisión:
+la lógica matemática del modelo, la regla de puntuación de la quiniela
+y los criterios de sanidad de las predicciones requirieron revisión
+cuidadosa por parte del autor.
+Sin embargo, redujo el costo marginal de implementar, corregir y
+documentar el código, lo que permitió dedicar más tiempo a las
+decisiones de diseño estadístico.
+
+% ─────────────────────────────────────────────────────────────
+\section{Resultados}
+\label{sec:resultados}
+
+\subsection{Fase de grupos}
+
+\TODO{Completar al concluir la fase de grupos (~2026-07-03).}
+
+Los datos que se reportarán incluyen:
+
+\begin{itemize}
+  \item Tabla de predicciones y resultados por partido, con puntos
+    obtenidos versus puntos esperados por el modelo.
+  \item Puntos totales acumulados y promedio por partido.
+  \item Evolución del parámetro $\delta$ a lo largo de la fase de
+    grupos (número de partidos jugados vs.\ estimación de $\delta$).
+  \item Valor estimado de $\hat{\alpha}$ al final de la fase de grupos
+    (sesgo favorito-longshot observado en Kalshi durante el WC 2026).
+  \item Comparación versus dos líneas base:
+    \begin{enumerate}
+      \item \emph{Línea base uniforme}: probabilidades iguales
+        (1/3, 1/3, 1/3) para cada resultado.
+      \item \emph{Línea base histórica}: modelo sin precios de Kalshi,
+        solo distribución histórica ponderada con $\gamma$.
+    \end{enumerate}
+  \item Score de Brier de las probabilidades de resultado de Kalshi:
+    $\text{Brier} = \frac{1}{N}\sum_{i} (p_i - o_i)^2$,
+    como medida de calibración.
+\end{itemize}
+
+\subsection{Fase eliminatoria}
+
+\TODO{Completar durante la revisión del artículo, conforme avancen
+los partidos eliminatorios (~2026-07-04 al ~2026-07-19).}
+
+Se reportarán los mismos indicadores que en la fase de grupos,
+organizados por ronda: Ronda de 32, Octavos de final,
+Cuartos de final, Semifinales y Final.
+
+% ─────────────────────────────────────────────────────────────
+\section{Discusión}
+\label{sec:discusion}
+
+\subsection{Aportación de los mercados de predicción}
+
+\TODO{Completar con datos reales al concluir la fase de grupos.}
+
+La pregunta central es si los precios de Kalshi añaden valor sobre
+la distribución histórica pura.
+El diseño experimental (comparación versus la línea base histórica)
+permite cuantificar esta contribución.
+Si el modelo con Kalshi supera consistentemente a la línea base
+histórica, esto constituye evidencia de que los mercados de predicción
+contienen información específica del partido que no está capturada en
+el historial de Mundiales.
+
+El modelo incluye la corrección por sesgo favorito-longshot descrita
+en la Sección~\ref{sec:alpha}: los precios brutos de Kalshi se
+transforman mediante la ecuación~\eqref{eq:alpha} con el exponente
+$\hat{\alpha}$ estimado por MAP sobre los partidos completados con
+datos de Kalshi.
+Al inicio del torneo, $\hat{\alpha} = \alpha_0 = 1.10$
+(valor de referencia para mercados de intercambio competitivos;
+\citealp{whelan2024}).
+Con el avance de la fase de grupos, $\hat{\alpha}$ se actualiza
+secuencialmente para incorporar la evidencia específica de Kalshi en
+el WC 2026.
+
+\TODO{Al concluir la fase de grupos: reportar el valor estimado de
+$\hat{\alpha}$ y comparar con $\alpha_0 = 1.10$. Si $\hat{\alpha}$
+difiere sustancialmente, esto indica que el sesgo en Kalshi durante
+el WC 2026 difiere del valor esperado para mercados de intercambio
+en general, posiblemente porque el Mundial atrae a usuarios nuevos
+con distinto perfil de calibración.}
+
+\subsection{Adaptación bayesiana: el parámetro \texorpdfstring{$\delta$}{delta}}
+
+\TODO{Analizar si $\delta > 0$ mejoró las predicciones en la fase
+de grupos.}
+
+El parámetro $\delta$ modela la hipótesis de que el WC 2026 puede
+diferir sistemáticamente de los Mundiales anteriores en el número y
+distribución de goles.
+Si $\delta$ estimado permanece cercano a cero al final de la fase de
+grupos, esto sugiere que el historial de tres Mundiales es suficiente
+para caracterizar la distribución del WC 2026.
+Si $\delta$ crece sustancialmente, indica una desviación real del
+comportamiento histórico.
+
+\subsection{Limitaciones}
+
+\textbf{Muestra histórica pequeña.}
+Con solo tres Mundiales (192 partidos), la distribución histórica
+tiene alta incertidumbre para marcadores infrecuentes.
+El suavizado Poisson mitiga este problema pero no lo elimina.
+
+\textbf{Truncación de la cuadrícula de marcadores.}
+La optimización se realiza sobre $\{0,\ldots,5\}^2$, ignorando la
+posibilidad de marcadores con 6 o más goles.
+En el historial de los tres Mundiales, aproximadamente el 0.5\% de
+los partidos terminaron con 6 o más goles en total.
+
+\textbf{Variables contextuales omitidas.}
+El modelo no incorpora variables específicas del partido como
+lesiones, sanciones, condiciones climáticas, historial directo entre
+selecciones o el contexto de clasificación dentro del grupo.
+Estas variables pueden ser relevantes en algunos partidos.
+
+\subsection{Extensiones posibles}
+
+La arquitectura del modelo es extensible en varias direcciones.
+El marco bayesiano adoptado aquí es afín a modelos que incorporan
+datos de eventos dentro del partido para actualizar probabilidades
+en tiempo real \citep{divekar2024}; aunque los concursos de predicción
+deportiva requieren pronósticos previos al partido, esa línea de
+trabajo es relevante para aplicaciones donde las predicciones pueden
+ajustarse durante el juego.
+El framework es aplicable a otros concursos con distintas reglas de
+puntuación simplemente cambiando la función $f$.
+Finalmente, el uso de mercados de predicción como fuente de prior
+bayesiano es aplicable a otros torneos con menor historial que el
+Mundial, donde la información histórica es más escasa.
+
+% ─────────────────────────────────────────────────────────────
+\section{Conclusiones}
+\label{sec:conclusiones}
+
+Este artículo presenta un modelo estadístico para la predicción de
+marcadores exactos en el Mundial 2026 que combina dos fuentes de
+información: el historial de tres ediciones del torneo (WC 2014,
+2018, 2022) y los precios en tiempo real de los mercados de predicción
+de Kalshi.
+La integración se realiza mediante un modelo bayesiano adaptativo
+con tres parámetros estimados por validación cruzada: el decaimiento
+temporal $\gamma \approx 0.84$, la adaptación al torneo en curso
+$\delta$, y el exponente de corrección de sesgo favorito-longshot
+$\alpha$ para los precios de Kalshi.
+
+La predicción resultante maximiza explícitamente los puntos esperados
+bajo la regla de puntuación de la quiniela, que es asimétrica y
+distingue varios niveles de acierto.
+Esta optimización es el elemento que diferencia el modelo de un
+sistema de predicción de probabilidades: no busca el marcador más
+probable, sino el que rinde más en promedio bajo esa regla de puntuación
+específica.
+
+Los resultados del torneo \TODO{completar con conclusión cuantitativa
+tras la fase de grupos y el análisis de calibración de Kalshi}.
+
+El código fuente y la plataforma web están disponibles públicamente,
+con actualizaciones automáticas durante todo el torneo.
+Esperamos que este trabajo motive desarrollos similares para otras
+competiciones y contribuya a la incipiente literatura académica en
+español sobre mercados de predicción aplicados al deporte.
+
+% ─────────────────────────────────────────────────────────────
+\section*{Agradecimientos}
+
+\TODO{Añadir agradecimientos si corresponde.}
+
+% ─────────────────────────────────────────────────────────────
+\section*{Disponibilidad del código}
+
+El código fuente completo del modelo y la plataforma web están
+disponibles en:
+\begin{center}
+  \url{https://github.com/USER/quiniela}  % TODO: reemplazar USER
+\end{center}
+bajo licencia MIT.
+Las predicciones actualizadas se pueden consultar en:
+\begin{center}
+  \url{https://USER.github.io/quiniela/}  % TODO: reemplazar USER
+\end{center}
+
+% ─────────────────────────────────────────────────────────────
+\bibliographystyle{plainnat}
+\bibliography{refs}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: t
+%%% End:
