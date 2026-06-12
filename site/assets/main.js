@@ -15,6 +15,27 @@ const FLAGS = {
   "Turkey":"🇹🇷","USA":"🇺🇸","Uruguay":"🇺🇾","Uzbekistan":"🇺🇿",
 };
 
+const NAMES_ES = {
+  "Algeria":"Argelia","Argentina":"Argentina","Australia":"Australia",
+  "Austria":"Austria","Belgium":"Bélgica",
+  "Bosnia & Herzegovina":"Bosnia y Herzegovina",
+  "Brazil":"Brasil","Canada":"Canadá","Cape Verde":"Cabo Verde",
+  "Colombia":"Colombia","Croatia":"Croacia","Curaçao":"Curazao",
+  "Czech Republic":"Rep. Checa","DR Congo":"Congo RD",
+  "Ecuador":"Ecuador","Egypt":"Egipto","England":"Inglaterra",
+  "France":"Francia","Germany":"Alemania","Ghana":"Ghana",
+  "Haiti":"Haití","Iran":"Irán","Iraq":"Irak",
+  "Ivory Coast":"Costa de Marfil","Japan":"Japón","Jordan":"Jordania",
+  "Mexico":"México","Morocco":"Marruecos","Netherlands":"Países Bajos",
+  "New Zealand":"Nueva Zelanda","Norway":"Noruega","Panama":"Panamá",
+  "Paraguay":"Paraguay","Portugal":"Portugal","Qatar":"Catar",
+  "Saudi Arabia":"Arabia Saudita","Scotland":"Escocia","Senegal":"Senegal",
+  "South Africa":"Sudáfrica","South Korea":"Corea del Sur","Spain":"España",
+  "Sweden":"Suecia","Switzerland":"Suiza","Tunisia":"Túnez",
+  "Turkey":"Turquía","USA":"EE.UU.","Uruguay":"Uruguay",
+  "Uzbekistan":"Uzbekistán",
+};
+
 const DAYS_ES   = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
 const MONTHS_ES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto",
                    "septiembre","octubre","noviembre","diciembre"];
@@ -24,6 +45,7 @@ const RESULT_DELAY_GROUP    = 120;
 const RESULT_DELAY_KNOCKOUT = 210;
 
 function flag(name) { return FLAGS[name] || "🏳️"; }
+function tname(name) { return NAMES_ES[name] || name; }
 
 function formatDate(dateStr) {
   const [y, m, d] = dateStr.split("-").map(Number);
@@ -165,7 +187,7 @@ function renderCard(m, filter, locked, result) {
       ${phaseBadge}
     </div>
     <div class="team-home">
-      <span class="team-name ${!FLAGS[m.home] ? 'tbd' : ''}">${m.home}</span>
+      <span class="team-name ${!FLAGS[m.home] ? 'tbd' : ''}">${tname(m.home)}</span>
       <span class="team-flag">${flag(m.home)}</span>
     </div>
     <div class="score-block">
@@ -173,7 +195,7 @@ function renderCard(m, filter, locked, result) {
     </div>
     <div class="team-away">
       <span class="team-flag">${flag(m.away)}</span>
-      <span class="team-name ${!FLAGS[m.away] ? 'tbd' : ''}">${m.away}</span>
+      <span class="team-name ${!FLAGS[m.away] ? 'tbd' : ''}">${tname(m.away)}</span>
     </div>
     <div class="prob-col">
       ${probBars(m.probabilities)}
