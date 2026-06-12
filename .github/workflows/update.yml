@@ -50,6 +50,7 @@ jobs:
           git add site/data/predictions.json \
                   site/data/locked_predictions.json \
                   site/data/results.json \
+                  site/data/learning.json \
                   data/kalshi_cache.json
           if git diff --staged --quiet; then
             echo "No changes to predictions."

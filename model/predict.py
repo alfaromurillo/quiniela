@@ -12,12 +12,15 @@ ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT))
 
 from model.kalshi import fetch_match_probs, _fallback_probs
-from model.historical import scoreline_probs
+from model.historical import build_distributions, scoreline_probs
 from model.optimizer import best_prediction
+from model.learn import load_canonical, count_2026, estimate_delta
 
 SCHEDULE_PATH  = ROOT / "data" / "schedule.json"
 OUT_PATH       = ROOT / "site" / "data" / "predictions.json"
 LOCKED_PATH    = ROOT / "site" / "data" / "locked_predictions.json"
+RESULTS_PATH   = ROOT / "site" / "data" / "results.json"
+LEARNING_PATH  = ROOT / "site" / "data" / "learning.json"
 
 
 def _is_tbd(name: str) -> bool:
@@ -25,17 +28,32 @@ def _is_tbd(name: str) -> bool:
 
 
 def run():
-    schedule = json.loads(SCHEDULE_PATH.read_text())["matches"]
-    predictions = []
-    total = len(schedule)
+    schedule_data = json.loads(SCHEDULE_PATH.read_text())
+    schedule = schedule_data["matches"]
     now = datetime.now(timezone.utc)
 
-    # Load existing locked predictions; only update pre-kickoff entries
+    # ── Adaptive model update from WC 2026 results ──
+    if RESULTS_PATH.exists():
+        results_json = json.loads(RESULTS_PATH.read_text())
+    else:
+        results_json = {"matches": {}}
+
+    canonical   = load_canonical(results_json, schedule_data)
+    delta       = estimate_delta(canonical)
+    extra_wins, extra_draws = count_2026(canonical)
+    dist        = build_distributions(extra_wins, extra_draws, delta)
+    n_2026      = len(canonical)
+    print(f"WC 2026: {n_2026} results, δ = {delta:.3f}")
+
+    # ── Load existing locked predictions ──
     if LOCKED_PATH.exists():
         locked_data = json.loads(LOCKED_PATH.read_text())
         locked: dict = locked_data.get("matches", {})
     else:
         locked = {}
+
+    predictions = []
+    total = len(schedule)
 
     for i, match in enumerate(schedule, 1):
         mid = match["id"]
@@ -80,10 +98,11 @@ def run():
         spread_away  = kalshi.get("spread_away")
         source = kalshi.get("source", "unknown")
 
-        # Build joint scoreline distribution
+        # Build joint scoreline distribution using adaptive model
         score_dist = scoreline_probs(
             p_home, p_draw, p_away, phase,
             total_goals, spread_home, spread_away,
+            dist=dist,
         )
 
         # Find best prediction
@@ -141,6 +160,14 @@ def run():
         indent=2, ensure_ascii=False,
     ))
     print(f"Saved locked predictions → {LOCKED_PATH}")
+
+    LEARNING_PATH.write_text(json.dumps({
+        "generated_at": ts,
+        "delta": round(delta, 4),
+        "n_games_2026": n_2026,
+        "sigma": 1.0,
+    }, indent=2))
+    print(f"Saved learning state → {LEARNING_PATH}")
 
 
 if __name__ == "__main__":
