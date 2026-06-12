@@ -229,10 +229,10 @@ def fig1_historical_overview():
     # (r, c, bold_label, italic_note)
     placeholders = [
         (1, 1,
-         "WC 2026 Grp real",
+         "Estimado fin\nde grupos",
          "Completar al fin\nde la fase de grupos (~jul 3)"),
         (2, 1,
-         "Estimado fin\nde grupos",
+         "WC 2026 Grp real",
          "Completar al fin\nde la fase de grupos (~jul 3)"),
         (1, 3,
          "Estimado fin\ndel mundial",
