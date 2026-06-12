@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project purpose
 
-World Cup 2026 score predictor for a quiniela (prediction pool). The model combines Kalshi prediction-market probabilities with WC 2022 historical scoreline distributions to find the scoreline that **maximises expected quiniela points** for each match.
+World Cup 2026 score predictor for a quiniela (prediction pool). The model combines Kalshi prediction-market probabilities with multi-tournament historical scoreline distributions to find the scoreline that **maximises expected quiniela points** for each match.
 
 ## Commands
 
@@ -14,6 +14,9 @@ pip install -r requirements.txt
 
 # Run the full prediction pipeline (fetches Kalshi data, writes site/data/predictions.json)
 python model/predict.py
+
+# Fetch completed match results from ESPN
+python model/results.py
 
 # Quick model sanity check (no network, pure math)
 python -c "
@@ -44,25 +47,32 @@ print(best_prediction(sp, 'group'))
 
 ```
 data/
-  wc2022.json          # WC 2022 results from openfootball (source of truth for historical model)
-  schedule.json        # WC 2026 full schedule (104 matches, generated from openfootball 2026 data)
-  wc2026_raw.json      # Raw openfootball 2026 data (keep for reference)
-  kalshi_cache.json    # Cached Kalshi API responses (TTL 1h, keyed by game event ticker)
+  wc2014.json          # WC 2014 results (openfootball)
+  wc2018.json          # WC 2018 results (openfootball)
+  wc2022.json          # WC 2022 results (openfootball)
+  schedule.json        # WC 2026 full schedule (104 matches)
+  kalshi_cache.json    # Kalshi API cache (per-match, locked at kickoff)
 
 model/
-  historical.py        # Builds P(score | result, phase) from WC 2022 + Laplace smoothing
-  kalshi.py            # Fetches win/draw/loss + total-goals + spread markets from Kalshi API
+  historical.py        # Multi-tournament distributions with γ decay + Poisson prior
+  learn.py             # estimate_gamma() and estimate_delta() via cross-validation
+  kalshi.py            # Fetches win/draw/loss + total-goals + spread from Kalshi API
   optimizer.py         # E[pts] calculator and argmax over 0–5 goal grid
-  predict.py           # Pipeline: schedule → Kalshi → scoreline_probs → best_prediction → JSON
+  results.py           # Fetches WC 2026 final scores from ESPN public API
+  predict.py           # Full pipeline: schedule → Kalshi → dist → predict → JSON
 
 site/
-  data/predictions.json  # Output consumed by the frontend
-  index.html             # Match predictions by date (TODO: build)
-  modelo.html            # Model methodology page (TODO: build)
-  assets/style.css       # (TODO)
-  assets/main.js         # (TODO)
+  index.html           # Match predictions by date, points counter
+  modelo.html          # Model methodology with MathJax LaTeX
+  assets/style.css
+  assets/main.js
+  data/
+    predictions.json   # Current model predictions (updated each run)
+    locked_predictions.json  # Frozen predictions (locked 1.5h before kickoff)
+    results.json       # Final scores for completed matches (from ESPN)
+    learning.json      # Current γ and δ estimates
 
-.github/workflows/update.yml  # Daily cron: runs predict.py, commits predictions.json (TODO)
+.github/workflows/update.yml  # Cron: 1.5h before each kickoff + midnight CR + result windows
 ```
 
 ## Kalshi API details
@@ -75,47 +85,54 @@ No authentication required for market data. Three market types per match:
 | Total goals | `KXWCTOTAL-{date}{HOME}{AWAY}` | `-1` = over 0.5, `-2` = over 1.5, …, `-6` = over 5.5 |
 | Spread | `KXWCSPREAD-{date}{HOME}{AWAY}` | `-HOME2/3/4`, `-AWAY2/3` = wins by over N.5 |
 
-**Date code rule**: Kalshi uses Eastern Time (UTC-4) date in the ticker, derived from `time_utc` in schedule.json. Use `_date_code(time_utc)` in `kalshi.py`.
+**Date code rule**: Kalshi uses Eastern Time (UTC-4) date in the ticker, derived from `time_utc` in schedule.json. `_date_code(time_utc)` in `kalshi.py` handles the UTC→ET conversion.
+
+**Cache locking**: Predictions are locked 1.5h before kickoff (CACHE_TTL=5400s). Once `now >= kickoff`, the cache entry is frozen permanently — live Kalshi prices do not alter the locked prediction.
 
 **Team codes** (Kalshi abbreviations, differ from FIFA/ISO in several cases):
 - Haiti → `HTI`, Iran → `IRI`, Algeria → `DZA`, Turkey → `TUR`
 - Saudi Arabia → `KSA`, Scotland → `SCO`, South Korea → `KOR`
-- Full mapping in `model/kalshi.py` → `TEAM_CODES` dict
+- Full mapping in `model/kalshi.py` → `TEAM_CODES` dict (all 48 WC 2026 teams covered)
 
-**Live/settled markets**: When a game is in progress, Kalshi prices become extreme (one outcome near 1.0). `_midprice()` rejects spreads > 0.30. For total-goals markets, `last_price_dollars` is used as fallback when bid/ask spread is too wide. Pre-game cache entry is preserved so predictions don't change mid-game.
+## Historical model
 
-## Known issues / TODO
+Three tournaments are used: WC 2014, 2018, 2022 (64 games each).
 
-1. **Date code bug**: `_date_code()` currently takes `date_str` (local date) but should take `time_utc` and convert to ET. Fix: change `predict.py` to pass `match["time_utc"]` and update `_date_code` signature.
-2. **Missing team codes**: Some teams fall back to historical rates. Find correct codes by testing `KXWCGAME-{date}{CODE1}{CODE2}` via API.
-3. **Frontend**: `site/index.html`, `site/modelo.html`, `site/assets/` not yet built.
-4. **GitHub Actions**: `.github/workflows/update.yml` not yet created.
-5. **Knockout TBD**: Knockout matches skip until bracket resolves. Once teams are known, predictions generate automatically on next run.
+**γ decay**: WC 2022 weight=1.0, WC 2018=γ, WC 2014=γ². γ is estimated by leave-one-tournament-out MLE with a Normal(1, 0.3) prior (current value ≈ 0.84). Effective sample ≈ 122 weighted games.
+
+**Knockout scores**: Uses `et` (120-min) score when available rather than `ft` (90-min), because the quiniela counts goals in 90+30 min. This raises knockout λ_d significantly (extra-time draws score more).
+
+**Poisson product prior**: Smoothing uses P_prior(w,l) ∝ λ_w^w/w! · λ_l^l/l! with κ=5 pseudo-observations. Parameters λ re-estimated by MLE from γ-weighted combined data each run.
+
+**WC 2026 adaptive update (δ)**: Once results come in, each WC 2026 game counts as (1+δ) relative to the historical baseline. δ is estimated by leave-one-jornada-out MAP with HalfNormal(σ=1) prior. Starts at 0; grows as current-tournament signal accumulates.
 
 ## Data pipeline flow
 
 ```
-schedule.json  ──→  kalshi.py (fetch_match_probs)
-                         │  P(home_win), P(draw), P(away_win)
-                         │  total_goals_probs {0..6}
-                         ↓
-wc2022.json  ──→  historical.py (scoreline_probs)
-                         │  P(home=a, away=b) for all a,b ∈ 0..5
-                         │  weighted by Kalshi result probs
-                         │  reweighted by Kalshi total-goals probs
-                         ↓
-                   optimizer.py (best_prediction)
-                         │  argmax E[quiniela_pts | predict (a,b)]
-                         ↓
-              site/data/predictions.json
+schedule.json ──→ kalshi.py (fetch_match_probs)
+                      │  P(home_win), P(draw), P(away_win)
+                      │  total_goals_probs {0..6}
+                      │  spread_home / spread_away
+                      ↓
+wc2014/18/22  ──→ learn.py → estimate_gamma()  →  γ ≈ 0.84
+results.json  ──→ learn.py → estimate_delta()  →  δ = 0..∞
+                      │
+                      ↓
+              historical.py (build_distributions(γ, δ, n_2026))
+                      │  γ-weighted WC 2014+2018+2022 + (1+δ)×WC2026
+                      │  Poisson prior smoothing
+                      ↓
+              historical.py (scoreline_probs)
+                      │  P(home=a, away=b) for all a,b ∈ 0..5
+                      │  reweighted by Kalshi total-goals + spread
+                      ↓
+              optimizer.py (best_prediction)
+                      │  argmax E[quiniela_pts | predict (a,b)]
+                      ↓
+         site/data/predictions.json + locked_predictions.json
 ```
 
-## Plan
+## Known issues / TODO
 
-Full implementation plan at: `~/.claude/plans/parallel-wiggling-oasis.md`
-
-Remaining work:
-- Fix date code and missing team codes in `model/kalshi.py`
-- Build `site/index.html` + `site/modelo.html` + `site/assets/`
-- Write `.github/workflows/update.yml`
-- Create GitHub repo + enable Pages from `main`/`site`
+- **Knockout TBD**: Knockout matches are skipped until bracket resolves. Predictions generate automatically once team names are known. 31 knockout matches currently TBD.
+- **Modelo.html δ card**: The "δ = 0, valor inicial" stat card is hardcoded. Cosmetic — needs live value once δ starts being estimated (after jornada 2 completes).
