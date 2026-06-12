@@ -14,7 +14,8 @@ sys.path.insert(0, str(ROOT))
 from model.kalshi import fetch_match_probs, _fallback_probs
 from model.historical import build_distributions, scoreline_probs
 from model.optimizer import best_prediction
-from model.learn import load_canonical, count_2026, estimate_delta
+from model.learn import (load_canonical, count_2026, estimate_gamma,
+                          estimate_delta, SIGMA_GAMMA, SIGMA_DELTA)
 
 SCHEDULE_PATH  = ROOT / "data" / "schedule.json"
 OUT_PATH       = ROOT / "site" / "data" / "predictions.json"
@@ -38,12 +39,14 @@ def run():
     else:
         results_json = {"matches": {}}
 
-    canonical   = load_canonical(results_json, schedule_data)
-    delta       = estimate_delta(canonical)
+    canonical        = load_canonical(results_json, schedule_data)
+    gamma            = estimate_gamma()
+    delta            = estimate_delta(canonical, gamma=gamma)
     extra_wins, extra_draws = count_2026(canonical)
-    dist        = build_distributions(extra_wins, extra_draws, delta)
-    n_2026      = len(canonical)
-    print(f"WC 2026: {n_2026} results, δ = {delta:.3f}")
+    dist             = build_distributions(gamma=gamma, extra_wins=extra_wins,
+                                           extra_draws=extra_draws, delta=delta)
+    n_2026           = len(canonical)
+    print(f"Historical γ = {gamma:.3f}  |  WC 2026: {n_2026} results, δ = {delta:.3f}")
 
     # ── Load existing locked predictions ──
     if LOCKED_PATH.exists():
@@ -162,10 +165,12 @@ def run():
     print(f"Saved locked predictions → {LOCKED_PATH}")
 
     LEARNING_PATH.write_text(json.dumps({
-        "generated_at": ts,
-        "delta": round(delta, 4),
-        "n_games_2026": n_2026,
-        "sigma": 1.0,
+        "generated_at":  ts,
+        "gamma":         round(gamma, 4),
+        "delta":         round(delta, 4),
+        "n_games_2026":  n_2026,
+        "sigma_gamma":   SIGMA_GAMMA,
+        "sigma_delta":   SIGMA_DELTA,
     }, indent=2))
     print(f"Saved learning state → {LEARNING_PATH}")
 

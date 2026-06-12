@@ -185,6 +185,44 @@
     distribución histórica.
   </p>
 
+  <h3>Ponderación de mundiales históricos (γ)</h3>
+
+  <p>
+    Se utilizan los datos de WC 2014, 2018 y 2022 (64 partidos cada uno).
+    Los mundiales más recientes pesan más mediante un factor de decaimiento
+    exponencial <strong>γ ∈ (0, 1]</strong>:
+  </p>
+
+  $$n_{\mathrm{hist}}(w,l) = n_{2022}(w,l) + \gamma\,n_{2018}(w,l) + \gamma^2\,n_{2014}(w,l)$$
+
+  <p>
+    γ se estima por <strong>validación cruzada leave-one-tournament-out</strong>:
+    se predice WC 2022 usando WC 2018×1.0 + WC 2014×γ,
+    y WC 2018 usando WC 2014×1.0.
+    Se maximiza la suma de log-verosimilitudes más un prior Normal(1, 0.3)
+    truncado en [0,1] que penaliza olvidar torneos pasados.
+  </p>
+
+  $$\hat{\gamma} = \arg\max_{\gamma}\;
+    \Bigl[\sum_{k=1}^{K}\log P\!\bigl(\mathrm{WC}_k \;\big|\; \text{entrenam. con }\gamma\bigr)
+    - \tfrac{(\gamma - 1)^2}{2\cdot 0.3^2}\Bigr]$$
+
+  <p>
+    El valor estimado en la versión actual es <strong>γ ≈ 0.84</strong>,
+    lo que da peso 0.84 a WC 2018 y ≈ 0.71 a WC 2014.
+    El aumento de datos (de 64 a hasta 164 partidos efectivos) estabiliza
+    considerablemente la distribución de marcadores en la fase eliminatoria.
+  </p>
+
+  <p>
+    <strong>Corrección: marcadores en eliminatoria.</strong>
+    La quiniela cuenta goles en 90+30 min. Para partidos que llegaron
+    a prórroga, el modelo usa el marcador final a 120 min
+    (campo <code>et</code> del historial) en lugar del de 90 min (<code>ft</code>).
+    Esto afecta especialmente a λ_d en eliminatoria:
+    empates que sobreviven la prórroga suelen tener marcadores más altos.
+  </p>
+
   <h3>Actualización adaptativa (WC 2026)</h3>
 
   <p>

@@ -1,31 +1,37 @@
 """
-Build scoreline probability distributions from WC 2022 historical data.
+Build scoreline probability distributions from WC historical data.
 
-Key design: WC 2022 (Qatar) was fully neutral-venue, so we collapse
-home_win/away_win into a single "winner" distribution expressed as
-(winner_goals, loser_goals). This removes spurious home/away bias.
-The three true host nations of WC 2026 (USA, Mexico, Canada) have any
-home advantage already priced into the Kalshi market probabilities.
+Data: WC 2014, 2018, 2022 — combined with exponential-decay weights.
+  WC 2022 weight = 1.0, WC 2018 = γ, WC 2014 = γ².
+  γ is estimated from the data by leave-one-tournament-out; see learn.py.
+
+Score convention: for knockout games the quiniela counts goals in 90+30 min,
+so we use the 'et' (extra time) score when available, else 'ft' (90 min).
 
 Smoothing: Poisson product prior instead of uniform Laplace.
   For wins:  P_prior(w, l) ∝ λ_w^w/w! · λ_l^l/l!
   For draws: P_prior(g, g) ∝ (λ_d^g/g!)²
-  Parameters λ estimated by MLE from combined WC 2022 + WC 2026 data.
-  SMOOTH_KAPPA total pseudo-observations are spread over cells
-  proportionally to the prior, so 2-2 >> 5-4 >> 5-5 for zero-count
-  cells, while observed cells remain close to their empirical rate.
+  Parameters λ are estimated by MLE from the γ-weighted combined data.
+  SMOOTH_KAPPA total pseudo-observations are spread proportionally.
 
-Adaptive update: pass extra_wins, extra_draws, delta to
-build_distributions() to blend WC 2026 results into the model.
-Each WC 2026 result counts as (1+delta) × a WC 2022 result.
+Adaptive WC 2026 update: pass extra_wins, extra_draws, delta to
+build_distributions() to blend in-progress tournament results with
+weight (1+delta) relative to the historical baseline.
 """
 import json
 import math
 from pathlib import Path
 
 DATA_DIR = Path(__file__).parent.parent / "data"
-MAX_GOALS    = 5    # prediction grid: 0..MAX_GOALS goals per team
-SMOOTH_KAPPA = 5.0  # total pseudo-observations added via the prior
+MAX_GOALS    = 5
+SMOOTH_KAPPA = 5.0
+
+# Chronological order (oldest first). Weight = γ^age, age=0 for most recent.
+HISTORICAL_FILES = [
+    DATA_DIR / "wc2014.json",
+    DATA_DIR / "wc2018.json",
+    DATA_DIR / "wc2022.json",
+]
 
 
 def _pois(k: int, lam: float) -> float:
@@ -36,68 +42,100 @@ def _pois(k: int, lam: float) -> float:
 def _poisson_prior(cells: list[tuple], *lams: float) -> dict:
     """
     Normalised Poisson product prior over a list of cells.
-    Each cell is a tuple of goals; lams[i] is the rate for dimension i.
-    E.g. for win cells (w, l): lams = (λ_w, λ_l).
-    For draw cells (g, g): pass g once with lam = λ_d and square it.
+    For win cells (w, l): lams = (λ_w, λ_l).
+    For draw cells (g, g): pass a single lam = λ_d (squared internally).
     """
     raw = {}
     for cell in cells:
-        if len(lams) == 1:            # draw: (g,g), use λ_d twice
+        if len(lams) == 1:
             raw[cell] = _pois(cell[0], lams[0]) ** 2
-        else:                         # win: (w,l)
+        else:
             raw[cell] = _pois(cell[0], lams[0]) * _pois(cell[1], lams[1])
     total = sum(raw.values())
     return {s: v / total for s, v in raw.items()}
 
 
-def _load_wc2022_counts():
-    """Load WC 2022 canonical counts by phase. Returns regular dicts."""
-    raw = json.loads((DATA_DIR / "wc2022.json").read_text())
+def _load_tournament(path) -> tuple[dict, dict]:
+    """
+    Load canonical win/draw counts from a single WC tournament file.
+    Knockout scores use 'et' (120 min) when available, else 'ft' (90 min).
+    Returns (win_counts, draw_counts) keyed by phase → canonical_score → int.
+    """
+    raw = json.loads(Path(path).read_text())
     win_counts  = {"group": {}, "knockout": {}}
     draw_counts = {"group": {}, "knockout": {}}
 
     for m in raw["matches"]:
-        score = m.get("score", {}).get("ft")
-        if not score or len(score) != 2:
+        sc_raw = m.get("score", {})
+        ft = sc_raw.get("ft")
+        if not ft or len(ft) != 2:
             continue
-        home, away = int(score[0]), int(score[1])
         rnd = m.get("round", "").lower()
         phase = "knockout" if any(k in rnd for k in
-                                  ["round of", "quarter", "semi", "final", "third"]) else "group"
-        if home > away:
-            s = (home, away)
+                  ["round of", "quarter", "semi", "final", "third"]) else "group"
+        # Quiniela counts 90+30 min goals; use et score for knockout when present
+        if phase == "knockout":
+            et = sc_raw.get("et")
+            sc = et if (et and len(et) == 2) else ft
+        else:
+            sc = ft
+        h, a = int(sc[0]), int(sc[1])
+        if h > a:
+            s = (h, a)
             win_counts[phase][s] = win_counts[phase].get(s, 0) + 1
-        elif home < away:
-            s = (away, home)
+        elif h < a:
+            s = (a, h)
             win_counts[phase][s] = win_counts[phase].get(s, 0) + 1
         else:
-            s = (home, away)
+            s = (h, a)
             draw_counts[phase][s] = draw_counts[phase].get(s, 0) + 1
 
     return win_counts, draw_counts
 
 
-def get_wc2022_counts():
-    """Return (win_counts, draw_counts) for WC 2022 keyed by phase → canonical → int."""
-    return _load_wc2022_counts()
+def get_tournament_counts() -> list[tuple[dict, dict]]:
+    """
+    Return list of (win_counts, draw_counts) for each available historical
+    tournament, in chronological order (oldest first).
+    """
+    return [_load_tournament(p) for p in HISTORICAL_FILES if p.exists()]
+
+
+def get_historical_counts(gamma: float = 1.0) -> tuple[dict, dict]:
+    """
+    γ-weighted combination of all historical tournaments.
+    Most recent WC has weight 1.0; each older WC is multiplied by γ.
+    """
+    tournaments = get_tournament_counts()
+    n = len(tournaments)
+    combined_w = {"group": {}, "knockout": {}}
+    combined_d = {"group": {}, "knockout": {}}
+    for k, (wc, dc) in enumerate(tournaments):
+        age   = (n - 1) - k          # 0 = most recent, 1 = one before, …
+        weight = gamma ** age
+        for phase in ["group", "knockout"]:
+            for s, cnt in wc[phase].items():
+                combined_w[phase][s] = combined_w[phase].get(s, 0) + weight * cnt
+            for s, cnt in dc[phase].items():
+                combined_d[phase][s] = combined_d[phase].get(s, 0) + weight * cnt
+    return combined_w, combined_d
 
 
 def build_distributions(
+    gamma:       float      = 1.0,
     extra_wins:  dict | None = None,
     extra_draws: dict | None = None,
-    delta: float = 0.0,
+    delta:       float      = 0.0,
 ) -> dict:
     """
-    Returns dist[phase][key] where:
-      key = "neutral_win"  → P(winner_goals=w, loser_goals=l)  w > l
-      key = "draw"         → P(goals=g, goals=g)
-    Indices are integer tuples (a, b).
+    Build scoreline distributions for all phases.
+    Returns dist[phase]["neutral_win"|"draw"][canonical_score] = probability.
 
-    extra_wins:  {phase: {(w,l): count}} — WC 2026 win results
-    extra_draws: {phase: {(g,g): count}} — WC 2026 draw results
-    delta: WC 2026 data counts as (1+delta) × a WC 2022 observation.
+    gamma: historical decay (WC 2022=1.0, WC 2018=γ, WC 2014=γ²)
+    extra_wins / extra_draws: WC 2026 in-progress results
+    delta: WC 2026 weight = (1 + delta) relative to historical baseline
     """
-    wc_raw, dc_raw = _load_wc2022_counts()
+    wc_raw, dc_raw = get_historical_counts(gamma)
     all_win_cells  = [(w, l) for w in range(MAX_GOALS + 1)
                                for l in range(MAX_GOALS + 1) if w > l]
     all_draw_cells = [(g, g) for g in range(MAX_GOALS + 1)]
@@ -109,7 +147,7 @@ def build_distributions(
         ew = (extra_wins  or {}).get(phase, {})
         ed = (extra_draws or {}).get(phase, {})
 
-        # All observed canonical scores for λ MLE (includes out-of-grid)
+        # All observed scores (may include out-of-grid) for MLE of λ
         all_win_obs  = set(wc.keys()) | set(ew.keys())
         all_draw_obs = set(dc.keys()) | set(ed.keys())
 
@@ -141,7 +179,7 @@ def build_distributions(
 _DIST = None
 
 def get_distributions():
-    """Cached WC-2022-only distribution (delta=0, no 2026 data)."""
+    """Cached baseline distribution (gamma=1.0, no WC 2026 data)."""
     global _DIST
     if _DIST is None:
         _DIST = build_distributions()
@@ -159,25 +197,21 @@ def scoreline_probs(
     """
     Return P(home=a, away=b) for all (a,b) in 0..MAX_GOALS grid.
 
-    p_home_win/draw/away_win: from Kalshi game market (should sum to ~1).
-    total_goals_probs: {n: P(total==n)} from Kalshi over/under chain.
-    spread_home / spread_away: {k: P(team wins by exactly k goals)} for k=1..4+
-      derived from KXWCSPREAD markets.  k=4 means "4 or more".
     dist: pre-built distribution from build_distributions(); if None, uses
-      the cached WC-2022-only baseline.
+      the cached baseline (gamma=1.0, delta=0).
     """
     if dist is None:
         dist = get_distributions()
     all_scores = [(a, b) for a in range(MAX_GOALS + 1) for b in range(MAX_GOALS + 1)]
 
-    # ── Step 1: base distribution (neutral-venue model) ──
+    # ── Step 1: base distribution ──
     probs = {}
     for a, b in all_scores:
-        if a > b:   # home team wins
+        if a > b:
             probs[(a, b)] = p_home_win * dist[phase]["neutral_win"].get((a, b), 0.0)
-        elif a < b:  # away team wins — flip coordinates to (winner, loser)
+        elif a < b:
             probs[(a, b)] = p_away_win * dist[phase]["neutral_win"].get((b, a), 0.0)
-        else:        # draw
+        else:
             probs[(a, b)] = p_draw * dist[phase]["draw"].get((a, b), 0.0)
 
     # ── Step 2: reweight by Kalshi total-goals distribution ──
