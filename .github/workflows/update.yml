@@ -46,6 +46,9 @@ jobs:
       - name: Fetch match results
         run: python model/results.py
 
+      - name: Validate predictions
+        run: python model/sanity.py
+
       - name: Commit updated data
         run: |
           git config user.name  "github-actions[bot]"
