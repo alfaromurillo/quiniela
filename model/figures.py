@@ -429,41 +429,80 @@ def fig3_kalshi_reweight():
 
 
 # ── Figure 4: Delta evolution ──────────────────────────────────
+# Jornada boundaries (cumulative games after each jornada ends)
+_JORNADA_LABELS = [
+    (16,  "MD1"),   # Matchday 1: 16 games
+    (32,  "MD2"),   # Matchday 2: 16 games
+    (48,  "MD3"),   # Matchday 3: 16 games
+    (64,  "R32"),   # Round of 32: 16 games
+    (72,  "R16"),   # Round of 16: 8 games
+    (76,  "QF"),    # Quarter-finals: 4 games
+    (78,  "SF"),    # Semi-finals: 2 games
+    (80,  "F"),     # Final + 3rd place: 2 games
+]
+
+
 def fig4_delta_evolution():
     """
-    Plot estimated delta vs number of WC 2026 matches played.
+    Plot estimated δ vs cumulative WC 2026 matches played.
+    Reads delta_history from learning.json for full trajectory.
+    Jornada boundaries are marked with vertical dashed lines.
     """
     path = ROOT / "site" / "data" / "learning.json"
     if not path.exists():
         print("  fig4: learning.json not found — skipping")
         return
 
-    data      = json.loads(path.read_text())
-    n_now     = data.get("n_games_2026", 0)
-    delta_now = data.get("delta", 0.0)
+    data    = json.loads(path.read_text())
+    history = data.get("delta_history", [])
 
-    ns     = [0, n_now] if n_now > 0 else [0]
-    deltas = [0.0, delta_now] if n_now > 0 else [0.0]
+    # Build (n_games, delta) series; always start at (0, 0)
+    if history:
+        ns     = [0] + [h["n_games"] for h in history]
+        deltas = [0.0] + [h["delta"]  for h in history]
+    else:
+        n_now     = data.get("n_games_2026", 0)
+        delta_now = data.get("delta", 0.0)
+        ns     = [0, n_now] if n_now > 0 else [0]
+        deltas = [0.0, delta_now] if n_now > 0 else [0.0]
 
-    fig, ax = plt.subplots(figsize=(7, 4))
-    ax.plot(ns, deltas, marker="o", color="#1f77b4", linewidth=2)
-    ax.set_xlabel("Partidos del WC 2026 disputados")
-    ax.set_ylabel("Estimación de $\\delta$")
-    ax.set_title("Adaptación bayesiana al torneo en curso\n"
-                 "($\\delta = 0$: solo historial; "
-                 "$\\delta > 0$: WC 2026 pesa más)")
-    ax.set_xlim(left=-1)
-    ax.set_ylim(bottom=-0.05)
-    ax.axhline(0, color="gray", linewidth=0.8, linestyle="--")
+    n_last     = ns[-1]
+    delta_last = deltas[-1]
+
+    fig, ax = plt.subplots(figsize=(8, 4))
+    ax.plot(ns, deltas, marker="o", color="#1f77b4", linewidth=2,
+            markersize=5, zorder=3)
+
+    # Jornada boundary lines — always show all to give tournament context
+    y_top = max(max(deltas) * 1.15, 0.08)
+    ax.set_ylim(bottom=-0.05, top=y_top)
+    for n_boundary, label in _JORNADA_LABELS:
+        ax.axvline(n_boundary, color="#cccccc", linewidth=0.9,
+                   linestyle="--", zorder=1)
+        ax.text(n_boundary, y_top * 0.97, label,
+                ha="center", va="top", fontsize=7.5, color="#888888")
+
+    ax.set_xlabel("Partidos del WC 2026 disputados", fontsize=11)
+    ax.set_ylabel("Estimación de $\\delta$", fontsize=11)
+    ax.set_title(
+        "Adaptación bayesiana al torneo en curso\n"
+        "($\\delta = 0$: solo historial; "
+        "$\\delta > 0$: WC 2026 pesa más)",
+        fontsize=11,
+    )
+    ax.set_xlim(left=-1, right=82)
+    ax.axhline(0, color="gray", linewidth=0.8, linestyle="--", zorder=2)
     ax.grid(axis="y", alpha=0.3)
-    if n_now > 0:
+
+    if n_last > 0:
         ax.annotate(
-            f"Actual: $\\delta = {delta_now:.2f}$ ({n_now} partidos)",
-            xy=(n_now, delta_now),
-            xytext=(n_now + 2, delta_now + 0.05),
+            f"Actual: $\\delta = {delta_last:.2f}$ ({n_last} partidos)",
+            xy=(n_last, delta_last),
+            xytext=(min(n_last + 4, 70), delta_last + 0.04),
             arrowprops=dict(arrowstyle="->", color="gray"),
-            fontsize=10,
+            fontsize=9,
         )
+
     fig.tight_layout()
     out = OUT_DIR / "fig4_delta_evolution.png"
     fig.savefig(out, format="png", dpi=150, bbox_inches="tight")

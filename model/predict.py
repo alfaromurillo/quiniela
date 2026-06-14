@@ -170,16 +170,32 @@ def run():
     ))
     print(f"Saved locked predictions → {LOCKED_PATH}")
 
+    # Preserve delta_history; append new entry only when n_2026 changes.
+    existing = {}
+    if LEARNING_PATH.exists():
+        try:
+            existing = json.loads(LEARNING_PATH.read_text())
+        except Exception:
+            pass
+    history = existing.get("delta_history", [])
+    if not history or history[-1].get("n_games") != n_2026:
+        history.append({
+            "n_games":      n_2026,
+            "delta":        round(delta, 4),
+            "generated_at": ts,
+        })
+
     LEARNING_PATH.write_text(json.dumps({
-        "generated_at":  ts,
-        "gamma":         round(gamma, 4),
-        "delta":         round(delta, 4),
-        "alpha":         round(alpha, 4),
-        "n_games_2026":  n_2026,
-        "sigma_gamma":   SIGMA_GAMMA,
-        "sigma_delta":   SIGMA_DELTA,
-        "alpha_0":       ALPHA_0,
-        "sigma_alpha":   SIGMA_ALPHA,
+        "generated_at":   ts,
+        "gamma":          round(gamma, 4),
+        "delta":          round(delta, 4),
+        "alpha":          round(alpha, 4),
+        "n_games_2026":   n_2026,
+        "sigma_gamma":    SIGMA_GAMMA,
+        "sigma_delta":    SIGMA_DELTA,
+        "alpha_0":        ALPHA_0,
+        "sigma_alpha":    SIGMA_ALPHA,
+        "delta_history":  history,
     }, indent=2))
     print(f"Saved learning state → {LEARNING_PATH}")
 
