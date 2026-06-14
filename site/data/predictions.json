@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-14T00:16:47.661072+00:00",
+  "generated_at": "2026-06-14T04:40:10.124001+00:00",
   "matches": [
     {
       "id": 1,
@@ -15,22 +15,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.5667,
+        "expected_pts": 1.5664,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.5667
+            "expected_pts": 1.5664
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.4906
+            "expected_pts": 1.4894
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.4545
+            "expected_pts": 1.445
           }
         ]
       },
@@ -65,22 +65,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.6619,
+        "expected_pts": 1.6618,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.6619
+            "expected_pts": 1.6618
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.6511
+            "expected_pts": 1.6506
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5425
+            "expected_pts": 1.542
           }
         ]
       },
@@ -115,22 +115,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.8064,
+        "expected_pts": 1.8033,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.8064
+            "expected_pts": 1.8033
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.7009
+            "expected_pts": 1.7062
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.6913
+            "expected_pts": 1.6839
           }
         ]
       },
@@ -139,13 +139,13 @@
         "draw": 0.2438,
         "away_win": 0.204,
         "total_goals": {
-          "0": 0.08,
-          "1": 0.215,
-          "2": 0.25,
+          "0": 0.075,
+          "1": 0.21,
+          "2": 0.26,
           "3": 0.22,
           "4": 0.13,
-          "5": 0.065,
-          "6": 0.04
+          "5": 0.07,
+          "6": 0.035
         }
       },
       "source": "kalshi",
@@ -165,22 +165,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7885,
+        "expected_pts": 1.789,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7885
-          },
-          {
-            "home": 2,
-            "away": 1,
-            "expected_pts": 1.6296
+            "expected_pts": 1.789
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.6239
+            "expected_pts": 1.6663
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.6596
           }
         ]
       },
@@ -189,11 +189,11 @@
         "draw": 0.2709,
         "away_win": 0.2315,
         "total_goals": {
-          "0": 0.1,
-          "1": 0.245,
-          "2": 0.25,
-          "3": 0.21,
-          "4": 0.12,
+          "0": 0.095,
+          "1": 0.24,
+          "2": 0.26,
+          "3": 0.22,
+          "4": 0.11,
           "5": 0.05,
           "6": 0.025
         }
@@ -215,22 +215,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 2.0033,
+        "expected_pts": 1.9649,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 2.0033
+            "expected_pts": 1.9649
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.8855
+            "expected_pts": 1.879
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.8709
+            "expected_pts": 1.8623
           }
         ]
       },
@@ -239,13 +239,13 @@
         "draw": 0.2537,
         "away_win": 0.5522,
         "total_goals": {
-          "0": 0.095,
-          "1": 0.21,
-          "2": 0.26,
-          "3": 0.205,
-          "4": 0.14,
-          "5": 0.045,
-          "6": 0.045
+          "0": 0.075,
+          "1": 0.225,
+          "2": 0.255,
+          "3": 0.21,
+          "4": 0.135,
+          "5": 0.065,
+          "6": 0.035
         }
       },
       "source": "kalshi",
@@ -265,37 +265,37 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 2.0926,
+        "expected_pts": 1.9366,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 2.0926
+            "expected_pts": 1.9366
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 2.0158
+            "expected_pts": 1.886
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.984
+            "expected_pts": 1.8493
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.1558,
-        "draw": 0.2161,
-        "away_win": 0.6281,
+        "home_win": 0.1542,
+        "draw": 0.2139,
+        "away_win": 0.6318,
         "total_goals": {
           "0": 0.08,
-          "1": 0.2,
-          "2": 0.265,
-          "3": 0.2,
-          "4": 0.135,
-          "5": 0.08,
-          "6": 0.04
+          "1": 0.195,
+          "2": 0.26,
+          "3": 0.22,
+          "4": 0.145,
+          "5": 0.065,
+          "6": 0.035
         }
       },
       "source": "kalshi",
@@ -315,22 +315,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.8132,
+        "expected_pts": 1.8146,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.8132
+            "expected_pts": 1.8146
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.7297
+            "expected_pts": 1.7256
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.6832
+            "expected_pts": 1.6851
           }
         ]
       },
@@ -365,22 +365,22 @@
       "prediction": {
         "home": 0,
         "away": 2,
-        "expected_pts": 2.2841,
+        "expected_pts": 2.2787,
         "top3": [
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 2.2841
+            "expected_pts": 2.2787
           },
           {
             "home": 0,
             "away": 3,
-            "expected_pts": 2.1801
+            "expected_pts": 2.1775
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 2.1717
+            "expected_pts": 2.1722
           }
         ]
       },
@@ -415,22 +415,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.96,
+        "expected_pts": 1.9771,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.96
+            "expected_pts": 1.9771
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.922
+            "expected_pts": 1.9444
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.8459
+            "expected_pts": 1.8795
           }
         ]
       },
@@ -439,10 +439,10 @@
         "draw": 0.2315,
         "away_win": 0.1527,
         "total_goals": {
-          "0": 0.07,
-          "1": 0.21,
-          "2": 0.285,
-          "3": 0.205,
+          "0": 0.075,
+          "1": 0.205,
+          "2": 0.275,
+          "3": 0.215,
           "4": 0.135,
           "5": 0.065,
           "6": 0.03
@@ -465,37 +465,37 @@
       "prediction": {
         "home": 3,
         "away": 0,
-        "expected_pts": 2.3063,
+        "expected_pts": 2.304,
         "top3": [
           {
             "home": 3,
             "away": 0,
-            "expected_pts": 2.3063
+            "expected_pts": 2.304
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.3014
+            "expected_pts": 2.302
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 2.2032
+            "expected_pts": 2.216
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.7537,
-        "draw": 0.1626,
-        "away_win": 0.0837,
+        "home_win": 0.7612,
+        "draw": 0.1542,
+        "away_win": 0.0846,
         "total_goals": {
-          "0": 0.05,
-          "1": 0.18,
-          "2": 0.23,
-          "3": 0.24,
-          "4": 0.155,
-          "5": 0.095,
-          "6": 0.05
+          "0": 0.055,
+          "1": 0.175,
+          "2": 0.235,
+          "3": 0.235,
+          "4": 0.16,
+          "5": 0.085,
+          "6": 0.055
         }
       },
       "source": "kalshi",
@@ -515,37 +515,37 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.6942,
+        "expected_pts": 1.6799,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.6942
+            "expected_pts": 1.6799
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.6175
+            "expected_pts": 1.624
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5971
+            "expected_pts": 1.5942
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.4518,
-        "draw": 0.2792,
-        "away_win": 0.269,
+        "home_win": 0.4472,
+        "draw": 0.2764,
+        "away_win": 0.2764,
         "total_goals": {
           "0": 0.075,
-          "1": 0.22,
-          "2": 0.26,
-          "3": 0.195,
-          "4": 0.15,
-          "5": 0.06,
-          "6": 0.04
+          "1": 0.21,
+          "2": 0.27,
+          "3": 0.2,
+          "4": 0.14,
+          "5": 0.07,
+          "6": 0.035
         }
       },
       "source": "kalshi",
@@ -565,37 +565,37 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 2.0872,
+        "expected_pts": 2.0727,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 2.0872
+            "expected_pts": 2.0727
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.0657
+            "expected_pts": 2.0369
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.0125
+            "expected_pts": 1.998
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.6414,
-        "draw": 0.2172,
-        "away_win": 0.1414,
+        "home_win": 0.6281,
+        "draw": 0.2261,
+        "away_win": 0.1457,
         "total_goals": {
-          "0": 0.085,
-          "1": 0.19,
-          "2": 0.265,
-          "3": 0.215,
-          "4": 0.12,
-          "5": 0.085,
-          "6": 0.04
+          "0": 0.065,
+          "1": 0.205,
+          "2": 0.255,
+          "3": 0.225,
+          "4": 0.135,
+          "5": 0.07,
+          "6": 0.045
         }
       },
       "source": "kalshi",
@@ -615,22 +615,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.8739,
+        "expected_pts": 1.8729,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.8739
+            "expected_pts": 1.8729
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.8041
+            "expected_pts": 1.7974
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.7484
+            "expected_pts": 1.7479
           }
         ]
       },
@@ -665,22 +665,22 @@
       "prediction": {
         "home": 1,
         "away": 2,
-        "expected_pts": 1.8395,
+        "expected_pts": 1.8408,
         "top3": [
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.8395
-          },
-          {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 1.8051
+            "expected_pts": 1.8408
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.8031
+            "expected_pts": 1.8039
+          },
+          {
+            "home": 0,
+            "away": 2,
+            "expected_pts": 1.8005
           }
         ]
       },
@@ -715,37 +715,37 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.8185,
+        "expected_pts": 1.8292,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.8185
+            "expected_pts": 1.8292
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.7192
+            "expected_pts": 1.7269
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.7118
+            "expected_pts": 1.7125
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.1921,
-        "draw": 0.2709,
-        "away_win": 0.5369,
+        "home_win": 0.1884,
+        "draw": 0.2657,
+        "away_win": 0.5459,
         "total_goals": {
-          "0": 0.095,
-          "1": 0.215,
-          "2": 0.255,
-          "3": 0.225,
-          "4": 0.115,
-          "5": 0.07,
-          "6": 0.025
+          "0": 0.085,
+          "1": 0.22,
+          "2": 0.26,
+          "3": 0.22,
+          "4": 0.12,
+          "5": 0.06,
+          "6": 0.035
         }
       },
       "source": "kalshi",
@@ -765,37 +765,37 @@
       "prediction": {
         "home": 4,
         "away": 1,
-        "expected_pts": 2.7843,
+        "expected_pts": 2.72,
         "top3": [
           {
             "home": 4,
             "away": 1,
-            "expected_pts": 2.7843
+            "expected_pts": 2.72
           },
           {
             "home": 3,
             "away": 0,
-            "expected_pts": 2.6135
+            "expected_pts": 2.5953
           },
           {
             "home": 3,
             "away": 1,
-            "expected_pts": 2.5837
+            "expected_pts": 2.5556
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.8905,
-        "draw": 0.0647,
-        "away_win": 0.0448,
+        "home_win": 0.8818,
+        "draw": 0.0739,
+        "away_win": 0.0443,
         "total_goals": {
           "0": 0.02,
           "1": 0.085,
-          "2": 0.155,
-          "3": 0.21,
-          "4": 0.2,
-          "5": 0.15,
-          "6": 0.18
+          "2": 0.185,
+          "3": 0.205,
+          "4": 0.19,
+          "5": 0.14,
+          "6": 0.175
         }
       },
       "source": "kalshi",
@@ -815,37 +815,37 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.9519,
+        "expected_pts": 2.0761,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.9519
+            "expected_pts": 2.0761
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.9458
+            "expected_pts": 2.0609
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.9039
+            "expected_pts": 2.0326
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.1429,
-        "draw": 0.1724,
-        "away_win": 0.6847,
+        "home_win": 0.1443,
+        "draw": 0.1741,
+        "away_win": 0.6816,
         "total_goals": {
           "0": 0.05,
           "1": 0.19,
           "2": 0.24,
-          "3": 0.23,
-          "4": 0.155,
-          "5": 0.075,
-          "6": 0.06
+          "3": 0.235,
+          "4": 0.16,
+          "5": 0.07,
+          "6": 0.055
         }
       },
       "source": "kalshi",
@@ -865,37 +865,37 @@
       "prediction": {
         "home": 3,
         "away": 0,
-        "expected_pts": 2.1691,
+        "expected_pts": 2.2422,
         "top3": [
           {
             "home": 3,
             "away": 0,
-            "expected_pts": 2.1691
+            "expected_pts": 2.2422
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.159
+            "expected_pts": 2.2324
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.1327
+            "expected_pts": 2.216
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.7313,
-        "draw": 0.1642,
-        "away_win": 0.1045,
+        "home_win": 0.7462,
+        "draw": 0.1675,
+        "away_win": 0.0863,
         "total_goals": {
-          "0": 0.045,
-          "1": 0.165,
-          "2": 0.225,
-          "3": 0.22,
-          "4": 0.175,
-          "5": 0.09,
-          "6": 0.08
+          "0": 0.04,
+          "1": 0.145,
+          "2": 0.245,
+          "3": 0.225,
+          "4": 0.16,
+          "5": 0.11,
+          "6": 0.075
         }
       },
       "source": "kalshi",
@@ -915,22 +915,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7594,
+        "expected_pts": 1.7587,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7594
+            "expected_pts": 1.7587
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.6371
+            "expected_pts": 1.6309
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.6081
+            "expected_pts": 1.6076
           }
         ]
       },
@@ -965,22 +965,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.8026,
+        "expected_pts": 1.8018,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.8026
+            "expected_pts": 1.8018
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.7743
+            "expected_pts": 1.7674
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.7362
+            "expected_pts": 1.7358
           }
         ]
       },
@@ -1015,36 +1015,36 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.9339,
+        "expected_pts": 1.9718,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.9339
+            "expected_pts": 1.9718
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.929
+            "expected_pts": 1.9622
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.8798
+            "expected_pts": 1.9162
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.6585,
-        "draw": 0.2,
-        "away_win": 0.1415,
+        "home_win": 0.6552,
+        "draw": 0.202,
+        "away_win": 0.1429,
         "total_goals": {
-          "0": 0.075,
+          "0": 0.07,
           "1": 0.185,
-          "2": 0.235,
+          "2": 0.24,
           "3": 0.23,
-          "4": 0.15,
-          "5": 0.07,
+          "4": 0.16,
+          "5": 0.06,
           "6": 0.055
         }
       },
@@ -1065,22 +1065,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.8171,
+        "expected_pts": 1.7799,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.8171
+            "expected_pts": 1.7799
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.6682
+            "expected_pts": 1.6429
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.6598
+            "expected_pts": 1.6179
           }
         ]
       },
@@ -1089,13 +1089,13 @@
         "draw": 0.2836,
         "away_win": 0.2239,
         "total_goals": {
-          "0": 0.1,
-          "1": 0.22,
-          "2": 0.275,
-          "3": 0.195,
-          "4": 0.13,
-          "5": 0.055,
-          "6": 0.025
+          "0": 0.085,
+          "1": 0.23,
+          "2": 0.27,
+          "3": 0.205,
+          "4": 0.12,
+          "5": 0.06,
+          "6": 0.03
         }
       },
       "source": "kalshi",
@@ -1115,37 +1115,37 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.6163,
+        "expected_pts": 1.6466,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.6163
+            "expected_pts": 1.6466
+          },
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.6138
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.6067
-          },
-          {
-            "home": 2,
-            "away": 1,
-            "expected_pts": 1.597
+            "expected_pts": 1.6133
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.3206,
-        "draw": 0.244,
-        "away_win": 0.4354,
+        "home_win": 0.3186,
+        "draw": 0.2304,
+        "away_win": 0.451,
         "total_goals": {
-          "0": 0.07,
-          "1": 0.165,
-          "2": 0.245,
-          "3": 0.235,
-          "4": 0.15,
-          "5": 0.075,
-          "6": 0.06
+          "0": 0.05,
+          "1": 0.19,
+          "2": 0.235,
+          "3": 0.24,
+          "4": 0.16,
+          "5": 0.08,
+          "6": 0.045
         }
       },
       "source": "kalshi",
@@ -1165,22 +1165,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7738,
+        "expected_pts": 1.7488,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7738
+            "expected_pts": 1.7488
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.6522
+            "expected_pts": 1.6334
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.6495
+            "expected_pts": 1.6079
           }
         ]
       },
@@ -1189,13 +1189,13 @@
         "draw": 0.2864,
         "away_win": 0.2563,
         "total_goals": {
-          "0": 0.105,
-          "1": 0.21,
-          "2": 0.29,
-          "3": 0.2,
-          "4": 0.105,
-          "5": 0.045,
-          "6": 0.045
+          "0": 0.095,
+          "1": 0.22,
+          "2": 0.28,
+          "3": 0.205,
+          "4": 0.115,
+          "5": 0.055,
+          "6": 0.03
         }
       },
       "source": "kalshi",
@@ -1215,22 +1215,22 @@
       "prediction": {
         "home": 5,
         "away": 1,
-        "expected_pts": 2.8379,
+        "expected_pts": 2.9267,
         "top3": [
           {
             "home": 5,
             "away": 1,
-            "expected_pts": 2.8379
+            "expected_pts": 2.9267
           },
           {
             "home": 4,
             "away": 1,
-            "expected_pts": 2.6798
+            "expected_pts": 2.7852
           },
           {
             "home": 4,
             "away": 0,
-            "expected_pts": 2.5443
+            "expected_pts": 2.6264
           }
         ]
       },
@@ -1239,8 +1239,8 @@
         "draw": 0.0448,
         "away_win": 0.0249,
         "total_goals": {
-          "0": 0.01,
-          "1": 0.055,
+          "0": 0.005,
+          "1": 0.06,
           "2": 0.11,
           "3": 0.19,
           "4": 0.18,
@@ -1265,35 +1265,35 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.7382,
+        "expected_pts": 1.7504,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.7382
+            "expected_pts": 1.7504
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7296
+            "expected_pts": 1.7177
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.551
+            "expected_pts": 1.5351
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.2709,
+        "home_win": 0.2808,
         "draw": 0.33,
-        "away_win": 0.399,
+        "away_win": 0.3892,
         "total_goals": {
           "0": 0.145,
-          "1": 0.26,
-          "2": 0.28,
-          "3": 0.18,
-          "4": 0.09,
+          "1": 0.25,
+          "2": 0.29,
+          "3": 0.17,
+          "4": 0.1,
           "5": 0.03,
           "6": 0.015
         }
@@ -1313,39 +1313,39 @@
       "phase": "group",
       "group": "Group E",
       "prediction": {
-        "home": 1,
-        "away": 0,
-        "expected_pts": 1.9949,
+        "home": 2,
+        "away": 1,
+        "expected_pts": 1.9945,
         "top3": [
-          {
-            "home": 1,
-            "away": 0,
-            "expected_pts": 1.9949
-          },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.9849
+            "expected_pts": 1.9945
+          },
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.9836
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.9736
+            "expected_pts": 1.9812
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.6355,
-        "draw": 0.202,
-        "away_win": 0.1626,
+        "home_win": 0.6318,
+        "draw": 0.204,
+        "away_win": 0.1642,
         "total_goals": {
           "0": 0.06,
-          "1": 0.175,
-          "2": 0.24,
-          "3": 0.215,
+          "1": 0.165,
+          "2": 0.245,
+          "3": 0.225,
           "4": 0.165,
-          "5": 0.095,
-          "6": 0.05
+          "5": 0.085,
+          "6": 0.055
         }
       },
       "source": "kalshi",
@@ -1365,22 +1365,22 @@
       "prediction": {
         "home": 3,
         "away": 0,
-        "expected_pts": 2.3967,
+        "expected_pts": 2.393,
         "top3": [
           {
             "home": 3,
             "away": 0,
-            "expected_pts": 2.3967
+            "expected_pts": 2.393
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.3725
+            "expected_pts": 2.3552
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.2691
+            "expected_pts": 2.2659
           }
         ]
       },
@@ -1390,11 +1390,11 @@
         "away_win": 0.0647,
         "total_goals": {
           "0": 0.06,
-          "1": 0.13,
-          "2": 0.255,
+          "1": 0.135,
+          "2": 0.24,
           "3": 0.22,
           "4": 0.18,
-          "5": 0.08,
+          "5": 0.09,
           "6": 0.075
         }
       },
@@ -1415,22 +1415,22 @@
       "prediction": {
         "home": 0,
         "away": 3,
-        "expected_pts": 2.2624,
+        "expected_pts": 2.2897,
         "top3": [
           {
             "home": 0,
             "away": 3,
-            "expected_pts": 2.2624
+            "expected_pts": 2.2897
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 2.2598
+            "expected_pts": 2.2873
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 2.1702
+            "expected_pts": 2.2156
           }
         ]
       },
@@ -1439,12 +1439,12 @@
         "draw": 0.1429,
         "away_win": 0.7833,
         "total_goals": {
-          "0": 0.055,
-          "1": 0.145,
-          "2": 0.24,
-          "3": 0.22,
-          "4": 0.165,
-          "5": 0.1,
+          "0": 0.035,
+          "1": 0.15,
+          "2": 0.235,
+          "3": 0.25,
+          "4": 0.145,
+          "5": 0.11,
           "6": 0.075
         }
       },
@@ -1465,22 +1465,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.9385,
+        "expected_pts": 1.941,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.9385
+            "expected_pts": 1.941
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.8931
+            "expected_pts": 1.9056
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.8717
+            "expected_pts": 1.8794
           }
         ]
       },
@@ -1489,13 +1489,13 @@
         "draw": 0.2414,
         "away_win": 0.5567,
         "total_goals": {
-          "0": 0.08,
-          "1": 0.17,
-          "2": 0.275,
-          "3": 0.2,
-          "4": 0.15,
-          "5": 0.075,
-          "6": 0.05
+          "0": 0.07,
+          "1": 0.185,
+          "2": 0.26,
+          "3": 0.215,
+          "4": 0.145,
+          "5": 0.08,
+          "6": 0.045
         }
       },
       "source": "kalshi",
@@ -1515,37 +1515,37 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.6025,
+        "expected_pts": 1.6389,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.6025
+            "expected_pts": 1.6389
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5851
+            "expected_pts": 1.6207
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.5492
+            "expected_pts": 1.577
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.4826,
-        "draw": 0.2637,
-        "away_win": 0.2537,
+        "home_win": 0.4774,
+        "draw": 0.2663,
+        "away_win": 0.2563,
         "total_goals": {
           "0": 0.075,
           "1": 0.17,
-          "2": 0.25,
-          "3": 0.23,
-          "4": 0.14,
+          "2": 0.26,
+          "3": 0.22,
+          "4": 0.15,
           "5": 0.08,
-          "6": 0.055
+          "6": 0.045
         }
       },
       "source": "kalshi",
@@ -1565,22 +1565,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7806,
+        "expected_pts": 1.7813,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7806
+            "expected_pts": 1.7813
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.6914
+            "expected_pts": 1.6822
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.6842
+            "expected_pts": 1.6822
           }
         ]
       },
@@ -1589,8 +1589,8 @@
         "draw": 0.2736,
         "away_win": 0.2139,
         "total_goals": {
-          "0": 0.09,
-          "1": 0.205,
+          "0": 0.085,
+          "1": 0.21,
           "2": 0.27,
           "3": 0.21,
           "4": 0.13,
@@ -1615,22 +1615,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.9608,
+        "expected_pts": 1.8224,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.9608
+            "expected_pts": 1.8224
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.9451
+            "expected_pts": 1.7862
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.9333
+            "expected_pts": 1.7823
           }
         ]
       },
@@ -1639,12 +1639,12 @@
         "draw": 0.2315,
         "away_win": 0.1823,
         "total_goals": {
-          "0": 0.055,
-          "1": 0.195,
-          "2": 0.25,
-          "3": 0.23,
-          "4": 0.135,
-          "5": 0.08,
+          "0": 0.06,
+          "1": 0.185,
+          "2": 0.255,
+          "3": 0.22,
+          "4": 0.15,
+          "5": 0.075,
           "6": 0.055
         }
       },
@@ -1665,22 +1665,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 2.0726,
+        "expected_pts": 2.0656,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 2.0726
+            "expected_pts": 2.0656
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.9962
+            "expected_pts": 1.9882
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.9163
+            "expected_pts": 1.9327
           }
         ]
       },
@@ -1689,12 +1689,12 @@
         "draw": 0.2611,
         "away_win": 0.5764,
         "total_goals": {
-          "0": 0.095,
+          "0": 0.08,
           "1": 0.225,
-          "2": 0.275,
-          "3": 0.2,
-          "4": 0.125,
-          "5": 0.055,
+          "2": 0.28,
+          "3": 0.21,
+          "4": 0.12,
+          "5": 0.06,
           "6": 0.025
         }
       },
@@ -1715,37 +1715,37 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7192,
+        "expected_pts": 1.6662,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7192
+            "expected_pts": 1.6662
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.618
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.6385
-          },
-          {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 1.5809
+            "expected_pts": 1.6066
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.4627,
-        "draw": 0.2736,
-        "away_win": 0.2637,
+        "home_win": 0.4673,
+        "draw": 0.2663,
+        "away_win": 0.2663,
         "total_goals": {
-          "0": 0.085,
-          "1": 0.2,
-          "2": 0.27,
-          "3": 0.22,
+          "0": 0.075,
+          "1": 0.205,
+          "2": 0.265,
+          "3": 0.225,
           "4": 0.125,
-          "5": 0.05,
-          "6": 0.05
+          "5": 0.07,
+          "6": 0.035
         }
       },
       "source": "kalshi",
@@ -1764,23 +1764,23 @@
       "group": "Group F",
       "prediction": {
         "home": 0,
-        "away": 1,
-        "expected_pts": 2.0951,
+        "away": 2,
+        "expected_pts": 2.0807,
         "top3": [
           {
             "home": 0,
-            "away": 1,
-            "expected_pts": 2.0951
+            "away": 2,
+            "expected_pts": 2.0807
           },
           {
             "home": 0,
-            "away": 2,
-            "expected_pts": 2.0715
+            "away": 1,
+            "expected_pts": 2.0753
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 2.0347
+            "expected_pts": 2.0551
           }
         ]
       },
@@ -1790,11 +1790,11 @@
         "away_win": 0.6617,
         "total_goals": {
           "0": 0.055,
-          "1": 0.21,
-          "2": 0.225,
-          "3": 0.24,
-          "4": 0.14,
-          "5": 0.075,
+          "1": 0.19,
+          "2": 0.24,
+          "3": 0.235,
+          "4": 0.135,
+          "5": 0.09,
           "6": 0.055
         }
       },
@@ -1815,22 +1815,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.8835,
+        "expected_pts": 1.8919,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.8835
+            "expected_pts": 1.8919
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.875
+            "expected_pts": 1.8611
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.8377
+            "expected_pts": 1.8426
           }
         ]
       },
@@ -1865,22 +1865,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.8505,
+        "expected_pts": 1.8499,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.8505
+            "expected_pts": 1.8499
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.7214
+            "expected_pts": 1.7293
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.6775
+            "expected_pts": 1.683
           }
         ]
       },
@@ -1915,22 +1915,22 @@
       "prediction": {
         "home": 2,
         "away": 0,
-        "expected_pts": 2.1355,
+        "expected_pts": 2.1368,
         "top3": [
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.1355
+            "expected_pts": 2.1368
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 2.0996
+            "expected_pts": 2.1007
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.0888
+            "expected_pts": 2.0844
           }
         ]
       },
@@ -1939,13 +1939,13 @@
         "draw": 0.1921,
         "away_win": 0.1232,
         "total_goals": {
-          "0": 0.065,
-          "1": 0.165,
-          "2": 0.265,
-          "3": 0.23,
-          "4": 0.14,
+          "0": 0.055,
+          "1": 0.175,
+          "2": 0.26,
+          "3": 0.225,
+          "4": 0.145,
           "5": 0.085,
-          "6": 0.05
+          "6": 0.055
         }
       },
       "source": "kalshi",
@@ -1965,22 +1965,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 2.0003,
+        "expected_pts": 1.9747,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 2.0003
+            "expected_pts": 1.9747
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.8958
+            "expected_pts": 1.9092
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.849
+            "expected_pts": 1.8588
           }
         ]
       },
@@ -1989,13 +1989,13 @@
         "draw": 0.2462,
         "away_win": 0.5578,
         "total_goals": {
-          "0": 0.08,
-          "1": 0.24,
-          "2": 0.265,
-          "3": 0.205,
-          "4": 0.125,
-          "5": 0.05,
-          "6": 0.035
+          "0": 0.085,
+          "1": 0.23,
+          "2": 0.27,
+          "3": 0.22,
+          "4": 0.11,
+          "5": 0.06,
+          "6": 0.025
         }
       },
       "source": "kalshi",
@@ -2015,37 +2015,37 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.8444,
+        "expected_pts": 1.7968,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.8444
+            "expected_pts": 1.7968
           },
           {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 1.665
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.6694
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.6565
+            "expected_pts": 1.6258
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.4328,
-        "draw": 0.2935,
-        "away_win": 0.2736,
+        "home_win": 0.4372,
+        "draw": 0.2965,
+        "away_win": 0.2663,
         "total_goals": {
-          "0": 0.14,
-          "1": 0.215,
-          "2": 0.29,
-          "3": 0.18,
-          "4": 0.11,
-          "5": 0.025,
-          "6": 0.04
+          "0": 0.12,
+          "1": 0.255,
+          "2": 0.27,
+          "3": 0.2,
+          "4": 0.1,
+          "5": 0.045,
+          "6": 0.01
         }
       },
       "source": "kalshi",
@@ -2064,23 +2064,23 @@
       "group": "Group G",
       "prediction": {
         "home": 0,
-        "away": 2,
-        "expected_pts": 2.1666,
+        "away": 3,
+        "expected_pts": 2.2789,
         "top3": [
           {
             "home": 0,
-            "away": 2,
-            "expected_pts": 2.1666
+            "away": 3,
+            "expected_pts": 2.2789
           },
           {
             "home": 0,
-            "away": 3,
-            "expected_pts": 2.1565
+            "away": 2,
+            "expected_pts": 2.2757
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 2.1096
+            "expected_pts": 2.2341
           }
         ]
       },
@@ -2089,11 +2089,11 @@
         "draw": 0.1542,
         "away_win": 0.7612,
         "total_goals": {
-          "0": 0.05,
+          "0": 0.045,
           "1": 0.16,
           "2": 0.23,
           "3": 0.225,
-          "4": 0.17,
+          "4": 0.175,
           "5": 0.1,
           "6": 0.065
         }
@@ -2115,22 +2115,22 @@
       "prediction": {
         "home": 4,
         "away": 1,
-        "expected_pts": 2.6869,
+        "expected_pts": 2.6856,
         "top3": [
           {
             "home": 4,
             "away": 1,
-            "expected_pts": 2.6869
+            "expected_pts": 2.6856
           },
           {
             "home": 3,
             "away": 0,
-            "expected_pts": 2.5879
+            "expected_pts": 2.6051
           },
           {
             "home": 3,
             "away": 1,
-            "expected_pts": 2.5404
+            "expected_pts": 2.5468
           }
         ]
       },
@@ -2140,10 +2140,10 @@
         "away_win": 0.0348,
         "total_goals": {
           "0": 0.025,
-          "1": 0.09,
-          "2": 0.18,
-          "3": 0.21,
-          "4": 0.2,
+          "1": 0.095,
+          "2": 0.175,
+          "3": 0.22,
+          "4": 0.19,
           "5": 0.14,
           "6": 0.155
         }
@@ -2165,29 +2165,29 @@
       "prediction": {
         "home": 0,
         "away": 2,
-        "expected_pts": 2.1257,
+        "expected_pts": 2.1117,
         "top3": [
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 2.1257
+            "expected_pts": 2.1117
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 2.1012
+            "expected_pts": 2.0895
           },
           {
             "home": 0,
             "away": 3,
-            "expected_pts": 2.0359
+            "expected_pts": 2.025
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.1156,
-        "draw": 0.206,
-        "away_win": 0.6784,
+        "home_win": 0.1144,
+        "draw": 0.2139,
+        "away_win": 0.6716,
         "total_goals": {
           "0": 0.075,
           "1": 0.2,
@@ -2215,37 +2215,37 @@
       "prediction": {
         "home": 3,
         "away": 0,
-        "expected_pts": 2.6132,
+        "expected_pts": 2.6042,
         "top3": [
           {
             "home": 3,
             "away": 0,
-            "expected_pts": 2.6132
+            "expected_pts": 2.6042
           },
           {
             "home": 4,
             "away": 1,
-            "expected_pts": 2.5607
+            "expected_pts": 2.5811
           },
           {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 2.4786
+            "home": 3,
+            "away": 1,
+            "expected_pts": 2.4868
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.895,
-        "draw": 0.065,
-        "away_win": 0.04,
+        "home_win": 0.8995,
+        "draw": 0.0653,
+        "away_win": 0.0352,
         "total_goals": {
-          "0": 0.03,
-          "1": 0.12,
-          "2": 0.215,
-          "3": 0.225,
+          "0": 0.035,
+          "1": 0.1,
+          "2": 0.22,
+          "3": 0.22,
           "4": 0.18,
           "5": 0.13,
-          "6": 0.1
+          "6": 0.115
         }
       },
       "source": "kalshi",
@@ -2263,24 +2263,24 @@
       "phase": "group",
       "group": "Group H",
       "prediction": {
-        "home": 2,
+        "home": 1,
         "away": 0,
-        "expected_pts": 2.1887,
+        "expected_pts": 2.1829,
         "top3": [
-          {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 2.1887
-          },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 2.1877
+            "expected_pts": 2.1829
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 2.1705
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.1264
+            "expected_pts": 2.1243
           }
         ]
       },
@@ -2292,10 +2292,10 @@
           "0": 0.06,
           "1": 0.195,
           "2": 0.255,
-          "3": 0.235,
-          "4": 0.145,
-          "5": 0.065,
-          "6": 0.045
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.07,
+          "6": 0.05
         }
       },
       "source": "kalshi",
@@ -2315,22 +2315,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.6939,
+        "expected_pts": 1.694,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.6939
+            "expected_pts": 1.694
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.6575
+            "expected_pts": 1.6708
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.554
+            "expected_pts": 1.5644
           }
         ]
       },
@@ -2339,13 +2339,13 @@
         "draw": 0.2487,
         "away_win": 0.3706,
         "total_goals": {
-          "0": 0.085,
-          "1": 0.21,
+          "0": 0.075,
+          "1": 0.22,
           "2": 0.27,
           "3": 0.185,
-          "4": 0.14,
-          "5": 0.07,
-          "6": 0.04
+          "4": 0.135,
+          "5": 0.08,
+          "6": 0.035
         }
       },
       "source": "kalshi",
@@ -2363,39 +2363,39 @@
       "phase": "group",
       "group": "Group H",
       "prediction": {
-        "home": 0,
-        "away": 1,
-        "expected_pts": 1.9725,
+        "home": 1,
+        "away": 2,
+        "expected_pts": 1.9577,
         "top3": [
-          {
-            "home": 0,
-            "away": 1,
-            "expected_pts": 1.9725
-          },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.9454
+            "expected_pts": 1.9577
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.9482
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.9428
+            "expected_pts": 1.9446
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.1733,
-        "draw": 0.2327,
-        "away_win": 0.5941,
+        "home_win": 0.1724,
+        "draw": 0.2315,
+        "away_win": 0.5961,
         "total_goals": {
-          "0": 0.065,
+          "0": 0.06,
           "1": 0.18,
-          "2": 0.27,
-          "3": 0.22,
-          "4": 0.12,
+          "2": 0.245,
+          "3": 0.24,
+          "4": 0.135,
           "5": 0.095,
-          "6": 0.05
+          "6": 0.045
         }
       },
       "source": "kalshi",
@@ -2413,24 +2413,24 @@
       "phase": "group",
       "group": "Group I",
       "prediction": {
-        "home": 2,
+        "home": 1,
         "away": 0,
-        "expected_pts": 2.0059,
+        "expected_pts": 1.9912,
         "top3": [
-          {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 2.0059
-          },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 2.0018
+            "expected_pts": 1.9912
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 1.9833
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.9443
+            "expected_pts": 1.9274
           }
         ]
       },
@@ -2443,8 +2443,8 @@
           "1": 0.19,
           "2": 0.26,
           "3": 0.22,
-          "4": 0.135,
-          "5": 0.085,
+          "4": 0.14,
+          "5": 0.08,
           "6": 0.045
         }
       },
@@ -2465,22 +2465,22 @@
       "prediction": {
         "home": 0,
         "away": 3,
-        "expected_pts": 2.4602,
+        "expected_pts": 2.4413,
         "top3": [
           {
             "home": 0,
             "away": 3,
-            "expected_pts": 2.4602
+            "expected_pts": 2.4413
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 2.3844
+            "expected_pts": 2.3699
           },
           {
             "home": 1,
-            "away": 3,
-            "expected_pts": 2.3459
+            "away": 4,
+            "expected_pts": 2.3338
           }
         ]
       },
@@ -2489,10 +2489,10 @@
         "draw": 0.1244,
         "away_win": 0.8209,
         "total_goals": {
-          "0": 0.035,
-          "1": 0.14,
-          "2": 0.215,
-          "3": 0.225,
+          "0": 0.04,
+          "1": 0.135,
+          "2": 0.22,
+          "3": 0.22,
           "4": 0.18,
           "5": 0.11,
           "6": 0.095
@@ -2515,22 +2515,22 @@
       "prediction": {
         "home": 3,
         "away": 0,
-        "expected_pts": 2.6833,
+        "expected_pts": 2.663,
         "top3": [
           {
             "home": 3,
             "away": 0,
-            "expected_pts": 2.6833
+            "expected_pts": 2.663
           },
           {
             "home": 4,
             "away": 1,
-            "expected_pts": 2.5884
+            "expected_pts": 2.614
           },
           {
             "home": 3,
             "away": 1,
-            "expected_pts": 2.5329
+            "expected_pts": 2.5379
           }
         ]
       },
@@ -2539,11 +2539,11 @@
         "draw": 0.0936,
         "away_win": 0.0345,
         "total_goals": {
-          "0": 0.04,
-          "1": 0.105,
-          "2": 0.205,
-          "3": 0.24,
-          "4": 0.18,
+          "0": 0.03,
+          "1": 0.12,
+          "2": 0.215,
+          "3": 0.22,
+          "4": 0.185,
           "5": 0.125,
           "6": 0.105
         }
@@ -2565,22 +2565,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.6777,
+        "expected_pts": 1.6688,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.6777
+            "expected_pts": 1.6688
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.6239
+            "expected_pts": 1.6175
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.6154
+            "expected_pts": 1.6049
           }
         ]
       },
@@ -2590,11 +2590,11 @@
         "away_win": 0.2836,
         "total_goals": {
           "0": 0.065,
-          "1": 0.205,
+          "1": 0.195,
           "2": 0.255,
-          "3": 0.225,
-          "4": 0.14,
-          "5": 0.06,
+          "3": 0.23,
+          "4": 0.15,
+          "5": 0.055,
           "6": 0.05
         }
       },
@@ -2615,37 +2615,37 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.7926,
+        "expected_pts": 1.7587,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.7926
+            "expected_pts": 1.7587
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.7178
+            "expected_pts": 1.7091
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.6794
+            "expected_pts": 1.6751
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.2139,
-        "draw": 0.2537,
-        "away_win": 0.5323,
+        "home_win": 0.2217,
+        "draw": 0.2512,
+        "away_win": 0.5271,
         "total_goals": {
           "0": 0.065,
-          "1": 0.205,
-          "2": 0.26,
-          "3": 0.22,
-          "4": 0.135,
-          "5": 0.075,
-          "6": 0.04
+          "1": 0.195,
+          "2": 0.255,
+          "3": 0.225,
+          "4": 0.145,
+          "5": 0.07,
+          "6": 0.045
         }
       },
       "source": "kalshi",
@@ -2665,22 +2665,22 @@
       "prediction": {
         "home": 2,
         "away": 0,
-        "expected_pts": 2.2089,
+        "expected_pts": 2.1928,
         "top3": [
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.2089
+            "expected_pts": 2.1928
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 2.1522
+            "expected_pts": 2.1495
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.1078
+            "expected_pts": 2.1312
           }
         ]
       },
@@ -2689,12 +2689,12 @@
         "draw": 0.194,
         "away_win": 0.1144,
         "total_goals": {
-          "0": 0.075,
+          "0": 0.06,
           "1": 0.18,
-          "2": 0.26,
-          "3": 0.21,
-          "4": 0.15,
-          "5": 0.08,
+          "2": 0.255,
+          "3": 0.22,
+          "4": 0.155,
+          "5": 0.085,
           "6": 0.045
         }
       },
@@ -2715,22 +2715,22 @@
       "prediction": {
         "home": 2,
         "away": 0,
-        "expected_pts": 2.2334,
+        "expected_pts": 2.1924,
         "top3": [
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.2334
+            "expected_pts": 2.1924
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 2.1673
+            "expected_pts": 2.1522
           },
           {
             "home": 3,
             "away": 0,
-            "expected_pts": 2.1603
+            "expected_pts": 2.1291
           }
         ]
       },
@@ -2765,22 +2765,22 @@
       "prediction": {
         "home": 2,
         "away": 0,
-        "expected_pts": 2.1699,
+        "expected_pts": 2.1102,
         "top3": [
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.1699
+            "expected_pts": 2.1102
           },
           {
             "home": 3,
             "away": 0,
-            "expected_pts": 2.1424
+            "expected_pts": 2.0941
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.114
+            "expected_pts": 2.0576
           }
         ]
       },
@@ -2791,10 +2791,10 @@
         "total_goals": {
           "0": 0.055,
           "1": 0.15,
-          "2": 0.24,
-          "3": 0.22,
-          "4": 0.16,
-          "5": 0.1,
+          "2": 0.23,
+          "3": 0.23,
+          "4": 0.17,
+          "5": 0.09,
           "6": 0.075
         }
       },
@@ -2815,37 +2815,37 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 2.003,
+        "expected_pts": 2.0342,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 2.003
+            "expected_pts": 2.0342
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.9935
+            "expected_pts": 2.0095
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.9425
+            "expected_pts": 1.9823
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.6059,
+        "home_win": 0.6158,
         "draw": 0.2315,
-        "away_win": 0.1626,
+        "away_win": 0.1527,
         "total_goals": {
-          "0": 0.075,
+          "0": 0.07,
           "1": 0.195,
-          "2": 0.265,
-          "3": 0.22,
-          "4": 0.125,
+          "2": 0.255,
+          "3": 0.225,
+          "4": 0.13,
           "5": 0.08,
-          "6": 0.04
+          "6": 0.045
         }
       },
       "source": "kalshi",
@@ -2864,23 +2864,23 @@
       "group": "Group J",
       "prediction": {
         "home": 0,
-        "away": 1,
-        "expected_pts": 2.0845,
+        "away": 2,
+        "expected_pts": 2.0938,
         "top3": [
           {
             "home": 0,
-            "away": 1,
-            "expected_pts": 2.0845
+            "away": 2,
+            "expected_pts": 2.0938
           },
           {
             "home": 0,
-            "away": 2,
-            "expected_pts": 2.0644
+            "away": 1,
+            "expected_pts": 2.0898
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 2.0177
+            "expected_pts": 2.0381
           }
         ]
       },
@@ -2889,13 +2889,13 @@
         "draw": 0.2161,
         "away_win": 0.6482,
         "total_goals": {
-          "0": 0.075,
-          "1": 0.19,
-          "2": 0.25,
-          "3": 0.205,
-          "4": 0.16,
-          "5": 0.08,
-          "6": 0.04
+          "0": 0.06,
+          "1": 0.195,
+          "2": 0.26,
+          "3": 0.22,
+          "4": 0.145,
+          "5": 0.075,
+          "6": 0.045
         }
       },
       "source": "kalshi",
@@ -2915,37 +2915,37 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.7338,
+        "expected_pts": 1.6839,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.7338
+            "expected_pts": 1.6839
+          },
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.5971
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.6204
-          },
-          {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 1.5639
+            "expected_pts": 1.5949
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.2475,
-        "draw": 0.303,
-        "away_win": 0.4495,
+        "home_win": 0.2563,
+        "draw": 0.2965,
+        "away_win": 0.4472,
         "total_goals": {
-          "0": 0.09,
+          "0": 0.085,
           "1": 0.205,
           "2": 0.265,
-          "3": 0.205,
-          "4": 0.14,
-          "5": 0.045,
-          "6": 0.05
+          "3": 0.215,
+          "4": 0.135,
+          "5": 0.055,
+          "6": 0.04
         }
       },
       "source": "kalshi",
@@ -2965,37 +2965,37 @@
       "prediction": {
         "home": 0,
         "away": 3,
-        "expected_pts": 2.4373,
+        "expected_pts": 2.4989,
         "top3": [
           {
             "home": 0,
             "away": 3,
-            "expected_pts": 2.4373
-          },
-          {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 2.3424
+            "expected_pts": 2.4989
           },
           {
             "home": 1,
             "away": 4,
-            "expected_pts": 2.317
+            "expected_pts": 2.4145
+          },
+          {
+            "home": 0,
+            "away": 2,
+            "expected_pts": 2.4037
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.0739,
-        "draw": 0.1034,
-        "away_win": 0.8227,
+        "home_win": 0.0647,
+        "draw": 0.1045,
+        "away_win": 0.8308,
         "total_goals": {
-          "0": 0.04,
-          "1": 0.14,
+          "0": 0.03,
+          "1": 0.155,
           "2": 0.205,
-          "3": 0.245,
-          "4": 0.165,
+          "3": 0.235,
+          "4": 0.175,
           "5": 0.125,
-          "6": 0.08
+          "6": 0.075
         }
       },
       "source": "kalshi",
@@ -3015,37 +3015,37 @@
       "prediction": {
         "home": 3,
         "away": 0,
-        "expected_pts": 2.3443,
+        "expected_pts": 2.2811,
         "top3": [
           {
             "home": 3,
             "away": 0,
-            "expected_pts": 2.3443
+            "expected_pts": 2.2811
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.3151
+            "expected_pts": 2.2756
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.2351
+            "expected_pts": 2.1962
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.7688,
-        "draw": 0.1558,
-        "away_win": 0.0754,
+        "home_win": 0.7537,
+        "draw": 0.1626,
+        "away_win": 0.0837,
         "total_goals": {
           "0": 0.055,
           "1": 0.16,
-          "2": 0.22,
-          "3": 0.24,
+          "2": 0.23,
+          "3": 0.23,
           "4": 0.16,
-          "5": 0.09,
-          "6": 0.075
+          "5": 0.095,
+          "6": 0.07
         }
       },
       "source": "kalshi",
@@ -3065,22 +3065,22 @@
       "prediction": {
         "home": 0,
         "away": 2,
-        "expected_pts": 2.2647,
+        "expected_pts": 2.2582,
         "top3": [
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 2.2647
+            "expected_pts": 2.2582
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 2.1886
+            "expected_pts": 2.1927
           },
           {
             "home": 0,
             "away": 3,
-            "expected_pts": 2.182
+            "expected_pts": 2.1804
           }
         ]
       },
@@ -3089,8 +3089,8 @@
         "draw": 0.194,
         "away_win": 0.7114,
         "total_goals": {
-          "0": 0.07,
-          "1": 0.185,
+          "0": 0.065,
+          "1": 0.19,
           "2": 0.24,
           "3": 0.24,
           "4": 0.14,
@@ -3115,22 +3115,22 @@
       "prediction": {
         "home": 3,
         "away": 0,
-        "expected_pts": 2.3523,
+        "expected_pts": 2.3491,
         "top3": [
           {
             "home": 3,
             "away": 0,
-            "expected_pts": 2.3523
+            "expected_pts": 2.3491
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.3054
+            "expected_pts": 2.2928
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.2775
+            "expected_pts": 2.2737
           }
         ]
       },
@@ -3143,9 +3143,9 @@
           "1": 0.145,
           "2": 0.225,
           "3": 0.23,
-          "4": 0.17,
-          "5": 0.11,
-          "6": 0.08
+          "4": 0.175,
+          "5": 0.095,
+          "6": 0.09
         }
       },
       "source": "kalshi",
@@ -3165,37 +3165,37 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 2.2375,
+        "expected_pts": 2.193,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 2.2375
+            "expected_pts": 2.193
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.2089
+            "expected_pts": 2.1849
           },
           {
-            "home": 3,
-            "away": 0,
-            "expected_pts": 2.0662
+            "home": 2,
+            "away": 1,
+            "expected_pts": 2.0276
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.6716,
-        "draw": 0.2139,
-        "away_win": 0.1144,
+        "home_win": 0.665,
+        "draw": 0.2118,
+        "away_win": 0.1232,
         "total_goals": {
-          "0": 0.085,
-          "1": 0.235,
-          "2": 0.265,
-          "3": 0.2,
-          "4": 0.125,
-          "5": 0.055,
-          "6": 0.035
+          "0": 0.075,
+          "1": 0.245,
+          "2": 0.26,
+          "3": 0.205,
+          "4": 0.115,
+          "5": 0.06,
+          "6": 0.04
         }
       },
       "source": "kalshi",
@@ -3215,37 +3215,37 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.784,
+        "expected_pts": 1.7502,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.784
+            "expected_pts": 1.7502
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.6874
+            "expected_pts": 1.6717
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.6403
+            "expected_pts": 1.5977
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.265,
-        "draw": 0.255,
-        "away_win": 0.48,
+        "home_win": 0.2677,
+        "draw": 0.2576,
+        "away_win": 0.4747,
         "total_goals": {
-          "0": 0.09,
-          "1": 0.2,
-          "2": 0.26,
-          "3": 0.205,
-          "4": 0.15,
-          "5": 0.05,
-          "6": 0.045
+          "0": 0.075,
+          "1": 0.215,
+          "2": 0.255,
+          "3": 0.225,
+          "4": 0.135,
+          "5": 0.06,
+          "6": 0.035
         }
       },
       "source": "kalshi",
@@ -3263,39 +3263,39 @@
       "phase": "group",
       "group": "Group K",
       "prediction": {
-        "home": 1,
-        "away": 0,
-        "expected_pts": 1.7415,
+        "home": 0,
+        "away": 1,
+        "expected_pts": 1.7114,
         "top3": [
-          {
-            "home": 1,
-            "away": 0,
-            "expected_pts": 1.7415
-          },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.7
+            "expected_pts": 1.7114
           },
           {
-            "home": 2,
-            "away": 1,
-            "expected_pts": 1.6008
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.7028
+          },
+          {
+            "home": 1,
+            "away": 2,
+            "expected_pts": 1.5633
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.4061,
-        "draw": 0.2792,
-        "away_win": 0.3147,
+        "home_win": 0.4129,
+        "draw": 0.2736,
+        "away_win": 0.3134,
         "total_goals": {
-          "0": 0.1,
-          "1": 0.23,
-          "2": 0.275,
-          "3": 0.195,
-          "4": 0.12,
+          "0": 0.085,
+          "1": 0.245,
+          "2": 0.265,
+          "3": 0.215,
+          "4": 0.115,
           "5": 0.045,
-          "6": 0.035
+          "6": 0.03
         }
       },
       "source": "kalshi",
@@ -3315,22 +3315,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.8603,
+        "expected_pts": 1.8657,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.8603
+            "expected_pts": 1.8657
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.7882
+            "expected_pts": 1.7816
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.7596
+            "expected_pts": 1.7603
           }
         ]
       },
@@ -3339,10 +3339,10 @@
         "draw": 0.2414,
         "away_win": 0.1921,
         "total_goals": {
-          "0": 0.08,
-          "1": 0.215,
-          "2": 0.26,
-          "3": 0.22,
+          "0": 0.085,
+          "1": 0.21,
+          "2": 0.265,
+          "3": 0.215,
           "4": 0.13,
           "5": 0.06,
           "6": 0.035
@@ -3365,22 +3365,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.7094,
+        "expected_pts": 1.7091,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.7094
+            "expected_pts": 1.7091
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.6818
+            "expected_pts": 1.6814
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5575
+            "expected_pts": 1.5572
           }
         ]
       },
@@ -3415,22 +3415,22 @@
       "prediction": {
         "home": 3,
         "away": 0,
-        "expected_pts": 2.2557,
+        "expected_pts": 2.2392,
         "top3": [
           {
             "home": 3,
             "away": 0,
-            "expected_pts": 2.2557
+            "expected_pts": 2.2392
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.2243
+            "expected_pts": 2.2211
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.1836
+            "expected_pts": 2.1775
           }
         ]
       },
@@ -3439,13 +3439,13 @@
         "draw": 0.1642,
         "away_win": 0.0945,
         "total_goals": {
-          "0": 0.045,
-          "1": 0.17,
-          "2": 0.215,
-          "3": 0.245,
-          "4": 0.175,
-          "5": 0.09,
-          "6": 0.06
+          "0": 0.05,
+          "1": 0.155,
+          "2": 0.225,
+          "3": 0.235,
+          "4": 0.18,
+          "5": 0.085,
+          "6": 0.07
         }
       },
       "source": "kalshi",
@@ -3465,22 +3465,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 2.1356,
+        "expected_pts": 2.1252,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 2.1356
+            "expected_pts": 2.1252
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 2.0875
+            "expected_pts": 2.0982
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 2.0123
+            "expected_pts": 2.0154
           }
         ]
       },
@@ -3490,12 +3490,12 @@
         "away_win": 0.6382,
         "total_goals": {
           "0": 0.07,
-          "1": 0.225,
-          "2": 0.255,
-          "3": 0.21,
-          "4": 0.14,
-          "5": 0.07,
-          "6": 0.03
+          "1": 0.215,
+          "2": 0.26,
+          "3": 0.22,
+          "4": 0.135,
+          "5": 0.055,
+          "6": 0.045
         }
       },
       "source": "kalshi",
@@ -3515,37 +3515,37 @@
       "prediction": {
         "home": 0,
         "away": 3,
-        "expected_pts": 2.2525,
+        "expected_pts": 2.2121,
         "top3": [
           {
             "home": 0,
             "away": 3,
-            "expected_pts": 2.2525
+            "expected_pts": 2.2121
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 2.2241
+            "expected_pts": 2.203
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 2.1787
+            "expected_pts": 2.1808
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.0995,
-        "draw": 0.1443,
-        "away_win": 0.7562,
+        "home_win": 0.1034,
+        "draw": 0.1429,
+        "away_win": 0.7537,
         "total_goals": {
-          "0": 0.045,
-          "1": 0.15,
-          "2": 0.22,
-          "3": 0.245,
+          "0": 0.04,
+          "1": 0.155,
+          "2": 0.225,
+          "3": 0.235,
           "4": 0.165,
-          "5": 0.1,
-          "6": 0.075
+          "5": 0.115,
+          "6": 0.065
         }
       },
       "source": "kalshi",
@@ -3565,37 +3565,37 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 2.0294,
+        "expected_pts": 2.0485,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 2.0294
+            "expected_pts": 2.0485
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.9927
+            "expected_pts": 2.0194
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.942
+            "expected_pts": 1.9687
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.595,
-        "draw": 0.245,
-        "away_win": 0.16,
+        "home_win": 0.602,
+        "draw": 0.2438,
+        "away_win": 0.1542,
         "total_goals": {
-          "0": 0.085,
-          "1": 0.2,
-          "2": 0.25,
+          "0": 0.075,
+          "1": 0.205,
+          "2": 0.26,
           "3": 0.215,
-          "4": 0.15,
-          "5": 0.055,
-          "6": 0.045
+          "4": 0.14,
+          "5": 0.065,
+          "6": 0.04
         }
       },
       "source": "kalshi",
