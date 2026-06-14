@@ -29,6 +29,10 @@
 % URLs en referencias
 \usepackage{url}
 
+% ── Entornos matemáticos ───────────────────────────────────────
+\theoremstyle{remark}
+\newtheorem{observacion}{Observación}
+
 % ── Comandos de autor ──────────────────────────────────────────
 \newcommand{\TODO}[1]{\textbf{\color{red}[TODO: #1]}}
 \newcommand{\E}{\mathbb{E}}
@@ -596,6 +600,40 @@ incluso si $P(0,0) > P(1,0)$, porque $1$-$0$ también recibe 3 puntos
 cuando el resultado es $2$-$0$ o $3$-$0$.
 \TODO{Insertar ejemplo concreto del WC 2026 con tabla de E(a,b).}
 
+\begin{observacion}[Los empates nunca son predicciones óptimas en fase de grupos]
+\label{obs:nodraw}
+Para cualquier predicción de empate exacto $(a, a)$, la tier de
+3 puntos de la regla de puntuación de grupos es inalcanzable.
+Esa tier requiere acertar simultáneamente el ganador/empate
+\emph{y} los goles de al menos un equipo.
+Si la predicción es $(a, a)$ y el resultado real es un empate
+$(c, c)$, los goles de un equipo coinciden solo si $c = a$, caso
+que corresponde al marcador exacto (5 puntos).
+Para cualquier otro empate $c \neq a$, ningún gol coincide y se
+obtienen 2 puntos.
+Por lo tanto, los puntos esperados de predecir $(a, a)$ son
+\begin{equation}
+  E(a, a)
+  = 5\,P(a,a)
+  + 2\!\!\sum_{c \neq a} P(c,c)
+  + 1 \cdot \!\!\!\!\sum_{\substack{h \neq k \\ h = a \text{ ó } k = a}}
+    \!\!\!\!P(h,k),
+  \label{eq:edraw}
+\end{equation}
+sin término de 3 puntos.
+En cambio, una predicción de victoria $(a, b)$ con $a > b$ sí
+accede a la tier de 3 puntos para todos los marcadores de victoria
+local $(h, b)$ con $h \neq a$ ó $(a, k)$ con $k \neq b$
+(resultados con un gol coincidente).
+Esta asimetría estructural implica que predecir un empate puede ser
+óptimo solo si la probabilidad de empate es suficientemente alta para
+compensar la ausencia del término de 3 puntos.
+En el fútbol mundialista, los empates ocurren en aproximadamente el
+25\% de los partidos de la fase de grupos, y la probabilidad de cada
+marcador de empate específico (0-0, 1-1, 2-2, \ldots) es pequeña,
+de modo que este umbral no se alcanza en la práctica.
+\end{observacion}
+
 % ─────────────────────────────────────────────────────────────
 \section{Implementación y plataforma web}
 \label{sec:implementacion}
@@ -821,6 +859,22 @@ grupos, esto sugiere que el historial de tres Mundiales es suficiente
 para caracterizar la distribución del WC 2026.
 Si $\delta$ crece sustancialmente, indica una desviación real del
 comportamiento histórico.
+
+\subsection{Ausencia de predicciones de empate}
+
+La Observación~\ref{obs:nodraw} predice que el modelo no producirá
+ninguna predicción de empate en la fase de grupos.
+Esta predicción se confirma empíricamente: en los 48 partidos de la
+fase de grupos del WC 2026, el modelo propone en todos los casos
+una victoria de uno de los dos equipos.
+Este resultado no refleja una sesgo hacia las victorias en las
+estimaciones de probabilidad, sino una consecuencia directa de la
+regla de puntuación: la tier de 3 puntos ---que constituye una
+fracción sustancial del valor esperado de una predicción--- es
+estructuralmente inaccesible para los empates.
+Un participante humano intuitivo que predijera empates en partidos
+muy parejos estaría actuando de forma subóptima incluso si su
+estimación de $P(\text{empate})$ fuera correcta.
 
 \subsection{Limitaciones}
 
