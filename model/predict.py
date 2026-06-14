@@ -13,7 +13,7 @@ sys.path.insert(0, str(ROOT))
 
 from model.kalshi import fetch_match_probs, _fallback_probs, _correct_bias
 from model.historical import build_distributions, scoreline_probs
-from model.optimizer import best_prediction
+from model.optimizer import best_prediction, modal_prediction
 from model.learn import (load_canonical, count_2026, estimate_gamma,
                           estimate_delta, estimate_alpha,
                           SIGMA_GAMMA, SIGMA_DELTA, ALPHA_0, SIGMA_ALPHA)
@@ -50,6 +50,17 @@ def run():
     n_2026           = len(canonical)
     print(f"Historical γ = {gamma:.3f}  |  WC 2026: {n_2026} results, "
           f"δ = {delta:.3f}  |  α = {alpha:.3f}")
+
+    # Neutral historical baseline (1/3-1/3-1/3, no WC 2026 data, no Kalshi).
+    # Same prediction for every match of a given phase — precompute once.
+    dist_neutral = build_distributions(gamma=gamma, delta=0.0)
+    from model.historical import scoreline_probs as _sp
+    _sp_neutral_group    = _sp(1/3, 1/3, 1/3, "group",    dist=dist_neutral)
+    _sp_neutral_knockout = _sp(1/3, 1/3, 1/3, "knockout", dist=dist_neutral)
+    baseline_by_phase = {
+        "group":    best_prediction(_sp_neutral_group,    "group"),
+        "knockout": best_prediction(_sp_neutral_knockout, "knockout"),
+    }
 
     # ── Load existing locked predictions ──
     if LOCKED_PATH.exists():
@@ -115,7 +126,9 @@ def run():
         )
 
         # Find best prediction
-        best = best_prediction(score_dist, phase)
+        best   = best_prediction(score_dist, phase)
+        modal  = modal_prediction(score_dist)
+        bh     = baseline_by_phase[phase]
 
         # Lock prediction before kickoff; keep existing entry after kickoff
         kickoff = datetime.strptime(
@@ -123,10 +136,14 @@ def run():
         ).replace(tzinfo=timezone.utc)
         if now < kickoff:
             locked[str(mid)] = {
-                "home":         best["home"],
-                "away":         best["away"],
-                "expected_pts": best["expected_pts"],
-                "locked_at":    now.isoformat(),
+                "home":               best["home"],
+                "away":               best["away"],
+                "expected_pts":       best["expected_pts"],
+                "modal_home":         modal["home"],
+                "modal_away":         modal["away"],
+                "baseline_hist_home": bh["home"],
+                "baseline_hist_away": bh["away"],
+                "locked_at":          now.isoformat(),
             }
 
         entry = {
@@ -145,6 +162,8 @@ def run():
                 "away": best["away"],
                 "expected_pts": best["expected_pts"],
                 "top3": best["top3"],
+                "modal": {"home": modal["home"], "away": modal["away"]},
+                "baseline_hist": {"home": bh["home"], "away": bh["away"]},
             },
             "probabilities": {
                 "home_win": round(raw_home, 4),

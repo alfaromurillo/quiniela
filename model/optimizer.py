@@ -59,6 +59,18 @@ def expected_points(pred_a: int, pred_b: int, score_probs: dict, phase: str) -> 
     return total
 
 
+def modal_prediction(score_probs: dict) -> dict:
+    """
+    Return the highest-probability scoreline argmax P(h,k).
+    Ties broken in favour of lower-scoring scoreline.
+    """
+    best_p, best_h, best_k = -1.0, 1, 0
+    for (h, k), p in score_probs.items():
+        if p > best_p or (p == best_p and h + k < best_h + best_k):
+            best_p, best_h, best_k = p, h, k
+    return {"home": best_h, "away": best_k, "prob": round(best_p, 4)}
+
+
 def best_prediction(score_probs: dict, phase: str) -> dict:
     """
     Return the prediction (a, b) maximising E[points], along with top-3 alternatives.
