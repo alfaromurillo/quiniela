@@ -275,10 +275,10 @@ def fig1_historical_overview():
 
 # ── Figure 2: Effect of gamma ──────────────────────────────────
 def fig2_gamma_effect():
-    gammas = [1.0, 0.84, 0.6]
+    gammas = [1.0, 0.84, 0.5]
     labels = ["$\\gamma = 1$ (sin decaimiento)",
               "$\\gamma = 0.84$ (estimado)",
-              "$\\gamma = 0.6$"]
+              "$\\gamma = 0.5$"]
     colors = ["#1f77b4", "#ff7f0e", "#2ca02c"]
 
     totals_range = list(range(0, 9))
