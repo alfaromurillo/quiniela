@@ -363,6 +363,25 @@ Mantenemos distribuciones separadas para la fase de grupos y la fase
 eliminatoria, dado que los partidos eliminatorios tienden a ser más
 cerrados y a producir marcadores distintos a los de la fase de grupos
 \citep{groll2015}.
+La Figura~\ref{fig:historico} muestra los mapas de calor de marcadores
+canónicos para los tres torneos.
+
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig1_historical_overview}
+  \caption{Distribuciones históricas de marcadores en forma canónica
+    (eje $x$ = goles del ganador, eje $y$ = goles del perdedor)
+    para WC 2014, 2018 y 2022, separadas por fase.
+    Columnas izquierdas: fase de grupos.
+    Columnas derechas: eliminación directa (marcadores a 120 min
+    cuando hay tiempo extra).
+    Las columnas de ``Estimado'' muestran el modelo en condiciones
+    neutrales ($\gamma \approx 0.84$, $\delta = 0$,
+    probabilidades iguales $1/3$--$1/3$--$1/3$);
+    los paneles en gris son marcadores de posición que se completarán
+    al concluir la fase de grupos y el torneo respectivamente.}
+  \label{fig:historico}
+\end{figure}
 
 \subsection{Ponderación temporal: parámetro \texorpdfstring{$\gamma$}{gamma}}
 
@@ -384,6 +403,22 @@ para regularizar hacia el caso sin decaimiento.
 La estimación resultante es $\hat{\gamma} \approx 0.84$, que implica
 una muestra efectiva de aproximadamente
 $64 \cdot (1 + 0.84 + 0.84^2) \approx 163$ partidos ponderados.
+La Figura~\ref{fig:gamma} muestra el efecto de distintos valores de
+$\gamma$ sobre la distribución marginal de goles totales.
+
+\begin{figure}[tb]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig2_gamma_effect}
+  \caption{Efecto del parámetro de decaimiento $\gamma$ sobre la
+    distribución marginal del total de goles, para la fase de grupos
+    (izquierda) y la fase eliminatoria (derecha).
+    El valor estimado $\gamma \approx 0.84$ está entre el caso sin
+    decaimiento ($\gamma = 1$) y el caso de alto decaimiento
+    ($\gamma = 0.6$).
+    El efecto sobre la fase eliminatoria es más pronunciado porque
+    WC 2022 incluyó más tiempo extra que los torneos anteriores.}
+  \label{fig:gamma}
+\end{figure}
 
 \subsection{Suavizado mediante un prior de Poisson}
 
@@ -432,6 +467,21 @@ regularización hacia el historial cuando los datos del torneo actual
 son escasos.
 Al inicio del torneo, $\delta = 0$; crece conforme se acumulan
 resultados y la señal del WC 2026 justifica desviarse del historial.
+La Figura~\ref{fig:delta} muestra la evolución de $\hat\delta$ a lo
+largo del torneo.
+
+\begin{figure}[tb]
+  \centering
+  \includegraphics[width=0.7\textwidth]{figures/fig4_delta_evolution}
+  \caption{Estimación del parámetro $\delta$ en función del número
+    de partidos del WC 2026 ya disputados.
+    $\delta = 0$ indica que el modelo se basa exclusivamente en el
+    historial de los tres Mundiales anteriores;
+    $\delta > 0$ indica que los resultados del WC 2026 reciben
+    peso adicional $(1 + \delta)$ sobre la línea base histórica.
+    Esta figura se actualizará conforme avance el torneo.}
+  \label{fig:delta}
+\end{figure}
 
 % ─────────────────────────────────────────────────────────────
 \section{Integración de los mercados de predicción}
@@ -533,6 +583,24 @@ donde $r(h,k)$ es el factor de reajuste derivado de los mercados de
 spread.
 La distribución resultante $P(h,k)$ es la estimación final que se
 utiliza en la optimización.
+La Figura~\ref{fig:kalshi} ilustra el efecto del reajuste completo
+para el partido Corea del Sur vs.\ Rep.\ Checa (WC 2026, jornada 1).
+
+\begin{figure}[tb]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig3_kalshi_reweight}
+  \caption{Distribución de probabilidades de marcador $P(h,k)$ para
+    Corea del Sur (local) vs.\ Rep.\ Checa (visita), antes (izquierda)
+    y después (derecha) del reajuste con datos de Kalshi
+    ($p_W = 0.37$, $p_D = 0.31$, $p_A = 0.32$).
+    El reajuste incorpora el resultado más probable del partido
+    (precio de Kalshi) y la distribución de total de goles y spread.
+    El recuadro rojo indica la predicción óptima ($0$-$1$), que
+    difiere de la moda de la distribución histórica sin Kalshi
+    ($1$-$0$ en el panel izquierdo).
+    El partido terminó $2$-$1$ (victoria de Corea del Sur).}
+  \label{fig:kalshi}
+\end{figure}
 
 % ─────────────────────────────────────────────────────────────
 \section{Optimización de puntos de quiniela}

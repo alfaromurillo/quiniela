@@ -276,35 +276,47 @@ def fig1_historical_overview():
 # ── Figure 2: Effect of gamma ──────────────────────────────────
 def fig2_gamma_effect():
     gammas = [1.0, 0.84, 0.6]
-    labels = ["γ = 1 (sin decaimiento)", "γ = 0.84 (estimado)", "γ = 0.6"]
+    labels = ["$\\gamma = 1$ (sin decaimiento)",
+              "$\\gamma = 0.84$ (estimado)",
+              "$\\gamma = 0.6$"]
     colors = ["#1f77b4", "#ff7f0e", "#2ca02c"]
 
-    fig, ax = plt.subplots(figsize=(7, 4))
-    totals_range = range(0, 9)
-    for gamma, label, color in zip(gammas, labels, colors):
-        mat = _model_matrix("group", gamma)
-        # Marginal P(total=t): sum canonical[loser, winner] over loser+winner=t
-        marginal = []
-        for t in totals_range:
-            prob = 0.0
-            for l in GOALS:
-                w = t - l
-                if 0 <= w <= MG and w >= l:
-                    v = mat[l, w]
-                    if not np.isnan(v):
-                        prob += v
-            marginal.append(prob)
-        ax.plot(list(totals_range), [m * 100 for m in marginal],
-                marker="o", label=label, color=color)
+    totals_range = list(range(0, 9))
+    phases = [("group",    "Fase de grupos"),
+              ("knockout", "Eliminación directa")]
 
-    ax.set_xlabel("Total de goles en el partido")
-    ax.set_ylabel("Probabilidad (%)")
-    ax.set_title("Efecto de $\\gamma$ sobre la distribución de goles totales\n"
-                 "(fase de grupos, WC 2014+2018+2022)")
-    ax.legend()
-    ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
-    ax.grid(axis="y", alpha=0.3)
-    fig.tight_layout()
+    fig, axes = plt.subplots(1, 2, figsize=(12, 4.5), sharey=False)
+    plt.subplots_adjust(wspace=0.35)
+
+    for ax, (phase, phase_label) in zip(axes, phases):
+        for gamma, label, color in zip(gammas, labels, colors):
+            mat = _model_matrix(phase, gamma)
+            marginal = []
+            for t in totals_range:
+                prob = 0.0
+                for l in GOALS:
+                    w = t - l
+                    if 0 <= w <= MG and w >= l:
+                        v = mat[l, w]
+                        if not np.isnan(v):
+                            prob += v
+                marginal.append(prob)
+            ax.plot(totals_range, [m * 100 for m in marginal],
+                    marker="o", label=label, color=color, linewidth=1.8)
+
+        ax.set_xlabel("Total de goles en el partido", fontsize=11)
+        ax.set_ylabel("Probabilidad (%)", fontsize=11)
+        ax.set_title(phase_label, fontsize=12)
+        ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
+        ax.grid(axis="y", alpha=0.3)
+        ax.legend(fontsize=9)
+
+    fig.suptitle(
+        "Efecto de $\\gamma$ sobre la distribución de goles totales\n"
+        "(WC 2014+2018+2022, ponderación geométrica por torneo)",
+        fontsize=12,
+    )
+    fig.tight_layout(rect=[0, 0, 1, 0.92])
     out = OUT_DIR / "fig2_gamma_effect.png"
     fig.savefig(out, format="png", dpi=150, bbox_inches="tight")
     plt.close(fig)
@@ -314,19 +326,24 @@ def fig2_gamma_effect():
 # ── Figure 3: Kalshi reweighting for a sample match ────────────
 def fig3_kalshi_reweight():
     """
-    Show before/after Kalshi reweighting for the first cached match.
-    Requires at least one entry in data/kalshi_cache.json.
-    Uses home×away (not canonical) to show the asymmetric reweighting.
+    Show before/after Kalshi reweighting for South Korea vs Czech Republic
+    (WC 2026 group stage, jornada 1) — the same match used in Section 5.
+    Falls back to the first available cached match if not found.
+    Uses home×away (not canonical) to show asymmetric reweighting clearly.
+    Marks the optimal prediction on the 'Con Kalshi' panel.
     """
     from model.kalshi import _load_cache, _clean_entry
-    from model.historical import scoreline_probs
+    from model.historical import scoreline_probs, build_distributions
+    from model.optimizer import expected_points, best_prediction
 
     cache = _load_cache()
     if not cache:
         print("  fig3: no Kalshi cache found — skipping")
         return
 
-    ticker_key = next(iter(cache))
+    # Prefer Korea vs Czech (cross-references Section 5 example)
+    preferred = "KXWCGAME-26JUN11KORCZE"
+    ticker_key = preferred if preferred in cache else next(iter(cache))
     entry  = _clean_entry(cache[ticker_key])
     ph_val = entry.get("home_win", 0.40)
     pd_val = entry.get("draw", 0.25)
@@ -336,9 +353,8 @@ def fig3_kalshi_reweight():
     sa     = entry.get("spread_away")
 
     gamma = _load_gamma()
+    dist  = build_distributions(gamma=gamma, delta=0.0)
 
-    from model.historical import build_distributions
-    dist = build_distributions(gamma=gamma, delta=0.0)
     sp_before = scoreline_probs(ph_val, pd_val, pa_val, "group",
                                 total_goals_probs=None,
                                 spread_home=None, spread_away=None,
@@ -357,36 +373,55 @@ def fig3_kalshi_reweight():
 
     mat_b = to_matrix(sp_before)
     mat_a = to_matrix(sp_after)
+    best  = best_prediction(sp_after, "group")
+    opt_h, opt_a = best["home"], best["away"]
 
-    fig, axes = plt.subplots(1, 2, figsize=(10, 4.5))
-    for ax, mat, title in zip(
+    vmax = max(mat_b.max(), mat_a.max()) * 100
+
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.8))
+    for ax, mat, title, mark_opt in zip(
         axes,
         [mat_b, mat_a],
         ["Sin Kalshi (solo histórico)", "Con Kalshi (reajustado)"],
+        [False, True],
     ):
         im = ax.imshow(mat * 100, origin="lower", aspect="equal",
-                       cmap="Blues", vmin=0)
-        ax.set_xticks(GOALS)
-        ax.set_yticks(GOALS)
-        ax.set_xlabel("Goles visitante")
-        ax.set_ylabel("Goles local")
-        ax.set_title(title)
+                       cmap="Blues", vmin=0, vmax=vmax)
+        ax.set_xticks(GOALS); ax.set_yticks(GOALS)
+        ax.set_xticklabels(GOALS, fontsize=9)
+        ax.set_yticklabels(GOALS, fontsize=9)
+        ax.set_xlabel("Goles visitante", fontsize=11)
+        ax.set_ylabel("Goles local", fontsize=11)
+        ax.set_title(title, fontsize=12)
         for h in GOALS:
             for a in GOALS:
                 val = mat[h][a] * 100
                 if val >= 0.5:
+                    color = "white" if val > vmax * 0.60 else "black"
                     ax.text(a, h, f"{val:.1f}", ha="center", va="center",
-                            fontsize=7,
-                            color="white" if val > 8 else "black")
+                            fontsize=7.5, color=color)
+        if mark_opt:
+            rect = plt.Rectangle(
+                (opt_a - 0.5, opt_h - 0.5), 1, 1,
+                linewidth=2.5, edgecolor="#e63946", facecolor="none",
+            )
+            ax.add_patch(rect)
+            ax.text(opt_a, opt_h - 0.42, "óptimo",
+                    ha="center", va="top", fontsize=7,
+                    color="#e63946", fontweight="bold")
         plt.colorbar(im, ax=ax, label="Probabilidad (%)")
 
+    # Readable match label
+    match_label = ("Corea del Sur vs. Rep. Checa"
+                   if ticker_key == preferred
+                   else ticker_key[:24])
     fig.suptitle(
-        f"Reajuste por mercados de predicción — {ticker_key[:20]}\n"
-        f"P(local)={ph_val:.2f}, P(empate)={pd_val:.2f}, "
-        f"P(visita)={pa_val:.2f}",
+        f"Reajuste por mercados de predicción de Kalshi\n"
+        f"{match_label} — "
+        f"$p_W={ph_val:.2f}$, $p_D={pd_val:.2f}$, $p_A={pa_val:.2f}$",
         fontsize=11,
     )
-    fig.tight_layout()
+    fig.tight_layout(rect=[0, 0, 1, 0.90])
     out = OUT_DIR / "fig3_kalshi_reweight.png"
     fig.savefig(out, format="png", dpi=150, bbox_inches="tight")
     plt.close(fig)
