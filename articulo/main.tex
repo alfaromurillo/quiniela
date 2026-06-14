@@ -743,6 +743,73 @@ marcador de empate específico (0-0, 1-1, 2-2, \ldots) es pequeña,
 de modo que este umbral no se alcanza en la práctica.
 \end{observacion}
 
+\subsection{Métricas de evaluación}
+\label{sec:metricas}
+
+Para cuantificar el rendimiento del modelo al concluir el torneo
+utilizaremos tres métricas complementarias.
+
+\paragraph{Score de Brier (calibración de Kalshi).}
+El score de Brier multi-clase mide la calibración de las probabilidades
+de resultado proporcionadas por Kalshi.
+Para $N$ partidos con probabilidades predichas
+$(p_W^i,\, p_D^i,\, p_A^i)$ y resultado real codificado como vector
+de indicadores $(o_W^i,\, o_D^i,\, o_A^i) \in \{0,1\}^3$, se define
+\begin{equation}
+  \mathrm{BS}
+  = \frac{1}{N}\sum_{i=1}^{N}
+    \bigl[(p_W^i - o_W^i)^2 + (p_D^i - o_D^i)^2
+          + (p_A^i - o_A^i)^2\bigr].
+  \label{eq:brier}
+\end{equation}
+Un predictor perfectamente calibrado obtiene $\mathrm{BS} = 0$;
+predicciones uniformes $(1/3, 1/3, 1/3)$ dan $\mathrm{BS} = 2/3$.
+Reportamos $\mathrm{BS}$ para las probabilidades de resultado de Kalshi
+(corregidas por sesgo favorito-longshot, véase Sección~\ref{sec:fsb})
+como medida de calidad de la fuente de información del modelo.
+
+\paragraph{Marcador modal.}
+El \emph{marcador modal} de un partido es
+\begin{equation}
+  (\tilde{a}, \tilde{b})
+  = \arg\max_{(a,b)\in\{0,\ldots,5\}^2} P(a, b).
+  \label{eq:modal}
+\end{equation}
+Es el marcador más probable bajo el modelo, pero como muestra
+la Sección~\ref{sec:optimizacion}, difiere en general de la
+predicción óptima $(\hat{a}, \hat{b})$.
+Incluimos el marcador modal como estrategia de referencia para
+cuantificar la ganancia debida al paso de optimización.
+
+\paragraph{Comparación de estrategias.}
+Evaluamos cuatro estrategias de predicción:
+
+\begin{center}
+\begin{tabular}{lp{9.5cm}}
+  \toprule
+  Estrategia & Descripción \\
+  \midrule
+  Uniforme &
+    $p_W = p_D = p_A = 1/3$; distribución histórica sin información
+    específica del partido.
+    La predicción es la misma para todos los partidos de la fase. \\[4pt]
+  Solo resultado &
+    Usa $(p_W, p_D, p_A)$ de Kalshi sin condicionar por distribución
+    de total de goles ni spread.
+    Añade dirección específica del partido pero no detalles de goles. \\[4pt]
+  Modal completo &
+    $\arg\max P(a,b)$ con el modelo completo
+    (los tres mercados de Kalshi). \\[4pt]
+  Óptimo (nuestro modelo) &
+    $\arg\max E[\mathrm{pts}]$ con el modelo completo. \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+Cada estrategia usa estrictamente más información que la anterior,
+lo que permite aislar la contribución de cada componente del modelo.
+La comparación completa se presenta en la Sección~\ref{sec:resultados}.
+
 % ─────────────────────────────────────────────────────────────
 \section{Implementación y plataforma web}
 \label{sec:implementacion}
@@ -898,16 +965,12 @@ Los datos que se reportarán incluyen:
     grupos (número de partidos jugados vs.\ estimación de $\delta$).
   \item Valor estimado de $\hat{\alpha}$ al final de la fase de grupos
     (sesgo favorito-longshot observado en Kalshi durante el WC 2026).
-  \item Comparación versus dos líneas base:
-    \begin{enumerate}
-      \item \emph{Línea base uniforme}: probabilidades iguales
-        (1/3, 1/3, 1/3) para cada resultado.
-      \item \emph{Línea base histórica}: modelo sin precios de Kalshi,
-        solo distribución histórica ponderada con $\gamma$.
-    \end{enumerate}
-  \item Score de Brier de las probabilidades de resultado de Kalshi:
-    $\text{Brier} = \frac{1}{N}\sum_{i} (p_i - o_i)^2$,
-    como medida de calibración.
+  \item Comparación de las cuatro estrategias definidas en
+    la Sección~\ref{sec:metricas}: uniforme, solo resultado de
+    Kalshi, marcador modal, y predicción óptima (nuestro modelo).
+  \item Score de Brier~\eqref{eq:brier} de las probabilidades de
+    resultado de Kalshi corregidas por sesgo favorito-longshot,
+    como medida de calibración de la fuente de información.
 \end{itemize}
 
 \subsection{Fase eliminatoria}
