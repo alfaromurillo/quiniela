@@ -330,26 +330,43 @@ def fig2_gamma_effect():
         ax.grid(axis="y", alpha=0.3)
         ax.legend(loc="lower left", fontsize=9)
 
-        # ── Heatmap insets (upper-right): γ=1 and γ=estimated ──
-        vmax_i = max(float(np.nanmax(mats[(phase, g)])) for g in gammas)
-        inset_labels = ["$\\gamma=1$", "$\\hat{\\gamma}$"]
-        # Two insets side by side in the upper-right quadrant
-        for k, (g, ilabel) in enumerate(zip(gammas, inset_labels)):
-            x0 = 0.505 + k * 0.247
-            inset = ax.inset_axes([x0, 0.52, 0.225, 0.44])
-            mat_i = mats[(phase, g)]
-            inset.imshow(mat_i, origin="lower", aspect="equal",
-                         cmap="Blues", vmin=0, vmax=vmax_i)
-            inset.set_xticks([]); inset.set_yticks([])
-            inset.set_title(ilabel, fontsize=7.5, pad=2)
-            for sp in inset.spines.values():
-                sp.set_linewidth(0.6)
-            # Axis labels on outermost edges only
-            if k == 0:
-                inset.set_ylabel("Goles\nperdedor", fontsize=5.5,
-                                 labelpad=2)
-            if k == 1:
-                inset.set_xlabel("Goles ganador", fontsize=5.5, labelpad=2)
+        # ── Inset bar chart: scorelines with biggest γ change ───
+        mat_1   = mats[(phase, 1.0)]
+        mat_084 = mats[(phase, 0.84)]
+
+        diffs = []
+        for lo in GOALS:
+            for wi in range(lo, MG + 1):
+                p1  = mat_1[lo, wi]
+                p84 = mat_084[lo, wi]
+                if np.isnan(p1) or np.isnan(p84):
+                    continue
+                diffs.append((abs(p84 - p1), lo, wi, p1, p84))
+        diffs.sort(reverse=True)
+        top5 = diffs[:5]
+
+        slabels  = [f"{wi}-{lo}" for _, lo, wi, _, _   in top5]
+        p1_vals  = [p1  * 100   for _, _,  _,  p1, _  in top5]
+        p84_vals = [p84 * 100   for _, _,  _,  _,  p84 in top5]
+
+        inset = ax.inset_axes([0.515, 0.52, 0.465, 0.43])
+        xi = np.arange(len(slabels))
+        bw = 0.38
+        inset.bar(xi - bw/2, p1_vals,  bw, color="#1f77b4",
+                  alpha=0.85, label="$\\gamma=1$")
+        inset.bar(xi + bw/2, p84_vals, bw, color="#ff7f0e",
+                  alpha=0.85, label="$\\hat{\\gamma}$")
+        inset.set_xticks(xi)
+        inset.set_xticklabels(slabels, fontsize=6.5)
+        inset.set_ylabel("P (%)", fontsize=6.5, labelpad=2)
+        inset.tick_params(labelsize=6, pad=1)
+        inset.grid(axis="y", alpha=0.3, linewidth=0.5)
+        inset.legend(fontsize=6, loc="upper right",
+                     framealpha=0.75, borderpad=0.4)
+        inset.set_title("Marcadores con mayor cambio",
+                        fontsize=6.5, pad=2)
+        for sp in inset.spines.values():
+            sp.set_linewidth(0.5)
 
     fig.suptitle(
         "Efecto de $\\gamma$ sobre la distribución de goles totales\n"
