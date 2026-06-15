@@ -208,21 +208,21 @@ y la fase eliminatoria.
 \textbf{Mercados de predicción.}
 Los mercados de predicción son plataformas donde los participantes
 negocian contratos cuyo valor depende del resultado de eventos futuros.
-En el equilibrio, los precios de mercado convergen hacia las
-probabilidades colectivas del resultado, agregando la información
-dispersa de todos los participantes de manera análoga a cómo los
-mercados financieros agregan expectativas sobre el valor futuro de
-los activos \citep{arrow2008}.
-La evidencia empírica muestra que estos mercados son competitivos con
-las mejores herramientas de pronóstico disponibles \citep{spann2009}.
+Su eficiencia descansa en un argumento de arbitraje: si el precio
+difiere de la probabilidad verdadera, los agentes racionales explotan
+esa discrepancia hasta eliminarla \citep{arrow2008}.
+La evidencia empírica confirma que estos mercados son al menos tan
+precisos como las cuotas de casas de apuestas y superan a los
+pronosticadores individuales \citep{spann2009, forrest2005}.
 
 Para el Mundial 2026 utilizamos \textbf{Kalshi}
-(\href{https://kalshi.com}{kalshi.com}), una plataforma de mercados
-de predicción regulada en Estados Unidos.
-Para cada partido del torneo, Kalshi ofrece tres tipos de mercados:
-resultado del partido (victoria local, empate, victoria visitante),
-total de goles y ventaja de goles, cada uno con alta liquidez y
-precios actualizados en tiempo real.
+(\href{https://kalshi.com}{kalshi.com}), una plataforma regulada en
+Estados Unidos que ofrece tres tipos de mercados por partido:
+resultado (victoria local, empate, victoria visitante), total de
+goles y ventaja de goles.
+Kalshi es la opción más adecuada para este trabajo por su liquidez
+en mercados deportivos, su regulación formal y la disponibilidad
+de una API pública sin autenticación.
 
 \subsection*{Contribución}
 
@@ -247,32 +247,8 @@ con el objetivo de optimizar pronósticos en concursos de predicción
 deportiva con reglas de puntuación asimétricas.
 
 % ─────────────────────────────────────────────────────────────
-\section{Mercados de predicción}
-\label{sec:mercados}
-
-\subsection{Teoría y eficiencia}
-
-Un mercado de predicción es un mecanismo de agregación de
-información en el que los participantes negocian contratos
-contingentes sobre eventos futuros.
-Un contrato binario típico paga \$1 si el evento ocurre y \$0
-en caso contrario; su precio de mercado es, en equilibrio, la
-estimación colectiva de la probabilidad del evento \citep{surowiecki2004}.
-
-La eficiencia de los mercados de predicción descansa sobre un
-argumento de arbitraje: si el precio de mercado difiere
-sustancialmente de la probabilidad verdadera, existe una oportunidad
-de ganancia que agentes racionales explotarán hasta eliminarla.
-Este mecanismo es el mismo que da eficiencia a los mercados
-financieros clásicos, con la ventaja adicional de que los contratos
-tienen un horizonte de tiempo definido y una resolución objetiva.
-
-Empíricamente, una comparación para 678 partidos de la Bundesliga
-alemana muestra que los mercados de predicción son al menos tan
-precisos como las cuotas de bookmakers, y ambos superan claramente
-a los pronosticadores individuales \citep{spann2009}.
-Resultados similares se obtienen para el fútbol inglés medidos
-con el score de Brier \citep{forrest2005}.
+\section{Métodos}
+\label{sec:metodos}
 
 \subsection{Kalshi: arquitectura y mercados disponibles}
 
@@ -297,51 +273,11 @@ Los precios se obtienen como el punto medio entre la mejor oferta de
 compra y la mejor oferta de venta (midprice) cuando el spread es menor
 de \$0.30; de lo contrario se descarta el mercado por falta de liquidez.
 
-\subsection{Sesgo favorito-longshot}
-
-Un hallazgo consistente en la literatura de mercados deportivos es el
-\emph{sesgo favorito-longshot}: los contratos sobre resultados
-probables (favoritos) están subvalorados, mientras que los contratos
-sobre resultados improbables (longshots) están sobrevalorados
-\citep{whelan2024}.
-Un análisis de más de 300{,}000 contratos de Kalshi documenta
-este sesgo: los contratos baratos ganan menos de lo implícito en
-su precio, y los contratos caros generan pequeños retornos
-positivos \citep{burgi2026}.
-El modelo incorpora una corrección explícita mediante una
-transformación de potencia que se describe en la Sección~\ref{sec:kalshi}.
-
-\subsection{Plataformas alternativas}
-
-Otras plataformas relevantes de mercados de predicción son:
-
-\textbf{Manifold Markets} (\href{https://manifold.markets}{manifold.markets}):
-plataforma de acceso global con dinero de juego (no real), con más de
-un millón de mercados sobre eventos de todo tipo.
-La ausencia de dinero real reduce los incentivos de corrección, pero
-también elimina barreras regulatorias y permite mercados sobre
-preguntas de nicho.
-
-\textbf{Metaculus} (\href{https://metaculus.com}{metaculus.com}):
-plataforma de pronóstico basada en torneos y reputación.
-Los datos del proyecto Calibration City \citep{manifund2024}
-sugieren que Metaculus obtiene scores de Brier de 0.084--0.111,
-comparables con los mejores forecasters individuales.
-
-\textbf{Polymarket}: plataforma de dinero real basada en blockchain,
-no disponible para usuarios en Estados Unidos.
-En las elecciones presidenciales de EE.UU.\ de 2024, Polymarket
-superó a las encuestas tradicionales en precisión \citep{cutting2025}.
-
-Para el Mundial 2026, Kalshi es la opción más adecuada por su
-liquidez en mercados deportivos, su regulación en EE.UU.\ y la
-disponibilidad de una API pública sin autenticación.
-
 % ─────────────────────────────────────────────────────────────
-\section{Modelo histórico de marcadores}
+\subsection{Modelo histórico de marcadores}
 \label{sec:historico}
 
-\subsection{Datos}
+\subsubsection{Datos}
 
 Utilizamos los resultados de tres ediciones del Mundial de Fútbol:
 WC 2014 (Brasil), WC 2018 (Rusia) y WC 2022 (Catar), con 64 partidos
@@ -383,7 +319,7 @@ canónicos para los tres torneos.
   \label{fig:historico}
 \end{figure}
 
-\subsection{Ponderación temporal: parámetro \texorpdfstring{$\gamma$}{gamma}}
+\subsubsection{Ponderación temporal: parámetro \texorpdfstring{$\gamma$}{gamma}}
 
 Dada la evolución del nivel de juego entre ediciones del Mundial,
 el historial más reciente debe pesar más en la estimación.
@@ -422,7 +358,7 @@ $\gamma$ sobre la distribución marginal de goles totales.
   \label{fig:gamma}
 \end{figure}
 
-\subsection{Suavizado mediante un prior de Poisson}
+\subsubsection{Suavizado mediante un prior de Poisson}
 
 Las estimaciones empíricas de frecuencias de marcadores exactos son
 inestables para muestras pequeñas: marcadores como 4-3 pueden no
@@ -445,7 +381,7 @@ $\kappa = 5$ pseudoobservaciones:
          {n_{\mathrm{eff}} + \kappa}.
 \]
 
-\subsection{Adaptación bayesiana al torneo en curso: parámetro
+\subsubsection{Adaptación bayesiana al torneo en curso: parámetro
   \texorpdfstring{$\delta$}{delta}}
 
 A medida que el propio WC 2026 produce resultados, esa información
@@ -486,7 +422,7 @@ largo del torneo.
 \end{figure}
 
 % ─────────────────────────────────────────────────────────────
-\section{Integración de los mercados de predicción}
+\subsection{Integración de los mercados de predicción}
 \label{sec:kalshi}
 
 La distribución histórica suavizada $\hat{P}_\delta(h,k)$ captura la
@@ -495,12 +431,16 @@ información específica del partido: las fortalezas relativas de los
 dos equipos, el contexto del grupo, el historial reciente.
 Esa información está contenida en los precios de Kalshi.
 
-\subsection{Corrección del sesgo favorito-longshot}
+\subsubsection{Corrección del sesgo favorito-longshot}
 \label{sec:alpha}
 
+Los mercados de predicción presentan el \emph{sesgo
+favorito-longshot}: los contratos sobre resultados probables
+(favoritos) están subvalorados y los contratos sobre resultados
+improbables (longshots) están sobrevalorados \citep{whelan2024,
+burgi2026}.
 Antes de usar los precios de Kalshi como probabilidades, aplicamos
-una corrección por el sesgo favorito-longshot descrito en la
-Sección~\ref{sec:mercados}.
+una corrección explícita por este sesgo.
 Denotamos con $p_W^0$, $p_D^0$, $p_A^0$ los precios brutos de Kalshi
 (normalizados para sumar 1).
 La corrección sigue la transformación de potencia
@@ -538,7 +478,7 @@ $\hat{\alpha} = \alpha_0$.
 La estimación actualizada se almacena junto con $\gamma$ y $\delta$,
 y se reporta en la Sección~\ref{sec:resultados}.
 
-\subsection{Condicionamiento al resultado del partido}
+\subsubsection{Condicionamiento al resultado del partido}
 
 Sean $p_W$, $p_D$, $p_A$ las probabilidades corregidas $q_W, q_D, q_A$
 de la ecuación~\eqref{eq:alpha}.
@@ -559,7 +499,7 @@ correspondiente:
   + \frac{p_A \cdot Q_A(h,k)}{\sum_{h'<k'} Q_A(h',k')}.
 \]
 
-\subsection{Reajuste por total de goles}
+\subsubsection{Reajuste por total de goles}
 
 Los mercados de total de goles de Kalshi proveen probabilidades
 $q_n = \Prob(\text{total de goles} = n)$ para $n = 0, 1, \ldots, 6$.
@@ -571,7 +511,7 @@ coincidan con $q_n$:
     {\sum_{h'+k'=h+k} \tilde{P}_1(h',k')}.
 \]
 
-\subsection{Reajuste por ventaja de goles}
+\subsubsection{Reajuste por ventaja de goles}
 
 Análogamente, los mercados de spread de Kalshi proveen, dado que
 el equipo local gana, las probabilidades $s_m^H$ de que lo haga
@@ -605,10 +545,10 @@ para el partido Corea del Sur vs.\ Rep.\ Checa (WC 2026, jornada 1).
 \end{figure}
 
 % ─────────────────────────────────────────────────────────────
-\section{Optimización de puntos de quiniela}
+\subsection{Optimización de puntos de quiniela}
 \label{sec:optimizacion}
 
-\subsection{Regla de puntuación}
+\subsubsection{Regla de puntuación}
 
 La quiniela en cuestión usa las siguientes reglas de puntuación.
 Para la \textbf{fase de grupos}, con prioridad estricta
@@ -642,7 +582,7 @@ equivalen a empate):
 \end{tabular}
 \end{center}
 
-\subsection{Predicción óptima}
+\subsubsection{Predicción óptima}
 
 Dada la distribución $P(h, k)$ y la función de puntuación $f$,
 los puntos esperados al predecir $(a, b)$ son
@@ -743,7 +683,7 @@ marcador de empate específico (0-0, 1-1, 2-2, \ldots) es pequeña,
 de modo que este umbral no se alcanza en la práctica.
 \end{observacion}
 
-\subsection{Métricas de evaluación}
+\subsubsection{Métricas de evaluación}
 \label{sec:metricas}
 
 Para cuantificar el rendimiento del modelo al concluir el torneo
@@ -811,10 +751,10 @@ lo que permite aislar la contribución de cada componente del modelo.
 La comparación completa se presenta en la Sección~\ref{sec:resultados}.
 
 % ─────────────────────────────────────────────────────────────
-\section{Implementación y plataforma web}
+\subsection{Implementación y plataforma web}
 \label{sec:implementacion}
 
-\subsection{Arquitectura del sistema}
+\subsubsection{Arquitectura del sistema}
 
 El modelo se implementa en Python 3.11, organizado en un repositorio
 público en GitHub.
@@ -842,7 +782,7 @@ Las predicciones actualizadas se sirven como archivos JSON desde
 GitHub Pages, lo que elimina costos de infraestructura y garantiza
 alta disponibilidad.
 
-\subsection{Pipeline de actualización automática}
+\subsubsection{Pipeline de actualización automática}
 
 Las predicciones se actualizan automáticamente mediante GitHub Actions,
 el sistema de integración continua de GitHub.
@@ -863,7 +803,7 @@ Cada ejecución del pipeline sigue los pasos:
   \item Publicar los archivos JSON actualizados y desplegar el sitio.
 \end{enumerate}
 
-\subsection{Desafíos técnicos resueltos}
+\subsubsection{Desafíos técnicos resueltos}
 
 El desarrollo del sistema reveló varios problemas sutiles que
 documentamos aquí, pues son representativos de los desafíos de los
@@ -906,7 +846,7 @@ una etiqueta HTML antes de que MathJax pudiera procesarlo.
 La solución fue usar la entidad HTML \texttt{\&lt;} dentro de las
 expresiones matemáticas de la página.
 
-\subsection{Desarrollo asistido por Claude Code}
+\subsubsection{Desarrollo asistido por Claude Code}
 
 El sistema completo se desarrolló con el apoyo de Claude Code
 (anteriormente Anthropic API), una herramienta de programación
