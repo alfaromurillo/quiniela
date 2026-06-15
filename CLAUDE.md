@@ -41,6 +41,10 @@ bibtex articulo/main && pdflatex -synctex=1 articulo/main.tex && pdflatex -synct
 python model/figures.py
 ```
 
+**Always recompile `articulo/main.pdf` after any change to `articulo/main.tex`
+or any figure included in the article (`articulo/figures/*.png`), and commit
+the updated PDF together with the source changes.**
+
 ## Scoring rules (quiniela)
 
 **Group stage** (priority order — first matching rule wins):
