@@ -448,9 +448,22 @@ de $T$ y $M$:
     y $\Prob(T \geq 6)$.
   \item \textbf{Resultado (\texttt{KXWCGAME-}) y ventaja
     (\texttt{KXWCSPREAD-}):}
-    conjuntamente determinan $\Prob(M = m)$ para
-    $m \in \{-2, -1, 0, 1, 2\}$, más las colas agregadas
-    $\Prob(M \geq 3)$ y $\Prob(M \leq -3)$.
+    conjuntamente determinan la distribución marginal de $M$.
+    \texttt{KXWCGAME-} provee $\Prob(M > 0)$, $\Prob(M = 0)$ y
+    $\Prob(M < 0)$.
+    \texttt{KXWCSPREAD-} provee las colas de victoria:
+    $\Prob(M \geq 2)$, $\Prob(M \geq 3)$, $\Prob(M \geq 4)$,
+    $\Prob(M \leq -2)$ y $\Prob(M \leq -3)$.
+    Por diferencias sucesivas se obtiene $\Prob(M = m)$ exacto para
+    $m \in \{-2, -1, 0, 1, 2, 3\}$:
+    \begin{align*}
+      \Prob(M = 1) &= \Prob(M > 0) - \Prob(M \geq 2), \\
+      \Prob(M = 2) &= \Prob(M \geq 2) - \Prob(M \geq 3), \\
+      \Prob(M = 3) &= \Prob(M \geq 3) - \Prob(M \geq 4),
+    \end{align*}
+    y análogamente para $m = -1, -2$.
+    Las colas $\Prob(M \geq 4)$ y $\Prob(M \leq -3)$ permanecen
+    agregadas.
 \end{itemize}
 
 Dado que $h = (T+M)/2$ y $k = (T-M)/2$, cada par $(T,M)$ con
@@ -463,8 +476,9 @@ Conocer la distribución \emph{conjunta} de $(T,M)$ equivale, pues,
 a conocer la distribución completa de marcadores.
 
 La cuadrícula $\{0,\ldots,5\}^2$ tiene 35 grados de libertad.
-Las dos marginales de Kalshi proveen alrededor de 13 ecuaciones
-independientes, dejando el sistema fuertemente subdeterminado.
+Las dos marginales de Kalshi proveen 6 ecuaciones para $T$
+y 8 para $M$ (6 valores exactos más 2 colas agregadas),
+unas 14 en total, dejando el sistema fuertemente subdeterminado.
 Para ilustrar la ambigüedad, supongamos
 $\Prob(T = 2) = 0.30$ y $\Prob(M = 0) = 0.25$.
 Entonces
