@@ -130,20 +130,51 @@ def run():
         modal  = modal_prediction(score_dist)
         bh     = baseline_by_phase[phase]
 
+        # ── Strategy-comparison baselines ────────────────────────
+        # Row 2: Kalshi outcome only, raw probs (no α correction)
+        _sp_out_raw = scoreline_probs(
+            raw_home, raw_draw, raw_away, phase,
+            None, None, None, dist=dist,
+        )
+        bsln_out_raw = best_prediction(_sp_out_raw, phase)
+
+        # Row 3: Kalshi outcome only, α-corrected probs
+        _sp_out_alpha = scoreline_probs(
+            p_home, p_draw, p_away, phase,
+            None, None, None, dist=dist,
+        )
+        bsln_out_alpha = best_prediction(_sp_out_alpha, phase)
+
+        # Row 4: Full Kalshi (goles + spread), raw probs (no α)
+        _sp_full_raw = scoreline_probs(
+            raw_home, raw_draw, raw_away, phase,
+            total_goals, spread_home, spread_away, dist=dist,
+        )
+        bsln_full_raw = best_prediction(_sp_full_raw, phase)
+
+        def _hk(b):
+            return {"home": b["home"], "away": b["away"]}
+
         # Lock prediction before kickoff; keep existing entry after kickoff
         kickoff = datetime.strptime(
             match["time_utc"], "%Y-%m-%dT%H:%M:%SZ"
         ).replace(tzinfo=timezone.utc)
         if now < kickoff:
             locked[str(mid)] = {
-                "home":               best["home"],
-                "away":               best["away"],
-                "expected_pts":       best["expected_pts"],
-                "modal_home":         modal["home"],
-                "modal_away":         modal["away"],
-                "baseline_hist_home": bh["home"],
-                "baseline_hist_away": bh["away"],
-                "locked_at":          now.isoformat(),
+                "home":                  best["home"],
+                "away":                  best["away"],
+                "expected_pts":          best["expected_pts"],
+                "modal_home":            modal["home"],
+                "modal_away":            modal["away"],
+                "baseline_hist_home":    bh["home"],
+                "baseline_hist_away":    bh["away"],
+                "baseline_out_raw_home": bsln_out_raw["home"],
+                "baseline_out_raw_away": bsln_out_raw["away"],
+                "baseline_out_alpha_home": bsln_out_alpha["home"],
+                "baseline_out_alpha_away": bsln_out_alpha["away"],
+                "baseline_full_raw_home":  bsln_full_raw["home"],
+                "baseline_full_raw_away":  bsln_full_raw["away"],
+                "locked_at":             now.isoformat(),
             }
 
         entry = {
@@ -162,8 +193,11 @@ def run():
                 "away": best["away"],
                 "expected_pts": best["expected_pts"],
                 "top3": best["top3"],
-                "modal": {"home": modal["home"], "away": modal["away"]},
-                "baseline_hist": {"home": bh["home"], "away": bh["away"]},
+                "modal":             _hk(modal),
+                "baseline_hist":     _hk(bh),
+                "baseline_out_raw":  _hk(bsln_out_raw),
+                "baseline_out_alpha": _hk(bsln_out_alpha),
+                "baseline_full_raw": _hk(bsln_full_raw),
             },
             "probabilities": {
                 "home_win": round(raw_home, 4),

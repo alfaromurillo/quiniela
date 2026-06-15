@@ -291,29 +291,32 @@ def fig1_historical_overview():
 
 # ── Figure 2: Effect of gamma ──────────────────────────────────
 def fig2_gamma_effect():
-    gammas = [1.0, 0.84, 0.5]
+    gammas = [1.0, 0.84]
     labels = ["$\\gamma = 1$ (sin decaimiento)",
-              "$\\gamma = 0.84$ (estimado)",
-              "$\\gamma = 0.5$"]
-    colors = ["#1f77b4", "#ff7f0e", "#2ca02c"]
+              "$\\gamma \\approx 0.84$ (estimado)"]
+    colors = ["#1f77b4", "#ff7f0e"]
 
     totals_range = list(range(0, 9))
     phases = [("group",    "Fase de grupos"),
               ("knockout", "Eliminación directa")]
 
-    fig, axes = plt.subplots(1, 2, figsize=(12, 4.5), sharey=False)
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5.0), sharey=False)
     plt.subplots_adjust(wspace=0.35)
 
+    # Pre-compute matrices for both gammas × both phases (needed for insets)
+    mats = {(ph, g): _model_matrix(ph, g) for ph, _ in phases for g in gammas}
+
     for ax, (phase, phase_label) in zip(axes, phases):
+        # ── Line plots ──────────────────────────────────────────
         for gamma, label, color in zip(gammas, labels, colors):
-            mat = _model_matrix(phase, gamma)
+            mat = mats[(phase, gamma)]
             marginal = []
             for t in totals_range:
                 prob = 0.0
-                for l in GOALS:
-                    w = t - l
-                    if 0 <= w <= MG and w >= l:
-                        v = mat[l, w]
+                for lo in GOALS:
+                    w = t - lo
+                    if 0 <= w <= MG and w >= lo:
+                        v = mat[lo, w]
                         if not np.isnan(v):
                             prob += v
                 marginal.append(prob)
@@ -325,7 +328,28 @@ def fig2_gamma_effect():
         ax.set_title(phase_label, fontsize=12)
         ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
         ax.grid(axis="y", alpha=0.3)
-        ax.legend(fontsize=9)
+        ax.legend(loc="lower left", fontsize=9)
+
+        # ── Heatmap insets (upper-right): γ=1 and γ=estimated ──
+        vmax_i = max(float(np.nanmax(mats[(phase, g)])) for g in gammas)
+        inset_labels = ["$\\gamma=1$", "$\\hat{\\gamma}$"]
+        # Two insets side by side in the upper-right quadrant
+        for k, (g, ilabel) in enumerate(zip(gammas, inset_labels)):
+            x0 = 0.505 + k * 0.247
+            inset = ax.inset_axes([x0, 0.52, 0.225, 0.44])
+            mat_i = mats[(phase, g)]
+            inset.imshow(mat_i, origin="lower", aspect="equal",
+                         cmap="Blues", vmin=0, vmax=vmax_i)
+            inset.set_xticks([]); inset.set_yticks([])
+            inset.set_title(ilabel, fontsize=7.5, pad=2)
+            for sp in inset.spines.values():
+                sp.set_linewidth(0.6)
+            # Axis labels on outermost edges only
+            if k == 0:
+                inset.set_ylabel("Goles\nperdedor", fontsize=5.5,
+                                 labelpad=2)
+            if k == 1:
+                inset.set_xlabel("Goles ganador", fontsize=5.5, labelpad=2)
 
     fig.suptitle(
         "Efecto de $\\gamma$ sobre la distribución de goles totales\n"
