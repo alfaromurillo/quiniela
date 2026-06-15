@@ -218,7 +218,7 @@ pronosticadores individuales \citep{spann2009, forrest2005}.
 Para el Mundial 2026 utilizamos \textbf{Kalshi}
 (\href{https://kalshi.com}{kalshi.com}), una plataforma regulada en
 Estados Unidos que ofrece tres tipos de mercados por partido:
-resultado (victoria local, empate, victoria visitante), total de
+resultado (victoria del Equipo~A, empate, victoria del Equipo~B), total de
 goles y ventaja de goles.
 Kalshi es la opción más adecuada para este trabajo por su liquidez
 en mercados deportivos, su regulación formal y la disponibilidad
@@ -260,7 +260,7 @@ por partido:
 
 \begin{enumerate}
   \item \textbf{Resultado del partido} (\texttt{KXWCGAME-}):
-    submercados de victoria local, empate y victoria visitante.
+    submercados de victoria del Equipo~A, empate y victoria del Equipo~B.
   \item \textbf{Total de goles} (\texttt{KXWCTOTAL-}):
     submercados del tipo ``más de $n - 0.5$ goles'', para
     $n = 1, 2, \ldots, 6$.
@@ -433,6 +433,75 @@ información específica del partido: las fortalezas relativas de los
 dos equipos, el contexto del grupo, el historial reciente.
 Esa información está contenida en los precios de Kalshi.
 
+\subsection{Por qué los mercados de Kalshi no determinan la distribución de marcadores}
+\label{sec:insuficiencia}
+
+Los mercados de Kalshi resumen el partido mediante dos variables
+agregadas.
+Sea $T = h + k$ el total de goles y $M = h - k$ la diferencia de goles
+(Equipo~A menos Equipo~B).
+Las tres familias de mercados proveen distribuciones \emph{marginales}
+de $T$ y $M$:
+\begin{itemize}
+  \item \textbf{Total de goles (\texttt{KXWCTOTAL-}):}
+    determina $\Prob(T = t)$ para $t = 0, 1, \ldots, 5$
+    y $\Prob(T \geq 6)$.
+  \item \textbf{Resultado (\texttt{KXWCGAME-}) y ventaja
+    (\texttt{KXWCSPREAD-}):}
+    conjuntamente determinan $\Prob(M = m)$ para
+    $m \in \{-2, -1, 0, 1, 2\}$, más las colas agregadas
+    $\Prob(M \geq 3)$ y $\Prob(M \leq -3)$.
+\end{itemize}
+
+Dado que $h = (T+M)/2$ y $k = (T-M)/2$, cada par $(T,M)$ con
+$T \geq |M|$ y $T + M$ par corresponde a exactamente un marcador,
+de modo que
+\[
+  \Prob(h, k) = \Prob\!\bigl(T = h + k,\; M = h - k\bigr).
+\]
+Conocer la distribución \emph{conjunta} de $(T,M)$ equivale, pues,
+a conocer la distribución completa de marcadores.
+
+La cuadrícula $\{0,\ldots,5\}^2$ tiene 35 grados de libertad.
+Las dos marginales de Kalshi proveen alrededor de 13 ecuaciones
+independientes, dejando el sistema fuertemente subdeterminado.
+Para ilustrar la ambigüedad, supongamos
+$\Prob(T = 2) = 0.30$ y $\Prob(M = 0) = 0.25$.
+Entonces
+\begin{align*}
+  \Prob(T = 2) &= \Prob(0\text{-}2) + \Prob(1\text{-}1) + \Prob(2\text{-}0)
+    = 0.30, \\
+  \Prob(M = 0) &= \Prob(0\text{-}0) + \Prob(1\text{-}1) + \Prob(2\text{-}2)
+    + \cdots = 0.25,
+\end{align*}
+dos ecuaciones que vinculan $\Prob(1\text{-}1)$ con otros marcadores
+sin determinarla unívocamente.
+El único marcador recuperable \emph{directamente} de Kalshi es
+$\Prob(0\text{-}0) = \Prob(T = 0)$: el marcador nulo es el único
+con cero goles totales.
+
+La pieza faltante es la distribución condicional del total de goles
+dado la diferencia de goles.
+Por ejemplo, condicionado en un empate ($M = 0$), ¿cuánto más probable
+es $1$-$1$ que $0$-$0$ o $2$-$2$?
+Empíricamente, los empates del Mundial tienden a ser de menor puntaje
+que las victorias: la probabilidad de $0$-$0$ dado empate es más alta
+que la probabilidad no condicionada de marcar cero goles.
+Esta correlación entre $T$ y $M$ no está capturada en ningún mercado
+de Kalshi.
+
+Recuperar $\Prob(h,k)$ únicamente a partir de las marginales requeriría
+suponer la independencia de $T$ y $M$, supuesto empíricamente incorrecto.
+El enfoque adoptado en este artículo evita ese supuesto: en lugar de
+reconstruir la distribución conjunta desde las marginales, se usa la
+distribución histórica $\hat{P}_\delta(h,k)$ como distribución de
+referencia y se ajusta para que sus marginales coincidan con los
+precios de Kalshi.
+El resultado es una estimación $P(h,k \mid \text{Kalshi})$ que
+hereda la estructura de correlación estadística del fútbol mundialista
+del modelo histórico, y la calibración específica del partido de los
+mercados de predicción.
+
 \subsubsection{Corrección del sesgo favorito-longshot}
 \label{sec:alpha}
 
@@ -443,13 +512,13 @@ improbables (longshots) están sobrevalorados \citep{whelan2024,
 burgi2026}.
 Antes de usar los precios de Kalshi como probabilidades, aplicamos
 una corrección explícita por este sesgo.
-Denotamos con $p_W^0$, $p_D^0$, $p_A^0$ los precios brutos de Kalshi
+Denotamos con $p_A^0$, $p_E^0$, $p_B^0$ los precios brutos de Kalshi
 (normalizados para sumar 1).
 La corrección sigue la transformación de potencia
 \citep{whelan2024,burgi2026}:
 \begin{equation}
   q_i = \frac{(p_i^0)^\alpha}{\sum_{j} (p_j^0)^\alpha},
-  \qquad i \in \{W, D, A\},
+  \qquad i \in \{A, E, B\},
   \label{eq:alpha}
 \end{equation}
 donde $\alpha > 1$ concentra masa en los favoritos y reduce la
@@ -463,8 +532,8 @@ de mercados de intercambio competitivos en \cite{whelan2024}.
 Tras cada jornada del Mundial, re-estimamos $\alpha$ por máximo
 a posteriori~(MAP) usando todos los partidos completados
 con datos de Kalshi hasta ese momento.
-Para el partido $i$ con precios brutos $p_W^{0,i}, p_D^{0,i}, p_A^{0,i}$
-y resultado $r_i \in \{W, D, A\}$, la log-verosimilitud de $\alpha$ es
+Para el partido $i$ con precios brutos $p_A^{0,i}, p_E^{0,i}, p_B^{0,i}$
+y resultado $r_i \in \{A, E, B\}$, la log-verosimilitud de $\alpha$ es
 \[
   \ell(\alpha) = \sum_{i} \log q_{r_i}(\alpha),
 \]
@@ -482,23 +551,23 @@ y se reporta en la Sección~\ref{sec:resultados}.
 
 \subsubsection{Condicionamiento al resultado del partido}
 
-Sean $p_W$, $p_D$, $p_A$ las probabilidades corregidas $q_W, q_D, q_A$
+Sean $p_A$, $p_E$, $p_B$ las probabilidades corregidas $q_A, q_E, q_B$
 de la ecuación~\eqref{eq:alpha}.
 Dividimos la distribución histórica en tres bloques:
 \[
-  Q_W(h,k) = \hat{P}_\delta(h,k) \cdot \mathbf{1}[h > k],
+  Q_A(h,k) = \hat{P}_\delta(h,k) \cdot \mathbf{1}[h > k],
   \quad
-  Q_D(h,k) = \hat{P}_\delta(h,k) \cdot \mathbf{1}[h = k],
+  Q_E(h,k) = \hat{P}_\delta(h,k) \cdot \mathbf{1}[h = k],
   \quad
-  Q_A(h,k) = \hat{P}_\delta(h,k) \cdot \mathbf{1}[h < k],
+  Q_B(h,k) = \hat{P}_\delta(h,k) \cdot \mathbf{1}[h < k],
 \]
 y los reescalamos para que cada bloque sume la probabilidad de Kalshi
 correspondiente:
 \[
   \tilde{P}_1(h,k)
-  = \frac{p_W \cdot Q_W(h,k)}{\sum_{h'>k'} Q_W(h',k')}
-  + \frac{p_D \cdot Q_D(h,k)}{\sum_{h'=k'} Q_D(h',k')}
-  + \frac{p_A \cdot Q_A(h,k)}{\sum_{h'<k'} Q_A(h',k')}.
+  = \frac{p_A \cdot Q_A(h,k)}{\sum_{h'>k'} Q_A(h',k')}
+  + \frac{p_E \cdot Q_E(h,k)}{\sum_{h'=k'} Q_E(h',k')}
+  + \frac{p_B \cdot Q_B(h,k)}{\sum_{h'<k'} Q_B(h',k')}.
 \]
 
 \subsubsection{Reajuste por total de goles}
@@ -516,9 +585,9 @@ coincidan con $q_n$:
 \subsubsection{Reajuste por ventaja de goles}
 
 Análogamente, los mercados de spread de Kalshi proveen, dado que
-el equipo local gana, las probabilidades $s_m^H$ de que lo haga
+el Equipo~A gana, las probabilidades $s_m^A$ de que lo haga
 por exactamente $m$ goles ($m = 1, 2, 3, 4+$), y, dado que
-gana el visitante, las correspondientes $s_m^A$.
+gana el Equipo~B, las correspondientes $s_m^B$.
 Aplicamos un reajuste adicional dentro de cada bloque de resultado:
 \[
   P(h,k) \propto \tilde{P}_2(h,k) \cdot r(h,k),
@@ -534,9 +603,9 @@ para el partido Corea del Sur vs.\ Rep.\ Checa (WC 2026, jornada 1).
   \centering
   \includegraphics[width=\textwidth]{figures/fig3_kalshi_reweight}
   \caption{Distribución de probabilidades de marcador $P(h,k)$ para
-    Corea del Sur (local) vs.\ Rep.\ Checa (visita), antes (izquierda)
+    Corea del Sur (Equipo~A) vs.\ Rep.\ Checa (Equipo~B), antes (izquierda)
     y después (derecha) del reajuste con datos de Kalshi
-    ($p_W = 0.37$, $p_D = 0.31$, $p_A = 0.32$).
+    ($p_A = 0.37$, $p_E = 0.31$, $p_B = 0.32$).
     El reajuste incorpora el resultado más probable del partido
     (precio de Kalshi) y la distribución de total de goles y spread.
     El recuadro rojo indica la predicción óptima ($0$-$1$), que
@@ -607,8 +676,8 @@ marcadores bajos de empate como $0$-$0$.
 \paragraph{Ejemplo: Corea del Sur vs.\ Rep.\ Checa (WC 2026,
   fase de grupos).}
 Kalshi asignó probabilidades
-$p_W = 0.37$, $p_D = 0.31$, $p_A = 0.32$
-(local-empate-visitante), con distribución de total de goles
+$p_A = 0.37$, $p_E = 0.31$, $p_B = 0.32$
+(Equipo~A-empate-Equipo~B), con distribución de total de goles
 $\{0{:}\,9.5\%,\ 1{:}\,21\%,\ 2{:}\,29\%,\ 3{:}\,20\%,\
    4{:}\,12\%,\ 5{:}\,5\%,\ 6{:}\,3.5\%\}$.
 La Tabla~\ref{tab:ejkorcze} muestra $P(a, b)$ y $E(a, b)$ para
@@ -617,7 +686,7 @@ los marcadores más probables.
 \begin{table}[h]
 \centering
 \caption{Probabilidades $P(a,b)$ y puntos esperados $E(a,b)$
-para Corea del Sur (local) vs.\ Rep.\ Checa (visita),
+para Corea del Sur (Equipo~A) vs.\ Rep.\ Checa (Equipo~B),
 calculados con el modelo del artículo sin reajuste por spread.
 El marcador modal y la predicción óptima difieren.}
 \label{tab:ejkorcze}
@@ -674,7 +743,7 @@ Por lo tanto, los puntos esperados de predecir $(a, a)$ son
 sin término de 3 puntos.
 En cambio, una predicción de victoria $(a, b)$ con $a > b$ sí
 accede a la tier de 3 puntos para todos los marcadores de victoria
-local $(h, b)$ con $h \neq a$ ó $(a, k)$ con $k \neq b$
+del Equipo~A $(h, b)$ con $h \neq a$ ó $(a, k)$ con $k \neq b$
 (resultados con un gol coincidente).
 Esta asimetría estructural implica que predecir un empate puede ser
 óptimo solo si la probabilidad de empate es suficientemente alta para

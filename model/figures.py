@@ -435,6 +435,13 @@ def fig3_kalshi_reweight():
 
     vmax = max(mat_b.max(), mat_a.max()) * 100
 
+    if ticker_key == preferred:
+        xlabel_str = "Goles Rep. Checa"
+        ylabel_str = "Goles Corea del Sur"
+    else:
+        xlabel_str = "Goles Equipo B"
+        ylabel_str = "Goles Equipo A"
+
     fig, axes = plt.subplots(1, 2, figsize=(11, 4.8))
     for ax, mat, title, mark_opt in zip(
         axes,
@@ -447,8 +454,8 @@ def fig3_kalshi_reweight():
         ax.set_xticks(GOALS); ax.set_yticks(GOALS)
         ax.set_xticklabels(GOALS, fontsize=9)
         ax.set_yticklabels(GOALS, fontsize=9)
-        ax.set_xlabel("Goles visitante", fontsize=11)
-        ax.set_ylabel("Goles local", fontsize=11)
+        ax.set_xlabel(xlabel_str, fontsize=11)
+        ax.set_ylabel(ylabel_str, fontsize=11)
         ax.set_title(title, fontsize=12)
         for h in GOALS:
             for a in GOALS:
@@ -475,7 +482,7 @@ def fig3_kalshi_reweight():
     fig.suptitle(
         f"Reajuste por mercados de predicción de Kalshi\n"
         f"{match_label} — "
-        f"$p_W={ph_val:.2f}$, $p_D={pd_val:.2f}$, $p_A={pa_val:.2f}$",
+        f"$p_A={ph_val:.2f}$, $p_E={pd_val:.2f}$, $p_B={pa_val:.2f}$",
         fontsize=11,
     )
     fig.tight_layout(rect=[0, 0, 1, 0.90])
