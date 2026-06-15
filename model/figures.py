@@ -160,9 +160,21 @@ def fig1_historical_overview():
     vmax = round(vmax * 1.10, 2)   # 10 % headroom
 
     # ── Layout ────────────────────────────────────────────────
-    fig, axes = plt.subplots(3, 4, figsize=(15, 9.5))
-    plt.subplots_adjust(wspace=0.45, hspace=0.55,
-                        left=0.07, right=0.89, top=0.88, bottom=0.07)
+    # 5-column GridSpec: cols 0-1 = Fase de grupos, col 2 = spacer
+    # (near-zero width), cols 3-4 = Eliminación directa.
+    # The spacer has negligible width but receives wspace padding on
+    # both sides, so the inter-block gap = 2 × the intra-block gap.
+    import matplotlib.gridspec as gridspec
+    fig = plt.figure(figsize=(15, 9.5))
+    gs = gridspec.GridSpec(
+        3, 5, figure=fig,
+        width_ratios=[1, 1, 0.001, 1, 1],
+        wspace=0.30, hspace=0.42,
+        left=0.07, right=0.89, top=0.88, bottom=0.07,
+    )
+    _GC = [0, 1, 3, 4]   # logical col i → GridSpec col _GC[i]
+    axes = np.array([[fig.add_subplot(gs[r, c]) for c in _GC]
+                     for r in range(3)])
     cmap = "Blues"
 
     def _draw_heatmap(ax, mat, title, ylabel):
@@ -255,9 +267,13 @@ def fig1_historical_overview():
                 style="italic", multialignment="center")
 
     # ── Phase block headers (span two columns each) ────────────
-    fig.text(0.255, 0.915, "Fase de grupos",
+    left_cx  = (axes[0, 0].get_position().x0
+                + axes[0, 1].get_position().x1) / 2
+    right_cx = (axes[0, 2].get_position().x0
+                + axes[0, 3].get_position().x1) / 2
+    fig.text(left_cx,  0.915, "Fase de grupos",
              ha="center", va="bottom", fontsize=10, fontweight="bold")
-    fig.text(0.715, 0.915, "Eliminación directa",
+    fig.text(right_cx, 0.915, "Eliminación directa",
              ha="center", va="bottom", fontsize=10, fontweight="bold")
 
     # ── Single shared colorbar ─────────────────────────────────
