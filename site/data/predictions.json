@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-16T21:58:30.700763+00:00",
+  "generated_at": "2026-06-16T23:20:46.943246+00:00",
   "matches": [
     {
       "id": 1,
@@ -155,27 +155,27 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7875,
+        "expected_pts": 1.5486,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7875
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.7059
+            "expected_pts": 1.4795
           },
           {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 1.6887
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
           "home": 1,
-          "away": 0
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
@@ -195,20 +195,20 @@
         }
       },
       "probabilities": {
-        "home_win": 0.5423,
-        "draw": 0.2537,
-        "away_win": 0.204,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.075,
-          "1": 0.21,
-          "2": 0.26,
-          "3": 0.22,
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
           "4": 0.13,
-          "5": 0.06,
-          "6": 0.045
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -225,26 +225,26 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.729,
+        "expected_pts": 1.5486,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.729
+            "expected_pts": 1.5486
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.616
-          },
-          {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 1.5999
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -265,20 +265,20 @@
         }
       },
       "probabilities": {
-        "home_win": 0.4826,
-        "draw": 0.2836,
-        "away_win": 0.2338,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.095,
-          "1": 0.24,
+          "0": 0.08,
+          "1": 0.2,
           "2": 0.27,
-          "3": 0.2,
-          "4": 0.115,
-          "5": 0.055,
-          "6": 0.025
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -293,28 +293,28 @@
       "phase": "group",
       "group": "Group A",
       "prediction": {
-        "home": 0,
-        "away": 1,
-        "expected_pts": 1.7737,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.5486
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
+          },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.7737
-          },
-          {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 1.7036
-          },
-          {
-            "home": 1,
-            "away": 2,
-            "expected_pts": 1.6905
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -322,33 +322,33 @@
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_out_alpha": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.196,
-        "draw": 0.2563,
-        "away_win": 0.5477,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
           "0": 0.08,
-          "1": 0.21,
+          "1": 0.2,
           "2": 0.27,
-          "3": 0.215,
+          "3": 0.24,
           "4": 0.13,
-          "5": 0.06,
-          "6": 0.035
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -363,28 +363,28 @@
       "phase": "group",
       "group": "Group A",
       "prediction": {
-        "home": 0,
-        "away": 1,
-        "expected_pts": 1.8579,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.5486
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
+          },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.8579
-          },
-          {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 1.8186
-          },
-          {
-            "home": 1,
-            "away": 2,
-            "expected_pts": 1.7968
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -392,33 +392,33 @@
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_out_alpha": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.1642,
-        "draw": 0.2239,
-        "away_win": 0.6119,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.065,
+          "0": 0.08,
           "1": 0.2,
-          "2": 0.25,
-          "3": 0.22,
-          "4": 0.155,
-          "5": 0.06,
-          "6": 0.05
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -575,166 +575,26 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.8685,
+        "expected_pts": 1.5486,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.8685
-          },
-          {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 1.8458
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.8001
-          }
-        ],
-        "modal": {
-          "home": 2,
-          "away": 0
-        },
-        "baseline_hist": {
-          "home": 0,
-          "away": 0
-        },
-        "baseline_out_raw": {
-          "home": 1,
-          "away": 0
-        },
-        "baseline_out_alpha": {
-          "home": 1,
-          "away": 0
-        },
-        "baseline_full_raw": {
-          "home": 1,
-          "away": 0
-        }
-      },
-      "probabilities": {
-        "home_win": 0.6219,
-        "draw": 0.2239,
-        "away_win": 0.1542,
-        "total_goals": {
-          "0": 0.075,
-          "1": 0.2,
-          "2": 0.27,
-          "3": 0.22,
-          "4": 0.13,
-          "5": 0.07,
-          "6": 0.035
-        }
-      },
-      "source": "kalshi",
-      "tbd": false
-    },
-    {
-      "id": 10,
-      "round": "Matchday 8",
-      "date": "2026-06-18",
-      "time_utc": "2026-06-18T22:00:00Z",
-      "time_local": "15:00 UTC-7",
-      "home": "Canada",
-      "away": "Qatar",
-      "venue": "Vancouver",
-      "phase": "group",
-      "group": "Group B",
-      "prediction": {
-        "home": 2,
-        "away": 0,
-        "expected_pts": 2.0638,
-        "top3": [
-          {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 2.0638
-          },
-          {
-            "home": 3,
-            "away": 0,
-            "expected_pts": 2.0385
-          },
-          {
-            "home": 2,
-            "away": 1,
-            "expected_pts": 2.0032
-          }
-        ],
-        "modal": {
-          "home": 3,
-          "away": 0
-        },
-        "baseline_hist": {
-          "home": 0,
-          "away": 0
-        },
-        "baseline_out_raw": {
-          "home": 2,
-          "away": 0
-        },
-        "baseline_out_alpha": {
-          "home": 2,
-          "away": 0
-        },
-        "baseline_full_raw": {
-          "home": 2,
-          "away": 0
-        }
-      },
-      "probabilities": {
-        "home_win": 0.7612,
-        "draw": 0.1542,
-        "away_win": 0.0846,
-        "total_goals": {
-          "0": 0.055,
-          "1": 0.17,
-          "2": 0.23,
-          "3": 0.23,
-          "4": 0.16,
-          "5": 0.09,
-          "6": 0.065
-        }
-      },
-      "source": "kalshi",
-      "tbd": false
-    },
-    {
-      "id": 11,
-      "round": "Matchday 14",
-      "date": "2026-06-24",
-      "time_utc": "2026-06-24T19:00:00Z",
-      "time_local": "12:00 UTC-7",
-      "home": "Switzerland",
-      "away": "Canada",
-      "venue": "Vancouver",
-      "phase": "group",
-      "group": "Group B",
-      "prediction": {
-        "home": 1,
-        "away": 0,
-        "expected_pts": 1.6531,
-        "top3": [
-          {
-            "home": 1,
-            "away": 0,
-            "expected_pts": 1.6531
+            "expected_pts": 1.4795
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.6445
-          },
-          {
-            "home": 2,
-            "away": 1,
-            "expected_pts": 1.5779
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -755,57 +615,57 @@
         }
       },
       "probabilities": {
-        "home_win": 0.4527,
-        "draw": 0.2736,
-        "away_win": 0.2736,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.075,
-          "1": 0.21,
+          "0": 0.08,
+          "1": 0.2,
           "2": 0.27,
-          "3": 0.205,
-          "4": 0.135,
-          "5": 0.075,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
           "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
-      "id": 12,
-      "round": "Matchday 14",
-      "date": "2026-06-24",
-      "time_utc": "2026-06-24T19:00:00Z",
-      "time_local": "12:00 UTC-7",
-      "home": "Bosnia & Herzegovina",
+      "id": 10,
+      "round": "Matchday 8",
+      "date": "2026-06-18",
+      "time_utc": "2026-06-18T22:00:00Z",
+      "time_local": "15:00 UTC-7",
+      "home": "Canada",
       "away": "Qatar",
-      "venue": "Seattle",
+      "venue": "Vancouver",
       "phase": "group",
       "group": "Group B",
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.9277,
+        "expected_pts": 1.5486,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.9277
-          },
-          {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 1.9033
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.885
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 2,
-          "away": 0
+          "home": 1,
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
@@ -825,20 +685,160 @@
         }
       },
       "probabilities": {
-        "home_win": 0.608,
-        "draw": 0.2261,
-        "away_win": 0.1658,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.065,
+          "0": 0.08,
           "1": 0.2,
-          "2": 0.26,
-          "3": 0.235,
-          "4": 0.125,
-          "5": 0.075,
-          "6": 0.04
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
+      "tbd": false
+    },
+    {
+      "id": 11,
+      "round": "Matchday 14",
+      "date": "2026-06-24",
+      "time_utc": "2026-06-24T19:00:00Z",
+      "time_local": "12:00 UTC-7",
+      "home": "Switzerland",
+      "away": "Canada",
+      "venue": "Vancouver",
+      "phase": "group",
+      "group": "Group B",
+      "prediction": {
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
+        "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.5486
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
+          }
+        ],
+        "modal": {
+          "home": 1,
+          "away": 1
+        },
+        "baseline_hist": {
+          "home": 0,
+          "away": 0
+        },
+        "baseline_out_raw": {
+          "home": 1,
+          "away": 0
+        },
+        "baseline_out_alpha": {
+          "home": 1,
+          "away": 0
+        },
+        "baseline_full_raw": {
+          "home": 1,
+          "away": 0
+        }
+      },
+      "probabilities": {
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
+        "total_goals": {
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
+        }
+      },
+      "source": "historical_fallback",
+      "tbd": false
+    },
+    {
+      "id": 12,
+      "round": "Matchday 14",
+      "date": "2026-06-24",
+      "time_utc": "2026-06-24T19:00:00Z",
+      "time_local": "12:00 UTC-7",
+      "home": "Bosnia & Herzegovina",
+      "away": "Qatar",
+      "venue": "Seattle",
+      "phase": "group",
+      "group": "Group B",
+      "prediction": {
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
+        "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.5486
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
+          }
+        ],
+        "modal": {
+          "home": 1,
+          "away": 1
+        },
+        "baseline_hist": {
+          "home": 0,
+          "away": 0
+        },
+        "baseline_out_raw": {
+          "home": 1,
+          "away": 0
+        },
+        "baseline_out_alpha": {
+          "home": 1,
+          "away": 0
+        },
+        "baseline_full_raw": {
+          "home": 1,
+          "away": 0
+        }
+      },
+      "probabilities": {
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
+        "total_goals": {
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
+        }
+      },
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -993,28 +993,28 @@
       "phase": "group",
       "group": "Group C",
       "prediction": {
-        "home": 0,
-        "away": 1,
-        "expected_pts": 1.832,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.5486
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
+          },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.832
-          },
-          {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 1.7397
-          },
-          {
-            "home": 1,
-            "away": 2,
-            "expected_pts": 1.7196
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -1022,33 +1022,33 @@
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_out_alpha": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.1841,
-        "draw": 0.2537,
-        "away_win": 0.5622,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.095,
-          "1": 0.21,
-          "2": 0.28,
-          "3": 0.205,
-          "4": 0.115,
-          "5": 0.065,
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
           "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -1063,28 +1063,28 @@
       "phase": "group",
       "group": "Group C",
       "prediction": {
-        "home": 4,
-        "away": 1,
-        "expected_pts": 2.3333,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
           {
-            "home": 4,
-            "away": 1,
-            "expected_pts": 2.3333
-          },
-          {
-            "home": 3,
-            "away": 1,
-            "expected_pts": 2.2628
-          },
-          {
-            "home": 3,
+            "home": 1,
             "away": 0,
-            "expected_pts": 2.2564
+            "expected_pts": 1.5486
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 4,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -1092,33 +1092,33 @@
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 2,
+          "home": 1,
           "away": 0
         },
         "baseline_out_alpha": {
-          "home": 2,
+          "home": 1,
           "away": 0
         },
         "baseline_full_raw": {
-          "home": 4,
-          "away": 1
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.8806,
-        "draw": 0.0746,
-        "away_win": 0.0448,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.025,
-          "1": 0.09,
-          "2": 0.17,
-          "3": 0.21,
-          "4": 0.2,
-          "5": 0.13,
-          "6": 0.175
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -1133,62 +1133,62 @@
       "phase": "group",
       "group": "Group C",
       "prediction": {
-        "home": 0,
-        "away": 2,
-        "expected_pts": 1.9906,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
           {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 1.9906
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.5486
           },
           {
-            "home": 1,
-            "away": 2,
-            "expected_pts": 1.9571
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.9537
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
-          "away": 2
+          "home": 1,
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_out_alpha": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 2
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.1357,
-        "draw": 0.1759,
-        "away_win": 0.6884,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.05,
-          "1": 0.175,
-          "2": 0.25,
-          "3": 0.23,
-          "4": 0.155,
-          "5": 0.085,
-          "6": 0.055
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -1203,36 +1203,36 @@
       "phase": "group",
       "group": "Group C",
       "prediction": {
-        "home": 2,
-        "away": 1,
-        "expected_pts": 2.081,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.5486
+          },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.081
+            "expected_pts": 1.4795
           },
           {
-            "home": 3,
-            "away": 0,
-            "expected_pts": 2.0678
-          },
-          {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 2.0578
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 3,
-          "away": 0
+          "home": 1,
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 2,
+          "home": 1,
           "away": 0
         },
         "baseline_out_alpha": {
@@ -1240,25 +1240,25 @@
           "away": 0
         },
         "baseline_full_raw": {
-          "home": 3,
+          "home": 1,
           "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.7512,
-        "draw": 0.1642,
-        "away_win": 0.0846,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.045,
-          "1": 0.145,
-          "2": 0.225,
-          "3": 0.22,
-          "4": 0.18,
-          "5": 0.1,
-          "6": 0.085
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -1415,27 +1415,27 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7985,
+        "expected_pts": 1.5486,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7985
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.7409
+            "expected_pts": 1.4795
           },
           {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 1.7358
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
           "home": 1,
-          "away": 0
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
@@ -1455,20 +1455,20 @@
         }
       },
       "probabilities": {
-        "home_win": 0.6119,
-        "draw": 0.2139,
-        "away_win": 0.1741,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.065,
+          "0": 0.08,
           "1": 0.2,
-          "2": 0.24,
-          "3": 0.23,
-          "4": 0.14,
-          "5": 0.07,
-          "6": 0.055
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -1485,26 +1485,26 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.6686,
+        "expected_pts": 1.5486,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.6686
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.6011
+            "expected_pts": 1.4795
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.574
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -1525,20 +1525,20 @@
         }
       },
       "probabilities": {
-        "home_win": 0.4778,
-        "draw": 0.2808,
-        "away_win": 0.2414,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.085,
+          "0": 0.08,
           "1": 0.2,
-          "2": 0.26,
-          "3": 0.22,
-          "4": 0.135,
-          "5": 0.065,
-          "6": 0.035
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -1555,26 +1555,26 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.6045,
+        "expected_pts": 1.5486,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.6045
-          },
-          {
-            "home": 0,
-            "away": 1,
-            "expected_pts": 1.6034
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5967
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 2,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -1582,12 +1582,12 @@
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_out_alpha": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_full_raw": {
           "home": 1,
@@ -1595,20 +1595,20 @@
         }
       },
       "probabilities": {
-        "home_win": 0.3382,
-        "draw": 0.2402,
-        "away_win": 0.4216,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.05,
-          "1": 0.175,
-          "2": 0.25,
-          "3": 0.235,
-          "4": 0.15,
-          "5": 0.08,
-          "6": 0.06
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -1623,28 +1623,28 @@
       "phase": "group",
       "group": "Group D",
       "prediction": {
-        "home": 0,
-        "away": 1,
-        "expected_pts": 1.6836,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
-          {
-            "home": 0,
-            "away": 1,
-            "expected_pts": 1.6836
-          },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.6783
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5907
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -1665,20 +1665,20 @@
         }
       },
       "probabilities": {
-        "home_win": 0.4372,
-        "draw": 0.2764,
-        "away_win": 0.2864,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.09,
-          "1": 0.225,
+          "0": 0.08,
+          "1": 0.2,
           "2": 0.27,
-          "3": 0.215,
-          "4": 0.11,
-          "5": 0.06,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
           "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -1833,28 +1833,28 @@
       "phase": "group",
       "group": "Group E",
       "prediction": {
-        "home": 2,
-        "away": 1,
-        "expected_pts": 1.8131,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
-          {
-            "home": 2,
-            "away": 1,
-            "expected_pts": 1.8131
-          },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7669
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
-            "away": 0,
-            "expected_pts": 1.7629
+            "away": 1,
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 2,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -1870,25 +1870,25 @@
           "away": 0
         },
         "baseline_full_raw": {
-          "home": 2,
-          "away": 1
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.6418,
-        "draw": 0.204,
-        "away_win": 0.1542,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.045,
-          "1": 0.15,
-          "2": 0.22,
-          "3": 0.23,
-          "4": 0.17,
-          "5": 0.1,
-          "6": 0.085
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -1903,28 +1903,28 @@
       "phase": "group",
       "group": "Group E",
       "prediction": {
-        "home": 4,
-        "away": 1,
-        "expected_pts": 2.3557,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
           {
-            "home": 4,
-            "away": 1,
-            "expected_pts": 2.3557
-          },
-          {
-            "home": 3,
+            "home": 1,
             "away": 0,
-            "expected_pts": 2.3447
+            "expected_pts": 1.5486
           },
           {
-            "home": 3,
+            "home": 2,
             "away": 1,
-            "expected_pts": 2.298
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 4,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -1932,33 +1932,33 @@
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 2,
+          "home": 1,
           "away": 0
         },
         "baseline_out_alpha": {
-          "home": 2,
+          "home": 1,
           "away": 0
         },
         "baseline_full_raw": {
-          "home": 4,
-          "away": 1
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.8894,
-        "draw": 0.0754,
-        "away_win": 0.0352,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.03,
-          "1": 0.115,
-          "2": 0.2,
-          "3": 0.21,
-          "4": 0.2,
-          "5": 0.125,
-          "6": 0.12
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -1973,62 +1973,62 @@
       "phase": "group",
       "group": "Group E",
       "prediction": {
-        "home": 0,
-        "away": 3,
-        "expected_pts": 2.3422,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
           {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.5486
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
+          },
+          {
             "home": 0,
-            "away": 3,
-            "expected_pts": 2.3422
-          },
-          {
-            "home": 1,
-            "away": 3,
-            "expected_pts": 2.3017
-          },
-          {
-            "home": 1,
-            "away": 4,
-            "expected_pts": 2.2983
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
-          "away": 3
+          "home": 1,
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 0,
-          "away": 2
+          "home": 1,
+          "away": 0
         },
         "baseline_out_alpha": {
-          "home": 0,
-          "away": 2
+          "home": 1,
+          "away": 0
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 3
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.0542,
-        "draw": 0.1034,
-        "away_win": 0.8424,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.03,
-          "1": 0.105,
-          "2": 0.2,
-          "3": 0.23,
-          "4": 0.195,
-          "5": 0.12,
-          "6": 0.12
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -2043,28 +2043,28 @@
       "phase": "group",
       "group": "Group E",
       "prediction": {
-        "home": 0,
-        "away": 1,
-        "expected_pts": 1.9228,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.5486
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
+          },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.9228
-          },
-          {
-            "home": 1,
-            "away": 2,
-            "expected_pts": 1.909
-          },
-          {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 1.8688
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -2072,33 +2072,33 @@
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_out_alpha": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.1841,
-        "draw": 0.2338,
-        "away_win": 0.5821,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.055,
-          "1": 0.18,
-          "2": 0.26,
-          "3": 0.22,
-          "4": 0.16,
-          "5": 0.07,
-          "6": 0.055
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -2255,26 +2255,26 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7178,
+        "expected_pts": 1.5486,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7178
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.7049
+            "expected_pts": 1.4795
           },
           {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 1.672
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 2,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -2295,20 +2295,20 @@
         }
       },
       "probabilities": {
-        "home_win": 0.5678,
-        "draw": 0.2362,
-        "away_win": 0.196,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.065,
-          "1": 0.17,
-          "2": 0.25,
-          "3": 0.23,
-          "4": 0.16,
-          "5": 0.07,
-          "6": 0.055
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -2323,28 +2323,28 @@
       "phase": "group",
       "group": "Group F",
       "prediction": {
-        "home": 0,
-        "away": 1,
-        "expected_pts": 1.9309,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.5486
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
+          },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.9309
-          },
-          {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 1.9039
-          },
-          {
-            "home": 1,
-            "away": 2,
-            "expected_pts": 1.8489
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -2352,33 +2352,33 @@
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_out_alpha": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.1244,
-        "draw": 0.2338,
-        "away_win": 0.6418,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.075,
+          "0": 0.08,
           "1": 0.2,
           "2": 0.27,
-          "3": 0.215,
-          "4": 0.135,
-          "5": 0.07,
-          "6": 0.035
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -2395,26 +2395,26 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.6434,
+        "expected_pts": 1.5486,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.6434
-          },
-          {
-            "home": 0,
-            "away": 1,
-            "expected_pts": 1.6353
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5864
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -2435,20 +2435,20 @@
         }
       },
       "probabilities": {
-        "home_win": 0.4581,
-        "draw": 0.2709,
-        "away_win": 0.2709,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.07,
-          "1": 0.205,
-          "2": 0.26,
-          "3": 0.225,
-          "4": 0.135,
-          "5": 0.065,
-          "6": 0.04
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -2463,62 +2463,62 @@
       "phase": "group",
       "group": "Group F",
       "prediction": {
-        "home": 0,
-        "away": 2,
-        "expected_pts": 2.1466,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
           {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 2.1466
-          },
-          {
             "home": 1,
-            "away": 2,
-            "expected_pts": 2.1281
+            "away": 0,
+            "expected_pts": 1.5486
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
           },
           {
             "home": 0,
-            "away": 3,
-            "expected_pts": 2.1093
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
-          "away": 3
+          "home": 1,
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 0,
-          "away": 2
+          "home": 1,
+          "away": 0
         },
         "baseline_out_alpha": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 2
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.0955,
-        "draw": 0.1558,
-        "away_win": 0.7487,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.045,
-          "1": 0.15,
-          "2": 0.23,
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
           "3": 0.24,
-          "4": 0.16,
-          "5": 0.095,
-          "6": 0.08
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -2673,29 +2673,29 @@
       "phase": "group",
       "group": "Group G",
       "prediction": {
-        "home": 2,
+        "home": 1,
         "away": 0,
-        "expected_pts": 1.9989,
+        "expected_pts": 1.5486,
         "top3": [
-          {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 1.9989
-          },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.9943
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.9792
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 3,
-          "away": 0
+          "home": 1,
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
@@ -2710,25 +2710,25 @@
           "away": 0
         },
         "baseline_full_raw": {
-          "home": 2,
+          "home": 1,
           "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.6884,
-        "draw": 0.196,
-        "away_win": 0.1156,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.06,
-          "1": 0.175,
-          "2": 0.25,
-          "3": 0.23,
-          "4": 0.15,
-          "5": 0.08,
-          "6": 0.055
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -2743,28 +2743,28 @@
       "phase": "group",
       "group": "Group G",
       "prediction": {
-        "home": 0,
-        "away": 1,
-        "expected_pts": 1.8999,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.5486
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
+          },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.8999
-          },
-          {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 1.8301
-          },
-          {
-            "home": 1,
-            "away": 2,
-            "expected_pts": 1.7764
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -2772,33 +2772,33 @@
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_out_alpha": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.1642,
-        "draw": 0.2338,
-        "away_win": 0.602,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
           "0": 0.08,
-          "1": 0.225,
+          "1": 0.2,
           "2": 0.27,
-          "3": 0.21,
-          "4": 0.125,
-          "5": 0.055,
-          "6": 0.035
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -2815,26 +2815,26 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7073,
+        "expected_pts": 1.5486,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7073
-          },
-          {
-            "home": 0,
-            "away": 1,
-            "expected_pts": 1.6995
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5537
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -2855,20 +2855,20 @@
         }
       },
       "probabilities": {
-        "home_win": 0.4627,
-        "draw": 0.2935,
-        "away_win": 0.2438,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.1,
-          "1": 0.255,
-          "2": 0.275,
-          "3": 0.205,
-          "4": 0.095,
-          "5": 0.055,
-          "6": 0.015
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -2883,62 +2883,62 @@
       "phase": "group",
       "group": "Group G",
       "prediction": {
-        "home": 0,
-        "away": 3,
-        "expected_pts": 2.0208,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
           {
-            "home": 0,
-            "away": 3,
-            "expected_pts": 2.0208
-          },
-          {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 2.02
-          },
-          {
             "home": 1,
-            "away": 2,
-            "expected_pts": 1.9896
+            "away": 0,
+            "expected_pts": 1.5486
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
-          "away": 3
+          "home": 1,
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 0,
-          "away": 2
+          "home": 1,
+          "away": 0
         },
         "baseline_out_alpha": {
-          "home": 0,
-          "away": 2
+          "home": 1,
+          "away": 0
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 3
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.0846,
-        "draw": 0.1343,
-        "away_win": 0.7811,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.045,
-          "1": 0.145,
-          "2": 0.225,
-          "3": 0.23,
-          "4": 0.17,
-          "5": 0.11,
-          "6": 0.075
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -3093,62 +3093,62 @@
       "phase": "group",
       "group": "Group H",
       "prediction": {
-        "home": 3,
+        "home": 1,
         "away": 0,
-        "expected_pts": 2.3033,
+        "expected_pts": 1.5486,
         "top3": [
           {
-            "home": 3,
+            "home": 1,
             "away": 0,
-            "expected_pts": 2.3033
+            "expected_pts": 1.5486
           },
           {
-            "home": 4,
+            "home": 2,
             "away": 1,
-            "expected_pts": 2.2621
+            "expected_pts": 1.4795
           },
           {
-            "home": 3,
+            "home": 0,
             "away": 1,
-            "expected_pts": 2.2428
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 3,
-          "away": 0
+          "home": 1,
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 2,
+          "home": 1,
           "away": 0
         },
         "baseline_out_alpha": {
-          "home": 2,
+          "home": 1,
           "away": 0
         },
         "baseline_full_raw": {
-          "home": 3,
+          "home": 1,
           "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.8719,
-        "draw": 0.0837,
-        "away_win": 0.0443,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.03,
-          "1": 0.115,
-          "2": 0.19,
-          "3": 0.23,
-          "4": 0.19,
-          "5": 0.12,
-          "6": 0.125
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -3165,27 +3165,27 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.9947,
+        "expected_pts": 1.5486,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.9947
-          },
-          {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 1.9301
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.8399
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
           "home": 1,
-          "away": 0
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
@@ -3205,20 +3205,20 @@
         }
       },
       "probabilities": {
-        "home_win": 0.6517,
-        "draw": 0.2239,
-        "away_win": 0.1244,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.095,
-          "1": 0.22,
+          "0": 0.08,
+          "1": 0.2,
           "2": 0.27,
-          "3": 0.21,
-          "4": 0.12,
+          "3": 0.24,
+          "4": 0.13,
           "5": 0.05,
-          "6": 0.035
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -3233,28 +3233,28 @@
       "phase": "group",
       "group": "Group H",
       "prediction": {
-        "home": 0,
-        "away": 1,
-        "expected_pts": 1.6745,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
-          {
-            "home": 0,
-            "away": 1,
-            "expected_pts": 1.6745
-          },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.6639
+            "expected_pts": 1.5486
           },
           {
-            "home": 1,
-            "away": 2,
-            "expected_pts": 1.5837
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -3262,33 +3262,33 @@
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_out_alpha": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.3433,
-        "draw": 0.2537,
-        "away_win": 0.403,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
           "0": 0.08,
-          "1": 0.22,
-          "2": 0.255,
-          "3": 0.23,
-          "4": 0.115,
-          "5": 0.065,
-          "6": 0.035
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -3303,62 +3303,62 @@
       "phase": "group",
       "group": "Group H",
       "prediction": {
-        "home": 0,
-        "away": 2,
-        "expected_pts": 1.9606,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
           {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 1.9606
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.5486
           },
           {
-            "home": 1,
-            "away": 2,
-            "expected_pts": 1.9488
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.9384
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
-          "away": 2
+          "home": 1,
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_out_alpha": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 2
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.1558,
-        "draw": 0.206,
-        "away_win": 0.6382,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.055,
-          "1": 0.175,
-          "2": 0.255,
-          "3": 0.23,
-          "4": 0.15,
-          "5": 0.08,
-          "6": 0.055
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -3513,28 +3513,28 @@
       "phase": "group",
       "group": "Group I",
       "prediction": {
-        "home": 3,
+        "home": 1,
         "away": 0,
-        "expected_pts": 2.3427,
+        "expected_pts": 1.5486,
         "top3": [
           {
-            "home": 3,
+            "home": 1,
             "away": 0,
-            "expected_pts": 2.3427
+            "expected_pts": 1.5486
           },
           {
-            "home": 4,
+            "home": 2,
             "away": 1,
-            "expected_pts": 2.3327
+            "expected_pts": 1.4795
           },
           {
-            "home": 3,
+            "home": 0,
             "away": 1,
-            "expected_pts": 2.2865
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 4,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -3542,33 +3542,33 @@
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 2,
+          "home": 1,
           "away": 0
         },
         "baseline_out_alpha": {
-          "home": 2,
+          "home": 1,
           "away": 0
         },
         "baseline_full_raw": {
-          "home": 3,
+          "home": 1,
           "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.8719,
-        "draw": 0.0936,
-        "away_win": 0.0345,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.03,
-          "1": 0.11,
-          "2": 0.205,
-          "3": 0.22,
-          "4": 0.19,
-          "5": 0.125,
-          "6": 0.12
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -3583,28 +3583,28 @@
       "phase": "group",
       "group": "Group I",
       "prediction": {
-        "home": 0,
-        "away": 1,
-        "expected_pts": 1.6325,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
-          {
-            "home": 0,
-            "away": 1,
-            "expected_pts": 1.6325
-          },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.6168
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5799
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -3620,25 +3620,25 @@
           "away": 0
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.4229,
-        "draw": 0.2637,
-        "away_win": 0.3134,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.075,
-          "1": 0.18,
-          "2": 0.26,
-          "3": 0.22,
-          "4": 0.15,
-          "5": 0.07,
-          "6": 0.045
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -3653,62 +3653,62 @@
       "phase": "group",
       "group": "Group I",
       "prediction": {
-        "home": 0,
-        "away": 1,
-        "expected_pts": 1.6834,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.5486
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
+          },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.6834
-          },
-          {
-            "home": 1,
-            "away": 2,
-            "expected_pts": 1.6429
-          },
-          {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 1.5983
+            "expected_pts": 1.426
           }
         ],
         "modal": {
           "home": 1,
-          "away": 0
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_out_alpha": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.215,
-        "draw": 0.255,
-        "away_win": 0.53,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.065,
-          "1": 0.195,
-          "2": 0.24,
-          "3": 0.23,
-          "4": 0.145,
-          "5": 0.075,
-          "6": 0.05
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -3723,29 +3723,29 @@
       "phase": "group",
       "group": "Group I",
       "prediction": {
-        "home": 2,
+        "home": 1,
         "away": 0,
-        "expected_pts": 2.0902,
+        "expected_pts": 1.5486,
         "top3": [
-          {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 2.0902
-          },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 2.0372
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.0248
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 2,
-          "away": 0
+          "home": 1,
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
@@ -3760,25 +3760,25 @@
           "away": 0
         },
         "baseline_full_raw": {
-          "home": 2,
+          "home": 1,
           "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.6976,
-        "draw": 0.1902,
-        "away_win": 0.1122,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.055,
-          "1": 0.18,
-          "2": 0.26,
-          "3": 0.22,
-          "4": 0.15,
-          "5": 0.08,
-          "6": 0.055
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -3793,29 +3793,29 @@
       "phase": "group",
       "group": "Group J",
       "prediction": {
-        "home": 2,
+        "home": 1,
         "away": 0,
-        "expected_pts": 1.9415,
+        "expected_pts": 1.5486,
         "top3": [
-          {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 1.9415
-          },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.934
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.8851
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 2,
-          "away": 0
+          "home": 1,
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
@@ -3830,25 +3830,25 @@
           "away": 0
         },
         "baseline_full_raw": {
-          "home": 2,
+          "home": 1,
           "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.6816,
-        "draw": 0.204,
-        "away_win": 0.1144,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.065,
-          "1": 0.19,
-          "2": 0.26,
-          "3": 0.22,
-          "4": 0.14,
-          "5": 0.08,
-          "6": 0.045
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -3863,29 +3863,29 @@
       "phase": "group",
       "group": "Group J",
       "prediction": {
-        "home": 2,
+        "home": 1,
         "away": 0,
-        "expected_pts": 1.9509,
+        "expected_pts": 1.5486,
         "top3": [
-          {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 1.9509
-          },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.9341
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.9264
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 3,
-          "away": 0
+          "home": 1,
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
@@ -3900,25 +3900,25 @@
           "away": 0
         },
         "baseline_full_raw": {
-          "home": 2,
+          "home": 1,
           "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.7085,
-        "draw": 0.1859,
-        "away_win": 0.1055,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.055,
-          "1": 0.17,
-          "2": 0.24,
-          "3": 0.23,
-          "4": 0.16,
-          "5": 0.08,
-          "6": 0.065
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -3935,27 +3935,27 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.8222,
+        "expected_pts": 1.5486,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.8222
-          },
-          {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 1.7809
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.7741
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
           "home": 1,
-          "away": 0
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
@@ -3975,20 +3975,20 @@
         }
       },
       "probabilities": {
-        "home_win": 0.602,
-        "draw": 0.2438,
-        "away_win": 0.1542,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.07,
-          "1": 0.19,
-          "2": 0.255,
-          "3": 0.22,
-          "4": 0.145,
-          "5": 0.075,
-          "6": 0.045
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -4003,28 +4003,28 @@
       "phase": "group",
       "group": "Group J",
       "prediction": {
-        "home": 0,
-        "away": 1,
-        "expected_pts": 1.8826,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.5486
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
+          },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.8826
-          },
-          {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 1.8594
-          },
-          {
-            "home": 1,
-            "away": 2,
-            "expected_pts": 1.843
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -4032,33 +4032,33 @@
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_out_alpha": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.1343,
-        "draw": 0.2239,
-        "away_win": 0.6418,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.065,
-          "1": 0.185,
-          "2": 0.255,
-          "3": 0.22,
-          "4": 0.15,
-          "5": 0.08,
-          "6": 0.045
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -4073,62 +4073,62 @@
       "phase": "group",
       "group": "Group J",
       "prediction": {
-        "home": 0,
-        "away": 1,
-        "expected_pts": 1.6669,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
-          {
-            "home": 0,
-            "away": 1,
-            "expected_pts": 1.6669
-          },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.6103
+            "expected_pts": 1.5486
           },
           {
-            "home": 1,
-            "away": 2,
-            "expected_pts": 1.595
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
           "home": 1,
-          "away": 0
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_out_alpha": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.2637,
-        "draw": 0.3035,
-        "away_win": 0.4328,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.085,
+          "0": 0.08,
           "1": 0.2,
           "2": 0.27,
-          "3": 0.215,
-          "4": 0.125,
-          "5": 0.065,
-          "6": 0.04
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -4143,62 +4143,62 @@
       "phase": "group",
       "group": "Group J",
       "prediction": {
-        "home": 0,
-        "away": 3,
-        "expected_pts": 2.2924,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
           {
-            "home": 0,
-            "away": 3,
-            "expected_pts": 2.2924
-          },
-          {
             "home": 1,
-            "away": 2,
-            "expected_pts": 2.2385
+            "away": 0,
+            "expected_pts": 1.5486
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
           },
           {
             "home": 0,
-            "away": 2,
-            "expected_pts": 2.2324
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
-          "away": 3
+          "home": 1,
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 0,
-          "away": 2
+          "home": 1,
+          "away": 0
         },
         "baseline_out_alpha": {
-          "home": 0,
-          "away": 2
+          "home": 1,
+          "away": 0
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 3
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.0647,
-        "draw": 0.1144,
-        "away_win": 0.8209,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.03,
-          "1": 0.135,
-          "2": 0.215,
-          "3": 0.235,
-          "4": 0.19,
-          "5": 0.11,
-          "6": 0.085
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -4213,36 +4213,36 @@
       "phase": "group",
       "group": "Group K",
       "prediction": {
-        "home": 2,
+        "home": 1,
         "away": 0,
-        "expected_pts": 2.0336,
+        "expected_pts": 1.5486,
         "top3": [
           {
-            "home": 2,
+            "home": 1,
             "away": 0,
-            "expected_pts": 2.0336
-          },
-          {
-            "home": 3,
-            "away": 0,
-            "expected_pts": 2.0077
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.9958
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 3,
-          "away": 0
+          "home": 1,
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 2,
+          "home": 1,
           "away": 0
         },
         "baseline_out_alpha": {
@@ -4250,25 +4250,25 @@
           "away": 0
         },
         "baseline_full_raw": {
-          "home": 2,
+          "home": 1,
           "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.7537,
-        "draw": 0.1626,
-        "away_win": 0.0837,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.055,
-          "1": 0.16,
-          "2": 0.24,
-          "3": 0.22,
-          "4": 0.17,
-          "5": 0.09,
-          "6": 0.065
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -4283,62 +4283,62 @@
       "phase": "group",
       "group": "Group K",
       "prediction": {
-        "home": 0,
-        "away": 2,
-        "expected_pts": 2.0104,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
           {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 2.0104
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.5486
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.9807
-          },
-          {
-            "home": 0,
-            "away": 3,
-            "expected_pts": 1.9465
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
-          "away": 2
+          "home": 1,
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_out_alpha": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 2
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.0955,
-        "draw": 0.196,
-        "away_win": 0.7085,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.065,
-          "1": 0.19,
-          "2": 0.24,
-          "3": 0.23,
-          "4": 0.15,
-          "5": 0.07,
-          "6": 0.055
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -4353,62 +4353,62 @@
       "phase": "group",
       "group": "Group K",
       "prediction": {
-        "home": 3,
+        "home": 1,
         "away": 0,
-        "expected_pts": 2.213,
+        "expected_pts": 1.5486,
         "top3": [
           {
-            "home": 3,
+            "home": 1,
             "away": 0,
-            "expected_pts": 2.213
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.1742
+            "expected_pts": 1.4795
           },
           {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 2.1624
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 3,
-          "away": 0
+          "home": 1,
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 2,
+          "home": 1,
           "away": 0
         },
         "baseline_out_alpha": {
-          "home": 2,
+          "home": 1,
           "away": 0
         },
         "baseline_full_raw": {
-          "home": 3,
+          "home": 1,
           "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.7889,
-        "draw": 0.1357,
-        "away_win": 0.0754,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.035,
-          "1": 0.14,
-          "2": 0.21,
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
           "3": 0.24,
-          "4": 0.18,
-          "5": 0.11,
-          "6": 0.085
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -4425,27 +4425,27 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 2.0804,
+        "expected_pts": 1.5486,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 2.0804
-          },
-          {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 2.057
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.9574
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
           "home": 1,
-          "away": 0
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
@@ -4465,20 +4465,20 @@
         }
       },
       "probabilities": {
-        "home_win": 0.6617,
-        "draw": 0.2139,
-        "away_win": 0.1244,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
           "0": 0.08,
-          "1": 0.22,
-          "2": 0.265,
-          "3": 0.21,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
           "4": 0.13,
-          "5": 0.055,
-          "6": 0.04
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -4493,62 +4493,62 @@
       "phase": "group",
       "group": "Group K",
       "prediction": {
-        "home": 0,
-        "away": 1,
-        "expected_pts": 1.6644,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
-          {
-            "home": 0,
-            "away": 1,
-            "expected_pts": 1.6644
-          },
-          {
-            "home": 1,
-            "away": 2,
-            "expected_pts": 1.6224
-          },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.592
+            "expected_pts": 1.5486
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
           "home": 1,
-          "away": 0
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_out_alpha": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.2624,
-        "draw": 0.2723,
-        "away_win": 0.4653,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
           "0": 0.08,
-          "1": 0.195,
-          "2": 0.26,
-          "3": 0.23,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
           "4": 0.13,
-          "5": 0.07,
-          "6": 0.035
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -4563,28 +4563,28 @@
       "phase": "group",
       "group": "Group K",
       "prediction": {
-        "home": 0,
-        "away": 1,
-        "expected_pts": 1.6994,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
-          {
-            "home": 0,
-            "away": 1,
-            "expected_pts": 1.6994
-          },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.6805
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5798
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -4600,25 +4600,25 @@
           "away": 0
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.4089,
-        "draw": 0.2808,
-        "away_win": 0.3103,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.085,
-          "1": 0.23,
-          "2": 0.26,
-          "3": 0.225,
-          "4": 0.115,
-          "5": 0.055,
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
           "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -4635,27 +4635,27 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7917,
+        "expected_pts": 1.5486,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7917
-          },
-          {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 1.7205
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.6923
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
           "home": 1,
-          "away": 0
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
@@ -4675,20 +4675,20 @@
         }
       },
       "probabilities": {
-        "home_win": 0.5665,
-        "draw": 0.2512,
-        "away_win": 0.1823,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.085,
-          "1": 0.21,
+          "0": 0.08,
+          "1": 0.2,
           "2": 0.27,
-          "3": 0.21,
+          "3": 0.24,
           "4": 0.13,
-          "5": 0.06,
-          "6": 0.035
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -4703,28 +4703,28 @@
       "phase": "group",
       "group": "Group L",
       "prediction": {
-        "home": 0,
-        "away": 1,
-        "expected_pts": 1.6795,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
-          {
-            "home": 0,
-            "away": 1,
-            "expected_pts": 1.6795
-          },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.6658
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5667
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -4745,20 +4745,20 @@
         }
       },
       "probabilities": {
-        "home_win": 0.4328,
-        "draw": 0.2836,
-        "away_win": 0.2836,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.095,
-          "1": 0.22,
+          "0": 0.08,
+          "1": 0.2,
           "2": 0.27,
-          "3": 0.21,
-          "4": 0.12,
+          "3": 0.24,
+          "4": 0.13,
           "5": 0.05,
-          "6": 0.035
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -4773,36 +4773,36 @@
       "phase": "group",
       "group": "Group L",
       "prediction": {
-        "home": 2,
+        "home": 1,
         "away": 0,
-        "expected_pts": 1.99,
+        "expected_pts": 1.5486,
         "top3": [
           {
-            "home": 2,
+            "home": 1,
             "away": 0,
-            "expected_pts": 1.99
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.975
+            "expected_pts": 1.4795
           },
           {
-            "home": 3,
-            "away": 0,
-            "expected_pts": 1.9646
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 3,
-          "away": 0
+          "home": 1,
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 2,
+          "home": 1,
           "away": 0
         },
         "baseline_out_alpha": {
@@ -4810,25 +4810,25 @@
           "away": 0
         },
         "baseline_full_raw": {
-          "home": 2,
+          "home": 1,
           "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.7438,
-        "draw": 0.1626,
-        "away_win": 0.0936,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.05,
-          "1": 0.155,
-          "2": 0.23,
-          "3": 0.23,
-          "4": 0.17,
-          "5": 0.095,
-          "6": 0.07
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -4843,28 +4843,28 @@
       "phase": "group",
       "group": "Group L",
       "prediction": {
-        "home": 0,
-        "away": 1,
-        "expected_pts": 1.8682,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.5486
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
+          },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.8682
-          },
-          {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 1.8309
-          },
-          {
-            "home": 1,
-            "away": 2,
-            "expected_pts": 1.7935
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
+          "home": 1,
           "away": 1
         },
         "baseline_hist": {
@@ -4872,33 +4872,33 @@
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_out_alpha": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.1457,
-        "draw": 0.2362,
-        "away_win": 0.6181,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.075,
+          "0": 0.08,
           "1": 0.2,
-          "2": 0.265,
-          "3": 0.22,
-          "4": 0.135,
-          "5": 0.07,
-          "6": 0.035
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -4913,62 +4913,62 @@
       "phase": "group",
       "group": "Group L",
       "prediction": {
-        "home": 0,
-        "away": 2,
-        "expected_pts": 1.9778,
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.5486,
         "top3": [
           {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 1.9778
-          },
-          {
-            "home": 0,
-            "away": 3,
-            "expected_pts": 1.9741
-          },
-          {
             "home": 1,
-            "away": 2,
-            "expected_pts": 1.9648
+            "away": 0,
+            "expected_pts": 1.5486
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
-          "home": 0,
-          "away": 3
+          "home": 1,
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 0,
-          "away": 2
+          "home": 1,
+          "away": 0
         },
         "baseline_out_alpha": {
-          "home": 0,
-          "away": 2
+          "home": 1,
+          "away": 0
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 3
+          "home": 1,
+          "away": 0
         }
       },
       "probabilities": {
-        "home_win": 0.0945,
-        "draw": 0.1343,
-        "away_win": 0.7711,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.04,
-          "1": 0.145,
-          "2": 0.22,
-          "3": 0.23,
-          "4": 0.175,
-          "5": 0.105,
-          "6": 0.085
+          "0": 0.08,
+          "1": 0.2,
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
@@ -4985,27 +4985,27 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.9325,
+        "expected_pts": 1.5486,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.9325
-          },
-          {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 1.9042
+            "expected_pts": 1.5486
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.8763
+            "expected_pts": 1.4795
+          },
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.426
           }
         ],
         "modal": {
           "home": 1,
-          "away": 0
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
@@ -5025,20 +5025,20 @@
         }
       },
       "probabilities": {
-        "home_win": 0.592,
-        "draw": 0.2438,
-        "away_win": 0.1642,
+        "home_win": 0.4,
+        "draw": 0.25,
+        "away_win": 0.35,
         "total_goals": {
-          "0": 0.075,
+          "0": 0.08,
           "1": 0.2,
-          "2": 0.26,
-          "3": 0.225,
-          "4": 0.135,
-          "5": 0.065,
-          "6": 0.04
+          "2": 0.27,
+          "3": 0.24,
+          "4": 0.13,
+          "5": 0.05,
+          "6": 0.03
         }
       },
-      "source": "kalshi",
+      "source": "historical_fallback",
       "tbd": false
     },
     {
