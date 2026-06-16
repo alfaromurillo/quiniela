@@ -121,6 +121,18 @@ def get_historical_counts(gamma: float = 1.0) -> tuple[dict, dict]:
     return combined_w, combined_d
 
 
+def knockout_draw_rate(gamma: float = 1.0) -> float:
+    """
+    Fraction of historical knockout games that ended as ET draws (→ penalties).
+    Used to translate Kalshi binary knockout probabilities (no TIE market)
+    into 90+30 min ternary probabilities.
+    """
+    wc, dc = get_historical_counts(gamma)
+    n_d = sum(dc["knockout"].values())
+    n_w = sum(wc["knockout"].values())
+    return n_d / (n_w + n_d) if (n_w + n_d) > 0 else 0.25
+
+
 def build_distributions(
     gamma:       float      = 1.0,
     extra_wins:  dict | None = None,

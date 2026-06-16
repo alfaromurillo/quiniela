@@ -115,8 +115,20 @@ def _fetch_event(event_ticker: str) -> list[dict]:
     return []
 
 
-def _parse_game(markets: list[dict], home_code: str, away_code: str) -> dict | None:
-    """Extract normalised P(home_win), P(draw), P(away_win)."""
+def _parse_game(markets: list[dict], home_code: str, away_code: str,
+                phase: str = "group", p_draw_ko: float = 0.25) -> dict | None:
+    """
+    Extract normalised P(home_win), P(draw), P(away_win).
+
+    For group stage: requires HOME, AWAY and TIE markets.
+
+    For knockout: Kalshi has no TIE market (match always has a winner via
+    penalties). Requires HOME and AWAY only. Translates binary Kalshi match-
+    winner probabilities into 90+30 min ternary probabilities using the
+    historical knockout draw rate p_draw_ko:
+        p_h = r_h - 0.5*p_d,  p_a = r_a - 0.5*p_d,  p_d = p_draw_ko
+    (assumes penalty shootouts are 50/50 between the two teams).
+    """
     probs = {}
     for m in markets:
         t = m["ticker"]
@@ -132,6 +144,21 @@ def _parse_game(markets: list[dict], home_code: str, away_code: str) -> dict | N
             p = _midprice(m)
             if p is not None:
                 probs["draw"] = p
+
+    if phase == "knockout":
+        if "home_win" not in probs or "away_win" not in probs:
+            return None
+        total = probs["home_win"] + probs["away_win"]
+        if total < 0.5:
+            return None
+        r_h = probs["home_win"] / total
+        r_a = probs["away_win"] / total
+        p_d = p_draw_ko
+        p_h = max(0.0, r_h - 0.5 * p_d)
+        p_a = max(0.0, r_a - 0.5 * p_d)
+        t2 = p_h + p_d + p_a
+        return {"home_win": p_h / t2, "draw": p_d / t2, "away_win": p_a / t2}
+
     if len(probs) != 3:
         return None
     total = sum(probs.values())
@@ -251,10 +278,14 @@ def _clean_entry(entry: dict) -> dict:
     return result
 
 
-def fetch_match_probs(match: dict) -> dict:
+def fetch_match_probs(match: dict, p_draw_knockout: float = 0.25) -> dict:
     """
     Fetch Kalshi probabilities for one match from schedule.json.
     Returns {home_win, draw, away_win, total_goals, spread_home, spread_away, source}.
+
+    p_draw_knockout: historical knockout ET-draw rate, used to convert Kalshi
+      binary (home/away only, no TIE market) into 90+30 min ternary probs.
+      Pass the value from historical.knockout_draw_rate(gamma).
 
     Cache policy:
     - Once kickoff time has passed, the cached entry is locked permanently so
@@ -288,7 +319,9 @@ def fetch_match_probs(match: dict) -> dict:
         if time.time() - entry.get("_ts", 0) < CACHE_TTL:
             return _clean_entry(entry)
 
-    game_probs  = _parse_game(_fetch_event(game_ticker), home_code, away_code)
+    phase = match.get("phase", "group")
+    game_probs  = _parse_game(_fetch_event(game_ticker), home_code, away_code,
+                               phase=phase, p_draw_ko=p_draw_knockout)
     total_goals = _parse_totals(_fetch_event(total_ticker))
 
     if game_probs is None:

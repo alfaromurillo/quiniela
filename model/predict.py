@@ -12,7 +12,7 @@ ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT))
 
 from model.kalshi import fetch_match_probs, _fallback_probs, _correct_bias
-from model.historical import build_distributions, scoreline_probs
+from model.historical import build_distributions, scoreline_probs, knockout_draw_rate
 from model.optimizer import best_prediction, modal_prediction
 from model.learn import (load_canonical, count_2026, estimate_gamma,
                           estimate_delta, estimate_alpha,
@@ -44,6 +44,7 @@ def run():
     gamma            = estimate_gamma()
     delta            = estimate_delta(canonical, gamma=gamma)
     alpha            = estimate_alpha()
+    p_draw_ko        = knockout_draw_rate(gamma=gamma)
     extra_wins, extra_draws = count_2026(canonical)
     dist             = build_distributions(gamma=gamma, extra_wins=extra_wins,
                                            extra_draws=extra_draws, delta=delta)
@@ -100,7 +101,7 @@ def run():
 
         # Fetch Kalshi probabilities
         try:
-            kalshi = fetch_match_probs(match)
+            kalshi = fetch_match_probs(match, p_draw_knockout=p_draw_ko)
         except Exception as e:
             print(f"Kalshi error: {e} — using fallback")
             kalshi = _fallback_probs()
