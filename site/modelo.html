@@ -335,7 +335,7 @@
     <div class="stat-card"><div class="num">σ = 1</div><div class="lbl">Prior HalfNormal</div></div>
     <div class="stat-card"><div class="num">E[δ] ≈ 0.8</div><div class="lbl">Media del prior</div></div>
     <div class="stat-card"><div class="num">9</div><div class="lbl">Jornadas del torneo</div></div>
-    <div class="stat-card"><div class="num">δ = 0</div><div class="lbl">Valor inicial</div></div>
+    <div class="stat-card"><div class="num" id="delta-current">δ = …</div><div class="lbl">Estimación actual</div></div>
   </div>
 
   <h3>Paso 2 — Reponderación por total de goles (Kalshi KXWCTOTAL)</h3>
@@ -443,5 +443,13 @@
 
 </div>
 
+<script>
+fetch('data/learning.json')
+  .then(r => r.json())
+  .then(d => {
+    const el = document.getElementById('delta-current');
+    if (el && d.delta !== undefined) el.textContent = 'δ = ' + d.delta.toFixed(2);
+  });
+</script>
 </body>
 </html>

@@ -125,10 +125,11 @@ def update_results() -> None:
         print("Results: nothing to update.")
         return
 
-    # Group by date (minimise ESPN requests)
+    # Group by UTC date for ESPN (schedule["date"] is local; ESPN uses UTC date)
     by_date: dict[str, list] = {}
     for m in need:
-        by_date.setdefault(m["date"], []).append(m)
+        espn_date = datetime.strptime(m["time_utc"], "%Y-%m-%dT%H:%M:%SZ").strftime("%Y-%m-%d")
+        by_date.setdefault(espn_date, []).append(m)
 
     updated = 0
     for date_str, matches in sorted(by_date.items()):
