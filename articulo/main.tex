@@ -273,6 +273,14 @@ Los precios se obtienen como el punto medio entre la mejor oferta de
 compra y la mejor oferta de venta (midprice) cuando el spread es menor
 de \$0.30; de lo contrario se descarta el mercado por falta de liquidez.
 
+Para los partidos de \textbf{fase eliminatoria}, el mercado de resultado
+(\texttt{KXWCGAME-}) omite el submercado de empate (\texttt{-TIE}),
+dado que en eliminación directa siempre existe un ganador
+(por tanda de penales si el marcador está igualado al final del
+tiempo extra).
+Los mercados de total de goles y ventaja de goles aplican en ambas
+fases.
+
 % ─────────────────────────────────────────────────────────────
 \subsection{Modelo histórico de marcadores}
 \label{sec:historico}
@@ -583,6 +591,60 @@ correspondiente:
   + \frac{p_E \cdot Q_E(h,k)}{\sum_{h'=k'} Q_E(h',k')}
   + \frac{p_B \cdot Q_B(h,k)}{\sum_{h'<k'} Q_B(h',k')}.
 \]
+
+\subsubsection{Fase eliminatoria: traducción de probabilidades de Kalshi}
+\label{sec:knockout-kalshi}
+
+En la fase eliminatoria, Kalshi ofrece únicamente probabilidades
+binarias: $r_A = \Prob(\text{gana el Equipo }A)$ y
+$r_B = \Prob(\text{gana el Equipo }B)$, con $r_A + r_B = 1$.
+Sin embargo, la quiniela requiere predicciones sobre el marcador en
+90+30 minutos, donde un empate al final del tiempo extra
+(seguido de penales) es un resultado legítimo que se puntúa como
+empate exacto si la predicción coincide.
+Necesitamos por tanto las probabilidades de resultado en 90+30 min:
+$p_A = \Prob(\text{gana en 90+30})$,
+$p_E = \Prob(\text{empate en 90+30})$ y
+$p_B = \Prob(\text{pierde en 90+30})$.
+
+Bajo el supuesto de que la tanda de penales es equiprobable entre los
+dos equipos, la probabilidad de ganar el partido es:
+\begin{equation}
+  r_A = p_A + \tfrac{1}{2} p_E, \qquad r_B = p_B + \tfrac{1}{2} p_E.
+  \label{eq:knockout-translation}
+\end{equation}
+El sistema~\eqref{eq:knockout-translation} tiene tres incógnitas y
+dos ecuaciones, con la restricción $p_A + p_E + p_B = 1$.
+Estimamos $p_E$ mediante la tasa histórica de empates en tiempo extra
+de la fase eliminatoria, ponderada por $\gamma$:
+\[
+  \hat{p}_E^{\text{hist}}
+  = \frac{\sum_{\text{torneos}} \gamma^{\text{age}}
+          \cdot (\text{partidos KO que llegaron a penales})}
+         {\sum_{\text{torneos}} \gamma^{\text{age}}
+          \cdot (\text{total partidos KO})},
+\]
+con valor estimado $\hat{p}_E^{\text{hist}} \approx 0.275$.
+Las probabilidades en 90+30 min se obtienen entonces como:
+\begin{equation}
+  p_A = \max\!\bigl(0,\; r_A - \tfrac{1}{2}\hat{p}_E^{\text{hist}}\bigr),
+  \quad
+  p_E = \hat{p}_E^{\text{hist}},
+  \quad
+  p_B = \max\!\bigl(0,\; r_B - \tfrac{1}{2}\hat{p}_E^{\text{hist}}\bigr),
+  \label{eq:knockout-probs}
+\end{equation}
+y se normalizan antes de usarlas en el condicionamiento histórico.
+
+\paragraph{Pendiente de verificación.}
+No está documentado públicamente si los mercados de total de goles
+(\texttt{KXWCTOTAL-}) y ventaja de goles (\texttt{KXWCSPREAD-})
+contabilizan los goles en 90 minutos reglamentarios, en 90+30 minutos,
+o incluyendo la tanda de penales (lo más probable es que no incluyan
+penales, pero la distinción entre 90 y 90+30 min es relevante para
+partidos que lleguen al tiempo extra).
+La verificación empírica se realizará al observar los primeros
+mercados eliminatorios de la API de Kalshi.
 
 \subsubsection{Reajuste por total de goles}
 
