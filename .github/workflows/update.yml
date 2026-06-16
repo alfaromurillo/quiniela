@@ -18,6 +18,10 @@ on:
     - cron: '0 6 * * *'
   workflow_dispatch:  # allow manual trigger
 
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
 permissions:
   contents: write
   pages: write
