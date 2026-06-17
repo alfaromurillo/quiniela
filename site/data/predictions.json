@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-17T19:34:47.420032+00:00",
+  "generated_at": "2026-06-17T20:59:29.251214+00:00",
   "matches": [
     {
       "id": 1,
@@ -15,22 +15,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.5554,
+        "expected_pts": 1.5514,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.5554
+            "expected_pts": 1.5514
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.4839
+            "expected_pts": 1.4795
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.4307
+            "expected_pts": 1.4328
           }
         ],
         "modal": {
@@ -95,12 +95,12 @@
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.6506
+            "expected_pts": 1.6502
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5432
+            "expected_pts": 1.543
           }
         ],
         "modal": {
@@ -155,22 +155,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.8011,
+        "expected_pts": 1.7902,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.8011
+            "expected_pts": 1.7902
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.7084
+            "expected_pts": 1.7001
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.6785
+            "expected_pts": 1.6608
           }
         ],
         "modal": {
@@ -225,22 +225,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7423,
+        "expected_pts": 1.735,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7423
-          },
-          {
-            "home": 2,
-            "away": 1,
-            "expected_pts": 1.6034
+            "expected_pts": 1.735
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.5965
+            "expected_pts": 1.6063
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.5985
           }
         ],
         "modal": {
@@ -295,22 +295,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.8055,
+        "expected_pts": 1.7934,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.8055
-          },
-          {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 1.7227
+            "expected_pts": 1.7934
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.7132
+            "expected_pts": 1.7031
+          },
+          {
+            "home": 0,
+            "away": 2,
+            "expected_pts": 1.7028
           }
         ],
         "modal": {
@@ -365,22 +365,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.9698,
+        "expected_pts": 1.9494,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.9698
+            "expected_pts": 1.9494
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.9169
+            "expected_pts": 1.899
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.9128
+            "expected_pts": 1.8834
           }
         ],
         "modal": {
@@ -435,22 +435,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7782,
+        "expected_pts": 1.7661,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7782
+            "expected_pts": 1.7661
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.6762
+            "expected_pts": 1.657
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.661
+            "expected_pts": 1.6515
           }
         ],
         "modal": {
@@ -503,24 +503,24 @@
       "phase": "group",
       "group": "Group B",
       "prediction": {
-        "home": 0,
+        "home": 1,
         "away": 2,
-        "expected_pts": 2.1323,
+        "expected_pts": 2.0848,
         "top3": [
-          {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 2.1323
-          },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 2.1191
+            "expected_pts": 2.0848
+          },
+          {
+            "home": 0,
+            "away": 2,
+            "expected_pts": 2.0846
           },
           {
             "home": 1,
             "away": 3,
-            "expected_pts": 2.0388
+            "expected_pts": 2.007
           }
         ],
         "modal": {
@@ -575,22 +575,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.8873,
+        "expected_pts": 1.8671,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.8873
+            "expected_pts": 1.8671
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.8393
+            "expected_pts": 1.8102
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.8169
+            "expected_pts": 1.7996
           }
         ],
         "modal": {
@@ -645,22 +645,22 @@
       "prediction": {
         "home": 2,
         "away": 0,
-        "expected_pts": 2.0616,
+        "expected_pts": 2.0264,
         "top3": [
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.0616
-          },
-          {
-            "home": 3,
-            "away": 0,
-            "expected_pts": 2.0411
+            "expected_pts": 2.0264
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.0355
+            "expected_pts": 2.0131
+          },
+          {
+            "home": 3,
+            "away": 0,
+            "expected_pts": 2.0056
           }
         ],
         "modal": {
@@ -715,22 +715,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.677,
+        "expected_pts": 1.6712,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.677
+            "expected_pts": 1.6712
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.5979
+            "expected_pts": 1.605
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5973
+            "expected_pts": 1.5925
           }
         ],
         "modal": {
@@ -785,22 +785,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.8757,
+        "expected_pts": 1.858,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.8757
+            "expected_pts": 1.858
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.8189
+            "expected_pts": 1.8036
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.812
+            "expected_pts": 1.7859
           }
         ],
         "modal": {
@@ -855,22 +855,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.8321,
+        "expected_pts": 1.8174,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.8321
+            "expected_pts": 1.8174
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.7415
+            "expected_pts": 1.719
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.7227
+            "expected_pts": 1.7109
           }
         ],
         "modal": {
@@ -925,22 +925,22 @@
       "prediction": {
         "home": 1,
         "away": 2,
-        "expected_pts": 1.798,
+        "expected_pts": 1.7781,
         "top3": [
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.798
+            "expected_pts": 1.7781
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.7505
+            "expected_pts": 1.7317
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.724
+            "expected_pts": 1.6953
           }
         ],
         "modal": {
@@ -995,22 +995,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.8473,
+        "expected_pts": 1.8327,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.8473
-          },
-          {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 1.7396
+            "expected_pts": 1.8327
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.7318
+            "expected_pts": 1.7202
+          },
+          {
+            "home": 0,
+            "away": 2,
+            "expected_pts": 1.718
           }
         ],
         "modal": {
@@ -1065,22 +1065,22 @@
       "prediction": {
         "home": 4,
         "away": 1,
-        "expected_pts": 2.4651,
+        "expected_pts": 2.4205,
         "top3": [
           {
             "home": 4,
             "away": 1,
-            "expected_pts": 2.4651
+            "expected_pts": 2.4205
           },
           {
             "home": 3,
             "away": 1,
-            "expected_pts": 2.3209
+            "expected_pts": 2.2801
           },
           {
-            "home": 3,
-            "away": 0,
-            "expected_pts": 2.2519
+            "home": 2,
+            "away": 1,
+            "expected_pts": 2.2125
           }
         ],
         "modal": {
@@ -1133,24 +1133,24 @@
       "phase": "group",
       "group": "Group C",
       "prediction": {
-        "home": 0,
+        "home": 1,
         "away": 2,
-        "expected_pts": 1.9736,
+        "expected_pts": 1.9455,
         "top3": [
-          {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 1.9736
-          },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.9685
+            "expected_pts": 1.9455
+          },
+          {
+            "home": 0,
+            "away": 2,
+            "expected_pts": 1.9384
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.9546
+            "expected_pts": 1.9302
           }
         ],
         "modal": {
@@ -1205,27 +1205,27 @@
       "prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 2.0258,
+        "expected_pts": 1.9951,
         "top3": [
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.0258
+            "expected_pts": 1.9951
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.9938
+            "expected_pts": 1.9525
           },
           {
             "home": 3,
             "away": 0,
-            "expected_pts": 1.9889
+            "expected_pts": 1.946
           }
         ],
         "modal": {
-          "home": 3,
-          "away": 0
+          "home": 4,
+          "away": 1
         },
         "baseline_hist": {
           "home": 0,
@@ -1275,22 +1275,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7404,
+        "expected_pts": 1.733,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7404
+            "expected_pts": 1.733
           },
           {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 1.6024
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.5981
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5996
+            "expected_pts": 1.5946
           }
         ],
         "modal": {
@@ -1345,22 +1345,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.7723,
+        "expected_pts": 1.7615,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.7723
-          },
-          {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 1.7225
+            "expected_pts": 1.7615
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.72
+            "expected_pts": 1.7114
+          },
+          {
+            "home": 0,
+            "away": 2,
+            "expected_pts": 1.7037
           }
         ],
         "modal": {
@@ -1415,22 +1415,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7845,
+        "expected_pts": 1.7724,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7845
+            "expected_pts": 1.7724
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.7298
+            "expected_pts": 1.7201
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.7076
+            "expected_pts": 1.688
           }
         ],
         "modal": {
@@ -1485,22 +1485,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.678,
+        "expected_pts": 1.6719,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.678
+            "expected_pts": 1.6719
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.6109
+            "expected_pts": 1.606
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.5742
+            "expected_pts": 1.5828
           }
         ],
         "modal": {
@@ -1555,22 +1555,22 @@
       "prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 1.5924,
+        "expected_pts": 1.5923,
         "top3": [
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5924
+            "expected_pts": 1.5923
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.5903
+            "expected_pts": 1.5902
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.5865
+            "expected_pts": 1.5862
           }
         ],
         "modal": {
@@ -1625,22 +1625,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.6947,
+        "expected_pts": 1.6944,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.6947
+            "expected_pts": 1.6944
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.6657
+            "expected_pts": 1.6651
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5647
+            "expected_pts": 1.5642
           }
         ],
         "modal": {
@@ -1695,22 +1695,22 @@
       "prediction": {
         "home": 5,
         "away": 1,
-        "expected_pts": 3.1342,
+        "expected_pts": 3.1019,
         "top3": [
           {
             "home": 5,
             "away": 1,
-            "expected_pts": 3.1342
+            "expected_pts": 3.1019
           },
           {
             "home": 4,
             "away": 1,
-            "expected_pts": 2.7143
+            "expected_pts": 2.6824
           },
           {
             "home": 3,
             "away": 1,
-            "expected_pts": 2.5461
+            "expected_pts": 2.5192
           }
         ],
         "modal": {
@@ -1765,22 +1765,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7382,
+        "expected_pts": 1.7384,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7382
+            "expected_pts": 1.7384
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.7326
+            "expected_pts": 1.7315
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.5165
+            "expected_pts": 1.5111
           }
         ],
         "modal": {
@@ -1796,7 +1796,7 @@
           "away": 1
         },
         "baseline_out_alpha": {
-          "home": 0,
+          "home": 1,
           "away": 1
         },
         "baseline_full_raw": {
@@ -1835,22 +1835,22 @@
       "prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 1.8316,
+        "expected_pts": 1.8205,
         "top3": [
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.8316
+            "expected_pts": 1.8205
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7785
+            "expected_pts": 1.7664
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.7496
+            "expected_pts": 1.7293
           }
         ],
         "modal": {
@@ -1905,22 +1905,22 @@
       "prediction": {
         "home": 4,
         "away": 1,
-        "expected_pts": 2.3537,
+        "expected_pts": 2.3093,
         "top3": [
           {
             "home": 4,
             "away": 1,
-            "expected_pts": 2.3537
-          },
-          {
-            "home": 3,
-            "away": 0,
-            "expected_pts": 2.28
+            "expected_pts": 2.3093
           },
           {
             "home": 3,
             "away": 1,
-            "expected_pts": 2.2689
+            "expected_pts": 2.2271
+          },
+          {
+            "home": 3,
+            "away": 0,
+            "expected_pts": 2.2264
           }
         ],
         "modal": {
@@ -1975,22 +1975,22 @@
       "prediction": {
         "home": 1,
         "away": 4,
-        "expected_pts": 2.419,
+        "expected_pts": 2.3836,
         "top3": [
           {
             "home": 1,
             "away": 4,
-            "expected_pts": 2.419
+            "expected_pts": 2.3836
           },
           {
             "home": 1,
             "away": 3,
-            "expected_pts": 2.373
+            "expected_pts": 2.3396
           },
           {
             "home": 0,
             "away": 3,
-            "expected_pts": 2.3643
+            "expected_pts": 2.3186
           }
         ],
         "modal": {
@@ -2045,22 +2045,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.7901,
+        "expected_pts": 1.7768,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.7901
+            "expected_pts": 1.7768
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.7719
+            "expected_pts": 1.7597
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.7254
+            "expected_pts": 1.7039
           }
         ],
         "modal": {
@@ -2115,22 +2115,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.6567,
+        "expected_pts": 1.6515,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.6567
+            "expected_pts": 1.6515
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.6012
+            "expected_pts": 1.6084
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.593
+            "expected_pts": 1.5891
           }
         ],
         "modal": {
@@ -2185,22 +2185,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.5554,
+        "expected_pts": 1.5514,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.5554
+            "expected_pts": 1.5514
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.4839
+            "expected_pts": 1.4795
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.4307
+            "expected_pts": 1.4328
           }
         ],
         "modal": {
@@ -2255,22 +2255,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7281,
+        "expected_pts": 1.7186,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7281
+            "expected_pts": 1.7186
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.7187
+            "expected_pts": 1.7104
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.6685
+            "expected_pts": 1.6512
           }
         ],
         "modal": {
@@ -2325,22 +2325,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.9101,
+        "expected_pts": 1.8866,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.9101
+            "expected_pts": 1.8866
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.8631
+            "expected_pts": 1.8298
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.8226
+            "expected_pts": 1.8017
           }
         ],
         "modal": {
@@ -2395,22 +2395,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.636,
+        "expected_pts": 1.6314,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.636
+            "expected_pts": 1.6314
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.6173
+            "expected_pts": 1.6236
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5925
+            "expected_pts": 1.5888
           }
         ],
         "modal": {
@@ -2465,22 +2465,22 @@
       "prediction": {
         "home": 1,
         "away": 2,
-        "expected_pts": 2.1505,
+        "expected_pts": 2.1228,
         "top3": [
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 2.1505
+            "expected_pts": 2.1228
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 2.1491
+            "expected_pts": 2.1091
           },
           {
             "home": 0,
             "away": 3,
-            "expected_pts": 2.1229
+            "expected_pts": 2.0845
           }
         ],
         "modal": {
@@ -2533,24 +2533,24 @@
       "phase": "group",
       "group": "Group G",
       "prediction": {
-        "home": 2,
+        "home": 1,
         "away": 0,
-        "expected_pts": 1.8903,
+        "expected_pts": 1.8618,
         "top3": [
-          {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 1.8903
-          },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.8813
+            "expected_pts": 1.8618
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 1.8606
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.8738
+            "expected_pts": 1.8558
           }
         ],
         "modal": {
@@ -2605,22 +2605,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.8213,
+        "expected_pts": 1.8098,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.8213
+            "expected_pts": 1.8098
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.6828
+            "expected_pts": 1.6651
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.6553
+            "expected_pts": 1.6478
           }
         ],
         "modal": {
@@ -2675,22 +2675,22 @@
       "prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 2.0322,
+        "expected_pts": 2.0108,
         "top3": [
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.0322
-          },
-          {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 2.0303
+            "expected_pts": 2.0108
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 2.0265
+            "expected_pts": 2.0034
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 1.9968
           }
         ],
         "modal": {
@@ -2745,22 +2745,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.8911,
+        "expected_pts": 1.8735,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.8911
+            "expected_pts": 1.8735
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.8333
+            "expected_pts": 1.8072
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.7837
+            "expected_pts": 1.7696
           }
         ],
         "modal": {
@@ -2815,22 +2815,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7306,
+        "expected_pts": 1.7238,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7306
+            "expected_pts": 1.7238
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.6683
+            "expected_pts": 1.677
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5718
+            "expected_pts": 1.5671
           }
         ],
         "modal": {
@@ -2885,22 +2885,22 @@
       "prediction": {
         "home": 0,
         "away": 3,
-        "expected_pts": 2.0787,
+        "expected_pts": 2.0319,
         "top3": [
           {
             "home": 0,
             "away": 3,
-            "expected_pts": 2.0787
+            "expected_pts": 2.0319
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 2.0658
+            "expected_pts": 2.021
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 2.0515
+            "expected_pts": 2.0186
           }
         ],
         "modal": {
@@ -2955,22 +2955,22 @@
       "prediction": {
         "home": 5,
         "away": 1,
-        "expected_pts": 2.6285,
+        "expected_pts": 2.591,
         "top3": [
           {
             "home": 5,
             "away": 1,
-            "expected_pts": 2.6285
+            "expected_pts": 2.591
           },
           {
             "home": 4,
             "away": 1,
-            "expected_pts": 2.4962
+            "expected_pts": 2.4576
           },
           {
             "home": 3,
             "away": 1,
-            "expected_pts": 2.4399
+            "expected_pts": 2.4046
           }
         ],
         "modal": {
@@ -3025,22 +3025,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.9544,
+        "expected_pts": 1.9268,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.9544
+            "expected_pts": 1.9268
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.9302
+            "expected_pts": 1.8922
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.8636
+            "expected_pts": 1.8394
           }
         ],
         "modal": {
@@ -3095,22 +3095,22 @@
       "prediction": {
         "home": 4,
         "away": 1,
-        "expected_pts": 2.3282,
+        "expected_pts": 2.2858,
         "top3": [
           {
             "home": 4,
             "away": 1,
-            "expected_pts": 2.3282
+            "expected_pts": 2.2858
           },
           {
             "home": 3,
             "away": 0,
-            "expected_pts": 2.3155
+            "expected_pts": 2.2625
           },
           {
             "home": 3,
             "away": 1,
-            "expected_pts": 2.2827
+            "expected_pts": 2.242
           }
         ],
         "modal": {
@@ -3165,22 +3165,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 2.0008,
+        "expected_pts": 1.9829,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 2.0008
+            "expected_pts": 1.9829
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.9363
+            "expected_pts": 1.9101
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.8535
+            "expected_pts": 1.8407
           }
         ],
         "modal": {
@@ -3235,22 +3235,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.6848,
+        "expected_pts": 1.6842,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.6848
+            "expected_pts": 1.6842
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.67
+            "expected_pts": 1.6695
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.5807
+            "expected_pts": 1.5803
           }
         ],
         "modal": {
@@ -3305,22 +3305,22 @@
       "prediction": {
         "home": 1,
         "away": 2,
-        "expected_pts": 1.9857,
+        "expected_pts": 1.9667,
         "top3": [
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.9857
+            "expected_pts": 1.9667
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.9724
+            "expected_pts": 1.952
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.9698
+            "expected_pts": 1.9392
           }
         ],
         "modal": {
@@ -3375,22 +3375,22 @@
       "prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 1.8881,
+        "expected_pts": 1.8649,
         "top3": [
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.8881
+            "expected_pts": 1.8649
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.8733
+            "expected_pts": 1.8502
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.8518
+            "expected_pts": 1.8181
           }
         ],
         "modal": {
@@ -3445,27 +3445,27 @@
       "prediction": {
         "home": 0,
         "away": 3,
-        "expected_pts": 2.1489,
+        "expected_pts": 2.1013,
         "top3": [
           {
             "home": 0,
             "away": 3,
-            "expected_pts": 2.1489
-          },
-          {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 2.1334
+            "expected_pts": 2.1013
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 2.1238
+            "expected_pts": 2.0901
+          },
+          {
+            "home": 0,
+            "away": 2,
+            "expected_pts": 2.0879
           }
         ],
         "modal": {
-          "home": 0,
-          "away": 3
+          "home": 1,
+          "away": 4
         },
         "baseline_hist": {
           "home": 0,
@@ -3515,22 +3515,22 @@
       "prediction": {
         "home": 4,
         "away": 1,
-        "expected_pts": 2.5313,
+        "expected_pts": 2.4882,
         "top3": [
           {
             "home": 4,
             "away": 1,
-            "expected_pts": 2.5313
+            "expected_pts": 2.4882
           },
           {
             "home": 3,
             "away": 1,
-            "expected_pts": 2.3914
+            "expected_pts": 2.3514
           },
           {
             "home": 3,
             "away": 0,
-            "expected_pts": 2.3656
+            "expected_pts": 2.3155
           }
         ],
         "modal": {
@@ -3585,22 +3585,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.6372,
+        "expected_pts": 1.6373,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.6372
+            "expected_pts": 1.6373
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.6235
+            "expected_pts": 1.6232
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5806
+            "expected_pts": 1.5803
           }
         ],
         "modal": {
@@ -3655,22 +3655,22 @@
       "prediction": {
         "home": 1,
         "away": 2,
-        "expected_pts": 1.6818,
+        "expected_pts": 1.675,
         "top3": [
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.6818
+            "expected_pts": 1.675
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.6781
+            "expected_pts": 1.6703
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.5973
+            "expected_pts": 1.5825
           }
         ],
         "modal": {
@@ -3725,22 +3725,22 @@
       "prediction": {
         "home": 2,
         "away": 0,
-        "expected_pts": 2.1764,
+        "expected_pts": 2.1361,
         "top3": [
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.1764
-          },
-          {
-            "home": 1,
-            "away": 0,
-            "expected_pts": 2.1169
+            "expected_pts": 2.1361
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.1149
+            "expected_pts": 2.089
+          },
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 2.0888
           }
         ],
         "modal": {
@@ -3752,7 +3752,7 @@
           "away": 0
         },
         "baseline_out_raw": {
-          "home": 2,
+          "home": 1,
           "away": 0
         },
         "baseline_out_alpha": {
@@ -3795,22 +3795,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.5554,
+        "expected_pts": 1.5514,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.5554
+            "expected_pts": 1.5514
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.4839
+            "expected_pts": 1.4795
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.4307
+            "expected_pts": 1.4328
           }
         ],
         "modal": {
@@ -3865,22 +3865,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.5554,
+        "expected_pts": 1.5514,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.5554
+            "expected_pts": 1.5514
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.4839
+            "expected_pts": 1.4795
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.4307
+            "expected_pts": 1.4328
           }
         ],
         "modal": {
@@ -3935,22 +3935,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.8693,
+        "expected_pts": 1.8524,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.8693
+            "expected_pts": 1.8524
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.8323
+            "expected_pts": 1.8171
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.8122
+            "expected_pts": 1.7863
           }
         ],
         "modal": {
@@ -4005,22 +4005,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.8845,
+        "expected_pts": 1.8675,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.8845
+            "expected_pts": 1.8675
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.8441
+            "expected_pts": 1.829
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.8441
+            "expected_pts": 1.8178
           }
         ],
         "modal": {
@@ -4075,12 +4075,12 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.6593,
+        "expected_pts": 1.6594,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.6593
+            "expected_pts": 1.6594
           },
           {
             "home": 0,
@@ -4090,7 +4090,7 @@
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5798
+            "expected_pts": 1.5797
           }
         ],
         "modal": {
@@ -4145,22 +4145,22 @@
       "prediction": {
         "home": 0,
         "away": 3,
-        "expected_pts": 2.2269,
+        "expected_pts": 2.1771,
         "top3": [
           {
             "home": 0,
             "away": 3,
-            "expected_pts": 2.2269
+            "expected_pts": 2.1771
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 2.1894
+            "expected_pts": 2.1541
           },
           {
             "home": 1,
             "away": 3,
-            "expected_pts": 2.1724
+            "expected_pts": 2.1363
           }
         ],
         "modal": {
@@ -4215,22 +4215,22 @@
       "prediction": {
         "home": 2,
         "away": 0,
-        "expected_pts": 2.1459,
+        "expected_pts": 2.1082,
         "top3": [
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.1459
+            "expected_pts": 2.1082
           },
           {
             "home": 3,
             "away": 0,
-            "expected_pts": 2.1409
+            "expected_pts": 2.1025
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.109
+            "expected_pts": 2.0848
           }
         ],
         "modal": {
@@ -4246,7 +4246,7 @@
           "away": 0
         },
         "baseline_out_alpha": {
-          "home": 2,
+          "home": 1,
           "away": 0
         },
         "baseline_full_raw": {
@@ -4285,22 +4285,22 @@
       "prediction": {
         "home": 0,
         "away": 2,
-        "expected_pts": 2.0008,
+        "expected_pts": 1.9641,
         "top3": [
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 2.0008
+            "expected_pts": 1.9641
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.989
+            "expected_pts": 1.9629
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.9635
+            "expected_pts": 1.9399
           }
         ],
         "modal": {
@@ -4355,22 +4355,22 @@
       "prediction": {
         "home": 3,
         "away": 0,
-        "expected_pts": 2.2857,
+        "expected_pts": 2.241,
         "top3": [
           {
             "home": 3,
             "away": 0,
-            "expected_pts": 2.2857
+            "expected_pts": 2.241
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.2477
+            "expected_pts": 2.2176
           },
           {
             "home": 3,
             "away": 1,
-            "expected_pts": 2.2398
+            "expected_pts": 2.2095
           }
         ],
         "modal": {
@@ -4425,22 +4425,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 2.0773,
+        "expected_pts": 2.0517,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 2.0773
+            "expected_pts": 2.0517
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.0496
+            "expected_pts": 2.0142
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.9677
+            "expected_pts": 1.9466
           }
         ],
         "modal": {
@@ -4495,22 +4495,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.7086,
+        "expected_pts": 1.7026,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.7086
+            "expected_pts": 1.7026
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.6461
+            "expected_pts": 1.6412
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.5771
+            "expected_pts": 1.5848
           }
         ],
         "modal": {
@@ -4565,22 +4565,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.6897,
+        "expected_pts": 1.6892,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.6897
+            "expected_pts": 1.6892
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.6884
+            "expected_pts": 1.6879
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.5624
+            "expected_pts": 1.5621
           }
         ],
         "modal": {
@@ -4635,22 +4635,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7919,
+        "expected_pts": 1.775,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7919
-          },
-          {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 1.7422
+            "expected_pts": 1.775
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.7361
+            "expected_pts": 1.7203
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 1.7159
           }
         ],
         "modal": {
@@ -4705,22 +4705,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.6764,
+        "expected_pts": 1.6763,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.6764
+            "expected_pts": 1.6763
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.6618
+            "expected_pts": 1.6613
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.536
+            "expected_pts": 1.5357
           }
         ],
         "modal": {
@@ -4775,22 +4775,22 @@
       "prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 2.0049,
+        "expected_pts": 1.9803,
         "top3": [
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.0049
+            "expected_pts": 1.9803
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.9903
+            "expected_pts": 1.9542
           },
           {
-            "home": 3,
+            "home": 1,
             "away": 0,
-            "expected_pts": 1.9761
+            "expected_pts": 1.944
           }
         ],
         "modal": {
@@ -4845,22 +4845,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.8805,
+        "expected_pts": 1.8631,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.8805
+            "expected_pts": 1.8631
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.8512
+            "expected_pts": 1.8243
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.8096
+            "expected_pts": 1.7949
           }
         ],
         "modal": {
@@ -4915,22 +4915,22 @@
       "prediction": {
         "home": 1,
         "away": 2,
-        "expected_pts": 2.1295,
+        "expected_pts": 2.1039,
         "top3": [
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 2.1295
+            "expected_pts": 2.1039
           },
           {
             "home": 0,
             "away": 3,
-            "expected_pts": 2.1218
+            "expected_pts": 2.0827
           },
           {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 2.1033
+            "home": 1,
+            "away": 3,
+            "expected_pts": 2.0666
           }
         ],
         "modal": {
@@ -4947,7 +4947,7 @@
         },
         "baseline_out_alpha": {
           "home": 0,
-          "away": 2
+          "away": 1
         },
         "baseline_full_raw": {
           "home": 0,
@@ -4985,22 +4985,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.9551,
+        "expected_pts": 1.935,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.9551
+            "expected_pts": 1.935
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.9117
+            "expected_pts": 1.8823
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.8915
+            "expected_pts": 1.8744
           }
         ],
         "modal": {
@@ -5445,22 +5445,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 0.6014,
+        "expected_pts": 0.599,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 0.6014
+            "expected_pts": 0.599
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 0.5727
+            "expected_pts": 0.5704
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 0.5432
+            "expected_pts": 0.5398
           }
         ],
         "modal": {
