@@ -19,7 +19,9 @@ API_BASE = "https://api.elections.kalshi.com/trade-api/v2"
 CACHE_PATH = Path(__file__).parent.parent / "data" / "kalshi_cache.json"
 # Pre-game entries are considered stale after 90 min; once kickoff passes they are
 # locked permanently so in-game/post-game prices never overwrite the prediction.
-CACHE_TTL = 5400  # 90 minutes — covers the 1.5h-before-kickoff → kickoff window
+CACHE_TTL = 5400       # 90 min — covers the 1.5h-before-kickoff → kickoff window
+EARLY_SNAPSHOT_H = 24  # stamp early_* once when match is this many hours away
+SNAPSHOT_INTERVAL = 3600  # seconds between history snapshots (one per hour)
 
 # Schedule → Kalshi 3-letter codes (several differ from FIFA/ISO)
 TEAM_CODES = {
@@ -270,12 +272,48 @@ def _save_cache(data: dict):
 
 
 def _clean_entry(entry: dict) -> dict:
-    """Strip internal fields and restore int keys for numeric-keyed dicts."""
-    result = {k: v for k, v in entry.items() if k != "_ts"}
-    for key in ("spread_home", "spread_away", "total_goals"):
+    """Strip internal/history fields; restore int keys for numeric-keyed dicts."""
+    _strip = {"_ts", "_early_ts", "snapshots",
+              "early_home_win", "early_draw", "early_away_win",
+              "early_total_goals", "early_spread_home", "early_spread_away",
+              "early_source"}
+    result = {k: v for k, v in entry.items() if k not in _strip}
+    for key in ("spread_home", "spread_away", "total_goals",
+                "early_spread_home", "early_spread_away", "early_total_goals"):
         if result.get(key):
             result[key] = {int(k): v for k, v in result[key].items()}
     return result
+
+
+def get_early_snapshot(match: dict) -> dict | None:
+    """
+    Return the early (≥24h-before-kickoff) Kalshi snapshot for a match, or
+    None if no early snapshot was recorded.  Keys are the same as fetch_match_probs
+    but prefixed with 'early_'.  Restores int keys for numeric-keyed dicts.
+    """
+    home_code = TEAM_CODES.get(match["home"])
+    away_code = TEAM_CODES.get(match["away"])
+    if not home_code or not away_code:
+        return None
+    game_ticker = f"KXWCGAME-{_date_code(match['time_utc'])}{home_code}{away_code}"
+    cache = _load_cache()
+    entry = cache.get(game_ticker, {})
+    if "early_home_win" not in entry:
+        return None
+    snap = {
+        "home_win":   entry["early_home_win"],
+        "draw":       entry["early_draw"],
+        "away_win":   entry["early_away_win"],
+        "total_goals": entry.get("early_total_goals"),
+        "spread_home": entry.get("early_spread_home"),
+        "spread_away": entry.get("early_spread_away"),
+        "source":      entry.get("early_source", "kalshi"),
+        "early_ts":    entry.get("_early_ts"),
+    }
+    for key in ("total_goals", "spread_home", "spread_away"):
+        if snap.get(key):
+            snap[key] = {int(k): v for k, v in snap[key].items()}
+    return snap
 
 
 def fetch_match_probs(match: dict, p_draw_knockout: float = 0.25) -> dict:
@@ -343,6 +381,47 @@ def fetch_match_probs(match: dict, p_draw_knockout: float = 0.25) -> dict:
 
     entry = dict(result)
     entry["_ts"] = time.time()
+
+    # Preserve early snapshot: stamp once when match is >EARLY_SNAPSHOT_H away.
+    # Keep existing early data if already present.
+    existing_early = cache.get(game_ticker, {})
+    if "early_home_win" in existing_early:
+        for k in ("early_home_win", "early_draw", "early_away_win",
+                  "early_total_goals", "early_spread_home", "early_spread_away",
+                  "early_source", "_early_ts"):
+            if k in existing_early:
+                entry[k] = existing_early[k]
+    elif result.get("source") == "kalshi":
+        hours_to_kickoff = (kickoff - now).total_seconds() / 3600
+        if hours_to_kickoff >= EARLY_SNAPSHOT_H:
+            entry["early_home_win"]   = result["home_win"]
+            entry["early_draw"]       = result["draw"]
+            entry["early_away_win"]   = result["away_win"]
+            entry["early_total_goals"]= result.get("total_goals")
+            entry["early_spread_home"]= result.get("spread_home")
+            entry["early_spread_away"]= result.get("spread_away")
+            entry["early_source"]     = "kalshi"
+            entry["_early_ts"]        = time.time()
+
+    # Append to time-series snapshot history (one entry per hour, pre-kickoff only).
+    # Each snapshot: {ts, home_win, draw, away_win, total_goals, spread_home, spread_away}
+    # Never modified once written — allows later analysis of which fetch time is best.
+    if result.get("source") == "kalshi":
+        snapshots: list = existing_early.get("snapshots", [])
+        last_ts = snapshots[-1]["ts"] if snapshots else 0
+        if time.time() - last_ts >= SNAPSHOT_INTERVAL:
+            snap = {
+                "ts":          time.time(),
+                "home_win":    result["home_win"],
+                "draw":        result["draw"],
+                "away_win":    result["away_win"],
+                "total_goals": result.get("total_goals"),
+                "spread_home": result.get("spread_home"),
+                "spread_away": result.get("spread_away"),
+            }
+            snapshots.append(snap)
+        entry["snapshots"] = snapshots
+
     cache[game_ticker] = entry
     _save_cache(cache)
     return result

@@ -270,4 +270,24 @@ def scoreline_probs(
     total = sum(probs.values())
     if total > 1e-12:
         probs = {s: v / total for s, v in probs.items()}
+
+    # ── Restore outcome marginals ──────────────────────────────────────────
+    # Total-goals and spread reweighting shift mass between cells without
+    # respecting the outcome boundaries, so the draw region shrinks
+    # significantly after global normalisation.  This one-pass rescale
+    # forces the three regions to sum to exactly p_home_win / p_draw /
+    # p_away_win, while preserving all within-region relative weights.
+    # After rescaling the grid still sums to 1 (the three targets sum to 1).
+    home_cells = [(a, b) for a, b in probs if a > b]
+    draw_cells = [(a, b) for a, b in probs if a == b]
+    away_cells = [(a, b) for a, b in probs if a < b]
+    for cells, p_target in ((home_cells, p_home_win),
+                             (draw_cells, p_draw),
+                             (away_cells, p_away_win)):
+        s = sum(probs[c] for c in cells)
+        if s > 1e-12 and abs(s - p_target) > 1e-9:
+            scale = p_target / s
+            for c in cells:
+                probs[c] *= scale
+
     return probs
