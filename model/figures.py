@@ -390,7 +390,7 @@ def fig3_kalshi_reweight():
     Marks the optimal prediction on the 'Con Kalshi' panel.
     """
     from model.kalshi import _load_cache, _clean_entry
-    from model.historical import scoreline_probs, build_distributions
+    from model.historical import scoreline_probs, scoreline_probs_ipf, build_distributions
     from model.optimizer import expected_points, best_prediction
 
     cache = _load_cache()
@@ -416,10 +416,10 @@ def fig3_kalshi_reweight():
                                 total_goals_probs=None,
                                 spread_home=None, spread_away=None,
                                 dist=dist)
-    sp_after  = scoreline_probs(ph_val, pd_val, pa_val, "group",
-                                total_goals_probs=tg,
-                                spread_home=sh, spread_away=sa,
-                                dist=dist)
+    sp_after  = scoreline_probs_ipf(ph_val, pd_val, pa_val, "group",
+                                    total_goals_probs=tg,
+                                    spread_home=sh, spread_away=sa,
+                                    dist=dist)
 
     def to_matrix(sp):
         mat = np.zeros((6, 6))
@@ -446,7 +446,7 @@ def fig3_kalshi_reweight():
     for ax, mat, title, mark_opt in zip(
         axes,
         [mat_b, mat_a],
-        ["Sin Kalshi (solo histórico)", "Con Kalshi (reajustado)"],
+        ["Sin Kalshi (solo histórico)", "Con Kalshi (IPF)"],
         [False, True],
     ):
         im = ax.imshow(mat * 100, origin="lower", aspect="equal",
@@ -480,7 +480,7 @@ def fig3_kalshi_reweight():
                    if ticker_key == preferred
                    else ticker_key[:24])
     fig.suptitle(
-        f"Reajuste por mercados de predicción de Kalshi\n"
+        f"Reajuste IPF por mercados de predicción de Kalshi\n"
         f"{match_label} — "
         f"$p_A={ph_val:.2f}$, $p_E={pd_val:.2f}$, $p_B={pa_val:.2f}$",
         fontsize=11,

@@ -646,47 +646,75 @@ partidos que lleguen al tiempo extra).
 La verificación empírica se realizará al observar los primeros
 mercados eliminatorios de la API de Kalshi.
 
-\subsubsection{Reajuste por total de goles}
+\subsubsection{Ajuste iterativo proporcional}
+\label{sec:ipf}
 
-Los mercados de total de goles de Kalshi proveen probabilidades
-$q_n = \Prob(\text{total de goles} = n)$ para $n = 0, 1, \ldots, 6$.
-Reajustamos $\tilde{P}_1$ para que las marginales de total de goles
-coincidan con $q_n$:
+Con la distribución inicial $\tilde{P}_1(h,k)$ se satisfacen las
+restricciones de resultado de Kalshi.
+Resta ajustar simultáneamente las marginales de total de goles y
+ventaja de goles.
+Un enfoque secuencial basado en razones ---reescalar cada diagonal de
+total de goles y luego cada antidiagonal de ventaja--- no garantiza que
+las restricciones previas se mantengan tras aplicar el paso siguiente,
+y puede amplificar artificialmente marcadores extremos cuando las
+probabilidades de Kalshi divergen del historial.
+
+Adoptamos en cambio el \emph{ajuste iterativo proporcional}
+(\textit{iterative proportional fitting}, IPF), un procedimiento
+clásico para ajustar los márgenes de una distribución discreta
+a valores objetivo predefinidos~\citep{deming1940}.
+Se definen los siguientes conjuntos de celdas en la cuadrícula
+$\{0,\ldots,5\}^2$:
+\begin{itemize}
+  \item Por resultado: $\mathcal{H}=\{(h,k):h>k\}$,
+    $\mathcal{E}=\{(h,k):h=k\}$,
+    $\mathcal{B}=\{(h,k):h<k\}$,
+    con objetivos $p_A$, $p_E$, $p_B$.
+  \item Por total: $\mathcal{T}_t = \{(h,k):h+k=t\}$,
+    $t = 0,\ldots,5$, con objetivo $q_t$ de Kalshi;
+    las celdas con $h+k \geq 6$ reciben el residuo $q_6$.
+  \item Por ventaja: $\mathcal{S}_m^A = \{(h,k)\in\mathcal{H}:h-k=m\}$
+    con objetivo $p_A \cdot s_m^A$, y
+    $\mathcal{S}_m^B = \{(h,k)\in\mathcal{B}:k-h=m\}$
+    con objetivo $p_B \cdot s_m^B$.
+\end{itemize}
+
+El algoritmo inicializa $P^{(0)} = \tilde{P}_1$ y, en cada iteración,
+proyecta la distribución sobre cada conjunto: dado un conjunto $\mathcal{C}$
+con objetivo $p_\mathcal{C}$,
 \[
-  \tilde{P}_2(h,k)
-  = \tilde{P}_1(h,k) \cdot \frac{q_{h+k}}
-    {\sum_{h'+k'=h+k} \tilde{P}_1(h',k')}.
+  P^{(n+1)}(h,k)
+  = P^{(n)}(h,k) \cdot
+    \frac{p_\mathcal{C}}
+         {\displaystyle\sum_{(h',k')\in\mathcal{C}} P^{(n)}(h',k')}
+  \qquad \forall\,(h,k)\in\mathcal{C},
 \]
-
-\subsubsection{Reajuste por ventaja de goles}
-
-Análogamente, los mercados de spread de Kalshi proveen, dado que
-el Equipo~A gana, las probabilidades $s_m^A$ de que lo haga
-por exactamente $m$ goles ($m = 1, 2, 3, 4+$), y, dado que
-gana el Equipo~B, las correspondientes $s_m^B$.
-Aplicamos un reajuste adicional dentro de cada bloque de resultado:
-\[
-  P(h,k) \propto \tilde{P}_2(h,k) \cdot r(h,k),
-\]
-donde $r(h,k)$ es el factor de reajuste derivado de los mercados de
-spread.
-La distribución resultante $P(h,k)$ es la estimación final que se
-utiliza en la optimización.
-La Figura~\ref{fig:kalshi} ilustra el efecto del reajuste completo
-para el partido Corea del Sur vs.\ Rep.\ Checa (WC 2026, jornada 1).
+y las celdas fuera de $\mathcal{C}$ permanecen sin cambio en ese paso.
+Se aplica esta proyección sucesivamente a los tres grupos de resultado,
+luego a las diagonales de total de goles, y finalmente a las
+antidiagonales de ventaja.
+El proceso se repite hasta convergencia
+$\|P^{(n+1)} - P^{(n)}\|_\infty < 10^{-8}$, lo que ocurre en menos
+de 20 iteraciones.
+La distribución final $P(h,k) = P^{(\infty)}(h,k)$ satisface
+simultáneamente las tres familias de restricciones de Kalshi
+y constituye la estimación que se usa en la optimización.
+La Figura~\ref{fig:kalshi} ilustra el efecto del reajuste IPF para
+el partido Corea del Sur vs.\ Rep.\ Checa (WC 2026, jornada 1).
 
 \begin{figure}[tb]
   \centering
   \includegraphics[width=\textwidth]{figures/fig3_kalshi_reweight}
   \caption{Distribución de probabilidades de marcador $P(h,k)$ para
-    Corea del Sur (Equipo~A) vs.\ Rep.\ Checa (Equipo~B), antes (izquierda)
-    y después (derecha) del reajuste con datos de Kalshi
-    ($p_A = 0.37$, $p_E = 0.31$, $p_B = 0.32$).
-    El reajuste incorpora el resultado más probable del partido
-    (precio de Kalshi) y la distribución de total de goles y spread.
-    El recuadro rojo indica la predicción óptima ($0$-$1$), que
-    difiere de la moda de la distribución histórica sin Kalshi
-    ($1$-$0$ en el panel izquierdo).
+    Corea del Sur (Equipo~A) vs.\ Rep.\ Checa (Equipo~B), antes
+    (izquierda, solo condicionamiento por resultado) y después
+    (derecha, reajuste IPF con todas las restricciones de Kalshi,
+    $p_A = 0.37$, $p_E = 0.31$, $p_B = 0.32$).
+    El reajuste IPF integra simultáneamente las tres familias de
+    restricciones de Kalshi: resultado, total de goles y ventaja.
+    El recuadro rojo indica la predicción óptima ($1$-$0$, victoria
+    de Corea del Sur), que maximiza los puntos esperados bajo la
+    regla de puntuación de la quiniela.
     El partido terminó $2$-$1$ (victoria de Corea del Sur).}
   \label{fig:kalshi}
 \end{figure}
@@ -763,38 +791,36 @@ los marcadores más probables.
 \centering
 \caption{Probabilidades $P(a,b)$ y puntos esperados $E(a,b)$
 para Corea del Sur (Equipo~A) vs.\ Rep.\ Checa (Equipo~B),
-calculados con el modelo del artículo sin reajuste por spread.
-El marcador modal y la predicción óptima difieren.}
+calculados con el modelo IPF (sin datos de spread, para claridad).
+El marcador modal ($1$-$1$) y la predicción óptima ($1$-$0$) difieren.}
 \label{tab:ejkorcze}
 \begin{tabular}{ccccc}
 \toprule
 Predicción $(a,b)$ & $P(a,b)$ & $E(a,b)$ & Observación \\
 \midrule
 $\mathbf{1\text{-}0}$ & 0.113 & $\mathbf{1.541}$ & \textbf{óptimo} \\
-$2\text{-}1$ & 0.080 & 1.415 & \\
-$2\text{-}0$ & 0.085 & 1.405 & \\
-$1\text{-}1$ & 0.131 & 1.427 & modal (mayor $P$), empate \\
-$0\text{-}1$ & 0.097 & 1.393 & \\
-$0\text{-}0$ & 0.095 & 1.328 & empate \\
-$1\text{-}2$ & 0.069 & 1.282 & \\
-$0\text{-}2$ & 0.074 & 1.240 & \\
-$2\text{-}2$ & 0.056 & 1.114 & empate \\
+$1\text{-}1$ & 0.138 & 1.460 & modal (mayor $P$), empate \\
+$2\text{-}1$ & 0.080 & 1.419 & \\
+$2\text{-}0$ & 0.082 & 1.396 & \\
+$0\text{-}1$ & 0.097 & 1.382 & \\
+$0\text{-}0$ & 0.095 & 1.334 & empate \\
+$1\text{-}2$ & 0.069 & 1.278 & \\
+$0\text{-}2$ & 0.070 & 1.221 & \\
+$2\text{-}2$ & 0.059 & 1.134 & empate \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-El marcador modal es $1$-$1$ (empate, $P = 0.131$), pero la
+El marcador modal es $1$-$1$ (empate, $P = 0.138$), pero la
 predicción óptima es $1$-$0$ ($E = 1.541$).
 La diferencia se debe a que $1$-$0$ también puntúa 3 puntos
 cuando el resultado es $2$-$0$, $3$-$0$ o $4$-$0$, mientras que
 $1$-$1$ nunca alcanza la tier de 3 puntos (véase
 Observación~\ref{obs:nodraw}).
 El resultado real fue $2$-$1$ (Corea del Sur).
-\TODO{Este ejemplo usa únicamente el reajuste por resultado y
-total de goles, sin datos de spread, para claridad expositiva.
-Buscar al final del torneo un ejemplo con mayor contraste entre
-el marcador modal y la predicción óptima, o donde la predicción
-resultó en una puntuación especialmente alta o baja.}
+\TODO{Al final del torneo, buscar un ejemplo con mayor contraste
+entre el marcador modal y la predicción óptima, o donde la
+predicción resultó en una puntuación especialmente alta o baja.}
 
 \begin{observacion}[Los empates nunca son predicciones óptimas en fase de grupos]
 \label{obs:nodraw}
@@ -912,10 +938,11 @@ Los componentes principales son:
 
 \begin{itemize}
   \item \texttt{model/historical.py}: construcción de la distribución
-    histórica ponderada con parámetros $\gamma$ y $\delta$.
+    histórica ponderada con parámetros $\gamma$ y $\delta$;
+    integración con datos de Kalshi mediante ajuste iterativo
+    proporcional (IPF).
   \item \texttt{model/kalshi.py}: obtención de precios de la API
-    pública de Kalshi, corrección por sesgo favorito-longshot y
-    aplicación de los tres reajustes sobre $P(h,k)$.
+    pública de Kalshi y corrección por sesgo favorito-longshot.
   \item \texttt{model/optimizer.py}: cálculo de $E(a,b)$ y argmax.
   \item \texttt{model/learn.py}: estimación de $\gamma$ y $\delta$
     por validación cruzada.
@@ -978,6 +1005,17 @@ del ampersand oficial).
 El sistema de detección automática de alias alerta cuando un partido
 ha superado su ventana de resultado sin que se haya importado el
 marcador, permitiendo corregir rápidamente el mapeo de nombres.
+
+\textbf{Fecha de consulta en la API de ESPN.}
+La API de ESPN indexa los partidos por la fecha local del encuentro,
+no por la fecha UTC.
+Para partidos nocturnos en la costa este de Estados Unidos, la fecha
+UTC puede adelantarse un día respecto a la fecha local del partido.
+El código usaba inicialmente la fecha derivada del campo \texttt{time\_utc},
+lo que hacía que las consultas para esos partidos no devolvieran
+ningún resultado.
+La corrección fue usar el campo \texttt{date} (fecha local) del
+calendario para construir la consulta a ESPN.
 
 \textbf{Condición de carrera en el repositorio git.}
 El pipeline automático de GitHub Actions puede ejecutarse en paralelo
