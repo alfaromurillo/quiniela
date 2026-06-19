@@ -12,7 +12,8 @@ ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT))
 
 from model.kalshi import fetch_match_probs, _fallback_probs, _correct_bias
-from model.historical import build_distributions, scoreline_probs, knockout_draw_rate
+from model.historical import (build_distributions, scoreline_probs,
+                              scoreline_probs_ipf, knockout_draw_rate)
 from model.optimizer import best_prediction, modal_prediction
 from model.learn import (load_canonical, count_2026, estimate_gamma,
                           estimate_delta, estimate_alpha,
@@ -126,10 +127,18 @@ def run():
             dist=dist,
         )
 
+        # IPF variant: enforces all three Kalshi marginals simultaneously
+        ipf_dist = scoreline_probs_ipf(
+            p_home, p_draw, p_away, phase,
+            total_goals, spread_home, spread_away,
+            dist=dist,
+        )
+
         # Find best prediction
-        best   = best_prediction(score_dist, phase)
-        modal  = modal_prediction(score_dist)
-        bh     = baseline_by_phase[phase]
+        best     = best_prediction(score_dist, phase)
+        best_ipf = best_prediction(ipf_dist,   phase)
+        modal    = modal_prediction(score_dist)
+        bh       = baseline_by_phase[phase]
 
         # ── Strategy-comparison baselines ────────────────────────
         # Row 2: Kalshi outcome only, raw probs (no α correction)
@@ -199,6 +208,11 @@ def run():
                 "baseline_out_raw":  _hk(bsln_out_raw),
                 "baseline_out_alpha": _hk(bsln_out_alpha),
                 "baseline_full_raw": _hk(bsln_full_raw),
+            },
+            "ipf_prediction": {
+                "home": best_ipf["home"],
+                "away": best_ipf["away"],
+                "expected_pts": best_ipf["expected_pts"],
             },
             "probabilities": {
                 "home_win": round(raw_home, 4),
