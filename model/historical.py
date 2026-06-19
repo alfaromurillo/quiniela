@@ -291,3 +291,120 @@ def scoreline_probs(
                 probs[c] *= scale
 
     return probs
+
+
+def scoreline_probs_ipf(
+    p_home_win: float, p_draw: float, p_away_win: float,
+    phase: str,
+    total_goals_probs: dict | None = None,
+    spread_home: dict | None = None,
+    spread_away: dict | None = None,
+    dist: dict | None = None,
+    n_iter: int = 20,
+    tol: float = 1e-8,
+) -> dict:
+    """
+    IPF (iterative proportional fitting) version of scoreline_probs.
+
+    Uses the historical distribution as a prior and iteratively projects
+    onto three sets of Kalshi marginal constraints until convergence:
+      1. Outcome regions  → sum to p_home_win / p_draw / p_away_win
+      2. Total-goals diagonals → sum to total_goals_probs[T]
+      3. Spread anti-diagonals → sum to p_side * spread[m]
+
+    Each projection preserves the relative weights within the constrained
+    subspace (multiplicative scaling), so the result is the minimum KL-
+    divergence distribution from the historical prior that simultaneously
+    satisfies all three Kalshi constraint sets.
+
+    Falls back to scoreline_probs() when total_goals_probs and both spread
+    dicts are None (no Kalshi constraints to fit).
+    """
+    if total_goals_probs is None and spread_home is None and spread_away is None:
+        return scoreline_probs(p_home_win, p_draw, p_away_win, phase,
+                               None, None, None, dist=dist)
+
+    if dist is None:
+        dist = get_distributions()
+
+    all_scores = [(a, b) for a in range(MAX_GOALS + 1) for b in range(MAX_GOALS + 1)]
+
+    # ── Initialise from historical prior weighted by outcome probs ──
+    probs: dict[tuple, float] = {}
+    for a, b in all_scores:
+        if a > b:
+            probs[(a, b)] = p_home_win * dist[phase]["neutral_win"].get((a, b), 0.0)
+        elif a < b:
+            probs[(a, b)] = p_away_win * dist[phase]["neutral_win"].get((b, a), 0.0)
+        else:
+            probs[(a, b)] = p_draw * dist[phase]["draw"].get((a, b), 0.0)
+
+    # Normalise initial distribution (sums to 1 by construction, but guard)
+    s0 = sum(probs.values())
+    if s0 > 1e-12:
+        probs = {c: v / s0 for c, v in probs.items()}
+
+    # Pre-compute cell groups (constant across iterations)
+    home_cells = [c for c in all_scores if c[0] > c[1]]
+    draw_cells = [c for c in all_scores if c[0] == c[1]]
+    away_cells = [c for c in all_scores if c[0] < c[1]]
+
+    # Total-goals: cells bucketed by min(h+a, 6)
+    tg_cells: dict[int, list] = {t: [] for t in range(7)}
+    for a, b in all_scores:
+        tg_cells[min(a + b, 6)].append((a, b))
+
+    # Spread home: cells bucketed by min(h-a, 4) for h>a
+    sh_cells: dict[int, list] = {m: [] for m in range(1, 5)}
+    for a, b in all_scores:
+        if a > b:
+            sh_cells[min(a - b, 4)].append((a, b))
+
+    # Spread away: cells bucketed by min(b-a, 4) for b>a
+    sa_cells: dict[int, list] = {m: [] for m in range(1, 5)}
+    for a, b in all_scores:
+        if b > a:
+            sa_cells[min(b - a, 4)].append((a, b))
+
+    def _scale_group(cells: list, target: float) -> None:
+        s = sum(probs[c] for c in cells)
+        if s > 1e-12 and abs(s - target) > 1e-12:
+            f = target / s
+            for c in cells:
+                probs[c] *= f
+
+    # ── IPF iterations ──
+    for _ in range(n_iter):
+        old = dict(probs)
+
+        # Projection 1: outcome regions
+        _scale_group(home_cells, p_home_win)
+        _scale_group(draw_cells, p_draw)
+        _scale_group(away_cells, p_away_win)
+
+        # Projection 2: total-goals diagonals
+        if total_goals_probs:
+            s_tg = sum(total_goals_probs.values())
+            for t, cells in tg_cells.items():
+                target = total_goals_probs.get(t, 0.0) / s_tg if s_tg > 1e-12 else 0.0
+                _scale_group(cells, target)
+
+        # Projection 3a: spread home (absolute target = p_home * sh[m])
+        if spread_home:
+            s_sh = sum(spread_home.values())
+            for m, cells in sh_cells.items():
+                target = p_home_win * spread_home.get(m, 0.0) / s_sh if s_sh > 1e-12 else 0.0
+                _scale_group(cells, target)
+
+        # Projection 3b: spread away (absolute target = p_away * sa[m])
+        if spread_away:
+            s_sa = sum(spread_away.values())
+            for m, cells in sa_cells.items():
+                target = p_away_win * spread_away.get(m, 0.0) / s_sa if s_sa > 1e-12 else 0.0
+                _scale_group(cells, target)
+
+        # Convergence check
+        if max(abs(probs[c] - old[c]) for c in probs) < tol:
+            break
+
+    return probs
