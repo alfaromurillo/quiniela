@@ -338,68 +338,64 @@
     <div class="stat-card"><div class="num" id="delta-current">δ = …</div><div class="lbl">Estimación actual</div></div>
   </div>
 
-  <h3>Paso 2 — Reponderación por total de goles (Kalshi KXWCTOTAL)</h3>
+  <h3>Paso 2 — Ajuste iterativo proporcional (IPF)</h3>
 
   <p>
-    La cadena de mercados sobre/bajo permite recuperar la distribución marginal del
-    total de goles según Kalshi. De las probabilidades acumuladas
-    $q_n = P_K(\text{total} > n - 0.5)$ obtenemos:
+    Con la distribución base $P_0$ ya se satisfacen las restricciones de resultado
+    de Kalshi. Queda ajustar simultáneamente la distribución marginal de total de
+    goles (KXWCTOTAL) y la distribución de diferencia de goles (KXWCSPREAD) sin
+    perturbar lo ya fijado.
+  </p>
+  <p>
+    Un reajuste secuencial por razones —primero ajustar total de goles, luego
+    diferencia— modifica los marginales previamente corregidos en cada paso siguiente,
+    y puede amplificar artificialmente marcadores extremos cuando los precios de Kalshi
+    divergen del historial. Se usa en cambio el
+    <strong>ajuste iterativo proporcional</strong> (IPF), un procedimiento clásico
+    que itera proyecciones sobre los marginales objetivo hasta convergencia simultánea.
   </p>
 
-  $$P_K(T = n) = q_n - q_{n+1}, \qquad n = 0, 1, \ldots, 5$$
+  <p>Las tres familias de restricciones a satisfacer son:</p>
+  <ul>
+    <li>
+      <strong>Resultado:</strong>
+      $\displaystyle\sum_{a>b} P(a,b) = p_H$,&ensp;
+      $\displaystyle\sum_{a=b} P(a,b) = p_D$,&ensp;
+      $\displaystyle\sum_{a &lt; b} P(a,b) = p_A$.
+    </li>
+    <li>
+      <strong>Total de goles:</strong> para cada $t = 0,\ldots,6$,&ensp;
+      $\displaystyle\sum_{a+b=t} P(a,b) = P_K(T=t)$,&ensp;
+      donde $P_K(T=t)$ se recupera de las diferencias sucesivas de los mercados
+      sobre/bajo KXWCTOTAL.
+    </li>
+    <li>
+      <strong>Diferencia de goles:</strong>
+      $\displaystyle\sum_{\substack{a-b=m \\ a>b}} P(a,b) = p_H \cdot s_m^H$
+      y análogamente para el visitante con $s_m^A$, donde $s_m^H$, $s_m^A$ son
+      las probabilidades de ganar por exactamente $m$ goles condicionales a la
+      victoria de cada equipo (derivadas de los mercados KXWCSPREAD).
+    </li>
+  </ul>
 
   <p>
-    La distribución marginal implícita en $P_0$ es
-    $P_0(T = n) = \sum_{a+b=n} P_0(a,b)$.
-    Reponderamos celda a celda:
+    En cada iteración, dada una celda $(a,b) \in \mathcal{C}$, la proyección sobre
+    el conjunto $\mathcal{C}$ con objetivo $p_\mathcal{C}$ es:
   </p>
 
-  $$P_1(H=a,\,A=b) \;\propto\; P_0(a,\,b)\;\cdot\;\frac{P_K(T=a+b)}{P_0(T=a+b)}$$
-
-  <p>y renormalizamos para que $\sum_{a,b} P_1(a,b)=1$.</p>
+  $$P^{(n+1)}(a,b) = P^{(n)}(a,b) \cdot
+    \frac{p_\mathcal{C}}{\displaystyle\sum_{(a',b')\in\mathcal{C}} P^{(n)}(a',b')}$$
 
   <p>
-    Este paso ajusta cuántos goles totales esperamos, manteniendo la distribución
-    histórica de cómo se reparten entre los dos equipos dado ese total.
+    Las celdas fuera de $\mathcal{C}$ no se modifican en ese paso.
+    Se aplican sucesivamente las proyecciones de resultado, total de goles y
+    diferencia de goles, y se repite hasta que
+    $\|P^{(n+1)} - P^{(n)}\|_\infty &lt; 10^{-8}$ (en la práctica, menos de
+    20 iteraciones). La distribución resultante $P_{\mathrm{IPF}}$ satisface
+    simultáneamente las tres familias de restricciones de Kalshi.
   </p>
 
-  <h3>Paso 3 — Reponderación por diferencia de goles (Kalshi KXWCSPREAD)</h3>
-
-  <p>
-    Los mercados de spread proveen $P_K(M_H > k - 0.5)$ para $k = 2, 3, 4$,
-    donde $M_H = H - A$ es la diferencia de goles (condicionada a victoria local).
-    Usando $P_K(M_H \ge 1) = p_H$ como umbral en $k=1$, calculamos las probabilidades
-    exactas de margen:
-  </p>
-
-  $$P_K(M_H = k) = P_K(M_H > k - 0.5) - P_K(M_H > k + 0.5), \qquad k = 1, 2, 3$$
-  $$P_K(M_H \ge 4) = P_K(M_H > 3.5)$$
-
-  <p>
-    Para garantizar que la cadena sea monótona decreciente a pesar del ruido del
-    mercado, se aplica un clip hacia abajo: $P_K(M_H > k - 0.5) \leftarrow
-    \min\bigl(P_K(M_H > k-0.5),\, P_K(M_H > k-1.5)\bigr)$.
-  </p>
-
-  <p>
-    Sea $k^*(a,b) = \min(a-b,\,4)$ el grupo de margen de la celda $(a,b)$ con $a > b$.
-    La reponderación es:
-  </p>
-
-  $$P_2(H=a,\,A=b) \;\propto\; P_1(a,\,b) \;\cdot\; r(a,b)$$
-
-  <p>donde el multiplicador de reponderación es:</p>
-
-  $$r(a,b) = \min\!\left(\frac{P_K(M_H = k^*(a,b))}{\displaystyle\sum_{(a',b'):\,k^*(a',b')=k^*(a,b)} P_1(a',b')},\; 4\right)$$
-
-  <p>
-    El cap de $4\times$ evita amplificaciones extremas cuando los mercados de spread
-    tienen liquidez baja. El procedimiento simétrico se aplica a la diferencia de goles
-    del visitante $M_A = A - H$ usando los mercados KXWCSPREAD del visitante.
-    Al finalizar, se renormaliza $P_2$.
-  </p>
-
-  <h3>Paso 4 — Maximización de puntos esperados</h3>
+  <h3>Paso 3 — Maximización de puntos esperados</h3>
 
   <p>
     Dado el marcador real $(x, y)$ y la predicción $(a, b)$, la función
@@ -410,10 +406,10 @@
   $$\hat{s} = \underset{(a,\,b)\;\in\;\{0,\ldots,5\}^2}{\arg\max}\;
     \mathbb{E}\bigl[\mathrm{pts}(a,b,H,A)\bigr]$$
 
-  <p>donde la esperanza se calcula sobre $P_2$:</p>
+  <p>donde la esperanza se calcula sobre $P_{\mathrm{IPF}}$:</p>
 
   $$\mathbb{E}\bigl[\mathrm{pts}(a,b,H,A)\bigr]
-    = \sum_{x=0}^{5}\sum_{y=0}^{5} P_2(H=x,\,A=y)\;\cdot\;\mathrm{pts}(a,\,b,\,x,\,y)$$
+    = \sum_{x=0}^{5}\sum_{y=0}^{5} P_{\mathrm{IPF}}(H=x,\,A=y)\;\cdot\;\mathrm{pts}(a,\,b,\,x,\,y)$$
 
   <p>
     Se evalúan los $6 \times 6 = 36$ candidatos posibles y se reporta el que maximiza
