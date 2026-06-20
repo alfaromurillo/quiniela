@@ -1,86 +1,90 @@
 # Quiniela Mundial 2026
 
-Score predictions for the 2026 FIFA World Cup, optimised to
-maximise expected points in a quiniela (prediction pool).
+Predicciones de marcadores para el Mundial de Fútbol 2026,
+optimizadas para maximizar los puntos esperados en una quiniela.
 
-**Live site:** https://alfaromurillo.github.io/quiniela/
+**Sitio web:** https://alfaromurillo.github.io/quiniela/
 
-## How it works
+## Cómo funciona
 
-The model combines two sources of information:
+El modelo combina dos fuentes de información:
 
-1. **Kalshi prediction-market probabilities** — real-money market odds
-   for win/draw/loss, total goals, and goal spread for each match.
-2. **Historical World Cup scoreline distributions** — weighted data
-   from WC 2014, 2018, and 2022 (γ-decay weighting, γ ≈ 0.84), with
-   a Poisson product prior for smoothing.
+1. **Probabilidades del mercado de predicciones Kalshi** — apuestas
+   con dinero real sobre victoria/empate/derrota, total de goles y
+   diferencia de goles por partido.
+2. **Distribuciones históricas de marcadores** — datos ponderados de
+   los mundiales 2014, 2018 y 2022 (ponderación γ ≈ 0.84), con una
+   prior de producto Poisson para suavizado.
 
-For each match the model finds the scoreline that **maximises expected
-quiniela points** (not just the most probable scoreline).
+Para cada partido el modelo encuentra el marcador que **maximiza los
+puntos esperados en la quiniela** (no simplemente el marcador más
+probable).
 
-Once WC 2026 results accumulate, a tournament-specific weight δ is
-estimated by cross-validation and blended in automatically.
+A medida que se acumulan resultados del Mundial 2026, se estima un
+peso δ específico del torneo mediante validación cruzada y se
+incorpora automáticamente.
 
-## Quiniela scoring
+## Puntuación de la quiniela
 
-**Group stage** (first matching rule wins):
+**Fase de grupos** (se aplica la primera regla que coincida):
 
-| Result | Points |
-|--------|--------|
-| Exact score | 5 |
-| Correct winner/draw + correct goals of one team | 3 |
-| Correct winner/draw only | 2 |
-| Correct goals of one team, wrong winner | 1 |
+| Resultado | Puntos |
+|-----------|--------|
+| Marcador exacto | 5 |
+| Ganador/empate correcto + goles correctos de un equipo | 3 |
+| Solo ganador/empate correcto | 2 |
+| Goles correctos de un equipo, ganador incorrecto | 1 |
 
-**Knockout** (90 + 30 min; penalty shootout → predict draw):
+**Eliminatorias** (90 + 30 min; penaltis → predecir empate):
 
-| Result | Points |
-|--------|--------|
-| Exact score | 3 |
-| Correct winner/draw (wrong goals) | 1 |
+| Resultado | Puntos |
+|-----------|--------|
+| Marcador exacto | 3 |
+| Ganador/empate correcto (goles incorrectos) | 1 |
 
-## Repository layout
+## Estructura del repositorio
 
 ```
-model/          # Python model code
-  historical.py # Weighted scoreline distributions
-  kalshi.py     # Kalshi market data fetcher / cache
-  optimizer.py  # Expected-points maximiser
-  predict.py    # Full prediction pipeline
-  results.py    # Fetch completed match scores from ESPN
-  learn.py      # Cross-validate γ and δ parameters
-  sanity.py     # Validate predictions.json before commit
-  figures.py    # Generate article figures
+model/          # Código del modelo en Python
+  historical.py # Distribuciones de marcadores ponderadas
+  kalshi.py     # Obtención y caché de datos de Kalshi
+  optimizer.py  # Maximizador de puntos esperados
+  predict.py    # Pipeline completo de predicción
+  results.py    # Obtiene resultados de partidos desde ESPN
+  learn.py      # Estimación de γ y δ por validación cruzada
+  sanity.py     # Valida predictions.json antes de hacer commit
+  figures.py    # Genera figuras del artículo
 
-site/           # GitHub Pages static site
-  index.html    # Predictions by matchday
-  modelo.html   # Methodology (MathJax)
+site/           # Sitio estático en GitHub Pages
+  index.html    # Predicciones por jornada
+  modelo.html   # Metodología (MathJax)
   data/
-    predictions.json        # Current predictions (auto-updated)
-    locked_predictions.json # Frozen 1.5 h before kickoff
-    results.json            # Final scores for completed matches
+    predictions.json        # Predicciones actuales (actualización automática)
+    locked_predictions.json # Congeladas 1.5 h antes del partido
+    results.json            # Marcadores finales de partidos jugados
 
-data/           # Historical WC data and schedule
-articulo/       # Scientific article (LaTeX)
+data/           # Datos históricos y calendario del mundial
+articulo/       # Artículo científico (LaTeX)
 ```
 
-## Running locally
+## Ejecución local
 
 ```bash
 pip install -r requirements.txt
 
-# Update predictions (fetches Kalshi, writes site/data/predictions.json)
+# Actualizar predicciones (consulta Kalshi, escribe site/data/predictions.json)
 python model/predict.py
 
-# Fetch completed match results from ESPN
+# Obtener resultados de partidos jugados desde ESPN
 python model/results.py
 
-# Validate predictions before committing
+# Validar predicciones antes de hacer commit
 python model/sanity.py
 
-# Preview the site
+# Vista previa del sitio
 cd site && python3 -m http.server 8765 --bind 127.0.0.1
-# open http://127.0.0.1:8765/
+# abrir http://127.0.0.1:8765/
 ```
 
-Predictions are refreshed automatically every hour via GitHub Actions.
+Las predicciones se actualizan automáticamente cada hora mediante
+GitHub Actions.
