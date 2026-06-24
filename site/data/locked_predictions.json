@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-24T21:07:06.700488+00:00",
+  "generated_at": "2026-06-24T22:43:45.169667+00:00",
   "matches": {
     "1": {
       "home": 1,
@@ -48,7 +48,7 @@
     "5": {
       "home": 0,
       "away": 1,
-      "expected_pts": 1.847,
+      "expected_pts": 1.8555,
       "modal_home": 0,
       "modal_away": 1,
       "baseline_hist_home": 0,
@@ -59,12 +59,12 @@
       "baseline_out_alpha_away": 1,
       "baseline_full_raw_home": 0,
       "baseline_full_raw_away": 1,
-      "locked_at": "2026-06-24T21:07:06.700488+00:00"
+      "locked_at": "2026-06-24T22:43:45.169667+00:00"
     },
     "6": {
       "home": 0,
       "away": 1,
-      "expected_pts": 2.0685,
+      "expected_pts": 2.0789,
       "modal_home": 0,
       "modal_away": 1,
       "baseline_hist_home": 0,
@@ -75,7 +75,7 @@
       "baseline_out_alpha_away": 1,
       "baseline_full_raw_home": 0,
       "baseline_full_raw_away": 1,
-      "locked_at": "2026-06-24T21:07:06.700488+00:00"
+      "locked_at": "2026-06-24T22:43:45.169667+00:00"
     },
     "7": {
       "home": 1,
@@ -274,9 +274,9 @@
       "locked_at": "2026-06-20T00:16:26.166826+00:00"
     },
     "23": {
-      "home": 0,
-      "away": 1,
-      "expected_pts": 1.7397,
+      "home": 1,
+      "away": 2,
+      "expected_pts": 1.7361,
       "modal_home": 1,
       "modal_away": 1,
       "baseline_hist_home": 0,
@@ -285,14 +285,14 @@
       "baseline_out_raw_away": 1,
       "baseline_out_alpha_home": 0,
       "baseline_out_alpha_away": 1,
-      "baseline_full_raw_home": 0,
-      "baseline_full_raw_away": 1,
-      "locked_at": "2026-06-24T21:07:06.700488+00:00"
+      "baseline_full_raw_home": 1,
+      "baseline_full_raw_away": 2,
+      "locked_at": "2026-06-24T22:43:45.169667+00:00"
     },
     "24": {
       "home": 0,
       "away": 0,
-      "expected_pts": 1.8116,
+      "expected_pts": 1.805,
       "modal_home": 0,
       "modal_away": 0,
       "baseline_hist_home": 0,
@@ -303,7 +303,7 @@
       "baseline_out_alpha_away": 1,
       "baseline_full_raw_home": 0,
       "baseline_full_raw_away": 0,
-      "locked_at": "2026-06-24T21:07:06.700488+00:00"
+      "locked_at": "2026-06-24T22:43:45.169667+00:00"
     },
     "25": {
       "home": 5,
@@ -352,7 +352,7 @@
     "29": {
       "home": 0,
       "away": 3,
-      "expected_pts": 2.6117,
+      "expected_pts": 2.6074,
       "modal_home": 0,
       "modal_away": 3,
       "baseline_hist_home": 0,
@@ -363,12 +363,12 @@
       "baseline_out_alpha_away": 1,
       "baseline_full_raw_home": 0,
       "baseline_full_raw_away": 3,
-      "locked_at": "2026-06-24T21:07:06.700488+00:00"
+      "locked_at": "2026-06-24T22:43:45.169667+00:00"
     },
     "30": {
       "home": 0,
       "away": 1,
-      "expected_pts": 1.8056,
+      "expected_pts": 1.8356,
       "modal_home": 0,
       "modal_away": 1,
       "baseline_hist_home": 0,
@@ -379,7 +379,7 @@
       "baseline_out_alpha_away": 1,
       "baseline_full_raw_home": 0,
       "baseline_full_raw_away": 1,
-      "locked_at": "2026-06-24T21:07:06.700488+00:00"
+      "locked_at": "2026-06-24T22:43:45.169667+00:00"
     },
     "31": {
       "home": 1,
@@ -428,7 +428,7 @@
     "35": {
       "home": 2,
       "away": 1,
-      "expected_pts": 1.7749,
+      "expected_pts": 1.7779,
       "modal_home": 1,
       "modal_away": 1,
       "baseline_hist_home": 0,
@@ -439,12 +439,12 @@
       "baseline_out_alpha_away": 0,
       "baseline_full_raw_home": 2,
       "baseline_full_raw_away": 1,
-      "locked_at": "2026-06-24T21:07:06.700488+00:00"
+      "locked_at": "2026-06-24T22:43:45.169667+00:00"
     },
     "36": {
       "home": 0,
       "away": 3,
-      "expected_pts": 2.705,
+      "expected_pts": 2.7027,
       "modal_home": 0,
       "modal_away": 3,
       "baseline_hist_home": 0,
@@ -452,10 +452,10 @@
       "baseline_out_raw_home": 0,
       "baseline_out_raw_away": 2,
       "baseline_out_alpha_home": 0,
-      "baseline_out_alpha_away": 1,
+      "baseline_out_alpha_away": 2,
       "baseline_full_raw_home": 0,
       "baseline_full_raw_away": 3,
-      "locked_at": "2026-06-24T21:07:06.700488+00:00"
+      "locked_at": "2026-06-24T22:43:45.169667+00:00"
     },
     "37": {
       "home": 2,
@@ -514,7 +514,7 @@
     "41": {
       "home": 1,
       "away": 0,
-      "expected_pts": 1.7093,
+      "expected_pts": 1.7146,
       "modal_home": 1,
       "modal_away": 1,
       "baseline_hist_home": 0,
@@ -525,12 +525,12 @@
       "baseline_out_alpha_away": 0,
       "baseline_full_raw_home": 1,
       "baseline_full_raw_away": 0,
-      "locked_at": "2026-06-24T21:07:06.700488+00:00"
+      "locked_at": "2026-06-24T22:43:45.169667+00:00"
     },
     "42": {
       "home": 0,
       "away": 3,
-      "expected_pts": 2.4823,
+      "expected_pts": 2.5272,
       "modal_home": 0,
       "modal_away": 3,
       "baseline_hist_home": 0,
@@ -541,7 +541,7 @@
       "baseline_out_alpha_away": 1,
       "baseline_full_raw_home": 0,
       "baseline_full_raw_away": 3,
-      "locked_at": "2026-06-24T21:07:06.700488+00:00"
+      "locked_at": "2026-06-24T22:43:45.169667+00:00"
     },
     "43": {
       "home": 5,
@@ -600,7 +600,7 @@
     "47": {
       "home": 1,
       "away": 0,
-      "expected_pts": 1.58,
+      "expected_pts": 1.5889,
       "modal_home": 1,
       "modal_away": 1,
       "baseline_hist_home": 0,
@@ -611,12 +611,12 @@
       "baseline_out_alpha_away": 0,
       "baseline_full_raw_home": 1,
       "baseline_full_raw_away": 0,
-      "locked_at": "2026-06-24T21:07:06.700488+00:00"
+      "locked_at": "2026-06-24T22:43:45.169667+00:00"
     },
     "48": {
       "home": 0,
       "away": 2,
-      "expected_pts": 2.0951,
+      "expected_pts": 2.103,
       "modal_home": 0,
       "modal_away": 3,
       "baseline_hist_home": 0,
@@ -627,7 +627,7 @@
       "baseline_out_alpha_away": 1,
       "baseline_full_raw_home": 0,
       "baseline_full_raw_away": 2,
-      "locked_at": "2026-06-24T21:07:06.700488+00:00"
+      "locked_at": "2026-06-24T22:43:45.169667+00:00"
     },
     "49": {
       "home": 2,
@@ -696,7 +696,7 @@
     "53": {
       "home": 1,
       "away": 2,
-      "expected_pts": 1.8938,
+      "expected_pts": 1.9072,
       "modal_home": 1,
       "modal_away": 2,
       "baseline_hist_home": 0,
@@ -707,12 +707,12 @@
       "baseline_out_alpha_away": 1,
       "baseline_full_raw_home": 1,
       "baseline_full_raw_away": 2,
-      "locked_at": "2026-06-24T21:07:06.700488+00:00"
+      "locked_at": "2026-06-24T22:43:45.169667+00:00"
     },
     "54": {
       "home": 3,
       "away": 0,
-      "expected_pts": 2.4607,
+      "expected_pts": 2.4518,
       "modal_home": 3,
       "modal_away": 0,
       "baseline_hist_home": 0,
@@ -723,7 +723,7 @@
       "baseline_out_alpha_away": 0,
       "baseline_full_raw_home": 3,
       "baseline_full_raw_away": 0,
-      "locked_at": "2026-06-24T21:07:06.700488+00:00"
+      "locked_at": "2026-06-24T22:43:45.169667+00:00"
     },
     "55": {
       "home": 1,
@@ -790,9 +790,9 @@
       "locked_at": "2026-06-23T00:15:47.197528+00:00"
     },
     "59": {
-      "home": 1,
-      "away": 1,
-      "expected_pts": 1.7788,
+      "home": 0,
+      "away": 0,
+      "expected_pts": 1.7822,
       "modal_home": 0,
       "modal_away": 0,
       "baseline_hist_home": 0,
@@ -801,14 +801,14 @@
       "baseline_out_raw_away": 1,
       "baseline_out_alpha_home": 1,
       "baseline_out_alpha_away": 1,
-      "baseline_full_raw_home": 1,
-      "baseline_full_raw_away": 1,
-      "locked_at": "2026-06-24T21:07:06.700488+00:00"
+      "baseline_full_raw_home": 0,
+      "baseline_full_raw_away": 0,
+      "locked_at": "2026-06-24T22:43:45.169667+00:00"
     },
     "60": {
       "home": 0,
       "away": 3,
-      "expected_pts": 2.5923,
+      "expected_pts": 2.5833,
       "modal_home": 0,
       "modal_away": 3,
       "baseline_hist_home": 0,
@@ -819,7 +819,7 @@
       "baseline_out_alpha_away": 1,
       "baseline_full_raw_home": 0,
       "baseline_full_raw_away": 3,
-      "locked_at": "2026-06-24T21:07:06.700488+00:00"
+      "locked_at": "2026-06-24T22:43:45.169667+00:00"
     },
     "61": {
       "home": 2,
@@ -888,7 +888,7 @@
     "65": {
       "home": 0,
       "away": 1,
-      "expected_pts": 1.8796,
+      "expected_pts": 1.8822,
       "modal_home": 0,
       "modal_away": 1,
       "baseline_hist_home": 0,
@@ -899,12 +899,12 @@
       "baseline_out_alpha_away": 1,
       "baseline_full_raw_home": 0,
       "baseline_full_raw_away": 1,
-      "locked_at": "2026-06-24T21:07:06.700488+00:00"
+      "locked_at": "2026-06-24T22:43:45.169667+00:00"
     },
     "66": {
       "home": 1,
       "away": 0,
-      "expected_pts": 1.9009,
+      "expected_pts": 1.9228,
       "modal_home": 1,
       "modal_away": 0,
       "baseline_hist_home": 0,
@@ -915,7 +915,7 @@
       "baseline_out_alpha_away": 0,
       "baseline_full_raw_home": 1,
       "baseline_full_raw_away": 0,
-      "locked_at": "2026-06-24T21:07:06.700488+00:00"
+      "locked_at": "2026-06-24T22:43:45.169667+00:00"
     },
     "67": {
       "home": 1,
@@ -984,7 +984,7 @@
     "71": {
       "home": 0,
       "away": 3,
-      "expected_pts": 2.5331,
+      "expected_pts": 2.5448,
       "modal_home": 0,
       "modal_away": 3,
       "baseline_hist_home": 0,
@@ -995,12 +995,12 @@
       "baseline_out_alpha_away": 1,
       "baseline_full_raw_home": 0,
       "baseline_full_raw_away": 3,
-      "locked_at": "2026-06-24T21:07:06.700488+00:00"
+      "locked_at": "2026-06-24T22:43:45.169667+00:00"
     },
     "72": {
       "home": 1,
       "away": 0,
-      "expected_pts": 1.9879,
+      "expected_pts": 1.9628,
       "modal_home": 1,
       "modal_away": 0,
       "baseline_hist_home": 0,
@@ -1011,12 +1011,12 @@
       "baseline_out_alpha_away": 0,
       "baseline_full_raw_home": 1,
       "baseline_full_raw_away": 0,
-      "locked_at": "2026-06-24T21:07:06.700488+00:00"
+      "locked_at": "2026-06-24T22:43:45.169667+00:00"
     },
     "103": {
       "home": 1,
       "away": 0,
-      "expected_pts": 0.6136,
+      "expected_pts": 0.6154,
       "modal_home": 1,
       "modal_away": 1,
       "baseline_hist_home": 1,
@@ -1027,7 +1027,7 @@
       "baseline_out_alpha_away": 1,
       "baseline_full_raw_home": 1,
       "baseline_full_raw_away": 0,
-      "locked_at": "2026-06-24T21:07:06.700488+00:00"
+      "locked_at": "2026-06-24T22:43:45.169667+00:00"
     }
   }
 }
