@@ -13,7 +13,9 @@ sys.path.insert(0, str(ROOT))
 
 from model.kalshi import fetch_match_probs, _fallback_probs, _correct_bias
 from model.historical import (build_distributions, scoreline_probs,
-                              scoreline_probs_ipf, knockout_draw_rate)
+                              scoreline_probs_ipf, scoreline_probs_knockout,
+                              knockout_draw_rate, knockout_et_draw_rate,
+                              build_et_kernel)
 from model.optimizer import best_prediction, modal_prediction
 from model.learn import (load_canonical, count_2026, estimate_gamma,
                           estimate_delta, estimate_alpha,
@@ -46,9 +48,11 @@ def run():
     delta            = estimate_delta(canonical, gamma=gamma)
     alpha            = estimate_alpha()
     p_draw_ko        = knockout_draw_rate(gamma=gamma)
+    p_et_draw_ko     = knockout_et_draw_rate(gamma=gamma)
     extra_wins, extra_draws = count_2026(canonical)
     dist             = build_distributions(gamma=gamma, extra_wins=extra_wins,
                                            extra_draws=extra_draws, delta=delta)
+    et_kernel        = build_et_kernel(gamma=gamma, delta=delta)
     n_2026           = len(canonical)
     print(f"Historical γ = {gamma:.3f}  |  WC 2026: {n_2026} results, "
           f"δ = {delta:.3f}  |  α = {alpha:.3f}")
@@ -102,7 +106,8 @@ def run():
 
         # Fetch Kalshi probabilities
         try:
-            kalshi = fetch_match_probs(match, p_draw_knockout=p_draw_ko)
+            kalshi = fetch_match_probs(match, p_draw_knockout=p_draw_ko,
+                                       p_et_draw_knockout=p_et_draw_ko)
         except Exception as e:
             print(f"Kalshi error: {e} — using fallback")
             kalshi = _fallback_probs()
@@ -121,18 +126,33 @@ def run():
         p_home, p_draw, p_away = _correct_bias(raw_home, raw_draw, raw_away, alpha)
 
         # Build joint scoreline distribution using adaptive model
-        score_dist = scoreline_probs(
-            p_home, p_draw, p_away, phase,
-            total_goals, spread_home, spread_away,
-            dist=dist,
-        )
-
-        # IPF variant: enforces all three Kalshi marginals simultaneously
-        ipf_dist = scoreline_probs_ipf(
-            p_home, p_draw, p_away, phase,
-            total_goals, spread_home, spread_away,
-            dist=dist,
-        )
+        if phase == "knockout" and "reg_home_win" in kalshi:
+            # Two-stage knockout model: reg-time scoreline + ET convolution
+            raw_reg_h = kalshi["reg_home_win"]
+            raw_reg_d = kalshi["reg_draw"]
+            raw_reg_a = kalshi["reg_away_win"]
+            p_reg_h, p_reg_d, p_reg_a = _correct_bias(raw_reg_h, raw_reg_d, raw_reg_a, alpha)
+            team_totals = {"home": kalshi.get("team_totals_home"),
+                           "away": kalshi.get("team_totals_away")}
+            score_dist = scoreline_probs_knockout(
+                p_home, p_draw, p_away,
+                p_reg_h, p_reg_d, p_reg_a,
+                total_goals, spread_home, spread_away,
+                team_totals=team_totals, dist=dist, et_kernel=et_kernel,
+            )
+            ipf_dist = score_dist  # knockout function already uses IPF internally
+        else:
+            # Group stage (or knockout fallback without TIE market)
+            score_dist = scoreline_probs(
+                p_home, p_draw, p_away, phase,
+                total_goals, spread_home, spread_away,
+                dist=dist,
+            )
+            ipf_dist = scoreline_probs_ipf(
+                p_home, p_draw, p_away, phase,
+                total_goals, spread_home, spread_away,
+                dist=dist,
+            )
 
         # Find best prediction
         best     = best_prediction(score_dist, phase)

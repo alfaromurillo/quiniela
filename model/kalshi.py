@@ -118,18 +118,19 @@ def _fetch_event(event_ticker: str) -> list[dict]:
 
 
 def _parse_game(markets: list[dict], home_code: str, away_code: str,
-                phase: str = "group", p_draw_ko: float = 0.25) -> dict | None:
+                phase: str = "group", p_draw_ko: float = 0.25) -> tuple[dict | None, bool]:
     """
-    Extract normalised P(home_win), P(draw), P(away_win).
+    Extract normalised P(home_win), P(draw), P(away_win) from KXWCGAME markets.
 
-    For group stage: requires HOME, AWAY and TIE markets.
+    Returns (probs_dict, has_tie_market).
 
-    For knockout: Kalshi has no TIE market (match always has a winner via
-    penalties). Requires HOME and AWAY only. Translates binary Kalshi match-
-    winner probabilities into 90+30 min ternary probabilities using the
-    historical knockout draw rate p_draw_ko:
-        p_h = r_h - 0.5*p_d,  p_a = r_a - 0.5*p_d,  p_d = p_draw_ko
-    (assumes penalty shootouts are 50/50 between the two teams).
+    When all three markets (HOME, AWAY, TIE) are present the probs represent
+    regulation-time (90 min) outcomes — including for knockout matches.
+    has_tie_market=True signals that the caller should apply the reg→quiniela
+    ET conversion for knockout.
+
+    Fallback for knockout without TIE market: synthesises quiniela probs using
+    the historical penalty-draw rate p_draw_ko (old behaviour, has_tie=False).
     """
     probs = {}
     for m in markets:
@@ -147,26 +148,106 @@ def _parse_game(markets: list[dict], home_code: str, away_code: str,
             if p is not None:
                 probs["draw"] = p
 
-    if phase == "knockout":
-        if "home_win" not in probs or "away_win" not in probs:
-            return None
+    if len(probs) == 3:
+        total = sum(probs.values())
+        if total < 0.5:
+            return None, False
+        return {k: v / total for k, v in probs.items()}, True
+
+    # Knockout fallback: TIE market absent — synthesise from historical rate
+    if phase == "knockout" and "home_win" in probs and "away_win" in probs:
         total = probs["home_win"] + probs["away_win"]
         if total < 0.5:
-            return None
+            return None, False
         r_h = probs["home_win"] / total
         r_a = probs["away_win"] / total
         p_d = p_draw_ko
         p_h = max(0.0, r_h - 0.5 * p_d)
         p_a = max(0.0, r_a - 0.5 * p_d)
         t2 = p_h + p_d + p_a
-        return {"home_win": p_h / t2, "draw": p_d / t2, "away_win": p_a / t2}
+        return {"home_win": p_h / t2, "draw": p_d / t2, "away_win": p_a / t2}, False
 
-    if len(probs) != 3:
+    return None, False
+
+
+def _parse_advance(markets: list[dict], home_code: str, away_code: str) -> dict | None:
+    """Parse KXWCADVANCE market: who advances (includes ET + penalties)."""
+    probs = {}
+    for m in markets:
+        t = m["ticker"]
+        p = _midprice(m)
+        if p is None:
+            continue
+        if t.endswith(f"-{home_code}"):
+            probs["home"] = p
+        elif t.endswith(f"-{away_code}"):
+            probs["away"] = p
+    if len(probs) != 2:
         return None
-    total = sum(probs.values())
+    total = probs["home"] + probs["away"]
     if total < 0.5:
         return None
-    return {k: v / total for k, v in probs.items()}
+    return {"home": probs["home"] / total, "away": probs["away"] / total}
+
+
+def _parse_teamtotals(markets: list[dict], home_code: str, away_code: str) -> dict | None:
+    """
+    Parse KXWCTEAMTOTAL markets: P(team scores >= N goals) in regulation time.
+    Returns {"home": {1: p, 2: p, ...}, "away": {1: p, 2: p, ...}}.
+    """
+    home_over: dict[int, float] = {}
+    away_over: dict[int, float] = {}
+    for m in markets:
+        t = m["ticker"]
+        p = _midprice(m, use_last=True)
+        if p is None:
+            continue
+        for code, bucket in [(home_code, home_over), (away_code, away_over)]:
+            match = re.search(rf"-{re.escape(code)}(\d+)$", t)
+            if match:
+                bucket[int(match.group(1))] = p
+    if not home_over and not away_over:
+        return None
+    return {
+        "home": home_over if home_over else None,
+        "away": away_over if away_over else None,
+    }
+
+
+def _reg_to_quiniela(
+    p_reg_h: float, p_reg_d: float, p_reg_a: float,
+    p_adv_h: float | None, p_adv_a: float | None,
+    p_et_draw: float,
+) -> tuple[float, float, float]:
+    """
+    Convert regulation-time (90 min) outcome probs to quiniela (90+30 min) probs.
+
+    p_q_draw  = P(reg draw) × P(ET draw → penalties | ET played)
+    p_q_home  = P(home advances) − p_q_draw/2   [using KXWCADVANCE]
+    p_q_away  = P(away advances) − p_q_draw/2
+
+    If advance probs unavailable: ET winner ratio = reg-time winner ratio.
+    """
+    p_q_draw = p_reg_d * p_et_draw
+
+    if p_adv_h is not None and p_adv_a is not None:
+        p_q_home = p_adv_h - p_q_draw / 2.0
+        p_q_away = p_adv_a - p_q_draw / 2.0
+    else:
+        denom = p_reg_h + p_reg_a
+        r_h = p_reg_h / denom if denom > 1e-9 else 0.5
+        r_a = 1.0 - r_h
+        et_win = p_reg_d * (1.0 - p_et_draw)
+        p_q_home = p_reg_h + et_win * r_h
+        p_q_away = p_reg_a + et_win * r_a
+
+    p_q_home = max(0.0, p_q_home)
+    p_q_away = max(0.0, p_q_away)
+    p_q_draw = max(0.0, p_q_draw)
+    total = p_q_home + p_q_draw + p_q_away
+    if total < 0.5:
+        return 1 / 3, 1 / 3, 1 / 3
+    return p_q_home / total, p_q_draw / total, p_q_away / total
 
 
 def _parse_totals(markets: list[dict]) -> dict | None:
@@ -279,7 +360,8 @@ def _clean_entry(entry: dict) -> dict:
               "early_source"}
     result = {k: v for k, v in entry.items() if k not in _strip}
     for key in ("spread_home", "spread_away", "total_goals",
-                "early_spread_home", "early_spread_away", "early_total_goals"):
+                "early_spread_home", "early_spread_away", "early_total_goals",
+                "team_totals_home", "team_totals_away"):
         if result.get(key):
             result[key] = {int(k): v for k, v in result[key].items()}
     return result
@@ -316,21 +398,26 @@ def get_early_snapshot(match: dict) -> dict | None:
     return snap
 
 
-def fetch_match_probs(match: dict, p_draw_knockout: float = 0.25) -> dict:
+def fetch_match_probs(match: dict,
+                      p_draw_knockout: float = 0.25,
+                      p_et_draw_knockout: float = 0.72) -> dict:
     """
     Fetch Kalshi probabilities for one match from schedule.json.
-    Returns {home_win, draw, away_win, total_goals, spread_home, spread_away, source}.
 
-    p_draw_knockout: historical knockout ET-draw rate, used to convert Kalshi
-      binary (home/away only, no TIE market) into 90+30 min ternary probs.
-      Pass the value from historical.knockout_draw_rate(gamma).
+    For group stage returns:
+      {home_win, draw, away_win, total_goals, spread_home, spread_away, source}
+    where all probs are regulation-time = quiniela probs.
 
-    Cache policy:
-    - Once kickoff time has passed, the cached entry is locked permanently so
-      in-game/post-game prices never alter the prediction.
-    - Before kickoff, a cached entry is reused if it is less than 90 minutes old,
-      meaning the last pre-kickoff run (scheduled 1.5 h before the match) is the
-      one that sets the final prediction.
+    For knockout, additionally returns:
+      {reg_home_win, reg_draw, reg_away_win,   ← regulation-time probs (KXWCGAME-TIE)
+       advance_home_win, advance_away_win,       ← who advances (KXWCADVANCE)
+       team_totals_home, team_totals_away}       ← per-team goals (KXWCTEAMTOTAL)
+    home_win/draw/away_win are the quiniela probs (90+30 min, penalties→draw).
+
+    p_draw_knockout: P(penalties|KO) used only in fallback when KXWCGAME has
+      no TIE market. Pass knockout_draw_rate(gamma) from historical.py.
+    p_et_draw_knockout: P(penalties|ET played), from knockout_et_draw_rate(gamma).
+      Used to convert reg-time probs to quiniela probs.
     """
     home_code = TEAM_CODES.get(match["home"])
     away_code = TEAM_CODES.get(match["away"])
@@ -358,13 +445,47 @@ def fetch_match_probs(match: dict, p_draw_knockout: float = 0.25) -> dict:
             return _clean_entry(entry)
 
     phase = match.get("phase", "group")
-    game_probs  = _parse_game(_fetch_event(game_ticker), home_code, away_code,
-                               phase=phase, p_draw_ko=p_draw_knockout)
+    game_probs, has_tie = _parse_game(_fetch_event(game_ticker), home_code, away_code,
+                                       phase=phase, p_draw_ko=p_draw_knockout)
     total_goals = _parse_totals(_fetch_event(total_ticker))
 
     if game_probs is None:
         result = _fallback_probs()
+    elif phase == "knockout" and has_tie:
+        # KXWCGAME has TIE market → reg-time probs; convert to quiniela probs
+        advance_ticker  = f"KXWCADVANCE-{date_code}{home_code}{away_code}"
+        teamtotal_ticker = f"KXWCTEAMTOTAL-{date_code}{home_code}{away_code}"
+        advance_probs   = _parse_advance(_fetch_event(advance_ticker), home_code, away_code)
+        team_totals     = _parse_teamtotals(_fetch_event(teamtotal_ticker), home_code, away_code)
+
+        p_adv_h = advance_probs["home"] if advance_probs else None
+        p_adv_a = advance_probs["away"] if advance_probs else None
+        q_home, q_draw, q_away = _reg_to_quiniela(
+            game_probs["home_win"], game_probs["draw"], game_probs["away_win"],
+            p_adv_h, p_adv_a, p_et_draw_knockout,
+        )
+        spread_home, spread_away = _parse_spread(
+            _fetch_event(spread_ticker), home_code, away_code,
+            game_probs["home_win"], game_probs["away_win"],
+        )
+        result = {
+            "home_win":          q_home,
+            "draw":              q_draw,
+            "away_win":          q_away,
+            "reg_home_win":      game_probs["home_win"],
+            "reg_draw":          game_probs["draw"],
+            "reg_away_win":      game_probs["away_win"],
+            "advance_home_win":  p_adv_h,
+            "advance_away_win":  p_adv_a,
+            "total_goals":       total_goals,
+            "spread_home":       spread_home,
+            "spread_away":       spread_away,
+            "team_totals_home":  team_totals["home"] if team_totals else None,
+            "team_totals_away":  team_totals["away"] if team_totals else None,
+            "source": "kalshi",
+        }
     else:
+        # Group stage or knockout fallback (no TIE market)
         spread_home, spread_away = _parse_spread(
             _fetch_event(spread_ticker), home_code, away_code,
             game_probs["home_win"], game_probs["away_win"],

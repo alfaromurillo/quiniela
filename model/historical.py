@@ -59,11 +59,12 @@ def _load_tournament(path) -> tuple[dict, dict]:
     """
     Load canonical win/draw counts from a single WC tournament file.
     Knockout scores use 'et' (120 min) when available, else 'ft' (90 min).
+    Also populates 'knockout_reg' phase using ft (90 min) scores for knockout games.
     Returns (win_counts, draw_counts) keyed by phase → canonical_score → int.
     """
     raw = json.loads(Path(path).read_text())
-    win_counts  = {"group": {}, "knockout": {}}
-    draw_counts = {"group": {}, "knockout": {}}
+    win_counts  = {"group": {}, "knockout": {}, "knockout_reg": {}}
+    draw_counts = {"group": {}, "knockout": {}, "knockout_reg": {}}
 
     for m in raw["matches"]:
         sc_raw = m.get("score", {})
@@ -73,24 +74,47 @@ def _load_tournament(path) -> tuple[dict, dict]:
         rnd = m.get("round", "").lower()
         phase = "knockout" if any(k in rnd for k in
                   ["round of", "quarter", "semi", "final", "third"]) else "group"
-        # Quiniela counts 90+30 min goals; use et score for knockout when present
+
         if phase == "knockout":
             et = sc_raw.get("et")
-            sc = et if (et and len(et) == 2) else ft
+            sc_120 = et if (et and len(et) == 2) else ft
+            scores_to_record = [(sc_120, "knockout"), (ft, "knockout_reg")]
         else:
-            sc = ft
-        h, a = int(sc[0]), int(sc[1])
-        if h > a:
-            s = (h, a)
-            win_counts[phase][s] = win_counts[phase].get(s, 0) + 1
-        elif h < a:
-            s = (a, h)
-            win_counts[phase][s] = win_counts[phase].get(s, 0) + 1
-        else:
-            s = (h, a)
-            draw_counts[phase][s] = draw_counts[phase].get(s, 0) + 1
+            scores_to_record = [(ft, "group")]
+
+        for sc, ph in scores_to_record:
+            h, a = int(sc[0]), int(sc[1])
+            if h > a:
+                s = (h, a)
+                win_counts[ph][s] = win_counts[ph].get(s, 0) + 1
+            elif h < a:
+                s = (a, h)
+                win_counts[ph][s] = win_counts[ph].get(s, 0) + 1
+            else:
+                s = (h, a)
+                draw_counts[ph][s] = draw_counts[ph].get(s, 0) + 1
 
     return win_counts, draw_counts
+
+
+def _load_et_data(path) -> list[tuple[int, int]]:
+    """
+    Extract ET goal deltas (delta_home, delta_away) for knockout games that went to ET.
+    delta = et_score - ft_score for each team.
+    """
+    raw = json.loads(Path(path).read_text())
+    deltas = []
+    for m in raw["matches"]:
+        sc_raw = m.get("score", {})
+        ft = sc_raw.get("ft")
+        et = sc_raw.get("et")
+        if not ft or len(ft) != 2 or not et or len(et) != 2:
+            continue
+        rnd = m.get("round", "").lower()
+        if not any(k in rnd for k in ["round of", "quarter", "semi", "final", "third"]):
+            continue
+        deltas.append((int(et[0]) - int(ft[0]), int(et[1]) - int(ft[1])))
+    return deltas
 
 
 def get_tournament_counts() -> list[tuple[dict, dict]]:
@@ -108,12 +132,12 @@ def get_historical_counts(gamma: float = 1.0) -> tuple[dict, dict]:
     """
     tournaments = get_tournament_counts()
     n = len(tournaments)
-    combined_w = {"group": {}, "knockout": {}}
-    combined_d = {"group": {}, "knockout": {}}
+    combined_w = {"group": {}, "knockout": {}, "knockout_reg": {}}
+    combined_d = {"group": {}, "knockout": {}, "knockout_reg": {}}
     for k, (wc, dc) in enumerate(tournaments):
-        age   = (n - 1) - k          # 0 = most recent, 1 = one before, …
+        age   = (n - 1) - k
         weight = gamma ** age
-        for phase in ["group", "knockout"]:
+        for phase in ["group", "knockout", "knockout_reg"]:
             for s, cnt in wc[phase].items():
                 combined_w[phase][s] = combined_w[phase].get(s, 0) + weight * cnt
             for s, cnt in dc[phase].items():
@@ -124,13 +148,72 @@ def get_historical_counts(gamma: float = 1.0) -> tuple[dict, dict]:
 def knockout_draw_rate(gamma: float = 1.0) -> float:
     """
     Fraction of historical knockout games that ended as ET draws (→ penalties).
-    Used to translate Kalshi binary knockout probabilities (no TIE market)
-    into 90+30 min ternary probabilities.
+    Used as fallback when KXWCGAME has no TIE market.
     """
     wc, dc = get_historical_counts(gamma)
     n_d = sum(dc["knockout"].values())
     n_w = sum(wc["knockout"].values())
     return n_d / (n_w + n_d) if (n_w + n_d) > 0 else 0.25
+
+
+def knockout_et_draw_rate(gamma: float = 1.0) -> float:
+    """
+    P(ET draw → penalties | match went to ET).
+    Used to convert P(reg_draw) from KXWCGAME-TIE into P(quiniela_draw).
+    """
+    files = [f for f in HISTORICAL_FILES if f.exists()]
+    n = len(files)
+    et_total = 0.0
+    et_draws = 0.0
+    for k, path in enumerate(files):
+        age = (n - 1) - k
+        weight = gamma ** age
+        for dh, da in _load_et_data(path):
+            et_total += weight
+            if dh == da:
+                et_draws += weight
+    return et_draws / et_total if et_total > 0 else 0.72
+
+
+def build_et_kernel(gamma: float = 1.0,
+                    extra_et: dict | None = None,
+                    delta: float = 0.0) -> dict:
+    """
+    Build gamma-weighted ET transition kernel.
+    Returns {(delta_home, delta_away): probability}.
+
+    Symmetrized: each observed home-wins-ET case is split 50/50 with its
+    mirror (away-wins-ET), correcting for small-sample home bias.
+    extra_et: {(dh, da): count} of WC 2026 knockout ET games; weight = (1+delta).
+    """
+    files = [f for f in HISTORICAL_FILES if f.exists()]
+    n = len(files)
+    kernel_raw: dict[tuple, float] = {}
+
+    def _add(dh: int, da: int, w: float) -> None:
+        if dh > da:
+            kernel_raw[(dh, da)] = kernel_raw.get((dh, da), 0.0) + w * 0.5
+            kernel_raw[(da, dh)] = kernel_raw.get((da, dh), 0.0) + w * 0.5
+        elif da > dh:
+            kernel_raw[(dh, da)] = kernel_raw.get((dh, da), 0.0) + w * 0.5
+            kernel_raw[(da, dh)] = kernel_raw.get((da, dh), 0.0) + w * 0.5
+        else:
+            kernel_raw[(dh, da)] = kernel_raw.get((dh, da), 0.0) + w
+
+    for k, path in enumerate(files):
+        age = (n - 1) - k
+        weight = gamma ** age
+        for dh, da in _load_et_data(path):
+            _add(dh, da, weight)
+
+    if extra_et:
+        for (dh, da), cnt in extra_et.items():
+            _add(dh, da, (1.0 + delta) * cnt)
+
+    total = sum(kernel_raw.values())
+    if total < 1e-9:
+        return {(0, 0): 1.0}
+    return {k: v / total for k, v in kernel_raw.items()}
 
 
 def build_distributions(
@@ -153,7 +236,7 @@ def build_distributions(
     all_draw_cells = [(g, g) for g in range(MAX_GOALS + 1)]
 
     dist = {}
-    for phase in ["group", "knockout"]:
+    for phase in ["group", "knockout", "knockout_reg"]:
         wc = wc_raw[phase]
         dc = dc_raw[phase]
         ew = (extra_wins  or {}).get(phase, {})
@@ -293,6 +376,36 @@ def scoreline_probs(
     return probs
 
 
+def _teamtotal_to_exact(over_probs: dict) -> dict | None:
+    """Convert P(goals >= n) dict to P(goals = k) for k = 0..MAX_GOALS."""
+    if not over_probs:
+        return None
+    p_over = {}
+    for n in range(1, MAX_GOALS + 1):
+        if n in over_probs:
+            p_over[n] = over_probs[n]
+    if not p_over:
+        return None
+    # Fill missing thresholds: monotone decreasing
+    for n in range(1, MAX_GOALS + 1):
+        if n not in p_over:
+            prev = p_over.get(n - 1, 1.0)
+            nxt  = p_over.get(n + 1, 0.0)
+            p_over[n] = max(nxt, min(prev, prev * 0.3))
+    # Enforce monotone decreasing
+    for n in range(2, MAX_GOALS + 1):
+        p_over[n] = min(p_over[n], p_over[n - 1])
+
+    result = {0: max(0.0, 1.0 - p_over.get(1, 0.0))}
+    for k in range(1, MAX_GOALS):
+        result[k] = max(0.0, p_over.get(k, 0.0) - p_over.get(k + 1, 0.0))
+    result[MAX_GOALS] = max(0.0, p_over.get(MAX_GOALS, 0.0))
+    total = sum(result.values())
+    if total < 0.01:
+        return None
+    return {k: v / total for k, v in result.items()}
+
+
 def scoreline_probs_ipf(
     p_home_win: float, p_draw: float, p_away_win: float,
     phase: str,
@@ -302,6 +415,7 @@ def scoreline_probs_ipf(
     dist: dict | None = None,
     n_iter: int = 20,
     tol: float = 1e-8,
+    team_totals: dict | None = None,
 ) -> dict:
     """
     IPF (iterative proportional fitting) version of scoreline_probs.
@@ -403,8 +517,108 @@ def scoreline_probs_ipf(
                 target = p_away_win * spread_away.get(m, 0.0) / s_sa if s_sa > 1e-12 else 0.0
                 _scale_group(cells, target)
 
+        # Projections 4-5: per-team goal marginals from KXWCTEAMTOTAL
+        if team_totals:
+            home_exact = _teamtotal_to_exact(team_totals.get("home") or {})
+            away_exact = _teamtotal_to_exact(team_totals.get("away") or {})
+            if home_exact:
+                for k, target in home_exact.items():
+                    if k < MAX_GOALS:
+                        cells = [c for c in all_scores if c[0] == k]
+                    else:
+                        cells = [c for c in all_scores if c[0] >= k]
+                    _scale_group(cells, target)
+            if away_exact:
+                for k, target in away_exact.items():
+                    if k < MAX_GOALS:
+                        cells = [c for c in all_scores if c[1] == k]
+                    else:
+                        cells = [c for c in all_scores if c[1] >= k]
+                    _scale_group(cells, target)
+
         # Convergence check
         if max(abs(probs[c] - old[c]) for c in probs) < tol:
             break
 
     return probs
+
+
+def scoreline_probs_knockout(
+    p_q_home: float, p_q_draw: float, p_q_away: float,
+    p_reg_home: float, p_reg_draw: float, p_reg_away: float,
+    total_goals_probs: dict | None = None,
+    spread_home: dict | None = None,
+    spread_away: dict | None = None,
+    team_totals: dict | None = None,
+    dist: dict | None = None,
+    et_kernel: dict | None = None,
+) -> dict:
+    """
+    Two-stage knockout scoreline distribution (90+30 min).
+
+    Stage 1: Build regulation-time (90 min) scoreline using "knockout_reg"
+      historical phase with Kalshi reg-time constraints (KXWCTOTAL, KXWCSPREAD,
+      KXWCTEAMTOTAL).
+    Stage 2: For reg-time wins, final score = reg score.
+      For reg-time draws, convolve with ET kernel:
+        P(final = k+dh, k+da) += P_reg(k,k) × et_kernel[(dh,da)]
+      ET draws (dh==da) remain draws; ET winners shift to a win cell.
+    Stage 3: Recalibrate to quiniela outcome probs (p_q_home/draw/away).
+
+    p_q_*: quiniela outcome probs (90+30 min, penalties→draw)
+    p_reg_*: regulation-time outcome probs from KXWCGAME
+    et_kernel: from build_et_kernel(); fallback used if None
+    """
+    if dist is None:
+        dist = get_distributions()
+    if et_kernel is None:
+        et_kernel = {(0, 0): 0.72, (1, 0): 0.07, (0, 1): 0.07, (1, 1): 0.14}
+
+    # Stage 1: reg-time scoreline distribution
+    reg_dist = scoreline_probs_ipf(
+        p_reg_home, p_reg_draw, p_reg_away, "knockout_reg",
+        total_goals_probs, spread_home, spread_away,
+        dist=dist, team_totals=team_totals,
+    )
+
+    # Stage 2: fold ET transitions into draw cells
+    final_dist: dict[tuple, float] = {}
+    for (rh, ra), p_reg in reg_dist.items():
+        if p_reg < 1e-12:
+            continue
+        if rh != ra:
+            # No ET: final score = reg score
+            s = (rh, ra)
+            final_dist[s] = final_dist.get(s, 0.0) + p_reg
+        else:
+            # ET: convolve with kernel
+            for (dh, da), p_et in et_kernel.items():
+                fh = min(rh + dh, MAX_GOALS)
+                fa = min(ra + da, MAX_GOALS)
+                s = (fh, fa)
+                final_dist[s] = final_dist.get(s, 0.0) + p_reg * p_et
+
+    # Fill missing cells
+    for a in range(MAX_GOALS + 1):
+        for b in range(MAX_GOALS + 1):
+            final_dist.setdefault((a, b), 0.0)
+
+    # Normalize
+    total = sum(final_dist.values())
+    if total > 1e-12:
+        final_dist = {s: v / total for s, v in final_dist.items()}
+
+    # Stage 3: recalibrate to quiniela outcome probs
+    home_cells = [(a, b) for a, b in final_dist if a > b]
+    draw_cells = [(a, b) for a, b in final_dist if a == b]
+    away_cells = [(a, b) for a, b in final_dist if a < b]
+    for cells, p_target in ((home_cells, p_q_home),
+                             (draw_cells, p_q_draw),
+                             (away_cells, p_q_away)):
+        s = sum(final_dist[c] for c in cells)
+        if s > 1e-12 and abs(s - p_target) > 1e-9:
+            scale = p_target / s
+            for c in cells:
+                final_dist[c] *= scale
+
+    return final_dist
