@@ -217,9 +217,10 @@ pronosticadores individuales \citep{spann2009, forrest2005}.
 
 Para el Mundial 2026 utilizamos \textbf{Kalshi}
 (\href{https://kalshi.com}{kalshi.com}), una plataforma regulada en
-Estados Unidos que ofrece tres tipos de mercados por partido:
-resultado (victoria del Equipo~A, empate, victoria del Equipo~B), total de
-goles y ventaja de goles.
+Estados Unidos que ofrece varios tipos de mercados por partido:
+resultado (victoria/empate/derrota en tiempo reglamentario),
+total de goles, ventaja de goles, total de goles por equipo y
+clasificación (esta última incluye prórroga y penales).
 Kalshi es la opción más adecuada para este trabajo por su liquidez
 en mercados deportivos, su regulación formal y la disponibilidad
 de una API pública sin autenticación.
@@ -260,26 +261,37 @@ por partido:
 
 \begin{enumerate}
   \item \textbf{Resultado del partido} (\texttt{KXWCGAME-}):
-    submercados de victoria del Equipo~A, empate y victoria del Equipo~B.
+    submercados de victoria del Equipo~A, empate y victoria del
+    Equipo~B, en \textbf{tiempo reglamentario} (90~min).
   \item \textbf{Total de goles} (\texttt{KXWCTOTAL-}):
     submercados del tipo ``más de $n - 0.5$ goles'', para
-    $n = 1, 2, \ldots, 6$.
+    $n = 1, 2, \ldots, 6$, en \textbf{tiempo reglamentario} (90~min).
   \item \textbf{Ventaja de goles} (\texttt{KXWCSPREAD-}):
     submercados del tipo ``el equipo $X$ gana por más de $m - 0.5$
-    goles'', para distintos valores de $m$.
+    goles'', para distintos valores de $m$, en
+    \textbf{tiempo reglamentario} (90~min).
+  \item \textbf{Total de goles por equipo} (\texttt{KXWCTEAMTOTAL-}):
+    submercados del tipo ``el equipo $X$ anota al menos $n$ goles'',
+    en \textbf{tiempo reglamentario} (90~min).
+    Solo disponible en la fase eliminatoria.
+  \item \textbf{Clasificación} (\texttt{KXWCADVANCE-}):
+    submercados binarios de qué equipo clasifica a la siguiente ronda,
+    incluyendo prórroga y tanda de penales.
+    Solo disponible en la fase eliminatoria.
 \end{enumerate}
 
 Los precios se obtienen como el punto medio entre la mejor oferta de
 compra y la mejor oferta de venta (midprice) cuando el spread es menor
 de \$0.30; de lo contrario se descarta el mercado por falta de liquidez.
 
-Para los partidos de \textbf{fase eliminatoria}, el mercado de resultado
-(\texttt{KXWCGAME-}) omite el submercado de empate (\texttt{-TIE}),
-dado que en eliminación directa siempre existe un ganador
-(por tanda de penales si el marcador está igualado al final del
-tiempo extra).
-Los mercados de total de goles y ventaja de goles aplican en ambas
-fases.
+Los mercados \texttt{KXWCGAME-}, \texttt{KXWCTOTAL-},
+\texttt{KXWCSPREAD-} y \texttt{KXWCTEAMTOTAL-} se refieren
+exclusivamente al tiempo reglamentario (90~min).
+Solo \texttt{KXWCADVANCE-} refleja el resultado final incluyendo
+prórroga y penales.
+En particular, \texttt{KXWCGAME-} sí incluye el submercado de empate
+(\texttt{-TIE}) en la fase eliminatoria (empate en 90~min), aunque ese
+empate en 90~min puede resolverse después en prórroga o penales.
 
 % ─────────────────────────────────────────────────────────────
 \subsection{Modelo histórico de marcadores}
@@ -295,13 +307,19 @@ Los datos se obtienen de la base de datos de código abierto
 
 Para la \textbf{fase de grupos}, registramos el marcador al final de
 los 90 minutos reglamentarios.
-Para la \textbf{fase eliminatoria}, registramos el marcador al final
-de los 120 minutos cuando hay tiempo extra (prórroga), dado que la
-regla de puntuación de la quiniela considera todos los goles en ese
-período.
-Los partidos que se resuelven en tanda de penales se registran con
-el marcador de empate al final del tiempo extra, pues la quiniela
-instruye predecir empate en ese caso.
+Para la \textbf{fase eliminatoria} mantenemos dos distribuciones
+históricas separadas:
+(a)~\emph{knockout\_reg}: marcadores a 90~min, para modelar la
+distribución en tiempo reglamentario compatible con los mercados de
+Kalshi de total y ventaja de goles; y
+(b)~\emph{knockout}: marcadores a 120~min cuando hay prórroga,
+usado como referencia para los goles en tiempo extra.
+Los partidos resueltos en tanda de penales se registran con el marcador
+de empate al final del tiempo extra en la distribución~(b),
+y con el marcador de empate a 90~min en la distribución~(a).
+Esta separación permite combinar los precios de Kalshi (que son de
+90~min) con la distribución histórica correcta y modelar explícitamente
+la prórroga mediante un kernel de transición (Sección~\ref{sec:knockout}).
 
 Mantenemos distribuciones separadas para la fase de grupos y la fase
 eliminatoria, dado que los partidos eliminatorios tienden a ser más
@@ -592,59 +610,85 @@ correspondiente:
   + \frac{p_B \cdot Q_B(h,k)}{\sum_{h'<k'} Q_B(h',k')}.
 \]
 
-\subsubsection{Fase eliminatoria: traducción de probabilidades de Kalshi}
-\label{sec:knockout-kalshi}
+\subsubsection{Fase eliminatoria: modelo de dos etapas}
+\label{sec:knockout}
 
-En la fase eliminatoria, Kalshi ofrece únicamente probabilidades
-binarias: $r_A = \Prob(\text{gana el Equipo }A)$ y
-$r_B = \Prob(\text{gana el Equipo }B)$, con $r_A + r_B = 1$.
-Sin embargo, la quiniela requiere predicciones sobre el marcador en
-90+30 minutos, donde un empate al final del tiempo extra
-(seguido de penales) es un resultado legítimo que se puntúa como
-empate exacto si la predicción coincide.
-Necesitamos por tanto las probabilidades de resultado en 90+30 min:
-$p_A = \Prob(\text{gana en 90+30})$,
-$p_E = \Prob(\text{empate en 90+30})$ y
-$p_B = \Prob(\text{pierde en 90+30})$.
+En la fase eliminatoria los mercados de Kalshi operan en dos horizontes
+temporales distintos: \texttt{KXWCGAME-}, \texttt{KXWCTOTAL-},
+\texttt{KXWCSPREAD-} y \texttt{KXWCTEAMTOTAL-} son de tiempo
+reglamentario (90~min), mientras que \texttt{KXWCADVANCE-} cubre el
+resultado final incluyendo prórroga y penales.
+La quiniela cuenta goles en 90+30~min y trata los penales como empate,
+por lo que el modelo de fase de grupos no puede aplicarse directamente.
+En su lugar, usamos un modelo de dos etapas que combina la distribución
+de 90~min con un kernel de prórroga estimado del historial.
 
-Bajo el supuesto de que la tanda de penales es equiprobable entre los
-dos equipos, la probabilidad de ganar el partido es:
-\begin{equation}
-  r_A = p_A + \tfrac{1}{2} p_E, \qquad r_B = p_B + \tfrac{1}{2} p_E.
-  \label{eq:knockout-translation}
-\end{equation}
-El sistema~\eqref{eq:knockout-translation} tiene tres incógnitas y
-dos ecuaciones, con la restricción $p_A + p_E + p_B = 1$.
-Estimamos $p_E$ mediante la tasa histórica de empates en tiempo extra
-de la fase eliminatoria, ponderada por $\gamma$:
+\paragraph{Etapa 1 — Distribución en tiempo reglamentario.}
+Con las probabilidades de 90~min del mercado \texttt{KXWCGAME-}
+$(p^r_H, p^r_D, p^r_A)$ y los constraints de \texttt{KXWCTOTAL-},
+\texttt{KXWCSPREAD-} y \texttt{KXWCTEAMTOTAL-}, se aplica IPF sobre la
+distribución histórica~\emph{knockout\_reg} (marcadores de 90~min),
+obteniendo la distribución de tiempo reglamentario $P_{\mathrm{reg}}(a, b)$.
+
+\paragraph{Conversión a probabilidades de quiniela.}
+Sea $\pi_{\mathrm{pen}}$ la probabilidad de que un empate en 90~min
+resulte en penales (es decir, que el tiempo extra también termine
+igualado).
+Estimamos $\pi_{\mathrm{pen}}$ $\gamma$-ponderado del historial:
 \[
-  \hat{p}_E^{\text{hist}}
-  = \frac{\sum_{\text{torneos}} \gamma^{\text{age}}
-          \cdot (\text{partidos KO que llegaron a penales})}
-         {\sum_{\text{torneos}} \gamma^{\text{age}}
-          \cdot (\text{total partidos KO})},
+  \hat\pi_{\mathrm{pen}}
+  = \frac{\sum_k \gamma^{2-k}\,n^{(k)}_{\mathrm{pen}}}
+         {\sum_k \gamma^{2-k}\,n^{(k)}_{\mathrm{ET}}}
+  \approx 0.75,
 \]
-con valor estimado $\hat{p}_E^{\text{hist}} \approx 0.275$.
-Las probabilidades en 90+30 min se obtienen entonces como:
-\begin{equation}
-  p_A = \max\!\bigl(0,\; r_A - \tfrac{1}{2}\hat{p}_E^{\text{hist}}\bigr),
-  \quad
-  p_E = \hat{p}_E^{\text{hist}},
-  \quad
-  p_B = \max\!\bigl(0,\; r_B - \tfrac{1}{2}\hat{p}_E^{\text{hist}}\bigr),
-  \label{eq:knockout-probs}
-\end{equation}
-y se normalizan antes de usarlas en el condicionamiento histórico.
+donde $n^{(k)}_{\mathrm{ET}}$ son los partidos eliminatorios con
+prórroga y $n^{(k)}_{\mathrm{pen}}$ los que llegaron a penales
+en el torneo $k$ (WC 2022: 5/5; WC 2018: 4/5; WC 2014: 4/8;
+valor $\gamma$-ponderado $\approx 75\%$).
+El mercado \texttt{KXWCADVANCE-} proporciona $p_{\mathrm{adv},H}$ y
+$p_{\mathrm{adv},A}$ (probabilidades de clasificar).
+Las probabilidades de quiniela se obtienen entonces como:
+\begin{align}
+  p^q_D &= p^r_D \cdot \hat\pi_{\mathrm{pen}}, \label{eq:pqD} \\
+  p^q_H &= p_{\mathrm{adv},H} - \tfrac{1}{2}\,p^q_D, \label{eq:pqH} \\
+  p^q_A &= p_{\mathrm{adv},A} - \tfrac{1}{2}\,p^q_D. \label{eq:pqA}
+\end{align}
+Las ecuaciones~\eqref{eq:pqH}--\eqref{eq:pqA} reflejan que quien
+clasifica lo hace ya sea ganando en 90~min o ganando la tanda de
+penales (probabilidad $p^q_D/2$ para cada equipo, dado que los penales
+se asumen equiprobables).
+Se verifica $p^q_H + p^q_D + p^q_A = p_{\mathrm{adv},H} + p_{\mathrm{adv},A} = 1$.
 
-\paragraph{Pendiente de verificación.}
-No está documentado públicamente si los mercados de total de goles
-(\texttt{KXWCTOTAL-}) y ventaja de goles (\texttt{KXWCSPREAD-})
-contabilizan los goles en 90 minutos reglamentarios, en 90+30 minutos,
-o incluyendo la tanda de penales (lo más probable es que no incluyan
-penales, pero la distinción entre 90 y 90+30 min es relevante para
-partidos que lleguen al tiempo extra).
-La verificación empírica se realizará al observar los primeros
-mercados eliminatorios de la API de Kalshi.
+\paragraph{Etapa 2 — Kernel de prórroga.}
+Las celdas de victoria en 90~min pasan al resultado final sin cambio.
+Las celdas de empate $(a = b)$ se convolucionan con un
+\textbf{kernel de prórroga} $K(\Delta_H, \Delta_A)$:
+\[
+  P_{\mathrm{final}}(a + \Delta_H,\; b + \Delta_A)
+  \mathrel{+{=}}
+  P_{\mathrm{reg}}(a, a) \cdot K(\Delta_H, \Delta_A).
+\]
+El kernel se estima $\gamma$-ponderado de los 18 partidos
+eliminatorios de WC 2014--2022 con prórroga, simetrizando victorias
+de local y visitante:
+
+\begin{center}
+\begin{tabular}{clc}
+  \toprule
+  $(\Delta_H, \Delta_A)$ & Descripción & $K$ ($\gamma \approx 0.84$) \\
+  \midrule
+  $(0,0)$ & Sin goles en ET $\to$ penales & $\approx 0.56$ \\
+  $(1,1)$ & Un gol cada equipo $\to$ penales & $\approx 0.19$ \\
+  $(1,0)$ ó $(0,1)$ & Un equipo gana en ET & $\approx 0.076$ c/u \\
+  $(2,1)$ ó $(1,2)$ & Tres goles, gana un equipo & $\approx 0.048$ c/u \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+El kernel se actualiza con partidos de ET del WC 2026
+conforme se juegan, con peso $(1+\delta)$ relativo al historial.
+Tras la convolución, $P_{\mathrm{final}}$ se recalibra a
+$(p^q_H, p^q_D, p^q_A)$ y se aplica el paso de optimización estándar.
 
 \subsubsection{Ajuste iterativo proporcional}
 \label{sec:ipf}
@@ -677,6 +721,14 @@ $\{0,\ldots,5\}^2$:
     con objetivo $p_A \cdot s_m^A$, y
     $\mathcal{S}_m^B = \{(h,k)\in\mathcal{B}:k-h=m\}$
     con objetivo $p_B \cdot s_m^B$.
+  \item \emph{Solo en fase eliminatoria, cuando} \texttt{KXWCTEAMTOTAL-}
+    \emph{está disponible}:
+    por goles del equipo local,
+    $\mathcal{G}^H_g = \{(h,k):h=g\}$ con objetivo $\tau^H_g$;
+    y por goles del visitante,
+    $\mathcal{G}^A_g = \{(h,k):k=g\}$ con objetivo $\tau^A_g$,
+    donde $\tau^H_g$ y $\tau^A_g$ se obtienen de las diferencias
+    sucesivas de los mercados \texttt{KXWCTEAMTOTAL-}.
 \end{itemize}
 
 El algoritmo inicializa $P^{(0)} = \tilde{P}_1$ y, en cada iteración,
@@ -1194,6 +1246,16 @@ El modelo no incorpora variables específicas del partido como
 lesiones, sanciones, condiciones climáticas, historial directo entre
 selecciones o el contexto de clasificación dentro del grupo.
 Estas variables pueden ser relevantes en algunos partidos.
+
+\textbf{Kernel de prórroga con muestra pequeña.}
+El kernel de transición de goles en tiempo extra se estima de solo
+18~partidos eliminatorios de tres Mundiales.
+Con tan pocos datos, la incertidumbre sobre las probabilidades
+condicionales es alta.
+El kernel se actualiza con los partidos de ET del WC~2026 conforme
+avanza el torneo, pero los datos acumulados en la fase eliminatoria
+de un único Mundial serán insuficientes para reducir sustancialmente
+esa incertidumbre.
 
 \subsection{Extensiones posibles}
 
