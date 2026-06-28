@@ -173,7 +173,9 @@ results.json  ──→ learn.py → estimate_delta()  →  δ = 0..∞
 
 ## Known issues / TODO
 
-- **Knockout TBD**: Some knockout matches still TBD. Run `python model/resolve_bracket.py` after each bracket-resolution event; predictions generate automatically once team names are set.
+- **Bracket resolution**: Group stage complete; knockout rounds in progress. Run
+  `python model/resolve_bracket.py` after each round to resolve the next set of
+  TBD slots; predictions generate automatically once team names are set.
 
 ## Gotchas
 
