@@ -9,6 +9,9 @@ World Cup 2026 score predictor for a quiniela (prediction pool). The model combi
 ## Commands
 
 ```bash
+# Resolve TBD knockout bracket from Kalshi (run after group stage or each bracket event)
+python model/resolve_bracket.py
+
 # Install dependencies
 pip install -r requirements.txt
 
@@ -102,13 +105,19 @@ site/
 
 ## Kalshi API details
 
-No authentication required for market data. Three market types per match:
+No authentication required for market data. Five market types (three for all matches, two knockout-only):
 
-| Type | Ticker pattern | Info |
-|------|---------------|------|
-| Game outcome | `KXWCGAME-{date}{HOME}{AWAY}` | `-HOME`, `-AWAY`, `-TIE` sub-markets |
-| Total goals | `KXWCTOTAL-{date}{HOME}{AWAY}` | `-1` = over 0.5, `-2` = over 1.5, …, `-6` = over 5.5 |
-| Spread | `KXWCSPREAD-{date}{HOME}{AWAY}` | `-HOME2/3/4`, `-AWAY2/3` = wins by over N.5 |
+| Type | Ticker pattern | Scope | Info |
+|------|---------------|-------|------|
+| Game outcome | `KXWCGAME-{date}{HOME}{AWAY}` | **90 min** | `-HOME`, `-AWAY`, `-TIE` sub-markets |
+| Total goals | `KXWCTOTAL-{date}{HOME}{AWAY}` | **90 min** | `-1` = over 0.5, `-2` = over 1.5, …, `-6` = over 5.5 |
+| Spread | `KXWCSPREAD-{date}{HOME}{AWAY}` | **90 min** | `-HOME2/3/4`, `-AWAY2/3` = wins by over N.5 |
+| Team totals | `KXWCTEAMTOTAL-{date}{HOME}{AWAY}-{CODE}N` | **90 min; KO only** | per-team over N goals |
+| Advance | `KXWCADVANCE-{date}{HOME}{AWAY}` | **90+30+pen; KO only** | who advances (includes ET+penalties) |
+
+**IMPORTANT**: All markets except `KXWCADVANCE` are regulation-time only (90 min). This matters
+for knockout: `KXWCGAME-TIE` = reg-time draw, not quiniela draw. Use `KXWCADVANCE` to derive
+quiniela probabilities via `_reg_to_quiniela()` in `kalshi.py`.
 
 **Date code rule**: Kalshi uses Eastern Time (UTC-4) date in the ticker, derived from `time_utc` in schedule.json. `_date_code(time_utc)` in `kalshi.py` handles the UTC→ET conversion.
 
@@ -125,7 +134,12 @@ Three tournaments are used: WC 2014, 2018, 2022 (64 games each).
 
 **γ decay**: WC 2022 weight=1.0, WC 2018=γ, WC 2014=γ². γ is estimated by leave-one-tournament-out MLE with a Normal(1, 0.3) prior (current value ≈ 0.84). Effective sample ≈ 122 weighted games.
 
-**Knockout scores**: Uses `et` (120-min) score when available rather than `ft` (90-min), because the quiniela counts goals in 90+30 min. This raises knockout λ_d significantly (extra-time draws score more).
+**Knockout scores**: Two historical phases coexist:
+- `knockout_reg` — uses `ft` (90-min) score; matches Kalshi reg-time markets (KXWCTOTAL/SPREAD/TEAMTOTAL)
+- `knockout` — uses `et` (120-min) score when available; used for the ET kernel
+
+The ET kernel (`build_et_kernel()` in `historical.py`) models goals in the 30-min ET period.
+γ-weighted P(ET also ends draw | went to ET) ≈ 0.75.
 
 **Poisson product prior**: Smoothing uses P_prior(w,l) ∝ λ_w^w/w! · λ_l^l/l! with κ=5 pseudo-observations. Parameters λ re-estimated by MLE from γ-weighted combined data each run.
 
@@ -159,11 +173,12 @@ results.json  ──→ learn.py → estimate_delta()  →  δ = 0..∞
 
 ## Known issues / TODO
 
-- **Knockout TBD**: Knockout matches are skipped until bracket resolves. Predictions generate automatically once team names are known. 31 knockout matches currently TBD.
-- **Modelo.html δ card**: The "δ = 0, valor inicial" stat card is hardcoded. Cosmetic — needs live value once δ starts being estimated (after jornada 2 completes).
+- **Knockout TBD**: Some knockout matches still TBD. Run `python model/resolve_bracket.py` after each bracket-resolution event; predictions generate automatically once team names are set.
 
 ## Gotchas
 
 **ESPN team name aliases**: ESPN uses different display names from our schedule. Known mismatches: `"Czechia"` (not `"Czech Republic"`), `"Bosnia-Herzegovina"` (not `"Bosnia & Herzegovina"`). Add new aliases to `ESPN_ALIASES` in `model/results.py` as they appear. Symptom: `results.py` prints `"No result yet"` for a match that already finished. Fix: add the ESPN name to the alias list and re-run.
 
-**Kalshi cache JSON round-trip**: `total_goals` and spread dicts have `int` keys in Python but become `str` after JSON serialization. `_clean_entry()` in `kalshi.py` must convert all numeric-keyed dicts back to `int` on cache load. Failure mode: all predictions collapse to 5-5 with 0.00 expected pts. `sanity.py` catches this before it reaches GitHub Pages.
+**Kalshi cache JSON round-trip**: `total_goals`, spread, and `team_totals_home`/`team_totals_away` dicts have `int` keys in Python but become `str` after JSON serialization. `_clean_entry()` in `kalshi.py` must convert all numeric-keyed dicts back to `int` on cache load. Failure mode: all predictions collapse to 5-5 with 0.00 expected pts. `sanity.py` catches this before it reaches GitHub Pages.
+
+**Git push rejected by CI bot**: The GitHub Actions bot commits prediction files every ~30 min. Manual pushes will be rejected. Fix: `git pull --rebase origin main && git push`. When the rebase conflicts on generated files, take the remote version: `git checkout --theirs site/data/predictions.json site/data/locked_predictions.json site/data/learning.json data/kalshi_cache.json`, then `GIT_EDITOR=true git rebase --continue`.
