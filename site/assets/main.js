@@ -108,7 +108,7 @@ function renderCard(m, filter, locked, result) {
   const status = matchStatus(m.time_utc, m.phase);
   const hasResult = result && result.status === "final";
 
-  if (filter === "upcoming"  && status !== "upcoming") return "";
+  if (filter === "upcoming"  && status !== "upcoming" && status !== "live") return "";
   if (filter === "finished"  && !hasResult)             return "";
   if (filter === "group"     && m.phase !== "group")    return "";
   if (filter === "knockout"  && m.phase !== "knockout") return "";
@@ -293,7 +293,7 @@ async function init() {
     chip.addEventListener("click", () => applyFilter(chip.dataset.filter));
   });
 
-  applyFilter("all");
+  applyFilter("upcoming");
 }
 
 document.addEventListener("DOMContentLoaded", init);
