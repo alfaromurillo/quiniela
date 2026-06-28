@@ -125,27 +125,46 @@ def update_results() -> None:
         print("Results: nothing to update.")
         return
 
-    # Group by schedule["date"] (local game date). ESPN indexes by local date,
-    # not UTC date — late-night matches cross UTC midnight but stay on one
-    # local date, so using time_utc would query the wrong day.
+    # Group by schedule["date"] (local game date). ESPN usually indexes by
+    # local date, not UTC date. But some late-night games (e.g. 04:00 UTC)
+    # appear on the next UTC date on ESPN, so we also cache the UTC date for
+    # use as a fallback when the local date yields no match.
     by_date: dict[str, list] = {}
+    utc_date: dict[int, str] = {}  # match id → UTC date string (YYYY-MM-DD)
     for m in need:
         by_date.setdefault(m["date"], []).append(m)
+        if m.get("time_utc"):
+            utc_date[m["id"]] = m["time_utc"][:10]
+
+    events_cache: dict[str, list] = {}
+
+    def _get_events(date_str: str) -> list:
+        if date_str not in events_cache:
+            events_cache[date_str] = _fetch_espn(date_str)
+            time.sleep(0.3)
+        return events_cache[date_str]
 
     updated = 0
     for date_str, matches in sorted(by_date.items()):
-        events = _fetch_espn(date_str)
-        time.sleep(0.3)
+        _get_events(date_str)  # warm cache
         for m in matches:
             mid = str(m["id"])
             matched = None
-            for ev in events:
-                parsed = _parse_event(ev)
-                if not parsed:
-                    continue
-                if (_teams_match(m["home"], parsed["home_name"]) and
-                        _teams_match(m["away"], parsed["away_name"])):
-                    matched = parsed
+            # Try local date first, then UTC date as fallback
+            dates_to_try = [date_str]
+            ud = utc_date.get(m["id"])
+            if ud and ud != date_str:
+                dates_to_try.append(ud)
+            for try_date in dates_to_try:
+                for ev in _get_events(try_date):
+                    parsed = _parse_event(ev)
+                    if not parsed:
+                        continue
+                    if (_teams_match(m["home"], parsed["home_name"]) and
+                            _teams_match(m["away"], parsed["away_name"])):
+                        matched = parsed
+                        break
+                if matched:
                     break
             if matched:
                 results[mid] = {
