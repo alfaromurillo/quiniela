@@ -120,7 +120,7 @@ quiniela probabilities via `_reg_to_quiniela()` in `kalshi.py`.
 
 **Date code rule**: Kalshi uses Eastern Time (UTC-4) date in the ticker, derived from `time_utc` in schedule.json. `_date_code(time_utc)` in `kalshi.py` handles the UTC→ET conversion.
 
-**Cache locking**: Predictions are locked 1.5h before kickoff (CACHE_TTL=5400s). Once `now >= kickoff`, the cache entry is frozen permanently — live Kalshi prices do not alter the locked prediction.
+**Cache locking**: Cache refreshes every 40 min (CACHE_TTL=2400s). The entry is frozen 10 min before kickoff (`LOCK_BEFORE_KICKOFF=10min`) — live Kalshi prices do not alter the locked prediction. Two crons fire per match: -2:15 and -1:30 before kickoff; the 45-min gap ensures the -1:30 run always re-fetches.
 
 **Team codes** (Kalshi abbreviations, differ from FIFA/ISO in several cases):
 - Haiti → `HTI`, Iran → `IRI`, Algeria → `DZA`, Turkey → `TUR`

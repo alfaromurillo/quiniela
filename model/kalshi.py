@@ -17,9 +17,10 @@ from datetime import datetime, timezone, timedelta
 
 API_BASE = "https://api.elections.kalshi.com/trade-api/v2"
 CACHE_PATH = Path(__file__).parent.parent / "data" / "kalshi_cache.json"
-# Pre-game entries are considered stale after 90 min; once kickoff passes they are
-# locked permanently so in-game/post-game prices never overwrite the prediction.
-CACHE_TTL = 5400       # 90 min — covers the 1.5h-before-kickoff → kickoff window
+# Pre-game entries refresh every 40 min; locked 10 min before kickoff so the
+# -1:30 cron fetch is always used but in-game prices never overwrite the prediction.
+CACHE_TTL = 2400       # 40 min — ensures -1:30 cron re-fetches after -2:15 cron
+LOCK_BEFORE_KICKOFF = timedelta(minutes=10)
 EARLY_SNAPSHOT_H = 24  # stamp early_* once when match is this many hours away
 SNAPSHOT_INTERVAL = 3600  # seconds between history snapshots (one per hour)
 
@@ -437,8 +438,8 @@ def fetch_match_probs(match: dict,
     cache = _load_cache()
     if game_ticker in cache:
         entry = cache[game_ticker]
-        # Kickoff passed → prices locked, never re-fetch
-        if now >= kickoff:
+        # Lock 10 min before kickoff — in-game prices never overwrite prediction
+        if now >= kickoff - LOCK_BEFORE_KICKOFF:
             return _clean_entry(entry)
         # Pre-game → use cached prices if still within 90-minute window
         if time.time() - entry.get("_ts", 0) < CACHE_TTL:
