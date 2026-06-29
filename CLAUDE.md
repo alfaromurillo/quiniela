@@ -36,9 +36,9 @@ sp = scoreline_probs(0.50, 0.25, 0.25, 'group')
 print(best_prediction(sp, 'group'))
 "
 
-# Compile the article (run from repo root; repeat pdflatex twice for refs)
-pdflatex -synctex=1 -interaction=nonstopmode articulo/main.tex
-bibtex articulo/main && pdflatex -synctex=1 articulo/main.tex && pdflatex -synctex=1 articulo/main.tex
+# Compile the article (run from articulo/ to avoid stale root main.pdf)
+cd articulo && pdflatex -synctex=1 -interaction=nonstopmode main.tex
+bibtex main && pdflatex -synctex=1 main.tex && pdflatex -synctex=1 main.tex && cd ..
 
 # Regenerate article figures
 python model/figures.py
@@ -59,10 +59,9 @@ the updated PDF together with the source changes.**
 | Correct goals of one team, wrong winner | 1 |
 
 **Knockout** (goals in 90+30 min; penalty shootout → predict draw):
-| Result | Points |
-|--------|--------|
-| Exact score | 3 |
-| Correct winner/draw (wrong goals) | 1 |
+Same 5/3/2/1/0 structure as group stage. Later rounds may scale all
+points by a constant (×2, ×4, …); this does not affect the argmax.
+TODO: confirm exact multipliers per round with organizers.
 
 ## Architecture
 
@@ -182,5 +181,7 @@ results.json  ──→ learn.py → estimate_delta()  →  δ = 0..∞
 **ESPN team name aliases**: ESPN uses different display names from our schedule. Known mismatches: `"Czechia"` (not `"Czech Republic"`), `"Bosnia-Herzegovina"` (not `"Bosnia & Herzegovina"`). Add new aliases to `ESPN_ALIASES` in `model/results.py` as they appear. Symptom: `results.py` prints `"No result yet"` for a match that already finished. Fix: add the ESPN name to the alias list and re-run.
 
 **Kalshi cache JSON round-trip**: `total_goals`, spread, and `team_totals_home`/`team_totals_away` dicts have `int` keys in Python but become `str` after JSON serialization. `_clean_entry()` in `kalshi.py` must convert all numeric-keyed dicts back to `int` on cache load. Failure mode: all predictions collapse to 5-5 with 0.00 expected pts. `sanity.py` catches this before it reaches GitHub Pages.
+
+**`phase` vs `scoring_phase` in predict.py**: `phase` (from schedule.json, values "group"/"knockout") controls which historical distribution is used. `scoring_phase` controls the optimizer's point function and is always "group" — all phases share the 5/3/2/1/0 structure, and constant multipliers don't change the argmax.
 
 **Git push rejected by CI bot**: The GitHub Actions bot commits prediction files every ~30 min. Manual pushes will be rejected. Fix: `git pull --rebase origin main && git push`. When the rebase conflicts on generated files, take the remote version: `git checkout --theirs site/data/predictions.json site/data/locked_predictions.json site/data/learning.json data/kalshi_cache.json`, then `GIT_EDITOR=true git rebase --continue`.
