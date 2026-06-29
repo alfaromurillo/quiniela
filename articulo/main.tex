@@ -795,8 +795,25 @@ Para la \textbf{fase de grupos}, con prioridad estricta
 \end{tabular}
 \end{center}
 
-Para la \textbf{fase eliminatoria} (incluyendo tiempo extra; penales
-equivalen a empate):
+Para la \textbf{Ronda de 32} (incluyendo tiempo extra; penales equivalen
+a empate), se aplica el mismo sistema de la fase de grupos:
+
+\begin{center}
+\begin{tabular}{lc}
+  \toprule
+  Condición & Puntos \\
+  \midrule
+  Marcador exacto & 5 \\
+  Ganador/empate correcto \emph{y} goles de un equipo correctos & 3 \\
+  Solo ganador/empate correcto & 2 \\
+  Solo goles de un equipo correctos (ganador incorrecto) & 1 \\
+  Ninguna condición anterior & 0 \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+Para las \textbf{rondas posteriores} (Octavos de final en adelante;
+incluyendo tiempo extra; penales equivalen a empate):
 \begin{center}
 \begin{tabular}{lc}
   \toprule
@@ -874,10 +891,12 @@ El resultado real fue $2$-$1$ (Corea del Sur).
 entre el marcador modal y la predicción óptima, o donde la
 predicción resultó en una puntuación especialmente alta o baja.}
 
-\begin{observacion}[Los empates nunca son predicciones óptimas en fase de grupos]
+\begin{observacion}[Los empates nunca son predicciones óptimas en fase
+  de grupos ni en la Ronda de 32]
 \label{obs:nodraw}
 Para cualquier predicción de empate exacto $(a, a)$, la tier de
-3 puntos de la regla de puntuación de grupos es inalcanzable.
+3 puntos de la regla de puntuación (que es idéntica para la fase de
+grupos y la Ronda de 32) es inalcanzable.
 Esa tier requiere acertar simultáneamente el ganador/empate
 \emph{y} los goles de al menos un equipo.
 Si la predicción es $(a, a)$ y el resultado real es un empate
@@ -1215,10 +1234,11 @@ comportamiento histórico.
 \subsection{Ausencia de predicciones de empate}
 
 La Observación~\ref{obs:nodraw} predice que el modelo no producirá
-ninguna predicción de empate en la fase de grupos.
+ninguna predicción de empate en la fase de grupos ni en la Ronda de 32.
 Esta predicción se confirma empíricamente: en los 48 partidos de la
-fase de grupos del WC 2026, el modelo propone en todos los casos
-una victoria de uno de los dos equipos.
+fase de grupos y en los 16 partidos de la Ronda de 32 del WC 2026,
+el modelo propone en todos los casos una victoria de uno de los
+dos equipos.
 Este resultado no refleja una sesgo hacia las victorias en las
 estimaciones de probabilidad, sino una consecuencia directa de la
 regla de puntuación: la tier de 3 puntos ---que constituye una
