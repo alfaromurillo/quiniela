@@ -1,18 +1,16 @@
 """
 Find the scoreline prediction that maximises expected quiniela points.
 
-Scoring rules:
-  GROUP STAGE:
+Scoring rules (all phases):
     5 pts  - exact score
     3 pts  - correct winner/draw AND correct goals of exactly one team
     2 pts  - correct winner/draw, no goals correct
     1 pt   - wrong winner/draw, but correct goals of one team
     0 pts  - nothing correct
 
-  KNOCKOUT (goals in 90+30 min; if penalties → result = draw):
-    3 pts  - exact score
-    1 pt   - correct winner/draw (wrong goals)
-    0 pts  - wrong winner/draw
+Later knockout rounds may scale all points by a constant (×2, ×4, …).
+Multiplying by a constant does not change the argmax, so _points_group
+is used for every phase.
 """
 
 MAX_GOALS = 5

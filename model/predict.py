@@ -81,9 +81,9 @@ def run():
     for i, match in enumerate(schedule, 1):
         mid = match["id"]
         phase = match["phase"]
-        scoring_phase = (
-            "group" if match.get("round") == "Round of 32" else phase
-        )
+        # All phases use 5/3/2/1/0. Later knockout rounds scale by a
+        # constant (×2, ×4, …) which does not affect the argmax.
+        scoring_phase = "group"
         home = match["home"]
         away = match["away"]
 
