@@ -81,6 +81,9 @@ def run():
     for i, match in enumerate(schedule, 1):
         mid = match["id"]
         phase = match["phase"]
+        scoring_phase = (
+            "group" if match.get("round") == "Round of 32" else phase
+        )
         home = match["home"]
         away = match["away"]
 
@@ -155,10 +158,10 @@ def run():
             )
 
         # Find best prediction
-        best     = best_prediction(score_dist, phase)
-        best_ipf = best_prediction(ipf_dist,   phase)
+        best     = best_prediction(score_dist, scoring_phase)
+        best_ipf = best_prediction(ipf_dist,   scoring_phase)
         modal    = modal_prediction(score_dist)
-        bh       = baseline_by_phase[phase]
+        bh       = baseline_by_phase[scoring_phase]
 
         # ── Strategy-comparison baselines ────────────────────────
         # Row 2: Kalshi outcome only, raw probs (no α correction)
@@ -166,21 +169,21 @@ def run():
             raw_home, raw_draw, raw_away, phase,
             None, None, None, dist=dist,
         )
-        bsln_out_raw = best_prediction(_sp_out_raw, phase)
+        bsln_out_raw = best_prediction(_sp_out_raw, scoring_phase)
 
         # Row 3: Kalshi outcome only, α-corrected probs
         _sp_out_alpha = scoreline_probs(
             p_home, p_draw, p_away, phase,
             None, None, None, dist=dist,
         )
-        bsln_out_alpha = best_prediction(_sp_out_alpha, phase)
+        bsln_out_alpha = best_prediction(_sp_out_alpha, scoring_phase)
 
         # Row 4: Full Kalshi (goles + spread), raw probs (no α)
         _sp_full_raw = scoreline_probs(
             raw_home, raw_draw, raw_away, phase,
             total_goals, spread_home, spread_away, dist=dist,
         )
-        bsln_full_raw = best_prediction(_sp_full_raw, phase)
+        bsln_full_raw = best_prediction(_sp_full_raw, scoring_phase)
 
         def _hk(b):
             return {"home": b["home"], "away": b["away"]}
