@@ -62,12 +62,15 @@
 
   <h3>Ronda eliminatoria</h3>
   <p>Solo se cuentan los goles en tiempo reglamentario + prórroga (120 min). Si el partido se define por penales,
-  se considera empate para efectos de la quiniela.</p>
+  se considera empate para efectos de la quiniela. La estructura de puntos es la misma que en la fase de grupos
+  (posiblemente escalada por un factor constante según la ronda, lo cual no altera la predicción óptima).</p>
   <table>
-    <thead><tr><th>Acierto</th><th>Puntos</th></tr></thead>
+    <thead><tr><th>Acierto</th><th>Puntos base</th></tr></thead>
     <tbody>
-      <tr><td>Marcador exacto en 120 min</td><td><strong>3 pts</strong></td></tr>
-      <tr><td>Ganador/empate correcto (goles incorrectos)</td><td><strong>1 pt</strong></td></tr>
+      <tr><td>Marcador exacto en 120 min</td><td><strong>5 pts</strong></td></tr>
+      <tr><td>Ganador/empate correcto <em>y</em> goles de un equipo correctos</td><td><strong>3 pts</strong></td></tr>
+      <tr><td>Ganador/empate correcto (sin goles correctos)</td><td><strong>2 pts</strong></td></tr>
+      <tr><td>Goles de un equipo correctos, ganador equivocado</td><td><strong>1 pt</strong></td></tr>
       <tr><td>Ningún acierto</td><td><strong>0 pts</strong></td></tr>
     </tbody>
   </table>
