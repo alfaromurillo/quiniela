@@ -89,7 +89,7 @@
       <tr>
         <td>Resultado</td>
         <td><code>KXWCGAME-…</code></td>
-        <td>$p_H$ = victoria local, $p_D$ = empate, $p_A$ = victoria visitante</td>
+        <td>$p_H$ = victoria del equipo 1, $p_D$ = empate, $p_A$ = victoria del equipo 2</td>
         <td>90 min</td>
       </tr>
       <tr>
@@ -107,7 +107,7 @@
       <tr>
         <td>Total por equipo</td>
         <td><code>KXWCTEAMTOTAL-…</code></td>
-        <td>$P_K(\text{equipo local} \ge 1),\; \ge 2,\; \ldots$ — y lo mismo para el visitante</td>
+        <td>$P_K(\text{equipo 1} \ge 1),\; \ge 2,\; \ldots$ — y lo mismo para el equipo 2</td>
         <td>90 min; eliminatoria</td>
       </tr>
       <tr>
@@ -151,7 +151,7 @@
   <h2>Modelo probabilístico</h2>
 
   <p>
-    Denotamos $H$ y $A$ los goles del equipo local y visitante, respectivamente.
+    Denotamos $H$ y $A$ los goles del equipo 1 y equipo 2, respectivamente.
     El modelo construye la distribución conjunta $P(H=a, A=b)$ para $(a,b) \in \{0,\ldots,5\}^2$
     en cuatro pasos secuenciales.
   </p>
@@ -354,7 +354,7 @@
 
   <p>
     El kernel se estima γ-ponderado de los 18 partidos de WC 2014–2022 que
-    llegaron a prórroga, simetrizando victorias locales y visitantes:
+    llegaron a prórroga, simetrizando victorias del equipo 1 y del equipo 2:
   </p>
 
   <table>
@@ -449,7 +449,7 @@
     perturbar lo ya fijado.
     En la ronda eliminatoria se añaden además las restricciones de
     <strong>goles por equipo</strong> (KXWCTEAMTOTAL), que fijan las marginales
-    individuales de goles del local y del visitante en tiempo reglamentario.
+    individuales de goles del equipo 1 y del equipo 2 en tiempo reglamentario.
   </p>
   <p>
     Un reajuste secuencial por razones —primero ajustar total de goles, luego
@@ -477,7 +477,7 @@
     <li>
       <strong>Diferencia de goles:</strong>
       $\displaystyle\sum_{\substack{a-b=m \\ a>b}} P(a,b) = p_H \cdot s_m^H$
-      y análogamente para el visitante con $s_m^A$, donde $s_m^H$, $s_m^A$ son
+      y análogamente para el equipo 2 con $s_m^A$, donde $s_m^H$, $s_m^A$ son
       las probabilidades de ganar por exactamente $m$ goles condicionales a la
       victoria de cada equipo (derivadas de los mercados KXWCSPREAD).
     </li>
