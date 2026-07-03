@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-03T04:14:38.471759+00:00",
+  "generated_at": "2026-07-03T04:29:38.026256+00:00",
   "matches": [
     {
       "id": 1,
@@ -6388,24 +6388,24 @@
       "phase": "knockout",
       "group": null,
       "prediction": {
-        "home": 3,
+        "home": 2,
         "away": 0,
-        "expected_pts": 2.9173,
+        "expected_pts": 2.9315,
         "top3": [
-          {
-            "home": 3,
-            "away": 0,
-            "expected_pts": 2.9173
-          },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.9132
+            "expected_pts": 2.9315
+          },
+          {
+            "home": 3,
+            "away": 0,
+            "expected_pts": 2.9072
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 2.8131
+            "expected_pts": 2.8253
           }
         ],
         "modal": {
@@ -6430,9 +6430,9 @@
         }
       },
       "ipf_prediction": {
-        "home": 3,
+        "home": 2,
         "away": 0,
-        "expected_pts": 2.9173
+        "expected_pts": 2.9315
       },
       "probabilities": {
         "home_win": 0.8853,
@@ -6463,24 +6463,24 @@
       "phase": "knockout",
       "group": null,
       "prediction": {
-        "home": 2,
+        "home": 1,
         "away": 0,
-        "expected_pts": 2.4723,
+        "expected_pts": 2.4527,
         "top3": [
-          {
-            "home": 2,
-            "away": 0,
-            "expected_pts": 2.4723
-          },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 2.4544
+            "expected_pts": 2.4527
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 2.4502
           },
           {
             "home": 3,
             "away": 0,
-            "expected_pts": 2.2923
+            "expected_pts": 2.3117
           }
         ],
         "modal": {
@@ -6505,9 +6505,9 @@
         }
       },
       "ipf_prediction": {
-        "home": 2,
+        "home": 1,
         "away": 0,
-        "expected_pts": 2.4723
+        "expected_pts": 2.4527
       },
       "probabilities": {
         "home_win": 0.7078,
