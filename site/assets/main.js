@@ -73,8 +73,11 @@ function quinielaPoints(predH, predA, actH, actA, phase) {
     if (predH === actH || predA === actA) return 1;
     return 0;
   } else {
-    if (predH === actH && predA === actA) return 3;
-    if (Math.sign(predH - predA) === Math.sign(actH - actA)) return 1;
+    if (predH === actH && predA === actA) return 5;
+    const pw = Math.sign(predH - predA), aw = Math.sign(actH - actA);
+    if (pw === aw && (predH === actH || predA === actA)) return 3;
+    if (pw === aw) return 2;
+    if (predH === actH || predA === actA) return 1;
     return 0;
   }
 }
