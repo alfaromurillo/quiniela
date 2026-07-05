@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-05T04:44:26.215197+00:00",
+  "generated_at": "2026-07-05T08:48:38.532146+00:00",
   "matches": [
     {
       "id": 1,
@@ -6765,22 +6765,22 @@
       "prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 2.0954,
+        "expected_pts": 2.0903,
         "top3": [
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.0954
+            "expected_pts": 2.0903
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.0021
+            "expected_pts": 2.0123
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.9618
+            "expected_pts": 1.9459
           }
         ],
         "modal": {
@@ -6807,7 +6807,7 @@
       "ipf_prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 2.0954
+        "expected_pts": 2.0903
       },
       "probabilities": {
         "home_win": 0.6067,
@@ -6817,10 +6817,10 @@
           "0": 0.055,
           "1": 0.14,
           "2": 0.24,
-          "3": 0.24,
-          "4": 0.16,
-          "5": 0.09,
-          "6": 0.075
+          "3": 0.23,
+          "4": 0.17,
+          "5": 0.1,
+          "6": 0.065
         }
       },
       "source": "kalshi",
@@ -6840,22 +6840,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.5882,
+        "expected_pts": 1.5976,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.5882
+            "expected_pts": 1.5976
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.5173
+            "expected_pts": 1.5271
           },
           {
-            "home": 1,
-            "away": 0,
-            "expected_pts": 1.4608
+            "home": 0,
+            "away": 2,
+            "expected_pts": 1.4644
           }
         ],
         "modal": {
@@ -6882,20 +6882,20 @@
       "ipf_prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.5882
+        "expected_pts": 1.5976
       },
       "probabilities": {
-        "home_win": 0.3744,
+        "home_win": 0.3692,
         "draw": 0.2211,
-        "away_win": 0.4044,
+        "away_win": 0.4096,
         "total_goals": {
           "0": 0.105,
           "1": 0.22,
           "2": 0.28,
           "3": 0.2,
           "4": 0.11,
-          "5": 0.06,
-          "6": 0.025
+          "5": 0.05,
+          "6": 0.035
         }
       },
       "source": "kalshi",
@@ -6915,22 +6915,22 @@
       "prediction": {
         "home": 1,
         "away": 2,
-        "expected_pts": 1.9978,
+        "expected_pts": 1.9921,
         "top3": [
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.9978
-          },
-          {
-            "home": 0,
-            "away": 2,
-            "expected_pts": 1.8963
+            "expected_pts": 1.9921
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.8836
+            "expected_pts": 1.8746
+          },
+          {
+            "home": 0,
+            "away": 2,
+            "expected_pts": 1.8737
           }
         ],
         "modal": {
@@ -6957,7 +6957,7 @@
       "ipf_prediction": {
         "home": 1,
         "away": 2,
-        "expected_pts": 1.9978
+        "expected_pts": 1.9921
       },
       "probabilities": {
         "home_win": 0.2357,
@@ -6966,10 +6966,10 @@
         "total_goals": {
           "0": 0.065,
           "1": 0.16,
-          "2": 0.26,
-          "3": 0.21,
-          "4": 0.16,
-          "5": 0.08,
+          "2": 0.23,
+          "3": 0.24,
+          "4": 0.15,
+          "5": 0.09,
           "6": 0.065
         }
       },
@@ -6990,22 +6990,22 @@
       "prediction": {
         "home": 1,
         "away": 2,
-        "expected_pts": 1.5047,
+        "expected_pts": 1.528,
         "top3": [
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.5047
+            "expected_pts": 1.528
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.4696
+            "expected_pts": 1.4605
           },
           {
-            "home": 0,
-            "away": 1,
-            "expected_pts": 1.411
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.3837
           }
         ],
         "modal": {
@@ -7025,14 +7025,14 @@
           "away": 2
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 2
         }
       },
       "ipf_prediction": {
         "home": 1,
         "away": 2,
-        "expected_pts": 1.5047
+        "expected_pts": 1.528
       },
       "probabilities": {
         "home_win": 0.3892,
@@ -7040,11 +7040,11 @@
         "away_win": 0.3992,
         "total_goals": {
           "0": 0.065,
-          "1": 0.14,
-          "2": 0.25,
-          "3": 0.21,
+          "1": 0.13,
+          "2": 0.24,
+          "3": 0.22,
           "4": 0.17,
-          "5": 0.09,
+          "5": 0.1,
           "6": 0.075
         }
       },
