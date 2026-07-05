@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-05T17:47:07.759936+00:00",
+  "generated_at": "2026-07-05T19:42:16.877339+00:00",
   "matches": [
     {
       "id": 1,
@@ -6765,22 +6765,22 @@
       "prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 2.0847,
+        "expected_pts": 2.0942,
         "top3": [
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.0847
+            "expected_pts": 2.0942
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.0219
+            "expected_pts": 2.0072
           },
           {
             "home": 3,
             "away": 1,
-            "expected_pts": 1.9365
+            "expected_pts": 1.9372
           }
         ],
         "modal": {
@@ -6801,13 +6801,13 @@
         },
         "baseline_full_raw": {
           "home": 2,
-          "away": 1
+          "away": 0
         }
       },
       "ipf_prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 2.0847
+        "expected_pts": 2.0942
       },
       "probabilities": {
         "home_win": 0.6057,
@@ -6815,12 +6815,12 @@
         "away_win": 0.1957,
         "total_goals": {
           "0": 0.055,
-          "1": 0.12,
-          "2": 0.25,
-          "3": 0.23,
-          "4": 0.18,
-          "5": 0.09,
-          "6": 0.075
+          "1": 0.14,
+          "2": 0.23,
+          "3": 0.24,
+          "4": 0.17,
+          "5": 0.1,
+          "6": 0.065
         }
       },
       "source": "kalshi",
@@ -6840,22 +6840,22 @@
       "prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.5735,
+        "expected_pts": 1.5681,
         "top3": [
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.5735
+            "expected_pts": 1.5681
           },
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.5146
+            "expected_pts": 1.5234
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.4698
+            "expected_pts": 1.4881
           }
         ],
         "modal": {
@@ -6882,20 +6882,20 @@
       "ipf_prediction": {
         "home": 0,
         "away": 1,
-        "expected_pts": 1.5735
+        "expected_pts": 1.5681
       },
       "probabilities": {
-        "home_win": 0.3718,
-        "draw": 0.2264,
-        "away_win": 0.4018,
+        "home_win": 0.3707,
+        "draw": 0.2286,
+        "away_win": 0.4007,
         "total_goals": {
           "0": 0.105,
           "1": 0.22,
           "2": 0.28,
           "3": 0.2,
           "4": 0.11,
-          "5": 0.06,
-          "6": 0.025
+          "5": 0.05,
+          "6": 0.035
         }
       },
       "source": "kalshi",
@@ -6990,22 +6990,22 @@
       "prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 1.5954,
+        "expected_pts": 1.5823,
         "top3": [
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5954
+            "expected_pts": 1.5823
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.4597
+            "expected_pts": 1.4662
           },
           {
-            "home": 3,
-            "away": 1,
-            "expected_pts": 1.4335
+            "home": 2,
+            "away": 0,
+            "expected_pts": 1.4368
           }
         ],
         "modal": {
@@ -7032,20 +7032,20 @@
       "ipf_prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 1.5954
+        "expected_pts": 1.5823
       },
       "probabilities": {
-        "home_win": 0.4303,
-        "draw": 0.2095,
-        "away_win": 0.3603,
+        "home_win": 0.4271,
+        "draw": 0.2158,
+        "away_win": 0.3571,
         "total_goals": {
           "0": 0.065,
           "1": 0.13,
-          "2": 0.24,
-          "3": 0.21,
-          "4": 0.175,
-          "5": 0.105,
-          "6": 0.075
+          "2": 0.23,
+          "3": 0.22,
+          "4": 0.17,
+          "5": 0.1,
+          "6": 0.085
         }
       },
       "source": "kalshi",
