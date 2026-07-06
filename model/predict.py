@@ -29,7 +29,7 @@ LEARNING_PATH  = ROOT / "site" / "data" / "learning.json"
 
 
 def _is_tbd(name: str) -> bool:
-    return not name or name[0].isdigit() or name.startswith("W")
+    return not name or name[0].isdigit() or name.startswith("W") or name.startswith("L")
 
 
 def run():
