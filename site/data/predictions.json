@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-06T10:13:14.487939+00:00",
+  "generated_at": "2026-07-06T16:04:15.381118+00:00",
   "matches": [
     {
       "id": 1,
@@ -6915,22 +6915,22 @@
       "prediction": {
         "home": 1,
         "away": 2,
-        "expected_pts": 1.9621,
+        "expected_pts": 1.9608,
         "top3": [
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.9621
+            "expected_pts": 1.9608
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.8924
+            "expected_pts": 1.8851
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.8792
+            "expected_pts": 1.8688
           }
         ],
         "modal": {
@@ -6957,19 +6957,19 @@
       "ipf_prediction": {
         "home": 1,
         "away": 2,
-        "expected_pts": 1.9621
+        "expected_pts": 1.9608
       },
       "probabilities": {
-        "home_win": 0.2357,
-        "draw": 0.1986,
-        "away_win": 0.5657,
+        "home_win": 0.2347,
+        "draw": 0.2006,
+        "away_win": 0.5647,
         "total_goals": {
           "0": 0.065,
           "1": 0.15,
           "2": 0.25,
           "3": 0.23,
-          "4": 0.16,
-          "5": 0.08,
+          "4": 0.17,
+          "5": 0.07,
           "6": 0.065
         }
       },
@@ -6990,22 +6990,22 @@
       "prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 1.5706,
+        "expected_pts": 1.5891,
         "top3": [
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5706
+            "expected_pts": 1.5891
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.4254
+            "expected_pts": 1.4337
           },
           {
-            "home": 1,
-            "away": 2,
-            "expected_pts": 1.4135
+            "home": 2,
+            "away": 0,
+            "expected_pts": 1.4224
           }
         ],
         "modal": {
@@ -7032,18 +7032,18 @@
       "ipf_prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 1.5706
+        "expected_pts": 1.5891
       },
       "probabilities": {
-        "home_win": 0.4203,
-        "draw": 0.2095,
-        "away_win": 0.3703,
+        "home_win": 0.4292,
+        "draw": 0.2115,
+        "away_win": 0.3592,
         "total_goals": {
-          "0": 0.065,
+          "0": 0.055,
           "1": 0.13,
-          "2": 0.23,
-          "3": 0.23,
-          "4": 0.16,
+          "2": 0.24,
+          "3": 0.22,
+          "4": 0.17,
           "5": 0.1,
           "6": 0.085
         }
@@ -7057,12 +7057,74 @@
       "date": "2026-07-07",
       "time_utc": "2026-07-07T16:00:00Z",
       "time_local": "12:00 UTC-4",
-      "home": "W86",
-      "away": "W88",
+      "home": "Argentina",
+      "away": "Egypt",
       "venue": "Atlanta",
       "phase": "knockout",
       "group": null,
-      "tbd": true
+      "prediction": {
+        "home": 1,
+        "away": 0,
+        "expected_pts": 2.6227,
+        "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 2.6227
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 2.6216
+          },
+          {
+            "home": 3,
+            "away": 0,
+            "expected_pts": 2.5313
+          }
+        ],
+        "modal": {
+          "home": 1,
+          "away": 0
+        },
+        "baseline_hist": {
+          "home": 0,
+          "away": 0
+        },
+        "baseline_out_raw": {
+          "home": 2,
+          "away": 1
+        },
+        "baseline_out_alpha": {
+          "home": 2,
+          "away": 0
+        },
+        "baseline_full_raw": {
+          "home": 3,
+          "away": 0
+        }
+      },
+      "ipf_prediction": {
+        "home": 1,
+        "away": 0,
+        "expected_pts": 2.6227
+      },
+      "probabilities": {
+        "home_win": 0.7689,
+        "draw": 0.1521,
+        "away_win": 0.0789,
+        "total_goals": {
+          "0": 0.065,
+          "1": 0.2,
+          "2": 0.26,
+          "3": 0.22,
+          "4": 0.14,
+          "5": 0.07,
+          "6": 0.045
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
     },
     {
       "id": 96,
@@ -7070,12 +7132,74 @@
       "date": "2026-07-07",
       "time_utc": "2026-07-07T20:00:00Z",
       "time_local": "13:00 UTC-7",
-      "home": "W85",
-      "away": "W87",
+      "home": "Switzerland",
+      "away": "Colombia",
       "venue": "Vancouver",
       "phase": "knockout",
       "group": null,
-      "tbd": true
+      "prediction": {
+        "home": 0,
+        "away": 1,
+        "expected_pts": 1.8307,
+        "top3": [
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.8307
+          },
+          {
+            "home": 1,
+            "away": 2,
+            "expected_pts": 1.7913
+          },
+          {
+            "home": 0,
+            "away": 2,
+            "expected_pts": 1.7115
+          }
+        ],
+        "modal": {
+          "home": 0,
+          "away": 1
+        },
+        "baseline_hist": {
+          "home": 0,
+          "away": 0
+        },
+        "baseline_out_raw": {
+          "home": 1,
+          "away": 2
+        },
+        "baseline_out_alpha": {
+          "home": 1,
+          "away": 2
+        },
+        "baseline_full_raw": {
+          "home": 0,
+          "away": 1
+        }
+      },
+      "ipf_prediction": {
+        "home": 0,
+        "away": 1,
+        "expected_pts": 1.8307
+      },
+      "probabilities": {
+        "home_win": 0.273,
+        "draw": 0.2361,
+        "away_win": 0.4909,
+        "total_goals": {
+          "0": 0.105,
+          "1": 0.23,
+          "2": 0.27,
+          "3": 0.2,
+          "4": 0.115,
+          "5": 0.045,
+          "6": 0.035
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
     },
     {
       "id": 97,
@@ -7083,12 +7207,74 @@
       "date": "2026-07-09",
       "time_utc": "2026-07-09T20:00:00Z",
       "time_local": "16:00 UTC-4",
-      "home": "W89",
-      "away": "W90",
+      "home": "France",
+      "away": "Morocco",
       "venue": "Boston (Foxborough)",
       "phase": "knockout",
       "group": null,
-      "tbd": true
+      "prediction": {
+        "home": 2,
+        "away": 0,
+        "expected_pts": 2.2882,
+        "top3": [
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 2.2882
+          },
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 2.2831
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 2.1741
+          }
+        ],
+        "modal": {
+          "home": 1,
+          "away": 0
+        },
+        "baseline_hist": {
+          "home": 0,
+          "away": 0
+        },
+        "baseline_out_raw": {
+          "home": 2,
+          "away": 1
+        },
+        "baseline_out_alpha": {
+          "home": 2,
+          "away": 1
+        },
+        "baseline_full_raw": {
+          "home": 3,
+          "away": 0
+        }
+      },
+      "ipf_prediction": {
+        "home": 2,
+        "away": 0,
+        "expected_pts": 2.2882
+      },
+      "probabilities": {
+        "home_win": 0.6755,
+        "draw": 0.1836,
+        "away_win": 0.1409,
+        "total_goals": {
+          "0": 0.085,
+          "1": 0.19,
+          "2": 0.25,
+          "3": 0.21,
+          "4": 0.15,
+          "5": 0.06,
+          "6": 0.055
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
     },
     {
       "id": 98,
@@ -7109,12 +7295,74 @@
       "date": "2026-07-11",
       "time_utc": "2026-07-11T21:00:00Z",
       "time_local": "17:00 UTC-4",
-      "home": "W91",
-      "away": "W92",
+      "home": "Norway",
+      "away": "England",
       "venue": "Miami (Miami Gardens)",
       "phase": "knockout",
       "group": null,
-      "tbd": true
+      "prediction": {
+        "home": 0,
+        "away": 1,
+        "expected_pts": 1.8811,
+        "top3": [
+          {
+            "home": 0,
+            "away": 1,
+            "expected_pts": 1.8811
+          },
+          {
+            "home": 0,
+            "away": 2,
+            "expected_pts": 1.8643
+          },
+          {
+            "home": 1,
+            "away": 2,
+            "expected_pts": 1.8601
+          }
+        ],
+        "modal": {
+          "home": 0,
+          "away": 1
+        },
+        "baseline_hist": {
+          "home": 0,
+          "away": 0
+        },
+        "baseline_out_raw": {
+          "home": 1,
+          "away": 2
+        },
+        "baseline_out_alpha": {
+          "home": 1,
+          "away": 2
+        },
+        "baseline_full_raw": {
+          "home": 0,
+          "away": 1
+        }
+      },
+      "ipf_prediction": {
+        "home": 0,
+        "away": 1,
+        "expected_pts": 1.8811
+      },
+      "probabilities": {
+        "home_win": 0.2559,
+        "draw": 0.1911,
+        "away_win": 0.5529,
+        "total_goals": {
+          "0": 0.06,
+          "1": 0.185,
+          "2": 0.23,
+          "3": 0.215,
+          "4": 0.165,
+          "5": 0.085,
+          "6": 0.06
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
     },
     {
       "id": 100,
