@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-07T01:25:39.571500+00:00",
+  "generated_at": "2026-07-07T03:49:26.655502+00:00",
   "matches": {
     "1": {
       "home": 1,
@@ -1382,9 +1382,9 @@
       "locked_at": "2026-07-06T23:44:36.776350+00:00"
     },
     "95": {
-      "home": 1,
+      "home": 2,
       "away": 0,
-      "expected_pts": 2.6348,
+      "expected_pts": 2.6244,
       "modal_home": 1,
       "modal_away": 0,
       "baseline_hist_home": 0,
@@ -1395,12 +1395,12 @@
       "baseline_out_alpha_away": 0,
       "baseline_full_raw_home": 3,
       "baseline_full_raw_away": 0,
-      "locked_at": "2026-07-07T01:25:39.571500+00:00"
+      "locked_at": "2026-07-07T03:49:26.655502+00:00"
     },
     "96": {
       "home": 0,
       "away": 1,
-      "expected_pts": 1.8502,
+      "expected_pts": 1.8473,
       "modal_home": 0,
       "modal_away": 1,
       "baseline_hist_home": 0,
@@ -1411,12 +1411,12 @@
       "baseline_out_alpha_away": 2,
       "baseline_full_raw_home": 0,
       "baseline_full_raw_away": 1,
-      "locked_at": "2026-07-07T01:25:39.571500+00:00"
+      "locked_at": "2026-07-07T03:49:26.655502+00:00"
     },
     "97": {
       "home": 2,
       "away": 0,
-      "expected_pts": 2.3033,
+      "expected_pts": 2.3402,
       "modal_home": 1,
       "modal_away": 0,
       "baseline_hist_home": 0,
@@ -1427,14 +1427,14 @@
       "baseline_out_alpha_away": 1,
       "baseline_full_raw_home": 3,
       "baseline_full_raw_away": 0,
-      "locked_at": "2026-07-07T01:25:39.571500+00:00"
+      "locked_at": "2026-07-07T03:49:26.655502+00:00"
     },
     "99": {
       "home": 1,
       "away": 2,
-      "expected_pts": 1.8866,
-      "modal_home": 0,
-      "modal_away": 1,
+      "expected_pts": 1.8944,
+      "modal_home": 1,
+      "modal_away": 2,
       "baseline_hist_home": 0,
       "baseline_hist_away": 0,
       "baseline_out_raw_home": 1,
@@ -1443,7 +1443,7 @@
       "baseline_out_alpha_away": 2,
       "baseline_full_raw_home": 0,
       "baseline_full_raw_away": 1,
-      "locked_at": "2026-07-07T01:25:39.571500+00:00"
+      "locked_at": "2026-07-07T03:49:26.655502+00:00"
     }
   }
 }
