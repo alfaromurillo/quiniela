@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-07T21:01:03.375694+00:00",
+  "generated_at": "2026-07-07T22:00:26.947492+00:00",
   "matches": [
     {
       "id": 1,
@@ -7215,22 +7215,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 2.3257,
+        "expected_pts": 2.3363,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 2.3257
+            "expected_pts": 2.3363
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.3241
+            "expected_pts": 2.3299
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.2039
+            "expected_pts": 2.2087
           }
         ],
         "modal": {
@@ -7257,7 +7257,7 @@
       "ipf_prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 2.3257
+        "expected_pts": 2.3363
       },
       "probabilities": {
         "home_win": 0.6823,
@@ -7303,22 +7303,22 @@
       "prediction": {
         "home": 1,
         "away": 2,
-        "expected_pts": 1.9383,
+        "expected_pts": 1.9335,
         "top3": [
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.9383
+            "expected_pts": 1.9335
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.8395
+            "expected_pts": 1.8539
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.8104
+            "expected_pts": 1.8054
           }
         ],
         "modal": {
@@ -7338,14 +7338,14 @@
           "away": 2
         },
         "baseline_full_raw": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 2
         }
       },
       "ipf_prediction": {
         "home": 1,
         "away": 2,
-        "expected_pts": 1.9383
+        "expected_pts": 1.9335
       },
       "probabilities": {
         "home_win": 0.2594,
@@ -7353,8 +7353,8 @@
         "away_win": 0.5494,
         "total_goals": {
           "0": 0.065,
-          "1": 0.15,
-          "2": 0.23,
+          "1": 0.14,
+          "2": 0.24,
           "3": 0.22,
           "4": 0.17,
           "5": 0.09,
