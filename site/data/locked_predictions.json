@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-08T01:10:36.853865+00:00",
+  "generated_at": "2026-07-08T01:37:50.575688+00:00",
   "matches": {
     "1": {
       "home": 1,
@@ -1416,7 +1416,7 @@
     "97": {
       "home": 2,
       "away": 0,
-      "expected_pts": 2.285,
+      "expected_pts": 2.2872,
       "modal_home": 1,
       "modal_away": 0,
       "baseline_hist_home": 0,
@@ -1427,23 +1427,55 @@
       "baseline_out_alpha_away": 1,
       "baseline_full_raw_home": 2,
       "baseline_full_raw_away": 0,
-      "locked_at": "2026-07-08T01:10:36.853865+00:00"
+      "locked_at": "2026-07-08T01:37:50.575688+00:00"
     },
     "99": {
       "home": 1,
       "away": 2,
-      "expected_pts": 1.8368,
-      "modal_home": 0,
-      "modal_away": 1,
+      "expected_pts": 1.8489,
+      "modal_home": 1,
+      "modal_away": 2,
       "baseline_hist_home": 0,
       "baseline_hist_away": 0,
       "baseline_out_raw_home": 1,
       "baseline_out_raw_away": 2,
       "baseline_out_alpha_home": 1,
       "baseline_out_alpha_away": 2,
-      "baseline_full_raw_home": 0,
-      "baseline_full_raw_away": 1,
-      "locked_at": "2026-07-08T01:10:36.853865+00:00"
+      "baseline_full_raw_home": 1,
+      "baseline_full_raw_away": 2,
+      "locked_at": "2026-07-08T01:37:50.575688+00:00"
+    },
+    "98": {
+      "home": 2,
+      "away": 0,
+      "expected_pts": 2.1734,
+      "modal_home": 1,
+      "modal_away": 0,
+      "baseline_hist_home": 0,
+      "baseline_hist_away": 0,
+      "baseline_out_raw_home": 2,
+      "baseline_out_raw_away": 1,
+      "baseline_out_alpha_home": 2,
+      "baseline_out_alpha_away": 1,
+      "baseline_full_raw_home": 3,
+      "baseline_full_raw_away": 0,
+      "locked_at": "2026-07-08T01:37:50.575688+00:00"
+    },
+    "100": {
+      "home": 1,
+      "away": 0,
+      "expected_pts": 2.2425,
+      "modal_home": 1,
+      "modal_away": 0,
+      "baseline_hist_home": 0,
+      "baseline_hist_away": 0,
+      "baseline_out_raw_home": 2,
+      "baseline_out_raw_away": 1,
+      "baseline_out_alpha_home": 2,
+      "baseline_out_alpha_away": 1,
+      "baseline_full_raw_home": 1,
+      "baseline_full_raw_away": 0,
+      "locked_at": "2026-07-08T01:37:50.575688+00:00"
     }
   }
 }
