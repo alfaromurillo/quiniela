@@ -112,6 +112,62 @@ def _load_gamma() -> float:
     return 0.84
 
 
+def _load_wc2026_group_real() -> tuple[np.ndarray, int]:
+    """
+    Canonical count matrix + total for completed WC 2026 group-stage matches,
+    read from site/data/results.json + data/schedule.json.
+    """
+    schedule_data = json.loads((ROOT / "data" / "schedule.json").read_text())
+    results_path  = ROOT / "site" / "data" / "results.json"
+    if not results_path.exists():
+        return np.zeros((MG+1, MG+1)), 0
+    results_json = json.loads(results_path.read_text())
+    by_id = {m["id"]: m for m in schedule_data["matches"]}
+    raw = np.zeros((MG+1, MG+1))
+    total = 0
+    for mid_str, r in results_json.get("matches", {}).items():
+        if r.get("status") != "final":
+            continue
+        m = by_id.get(int(mid_str))
+        if not m or m["phase"] != "group":
+            continue
+        h, a = r.get("home_score"), r.get("away_score")
+        if h is None or a is None:
+            continue
+        if h <= MG and a <= MG:
+            raw[h, a] += 1
+        total += 1
+    return _to_canonical(raw), total
+
+
+def _end_of_group_estimate_matrix(gamma: float, delta: float) -> np.ndarray:
+    """
+    Canonical probability matrix for the group phase using the model as it
+    stood at the end of the group stage: γ-weighted historical data plus the
+    72 completed WC 2026 group matches, weighted (1+δ), neutral 1/3-1/3-1/3
+    outcome probabilities (no Kalshi reweighting).
+    """
+    from model.learn import load_canonical, count_2026
+    from model.historical import build_distributions, scoreline_probs
+
+    schedule_data = json.loads((ROOT / "data" / "schedule.json").read_text())
+    results_path  = ROOT / "site" / "data" / "results.json"
+    results_json  = json.loads(results_path.read_text()) if results_path.exists() else {"matches": {}}
+    canonical     = load_canonical(results_json, schedule_data)
+    extra_wins, extra_draws = count_2026(canonical)
+
+    dist = build_distributions(gamma=gamma, delta=delta,
+                                extra_wins=extra_wins, extra_draws=extra_draws)
+    sp = scoreline_probs(1/3, 1/3, 1/3, "group", dist=dist)
+    raw = np.zeros((MG+1, MG+1))
+    for (h, a), p in sp.items():
+        if h <= MG and a <= MG:
+            raw[h, a] = p
+    s = raw.sum()
+    raw = raw / s if s > 0 else raw
+    return _to_canonical(raw)
+
+
 # ── Figure 1: Historical + model scoreline overview ────────────
 def fig1_historical_overview():
     """
@@ -237,15 +293,44 @@ def fig1_historical_overview():
                 transform=ax.transAxes, fontsize=6.5, color="#555555",
                 va="top", ha="left", linespacing=1.5)
 
-    # ── Placeholders: rows 1–2 of model columns ────────────────
+    # ── Row 1, col 1: end-of-group-stage model estimate (δ > 0) ────
+    delta_eog = 0.1   # δ estimated when the 72nd (last) group match locked
+    ax = axes[1, 1]
+    mat_eog = _end_of_group_estimate_matrix(gamma, delta_eog)
+    _draw_heatmap(ax, mat_eog, "Estimado fin de grupos", "Goles perdedor")
+    for loser in GOALS:
+        for winner in GOALS:
+            p = mat_eog[loser, winner]
+            if np.isnan(p) or p < 0.004:
+                continue
+            txt   = f"({p*100:.1f}%)"
+            color = "white" if p > vmax * 0.55 else "black"
+            ax.text(winner, loser, txt, ha="center", va="center",
+                    fontsize=5.5, color=color)
+    ax.text(0.04, 0.97, f"$\\gamma \\approx {gamma:.2f}$\n$\\delta \\approx {delta_eog:.2f}$",
+            transform=ax.transAxes, fontsize=6.5, color="#555555",
+            va="top", ha="left", linespacing=1.5)
+
+    # ── Row 2, col 1: real WC 2026 group-stage results (72 matches) ─
+    ax = axes[2, 1]
+    real_counts, real_total = _load_wc2026_group_real()
+    prop = (np.where(np.isnan(real_counts), np.nan, real_counts / real_total)
+            if real_total > 0 else real_counts.copy())
+    _draw_heatmap(ax, prop, "WC 2026 — datos reales", "Goles perdedor")
+    for loser in GOALS:
+        for winner in GOALS:
+            n = real_counts[loser, winner]
+            if np.isnan(n) or n == 0:
+                continue
+            frc = n / real_total if real_total > 0 else 0.0
+            txt = f"n={int(n)}\n({frc*100:.1f}%)"
+            color = "white" if frc > vmax * 0.55 else "black"
+            ax.text(winner, loser, txt, ha="center", va="center",
+                    fontsize=4.5, color=color, linespacing=1.3)
+
+    # ── Placeholders: knockout model column (tournament in progress) ─
     # (r, c, bold_label, italic_note)
     placeholders = [
-        (1, 1,
-         "Estimado fin\nde grupos",
-         "Completar al fin\nde la fase de grupos (~jul 3)"),
-        (2, 1,
-         "WC 2026 Grp real",
-         "Completar al fin\nde la fase de grupos (~jul 3)"),
         (1, 3,
          "Estimado fin\ndel mundial",
          "Completar al final\ndel torneo (~jul 19)"),

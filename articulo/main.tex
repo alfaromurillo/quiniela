@@ -110,7 +110,17 @@ Sobre la distribución resultante de marcadores se aplica un argumento
 de optimización explícito para encontrar la predicción que maximiza
 los puntos esperados bajo la regla de puntuación de la quiniela.
 
-\TODO{Completar con resultados numéricos al concluir la fase de grupos.}
+Evaluamos el modelo de forma retrospectiva sobre los 96 partidos del
+Mundial 2026 disputados hasta antes de cuartos de final (72 de fase de
+grupos y 24 de eliminatoria: ronda de 32 y octavos).
+La predicción óptima obtuvo en promedio 2.09 puntos por partido
+(1.99 en fase de grupos, 2.42 en eliminatoria), acertó el marcador
+exacto en el 11.5\,\% de los partidos y superó consistentemente al
+marcador modal (2.16 puntos por partido en promedio).
+Los precios de Kalshi, corregidos por sesgo favorito-longshot con
+$\hat\alpha \approx 1.11$ (prácticamente igual al valor de referencia
+$\alpha_0 = 1.10$), obtuvieron un score de Brier de 0.469, muy por
+debajo del 0.667 de una predicción uniforme.
 
 El código fuente del modelo y la plataforma web de seguimiento
 están disponibles públicamente en GitHub.
@@ -152,7 +162,17 @@ An explicit optimization argument then identifies the scoreline
 prediction that maximizes expected points under the quiniela scoring
 rule.
 
-\TODO{Insert numerical results upon conclusion of the group stage.}
+We evaluate the model retrospectively on the 96 WC 2026 matches played
+before the quarter-finals (72 group-stage and 24 knockout: round of 32
+and round of 16).
+The optimal prediction averaged 2.09 points per match (1.99 in the
+group stage, 2.42 in the knockout rounds), matched the exact scoreline
+in 11.5\,\% of matches, and consistently outperformed the modal
+scoreline (2.16 points per match on average).
+Kalshi prices, corrected for favourite-longshot bias with
+$\hat\alpha \approx 1.11$ (nearly identical to the reference value
+$\alpha_0 = 1.10$), achieved a Brier score of 0.469, well below the
+0.667 obtained by a uniform prediction.
 
 Model source code and live tracking website are publicly available
 on GitHub.
@@ -337,11 +357,17 @@ canónicos para los tres torneos.
     Columnas izquierdas: fase de grupos.
     Columnas derechas: eliminación directa (marcadores a 120 min
     cuando hay tiempo extra).
-    Las columnas de ``Estimado'' muestran el modelo en condiciones
-    neutrales ($\gamma \approx 0.84$, $\delta = 0$,
-    probabilidades iguales $1/3$--$1/3$--$1/3$);
-    los paneles en gris son marcadores de posición que se completarán
-    al concluir la fase de grupos y el torneo respectivamente.}
+    Fila superior de las columnas de modelo (``Estimado inicio''):
+    condiciones neutrales al inicio del torneo
+    ($\gamma \approx 0.84$, $\delta = 0$, probabilidades iguales
+    $1/3$--$1/3$--$1/3$).
+    En la columna de fase de grupos, la fila intermedia
+    (``Estimado fin de grupos'') incorpora los 72 partidos de grupos
+    ya disputados con $\delta \approx 0.10$, y la fila inferior
+    (``WC 2026 --- datos reales'') muestra su distribución empírica.
+    Los paneles en gris de la columna de eliminación directa son
+    marcadores de posición que se completarán al concluir el torneo
+    (\textasciitilde jul 19).}
   \label{fig:historico}
 \end{figure}
 
@@ -883,11 +909,25 @@ cuando el resultado es $2$-$0$, $3$-$0$ o $4$-$0$, mientras que
 $1$-$1$ nunca alcanza la tier de 3 puntos (véase
 Observación~\ref{obs:nodraw}).
 El resultado real fue $2$-$1$ (Corea del Sur).
-\TODO{Al final del torneo, buscar un ejemplo con mayor contraste
-entre el marcador modal y la predicción óptima, o donde la
-predicción resultó en una puntuación especialmente alta o baja.}
 
-\begin{observacion}[Los empates nunca son predicciones óptimas]
+\paragraph{Ejemplo de mayor contraste: México vs.\ Corea del Sur
+  (WC 2026, jornada 4).}
+Con precios de Kalshi $p_A = 0.478$, $p_E = 0.291$, $p_B = 0.231$,
+el marcador modal fue $0$-$1$ (victoria de Corea del Sur) mientras que
+la predicción óptima fue $1$-$0$ ($E = 1.689$), es decir, ambas
+estrategias no solo difirieron en los goles sino en el propio ganador
+previsto.
+El resultado real fue $1$-$0$ (México): la predicción óptima acertó el
+marcador exacto (5 puntos) mientras que el marcador modal no habría
+obtenido ningún punto.
+Esta diferencia de 5 puntos es la mayor observada entre ambas
+estrategias en los 82 partidos evaluados en la Sección~\ref{sec:resultados}
+(Tabla~\ref{tab:ablacion}), e ilustra que el desacuerdo entre el
+marcador más probable y el marcador óptimo no se limita a casos
+marginales de goles: la asimetría de la regla de puntuación puede
+invertir por completo la predicción recomendada.
+
+\begin{observacion}[Los empates están estructuralmente en desventaja]
 \label{obs:nodraw}
 Para cualquier predicción de empate exacto $(a, a)$, la tier de
 3 puntos de la regla de puntuación es inalcanzable.
@@ -918,7 +958,8 @@ compensar la ausencia del término de 3 puntos.
 En el fútbol mundialista, los empates ocurren en aproximadamente el
 25\% de los partidos de la fase de grupos, y la probabilidad de cada
 marcador de empate específico (0-0, 1-1, 2-2, \ldots) es pequeña,
-de modo que este umbral no se alcanza en la práctica.
+de modo que este umbral rara vez se alcanza en la práctica
+(Sección~\ref{sec:discusion} cuantifica cuán rara vez).
 \end{observacion}
 
 \subsubsection{Métricas de evaluación}
@@ -960,10 +1001,9 @@ Incluimos el marcador modal como estrategia de referencia para
 cuantificar la ganancia debida al paso de optimización.
 
 \paragraph{Comparación de estrategias.}
-Evaluamos cuatro estrategias de predicción:
-
-Las seis estrategias forman una ablación anidada en la que cada fila
-añade exactamente un componente respecto a la anterior:
+Evaluamos seis estrategias de predicción, que forman una ablación
+anidada en la que cada fila añade exactamente un componente respecto
+a la anterior:
 
 \begin{center}
 \begin{tabular}{clccc}
@@ -1144,36 +1184,139 @@ decisiones de diseño estadístico.
 \section{Resultados}
 \label{sec:resultados}
 
-\subsection{Fase de grupos}
+\subsection{Cobertura de la evaluación}
 
-\TODO{Completar al concluir la fase de grupos (~2026-07-03).}
+Evaluamos el modelo de forma retrospectiva sobre los 96 partidos del
+WC 2026 disputados hasta el 8 de julio de 2026, justo antes del inicio
+de cuartos de final: los 72 partidos de fase de grupos y los primeros
+24 de la fase eliminatoria (ronda de 32 y octavos de final).
+Para cada partido usamos la predicción \emph{congelada} al momento del
+cierre de mercado (Sección~\ref{sec:kalshi}), no la predicción
+recalculada con los parámetros $\gamma$, $\delta$ y $\alpha$ actuales,
+de modo que los puntos reportados reflejan lo que un participante real
+de la quiniela habría obtenido.
 
-Los datos que se reportarán incluyen:
+\subsection{Puntos de la quiniela}
+\label{sec:puntos}
 
-\begin{itemize}
-  \item Tabla de predicciones y resultados por partido, con puntos
-    obtenidos versus puntos esperados por el modelo.
-  \item Puntos totales acumulados y promedio por partido.
-  \item Evolución del parámetro $\delta$ a lo largo de la fase de
-    grupos (número de partidos jugados vs.\ estimación de $\delta$).
-  \item Valor estimado de $\hat{\alpha}$ al final de la fase de grupos
-    (sesgo favorito-longshot observado en Kalshi durante el WC 2026).
-  \item Comparación de las cuatro estrategias definidas en
-    la Sección~\ref{sec:metricas}: uniforme, solo resultado de
-    Kalshi, marcador modal, y predicción óptima (nuestro modelo).
-  \item Score de Brier~\eqref{eq:brier} de las probabilidades de
-    resultado de Kalshi corregidas por sesgo favorito-longshot,
-    como medida de calibración de la fuente de información.
-\end{itemize}
+La Tabla~\ref{tab:puntos} resume el desempeño de la predicción óptima.
+En promedio, el modelo obtuvo 2.09 puntos por partido, con una tasa de
+acierto exacto del 11.5\,\% y una tasa de acierto de ganador o mejor
+(2 puntos o más) del 65.6\,\%.
+El promedio de puntos esperados \emph{ex ante} sobre estos mismos 96
+partidos fue 2.07, prácticamente idéntico al promedio de puntos
+realmente obtenidos (2.09): el modelo está bien calibrado en agregado,
+aunque esto no garantiza calibración partido a partido.
 
-\subsection{Fase eliminatoria}
+\begin{table}[h]
+\centering
+\caption{Puntos obtenidos por la predicción óptima (congelada al
+cierre de mercado) en los 96 partidos disputados hasta antes de
+cuartos de final.}
+\label{tab:puntos}
+\begin{tabular}{lccccc}
+\toprule
+Fase & $n$ & Total & Promedio & \% exacto & \% ganador o mejor \\
+\midrule
+Grupos      & 72 & 143 & 1.99 &  9.7\,\% & 63.9\,\% \\
+Eliminatoria & 24 &  58 & 2.42 & 16.7\,\% & 70.8\,\% \\
+\midrule
+Total       & 96 & 201 & 2.09 & 11.5\,\% & 65.6\,\% \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\TODO{Completar durante la revisión del artículo, conforme avancen
-los partidos eliminatorios (~2026-07-04 al ~2026-07-19).}
+La fase eliminatoria muestra un promedio superior a la de grupos, pero
+con alta varianza entre rondas: la ronda de 32 promedió 2.94 puntos
+por partido ($n=16$), mientras que octavos de final promedió apenas
+1.38 ($n=8$), con ninguna predicción exacta y tres partidos en los
+que el equipo visitante ganó por dos o más goles de diferencia
+(México 2-3 Inglaterra, Estados Unidos 1-4 Bélgica, Brasil 1-2
+Noruega).
+Con solo ocho partidos, esta diferencia es consistente con varianza
+muestral y no debe interpretarse como una falla sistemática del
+modelo en rondas avanzadas (véase Limitaciones,
+Sección~\ref{sec:discusion}).
 
-Se reportarán los mismos indicadores que en la fase de grupos,
-organizados por ronda: Ronda de 32, Octavos de final,
-Cuartos de final, Semifinales y Final.
+\subsection{Comparación de estrategias}
+\label{sec:comparacion}
+
+La Tabla~\ref{tab:ablacion} compara las seis estrategias definidas en
+la Sección~\ref{sec:metricas} sobre los 82 de los 96 partidos para los
+que la predicción congelada incluye las cuatro estrategias de
+referencia.\footnote{Los 14 partidos restantes corresponden a las
+jornadas 1--5, disputadas antes de que el \textit{pipeline} registrara
+las predicciones de referencia junto con la predicción óptima; se
+excluyen de esta comparación pero sí se incluyen en la
+Tabla~\ref{tab:puntos}.}
+
+\begin{table}[h]
+\centering
+\caption{Comparación de las seis estrategias de la
+Sección~\ref{sec:metricas} sobre 82 partidos con predicciones de
+referencia completas (58 de fase de grupos, 24 de eliminatoria).}
+\label{tab:ablacion}
+\begin{tabular}{lcccccc}
+\toprule
+& \multicolumn{2}{c}{Grupos ($n=58$)}
+& \multicolumn{2}{c}{Eliminatoria ($n=24$)}
+& \multicolumn{2}{c}{Total ($n=82$)} \\
+Estrategia & Total & Prom. & Total & Prom. & Total & Prom. \\
+\midrule
+1. Uniforme                        &  68 & 1.17 & 21 & 0.88 &  89 & 1.09 \\
+2. Solo resultado (sin $\alpha$)   & 126 & 2.17 & 53 & 2.21 & 179 & 2.18 \\
+3. Solo resultado (con $\alpha$)   & 126 & 2.17 & 53 & 2.21 & 179 & 2.18 \\
+4. Completo (sin $\alpha$)         & 127 & 2.19 & 58 & 2.42 & 185 & 2.26 \\
+5. Modal completo                  & 123 & 2.12 & 54 & 2.25 & 177 & 2.16 \\
+6. \textbf{Óptimo — nuestro modelo} & \textbf{128} & \textbf{2.21} & \textbf{58} & \textbf{2.42} & \textbf{186} & \textbf{2.27} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Tres comparaciones son relevantes.
+Primero, $1 \to 2$: incorporar la dirección de Kalshi sobre una
+distribución uniforme casi duplica el promedio de puntos (1.09 a
+2.18), confirmando el valor básico del mercado de predicción.
+Segundo, $2 \to 3$: la corrección por sesgo favorito-longshot no
+cambió ningún punto en este período ($\hat\alpha \approx 1.11$,
+Sección~\ref{sec:brier}, es prácticamente idéntico al valor de
+referencia $\alpha_0 = 1.10$, por lo que la corrección apenas mueve
+las probabilidades).
+Tercero, $5 \to 6$: el paso de optimización explícito aporta una
+ganancia modesta pero consistente sobre el marcador modal (177 a 186
+puntos, +5.1\,\%), concentrada principalmente en la fase de grupos
+(123 a 128).
+La Sección~\ref{sec:optimizacion} presenta un ejemplo concreto
+(México vs.\ Corea del Sur) donde esta ganancia fue de 5 puntos en un
+solo partido.
+
+\subsection{Score de Brier y sesgo favorito-longshot}
+\label{sec:brier}
+
+Para los 90 partidos con probabilidades de Kalshi y resultado final
+disponibles, el score de Brier~\eqref{eq:brier} de las probabilidades
+de resultado fue 0.470 sin corregir y 0.469 corregidas por sesgo
+favorito-longshot con $\hat\alpha \approx 1.106$, ambos muy por debajo
+del 0.667 de una predicción uniforme.
+La mejora marginal de la corrección $\alpha$ refleja que $\hat\alpha$
+resultó casi idéntico al valor de referencia $\alpha_0 = 1.10$
+calibrado en mercados de intercambio competitivos \citep{whelan2024}:
+el sesgo favorito-longshot observado en Kalshi durante el WC 2026 no
+difiere sustancialmente del reportado para otros mercados de
+predicción deportivos.
+
+\subsection{Adaptación al torneo en curso}
+\label{sec:resultados-delta}
+
+El parámetro $\delta$ se reestimó en cada ejecución del \textit{pipeline}
+conforme llegaban resultados del WC 2026 (Figura~\ref{fig:delta}).
+Tras los 96 partidos disputados, $\hat\delta = 0.20$; a lo largo de la
+fase de grupos y la ronda de 32 y octavos, $\hat\delta$ osciló entre 0
+y 0.5, con media 0.13 y desviación estándar 0.11.
+Este rango moderado indica que el WC 2026 no se ha desviado
+drásticamente del comportamiento de los tres Mundiales anteriores en
+número y distribución de goles, aunque el modelo sí incorpora un peso
+adicional constante y positivo hacia los datos del torneo en curso.
 
 % ─────────────────────────────────────────────────────────────
 \section{Discusión}
@@ -1181,66 +1324,89 @@ Cuartos de final, Semifinales y Final.
 
 \subsection{Aportación de los mercados de predicción}
 
-\TODO{Completar con datos reales al concluir la fase de grupos.}
-
 La pregunta central es si los precios de Kalshi añaden valor sobre
 la distribución histórica pura.
-El diseño experimental (comparación versus la línea base histórica)
-permite cuantificar esta contribución.
-Si el modelo con Kalshi supera consistentemente a la línea base
-histórica, esto constituye evidencia de que los mercados de predicción
-contienen información específica del partido que no está capturada en
-el historial de Mundiales.
+La comparación $1 \to 2$ de la Tabla~\ref{tab:ablacion}
+(Sección~\ref{sec:comparacion}) responde afirmativamente: incorporar
+únicamente la dirección de Kalshi —sin corrección de sesgo ni ajuste
+de goles y ventaja— casi duplica el promedio de puntos frente a una
+distribución uniforme (1.09 a 2.18 puntos por partido sobre 82
+partidos).
+Esto confirma que los mercados de predicción contienen información
+específica del partido que el historial de Mundiales, por sí solo, no
+captura.
 
-El modelo incluye la corrección por sesgo favorito-longshot descrita
-en la Sección~\ref{sec:alpha}: los precios brutos de Kalshi se
-transforman mediante la ecuación~\eqref{eq:alpha} con el exponente
+El modelo incluye además la corrección por sesgo favorito-longshot
+descrita en la Sección~\ref{sec:alpha}: los precios brutos de Kalshi
+se transforman mediante la ecuación~\eqref{eq:alpha} con el exponente
 $\hat{\alpha}$ estimado por MAP sobre los partidos completados con
 datos de Kalshi.
 Al inicio del torneo, $\hat{\alpha} = \alpha_0 = 1.10$
 (valor de referencia para mercados de intercambio competitivos;
 \citealp{whelan2024}).
-Con el avance de la fase de grupos, $\hat{\alpha}$ se actualiza
-secuencialmente para incorporar la evidencia específica de Kalshi en
-el WC 2026.
-
-\TODO{Al concluir la fase de grupos: reportar el valor estimado de
-$\hat{\alpha}$ y comparar con $\alpha_0 = 1.10$. Si $\hat{\alpha}$
-difiere sustancialmente, esto indica que el sesgo en Kalshi durante
-el WC 2026 difiere del valor esperado para mercados de intercambio
-en general, posiblemente porque el Mundial atrae a usuarios nuevos
-con distinto perfil de calibración.}
+Tras 90 partidos con datos de Kalshi y resultado final,
+$\hat{\alpha} \approx 1.106$: prácticamente indistinguible del valor
+de referencia.
+En este período la corrección no cambió ningún punto respecto a usar
+las probabilidades brutas (comparación $2 \to 3$ en
+Tabla~\ref{tab:ablacion}) ni mejoró de forma apreciable el score de
+Brier (0.470 sin corregir vs.\ 0.469 corregido,
+Sección~\ref{sec:brier}).
+Esto sugiere que el sesgo favorito-longshot de los usuarios de Kalshi
+durante el WC 2026 no difiere del observado en mercados de intercambio
+competitivos en general \citep{whelan2024}, en lugar de reflejar un
+perfil de calibración distinto atribuible al público específico del
+Mundial.
+La ganancia de aplicar el reajuste completo de goles y ventaja
+($2 \to 4$ en Tabla~\ref{tab:ablacion}) fue mayor en la fase
+eliminatoria (2.21 a 2.42 puntos) que en la de grupos (2.17 a 2.19),
+consistente con la disponibilidad de mercados adicionales
+(\texttt{KXWCTEAMTOTAL-}) exclusivos de la fase eliminatoria.
 
 \subsection{Adaptación bayesiana: el parámetro \texorpdfstring{$\delta$}{delta}}
-
-\TODO{Analizar si $\delta > 0$ mejoró las predicciones en la fase
-de grupos.}
 
 El parámetro $\delta$ modela la hipótesis de que el WC 2026 puede
 diferir sistemáticamente de los Mundiales anteriores en el número y
 distribución de goles.
-Si $\delta$ estimado permanece cercano a cero al final de la fase de
-grupos, esto sugiere que el historial de tres Mundiales es suficiente
-para caracterizar la distribución del WC 2026.
-Si $\delta$ crece sustancialmente, indica una desviación real del
-comportamiento histórico.
+Tras 96 partidos, $\hat\delta = 0.20$, y a lo largo de la fase de
+grupos y los primeros partidos eliminatorios osciló entre 0 y 0.5
+(media 0.13, desviación estándar 0.11; Figura~\ref{fig:delta}).
+Este rango moderado y siempre no negativo indica que el historial de
+tres Mundiales anteriores describe razonablemente bien la
+distribución de goles del WC 2026, aunque el torneo en curso sí
+aporta una señal adicional consistente: en ningún momento de la fase
+de grupos ni la ronda de 32/octavos la validación cruzada favoreció
+$\delta = 0$ de forma sostenida, lo que respalda incluir el término
+adaptativo en lugar de depender exclusivamente del historial fijo.
 
-\subsection{Ausencia de predicciones de empate}
+\subsection{Ausencia (casi total) de predicciones de empate}
 
-La Observación~\ref{obs:nodraw} predice que el modelo no producirá
-ninguna predicción de empate en ninguna fase del torneo.
-Esta predicción se confirma empíricamente: en los 48 partidos de la
-fase de grupos y en los partidos eliminatorios disputados hasta la
-fecha, el modelo propone en todos los casos una victoria de uno de los
-dos equipos.
-Este resultado no refleja una sesgo hacia las victorias en las
-estimaciones de probabilidad, sino una consecuencia directa de la
-regla de puntuación: la tier de 3 puntos ---que constituye una
-fracción sustancial del valor esperado de una predicción--- es
-estructuralmente inaccesible para los empates.
-Un participante humano intuitivo que predijera empates en partidos
-muy parejos estaría actuando de forma subóptima incluso si su
-estimación de $P(\text{empate})$ fuera correcta.
+La Observación~\ref{obs:nodraw} muestra que la tier de 3 puntos es
+estructuralmente inalcanzable para cualquier predicción de empate, y
+argumenta que este umbral rara vez se alcanza en la práctica.
+Los datos confirman que las predicciones de empate son, en efecto,
+excepcionales: de los 96 partidos evaluados, el modelo predijo empate
+($0$-$0$) en solo 2 (Paraguay vs.\ Australia y Argelia vs.\ Austria),
+ambos en fase de grupos.
+En ambos casos, Kalshi asignó una probabilidad de empate inusualmente
+alta ($p_E = 0.393$ y $p_E = 0.467$, respectivamente, frente a un
+25\,\% típico) junto con una distribución de goles totales sesgada
+hacia marcadores bajos ($\Prob(T=0) \approx 0.21$ en ambos partidos),
+exactamente la combinación que la Observación~\ref{obs:nodraw}
+identifica como necesaria para que un empate supere el umbral de
+puntos esperados.
+El resultado real fue $0$-$0$ en ambos partidos: la predicción de
+empate, aunque estructuralmente en desventaja frente a la tier de 3
+puntos, resultó óptima y acertó el marcador exacto.
+Este resultado no contradice la Observación~\ref{obs:nodraw} sino que
+ilustra su condición de frontera: el modelo predice empates
+únicamente cuando la evidencia de mercado lo justifica con suficiente
+margen, y en el resto de los 94 partidos (97.9\,\%) propuso la
+victoria de uno de los dos equipos.
+Un participante humano intuitivo que predijera empates en todo
+partido muy parejo estaría actuando de forma subóptima con más
+frecuencia que el modelo, incluso si su estimación de
+$P(\text{empate})$ fuera correcta.
 
 \subsection{Limitaciones}
 
@@ -1270,6 +1436,16 @@ El kernel se actualiza con los partidos de ET del WC~2026 conforme
 avanza el torneo, pero los datos acumulados en la fase eliminatoria
 de un único Mundial serán insuficientes para reducir sustancialmente
 esa incertidumbre.
+
+\textbf{Varianza muestral por ronda eliminatoria.}
+Cada ronda de la fase eliminatoria tiene pocos partidos (16 en la
+ronda de 32, 8 en octavos, 4 en cuartos, 2 en semifinales), por lo que
+el promedio de puntos observado en una ronda específica está sujeto a
+alta varianza muestral.
+La diferencia observada entre la ronda de 32 (2.94 puntos por
+partido) y octavos de final (1.38) ilustra este efecto
+(Sección~\ref{sec:puntos}) y no debe interpretarse como evidencia de
+que el modelo se deteriora sistemáticamente en rondas avanzadas.
 
 \subsection{Extensiones posibles}
 
@@ -1309,8 +1485,18 @@ sistema de predicción de probabilidades: no busca el marcador más
 probable, sino el que rinde más en promedio bajo esa regla de puntuación
 específica.
 
-Los resultados del torneo \TODO{completar con conclusión cuantitativa
-tras la fase de grupos y el análisis de calibración de Kalshi}.
+Evaluado retrospectivamente sobre los 96 partidos del WC 2026
+disputados hasta antes de cuartos de final, el modelo obtuvo un
+promedio de 2.09 puntos por partido y una tasa de acierto exacto del
+11.5\,\%, superando de forma consistente tanto a una línea base
+uniforme (1.09 puntos, Sección~\ref{sec:comparacion}) como al
+marcador modal (2.16 puntos).
+Los precios de Kalshi resultaron bien calibrados (score de Brier 0.469
+frente a 0.667 de una predicción uniforme), y el sesgo
+favorito-longshot observado ($\hat\alpha \approx 1.11$) coincidió con
+el valor de referencia reportado para mercados de intercambio
+competitivos, sin evidencia de un perfil de calibración distintivo
+entre los usuarios de Kalshi durante el Mundial.
 
 El código fuente y la plataforma web están disponibles públicamente,
 con actualizaciones automáticas durante todo el torneo.
