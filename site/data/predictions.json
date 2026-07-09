@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-09T16:58:33.920604+00:00",
+  "generated_at": "2026-07-09T18:26:21.922255+00:00",
   "matches": [
     {
       "id": 1,
@@ -7215,22 +7215,22 @@
       "prediction": {
         "home": 2,
         "away": 0,
-        "expected_pts": 2.3234,
+        "expected_pts": 2.3172,
         "top3": [
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.3234
+            "expected_pts": 2.3172
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 2.3026
+            "expected_pts": 2.3135
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.1938
+            "expected_pts": 2.1969
           }
         ],
         "modal": {
@@ -7257,7 +7257,7 @@
       "ipf_prediction": {
         "home": 2,
         "away": 0,
-        "expected_pts": 2.3234
+        "expected_pts": 2.3172
       },
       "probabilities": {
         "home_win": 0.6832,
@@ -7440,22 +7440,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 2.2451,
+        "expected_pts": 2.2422,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 2.2451
+            "expected_pts": 2.2422
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.1659
+            "expected_pts": 2.1661
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.0743
+            "expected_pts": 2.0826
           }
         ],
         "modal": {
@@ -7482,7 +7482,7 @@
       "ipf_prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 2.2451
+        "expected_pts": 2.2422
       },
       "probabilities": {
         "home_win": 0.6274,
@@ -7494,8 +7494,8 @@
           "2": 0.26,
           "3": 0.21,
           "4": 0.12,
-          "5": 0.06,
-          "6": 0.035
+          "5": 0.055,
+          "6": 0.04
         }
       },
       "source": "kalshi",
