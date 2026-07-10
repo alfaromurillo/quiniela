@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-10T22:56:42.594609+00:00",
+  "generated_at": "2026-07-10T23:29:42.496054+00:00",
   "matches": [
     {
       "id": 1,
@@ -7365,22 +7365,22 @@
       "prediction": {
         "home": 1,
         "away": 2,
-        "expected_pts": 1.9257,
+        "expected_pts": 1.9104,
         "top3": [
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.9257
+            "expected_pts": 1.9104
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.8193
+            "expected_pts": 1.8143
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.8013
+            "expected_pts": 1.8032
           }
         ],
         "modal": {
@@ -7407,7 +7407,7 @@
       "ipf_prediction": {
         "home": 1,
         "away": 2,
-        "expected_pts": 1.9257
+        "expected_pts": 1.9104
       },
       "probabilities": {
         "home_win": 0.2567,
@@ -7440,22 +7440,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 2.2606,
+        "expected_pts": 2.2817,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 2.2606
+            "expected_pts": 2.2817
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.1952
+            "expected_pts": 2.2347
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.1063
+            "expected_pts": 2.1423
           }
         ],
         "modal": {
@@ -7482,18 +7482,18 @@
       "ipf_prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 2.2606
+        "expected_pts": 2.2817
       },
       "probabilities": {
-        "home_win": 0.6373,
+        "home_win": 0.6447,
         "draw": 0.2006,
-        "away_win": 0.1621,
+        "away_win": 0.1547,
         "total_goals": {
           "0": 0.095,
           "1": 0.21,
           "2": 0.27,
-          "3": 0.205,
-          "4": 0.125,
+          "3": 0.21,
+          "4": 0.12,
           "5": 0.06,
           "6": 0.035
         }
