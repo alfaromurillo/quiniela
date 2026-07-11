@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-11T01:07:25.431745+00:00",
+  "generated_at": "2026-07-11T02:56:42.098659+00:00",
   "matches": [
     {
       "id": 1,
@@ -7365,22 +7365,22 @@
       "prediction": {
         "home": 1,
         "away": 2,
-        "expected_pts": 1.9134,
+        "expected_pts": 1.9222,
         "top3": [
           {
             "home": 1,
             "away": 2,
-            "expected_pts": 1.9134
+            "expected_pts": 1.9222
           },
           {
             "home": 0,
             "away": 2,
-            "expected_pts": 1.8185
+            "expected_pts": 1.8305
           },
           {
             "home": 0,
             "away": 1,
-            "expected_pts": 1.7935
+            "expected_pts": 1.7864
           }
         ],
         "modal": {
@@ -7407,7 +7407,7 @@
       "ipf_prediction": {
         "home": 1,
         "away": 2,
-        "expected_pts": 1.9134
+        "expected_pts": 1.9222
       },
       "probabilities": {
         "home_win": 0.2567,
@@ -7440,22 +7440,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 2.2803,
+        "expected_pts": 2.289,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 2.2803
+            "expected_pts": 2.289
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 2.2347
+            "expected_pts": 2.2396
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.1495
+            "expected_pts": 2.135
           }
         ],
         "modal": {
@@ -7482,7 +7482,7 @@
       "ipf_prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 2.2803
+        "expected_pts": 2.289
       },
       "probabilities": {
         "home_win": 0.6447,
