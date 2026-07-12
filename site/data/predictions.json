@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-12T17:41:54.967100+00:00",
+  "generated_at": "2026-07-12T18:30:41.804666+00:00",
   "matches": [
     {
       "id": 1,
@@ -7507,12 +7507,74 @@
       "date": "2026-07-14",
       "time_utc": "2026-07-14T19:00:00Z",
       "time_local": "14:00 UTC-5",
-      "home": "W97",
-      "away": "W98",
+      "home": "France",
+      "away": "Spain",
       "venue": "Dallas (Arlington)",
       "phase": "knockout",
       "group": null,
-      "tbd": true
+      "prediction": {
+        "home": 2,
+        "away": 1,
+        "expected_pts": 1.8108,
+        "top3": [
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.8108
+          },
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.6928
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 1.637
+          }
+        ],
+        "modal": {
+          "home": 2,
+          "away": 1
+        },
+        "baseline_hist": {
+          "home": 0,
+          "away": 0
+        },
+        "baseline_out_raw": {
+          "home": 2,
+          "away": 1
+        },
+        "baseline_out_alpha": {
+          "home": 2,
+          "away": 1
+        },
+        "baseline_full_raw": {
+          "home": 1,
+          "away": 0
+        }
+      },
+      "ipf_prediction": {
+        "home": 2,
+        "away": 1,
+        "expected_pts": 1.8108
+      },
+      "probabilities": {
+        "home_win": 0.4855,
+        "draw": 0.2189,
+        "away_win": 0.2955,
+        "total_goals": {
+          "0": 0.065,
+          "1": 0.16,
+          "2": 0.26,
+          "3": 0.23,
+          "4": 0.15,
+          "5": 0.08,
+          "6": 0.055
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
     },
     {
       "id": 102,
@@ -7520,12 +7582,74 @@
       "date": "2026-07-15",
       "time_utc": "2026-07-15T19:00:00Z",
       "time_local": "15:00 UTC-4",
-      "home": "W99",
-      "away": "W100",
+      "home": "England",
+      "away": "Argentina",
       "venue": "Atlanta",
       "phase": "knockout",
       "group": null,
-      "tbd": true
+      "prediction": {
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.6473,
+        "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.6473
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.5803
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 1.4642
+          }
+        ],
+        "modal": {
+          "home": 1,
+          "away": 0
+        },
+        "baseline_hist": {
+          "home": 0,
+          "away": 0
+        },
+        "baseline_out_raw": {
+          "home": 2,
+          "away": 1
+        },
+        "baseline_out_alpha": {
+          "home": 2,
+          "away": 1
+        },
+        "baseline_full_raw": {
+          "home": 1,
+          "away": 0
+        }
+      },
+      "ipf_prediction": {
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.6473
+      },
+      "probabilities": {
+        "home_win": 0.4232,
+        "draw": 0.2436,
+        "away_win": 0.3332,
+        "total_goals": {
+          "0": 0.095,
+          "1": 0.22,
+          "2": 0.27,
+          "3": 0.21,
+          "4": 0.12,
+          "5": 0.05,
+          "6": 0.035
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
     },
     {
       "id": 103,
