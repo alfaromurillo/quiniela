@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-14T18:46:34.755535+00:00",
+  "generated_at": "2026-07-14T19:42:53.832010+00:00",
   "matches": [
     {
       "id": 1,
@@ -7590,22 +7590,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.6265,
+        "expected_pts": 1.6241,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.6265
+            "expected_pts": 1.6241
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5942
+            "expected_pts": 1.59
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.4916
+            "expected_pts": 1.4927
           }
         ],
         "modal": {
@@ -7632,20 +7632,20 @@
       "ipf_prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.6265
+        "expected_pts": 1.6241
       },
       "probabilities": {
-        "home_win": 0.4207,
-        "draw": 0.2486,
-        "away_win": 0.3307,
+        "home_win": 0.4195,
+        "draw": 0.2511,
+        "away_win": 0.3295,
         "total_goals": {
           "0": 0.105,
           "1": 0.21,
           "2": 0.28,
           "3": 0.19,
           "4": 0.12,
-          "5": 0.05,
-          "6": 0.045
+          "5": 0.06,
+          "6": 0.035
         }
       },
       "source": "kalshi",
