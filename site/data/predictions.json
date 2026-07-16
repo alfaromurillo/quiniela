@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-16T18:46:49.343696+00:00",
+  "generated_at": "2026-07-16T19:34:12.212755+00:00",
   "matches": [
     {
       "id": 1,
@@ -7665,22 +7665,22 @@
       "prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 1.8746,
+        "expected_pts": 1.8738,
         "top3": [
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.8746
+            "expected_pts": 1.8738
           },
           {
             "home": 3,
             "away": 1,
-            "expected_pts": 1.7703
+            "expected_pts": 1.7678
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.6923
+            "expected_pts": 1.692
           }
         ],
         "modal": {
@@ -7707,7 +7707,7 @@
       "ipf_prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 1.8746
+        "expected_pts": 1.8738
       },
       "probabilities": {
         "home_win": 0.5304,
@@ -7740,22 +7740,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7597,
+        "expected_pts": 1.7702,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7597
+            "expected_pts": 1.7702
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.6673
+            "expected_pts": 1.6801
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.6263
+            "expected_pts": 1.6481
           }
         ],
         "modal": {
@@ -7782,12 +7782,12 @@
       "ipf_prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7597
+        "expected_pts": 1.7702
       },
       "probabilities": {
-        "home_win": 0.4621,
-        "draw": 0.2388,
-        "away_win": 0.299,
+        "home_win": 0.4674,
+        "draw": 0.2412,
+        "away_win": 0.2914,
         "total_goals": {
           "0": 0.105,
           "1": 0.2,
