@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-16T15:52:18.271488+00:00",
+  "generated_at": "2026-07-16T16:52:40.207014+00:00",
   "matches": [
     {
       "id": 1,
@@ -7665,22 +7665,22 @@
       "prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 1.8532,
+        "expected_pts": 1.8663,
         "top3": [
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.8532
+            "expected_pts": 1.8663
           },
           {
             "home": 3,
             "away": 1,
-            "expected_pts": 1.7713
+            "expected_pts": 1.7712
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.6835
+            "expected_pts": 1.6841
           }
         ],
         "modal": {
@@ -7707,7 +7707,7 @@
       "ipf_prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 1.8532
+        "expected_pts": 1.8663
       },
       "probabilities": {
         "home_win": 0.5304,
@@ -7715,12 +7715,12 @@
         "away_win": 0.2804,
         "total_goals": {
           "0": 0.035,
-          "1": 0.1,
-          "2": 0.195,
-          "3": 0.225,
+          "1": 0.09,
+          "2": 0.2,
+          "3": 0.23,
           "4": 0.2,
-          "5": 0.12,
-          "6": 0.125
+          "5": 0.11,
+          "6": 0.135
         }
       },
       "source": "kalshi",
@@ -7740,22 +7740,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.745,
+        "expected_pts": 1.7519,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.745
+            "expected_pts": 1.7519
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.6741
+            "expected_pts": 1.671
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.648
+            "expected_pts": 1.6391
           }
         ],
         "modal": {
@@ -7782,7 +7782,7 @@
       "ipf_prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.745
+        "expected_pts": 1.7519
       },
       "probabilities": {
         "home_win": 0.4674,
@@ -7790,12 +7790,12 @@
         "away_win": 0.2914,
         "total_goals": {
           "0": 0.105,
-          "1": 0.19,
-          "2": 0.28,
+          "1": 0.2,
+          "2": 0.27,
           "3": 0.2,
-          "4": 0.12,
+          "4": 0.125,
           "5": 0.065,
-          "6": 0.04
+          "6": 0.035
         }
       },
       "source": "kalshi",
