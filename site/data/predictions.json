@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-16T01:07:16.809144+00:00",
+  "generated_at": "2026-07-16T01:12:02.114023+00:00",
   "matches": [
     {
       "id": 1,
@@ -7657,12 +7657,74 @@
       "date": "2026-07-18",
       "time_utc": "2026-07-18T21:00:00Z",
       "time_local": "17:00 UTC-4",
-      "home": "L101",
-      "away": "L102",
+      "home": "France",
+      "away": "England",
       "venue": "Miami (Miami Gardens)",
       "phase": "knockout",
       "group": null,
-      "tbd": true
+      "prediction": {
+        "home": 2,
+        "away": 1,
+        "expected_pts": 1.8867,
+        "top3": [
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.8867
+          },
+          {
+            "home": 3,
+            "away": 1,
+            "expected_pts": 1.7684
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 1.7305
+          }
+        ],
+        "modal": {
+          "home": 2,
+          "away": 1
+        },
+        "baseline_hist": {
+          "home": 0,
+          "away": 0
+        },
+        "baseline_out_raw": {
+          "home": 2,
+          "away": 1
+        },
+        "baseline_out_alpha": {
+          "home": 2,
+          "away": 1
+        },
+        "baseline_full_raw": {
+          "home": 2,
+          "away": 1
+        }
+      },
+      "ipf_prediction": {
+        "home": 2,
+        "away": 1,
+        "expected_pts": 1.8867
+      },
+      "probabilities": {
+        "home_win": 0.5394,
+        "draw": 0.1911,
+        "away_win": 0.2694,
+        "total_goals": {
+          "0": 0.045,
+          "1": 0.105,
+          "2": 0.205,
+          "3": 0.23,
+          "4": 0.19,
+          "5": 0.12,
+          "6": 0.105
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
     },
     {
       "id": 104,
@@ -7670,12 +7732,74 @@
       "date": "2026-07-19",
       "time_utc": "2026-07-19T19:00:00Z",
       "time_local": "15:00 UTC-4",
-      "home": "W101",
-      "away": "W102",
+      "home": "Spain",
+      "away": "Argentina",
       "venue": "New York/New Jersey (East Rutherford)",
       "phase": "knockout",
       "group": null,
-      "tbd": true
+      "prediction": {
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.8049,
+        "top3": [
+          {
+            "home": 1,
+            "away": 0,
+            "expected_pts": 1.8049
+          },
+          {
+            "home": 2,
+            "away": 1,
+            "expected_pts": 1.6629
+          },
+          {
+            "home": 2,
+            "away": 0,
+            "expected_pts": 1.6581
+          }
+        ],
+        "modal": {
+          "home": 1,
+          "away": 0
+        },
+        "baseline_hist": {
+          "home": 0,
+          "away": 0
+        },
+        "baseline_out_raw": {
+          "home": 2,
+          "away": 1
+        },
+        "baseline_out_alpha": {
+          "home": 2,
+          "away": 1
+        },
+        "baseline_full_raw": {
+          "home": 1,
+          "away": 0
+        }
+      },
+      "ipf_prediction": {
+        "home": 1,
+        "away": 0,
+        "expected_pts": 1.8049
+      },
+      "probabilities": {
+        "home_win": 0.4661,
+        "draw": 0.2399,
+        "away_win": 0.2941,
+        "total_goals": {
+          "0": 0.085,
+          "1": 0.23,
+          "2": 0.28,
+          "3": 0.185,
+          "4": 0.125,
+          "5": 0.065,
+          "6": 0.03
+        }
+      },
+      "source": "kalshi",
+      "tbd": false
     }
   ]
 }
