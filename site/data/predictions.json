@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-18T07:44:06.446015+00:00",
+  "generated_at": "2026-07-18T14:38:24.813972+00:00",
   "matches": [
     {
       "id": 1,
@@ -7665,22 +7665,22 @@
       "prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 1.9554,
+        "expected_pts": 1.9628,
         "top3": [
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.9554
+            "expected_pts": 1.9628
           },
           {
             "home": 3,
             "away": 1,
-            "expected_pts": 1.8681
+            "expected_pts": 1.881
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.8143
+            "expected_pts": 1.8273
           }
         ],
         "modal": {
@@ -7707,12 +7707,12 @@
       "ipf_prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 1.9554
+        "expected_pts": 1.9628
       },
       "probabilities": {
-        "home_win": 0.5732,
-        "draw": 0.1836,
-        "away_win": 0.2432,
+        "home_win": 0.5769,
+        "draw": 0.1761,
+        "away_win": 0.2469,
         "total_goals": {
           "0": 0.035,
           "1": 0.1,
@@ -7740,22 +7740,22 @@
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7678,
+        "expected_pts": 1.773,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7678
+            "expected_pts": 1.773
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.6903
+            "expected_pts": 1.6793
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.6705
+            "expected_pts": 1.6684
           }
         ],
         "modal": {
@@ -7782,7 +7782,7 @@
       "ipf_prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7678
+        "expected_pts": 1.773
       },
       "probabilities": {
         "home_win": 0.4652,
@@ -7791,8 +7791,8 @@
         "total_goals": {
           "0": 0.105,
           "1": 0.2,
-          "2": 0.27,
-          "3": 0.2,
+          "2": 0.28,
+          "3": 0.19,
           "4": 0.12,
           "5": 0.07,
           "6": 0.035
