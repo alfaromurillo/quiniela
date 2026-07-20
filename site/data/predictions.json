@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-20T16:06:33.125509+00:00",
+  "generated_at": "2026-07-20T16:36:47.097460+00:00",
   "matches": [
     {
       "id": 1,
@@ -12,6 +12,7 @@
       "venue": "Mexico City",
       "phase": "group",
       "group": "Group A",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -87,6 +88,7 @@
       "venue": "Guadalajara (Zapopan)",
       "phase": "group",
       "group": "Group A",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -162,6 +164,7 @@
       "venue": "Atlanta",
       "phase": "group",
       "group": "Group A",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -237,6 +240,7 @@
       "venue": "Guadalajara (Zapopan)",
       "phase": "group",
       "group": "Group A",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -312,6 +316,7 @@
       "venue": "Mexico City",
       "phase": "group",
       "group": "Group A",
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 1,
@@ -387,6 +392,7 @@
       "venue": "Monterrey (Guadalupe)",
       "phase": "group",
       "group": "Group A",
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 1,
@@ -462,6 +468,7 @@
       "venue": "Toronto",
       "phase": "group",
       "group": "Group B",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -537,6 +544,7 @@
       "venue": "San Francisco Bay Area (Santa Clara)",
       "phase": "group",
       "group": "Group B",
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 2,
@@ -612,6 +620,7 @@
       "venue": "Los Angeles (Inglewood)",
       "phase": "group",
       "group": "Group B",
+      "points_multiplier": 1,
       "prediction": {
         "home": 2,
         "away": 0,
@@ -687,6 +696,7 @@
       "venue": "Vancouver",
       "phase": "group",
       "group": "Group B",
+      "points_multiplier": 1,
       "prediction": {
         "home": 3,
         "away": 0,
@@ -762,6 +772,7 @@
       "venue": "Vancouver",
       "phase": "group",
       "group": "Group B",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -837,6 +848,7 @@
       "venue": "Seattle",
       "phase": "group",
       "group": "Group B",
+      "points_multiplier": 1,
       "prediction": {
         "home": 3,
         "away": 0,
@@ -912,6 +924,7 @@
       "venue": "New York/New Jersey (East Rutherford)",
       "phase": "group",
       "group": "Group C",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -987,6 +1000,7 @@
       "venue": "Boston (Foxborough)",
       "phase": "group",
       "group": "Group C",
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 3,
@@ -1062,6 +1076,7 @@
       "venue": "Boston (Foxborough)",
       "phase": "group",
       "group": "Group C",
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 1,
@@ -1137,6 +1152,7 @@
       "venue": "Philadelphia",
       "phase": "group",
       "group": "Group C",
+      "points_multiplier": 1,
       "prediction": {
         "home": 5,
         "away": 1,
@@ -1212,6 +1228,7 @@
       "venue": "Miami (Miami Gardens)",
       "phase": "group",
       "group": "Group C",
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 3,
@@ -1287,6 +1304,7 @@
       "venue": "Atlanta",
       "phase": "group",
       "group": "Group C",
+      "points_multiplier": 1,
       "prediction": {
         "home": 3,
         "away": 0,
@@ -1362,6 +1380,7 @@
       "venue": "Los Angeles (Inglewood)",
       "phase": "group",
       "group": "Group D",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -1437,6 +1456,7 @@
       "venue": "Vancouver",
       "phase": "group",
       "group": "Group D",
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 1,
@@ -1512,6 +1532,7 @@
       "venue": "Seattle",
       "phase": "group",
       "group": "Group D",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -1587,6 +1608,7 @@
       "venue": "San Francisco Bay Area (Santa Clara)",
       "phase": "group",
       "group": "Group D",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -1662,6 +1684,7 @@
       "venue": "Los Angeles (Inglewood)",
       "phase": "group",
       "group": "Group D",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 2,
@@ -1737,6 +1760,7 @@
       "venue": "San Francisco Bay Area (Santa Clara)",
       "phase": "group",
       "group": "Group D",
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 0,
@@ -1812,6 +1836,7 @@
       "venue": "Houston",
       "phase": "group",
       "group": "Group E",
+      "points_multiplier": 1,
       "prediction": {
         "home": 5,
         "away": 1,
@@ -1887,6 +1912,7 @@
       "venue": "Philadelphia",
       "phase": "group",
       "group": "Group E",
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 1,
@@ -1962,6 +1988,7 @@
       "venue": "Toronto",
       "phase": "group",
       "group": "Group E",
+      "points_multiplier": 1,
       "prediction": {
         "home": 3,
         "away": 0,
@@ -2037,6 +2064,7 @@
       "venue": "Kansas City",
       "phase": "group",
       "group": "Group E",
+      "points_multiplier": 1,
       "prediction": {
         "home": 2,
         "away": 0,
@@ -2112,6 +2140,7 @@
       "venue": "Philadelphia",
       "phase": "group",
       "group": "Group E",
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 3,
@@ -2187,6 +2216,7 @@
       "venue": "New York/New Jersey (East Rutherford)",
       "phase": "group",
       "group": "Group E",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 2,
@@ -2262,6 +2292,7 @@
       "venue": "Dallas (Arlington)",
       "phase": "group",
       "group": "Group F",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -2337,6 +2368,7 @@
       "venue": "Monterrey (Guadalupe)",
       "phase": "group",
       "group": "Group F",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -2412,6 +2444,7 @@
       "venue": "Houston",
       "phase": "group",
       "group": "Group F",
+      "points_multiplier": 1,
       "prediction": {
         "home": 2,
         "away": 1,
@@ -2487,6 +2520,7 @@
       "venue": "Monterrey (Guadalupe)",
       "phase": "group",
       "group": "Group F",
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 1,
@@ -2562,6 +2596,7 @@
       "venue": "Dallas (Arlington)",
       "phase": "group",
       "group": "Group F",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -2637,6 +2672,7 @@
       "venue": "Kansas City",
       "phase": "group",
       "group": "Group F",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 5,
@@ -2712,6 +2748,7 @@
       "venue": "Seattle",
       "phase": "group",
       "group": "Group G",
+      "points_multiplier": 1,
       "prediction": {
         "home": 2,
         "away": 0,
@@ -2787,6 +2824,7 @@
       "venue": "Los Angeles (Inglewood)",
       "phase": "group",
       "group": "Group G",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -2862,6 +2900,7 @@
       "venue": "Los Angeles (Inglewood)",
       "phase": "group",
       "group": "Group G",
+      "points_multiplier": 1,
       "prediction": {
         "home": 2,
         "away": 0,
@@ -2937,6 +2976,7 @@
       "venue": "Vancouver",
       "phase": "group",
       "group": "Group G",
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 1,
@@ -3012,6 +3052,7 @@
       "venue": "Seattle",
       "phase": "group",
       "group": "Group G",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 1,
@@ -3087,6 +3128,7 @@
       "venue": "Vancouver",
       "phase": "group",
       "group": "Group G",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 4,
@@ -3162,6 +3204,7 @@
       "venue": "Atlanta",
       "phase": "group",
       "group": "Group H",
+      "points_multiplier": 1,
       "prediction": {
         "home": 5,
         "away": 1,
@@ -3237,6 +3280,7 @@
       "venue": "Miami (Miami Gardens)",
       "phase": "group",
       "group": "Group H",
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 1,
@@ -3312,6 +3356,7 @@
       "venue": "Atlanta",
       "phase": "group",
       "group": "Group H",
+      "points_multiplier": 1,
       "prediction": {
         "home": 3,
         "away": 0,
@@ -3387,6 +3432,7 @@
       "venue": "Miami (Miami Gardens)",
       "phase": "group",
       "group": "Group H",
+      "points_multiplier": 1,
       "prediction": {
         "home": 2,
         "away": 0,
@@ -3462,6 +3508,7 @@
       "venue": "Houston",
       "phase": "group",
       "group": "Group H",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -3537,6 +3584,7 @@
       "venue": "Guadalajara (Zapopan)",
       "phase": "group",
       "group": "Group H",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -3612,6 +3660,7 @@
       "venue": "New York/New Jersey (East Rutherford)",
       "phase": "group",
       "group": "Group I",
+      "points_multiplier": 1,
       "prediction": {
         "home": 2,
         "away": 0,
@@ -3687,6 +3736,7 @@
       "venue": "Boston (Foxborough)",
       "phase": "group",
       "group": "Group I",
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 3,
@@ -3762,6 +3812,7 @@
       "venue": "Philadelphia",
       "phase": "group",
       "group": "Group I",
+      "points_multiplier": 1,
       "prediction": {
         "home": 3,
         "away": 0,
@@ -3837,6 +3888,7 @@
       "venue": "New York/New Jersey (East Rutherford)",
       "phase": "group",
       "group": "Group I",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -3912,6 +3964,7 @@
       "venue": "Boston (Foxborough)",
       "phase": "group",
       "group": "Group I",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 2,
@@ -3987,6 +4040,7 @@
       "venue": "Toronto",
       "phase": "group",
       "group": "Group I",
+      "points_multiplier": 1,
       "prediction": {
         "home": 3,
         "away": 0,
@@ -4062,6 +4116,7 @@
       "venue": "Kansas City",
       "phase": "group",
       "group": "Group J",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -4137,6 +4192,7 @@
       "venue": "San Francisco Bay Area (Santa Clara)",
       "phase": "group",
       "group": "Group J",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -4212,6 +4268,7 @@
       "venue": "Dallas (Arlington)",
       "phase": "group",
       "group": "Group J",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -4287,6 +4344,7 @@
       "venue": "San Francisco Bay Area (Santa Clara)",
       "phase": "group",
       "group": "Group J",
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 1,
@@ -4362,6 +4420,7 @@
       "venue": "Kansas City",
       "phase": "group",
       "group": "Group J",
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 0,
@@ -4437,6 +4496,7 @@
       "venue": "Dallas (Arlington)",
       "phase": "group",
       "group": "Group J",
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 3,
@@ -4512,6 +4572,7 @@
       "venue": "Houston",
       "phase": "group",
       "group": "Group K",
+      "points_multiplier": 1,
       "prediction": {
         "home": 3,
         "away": 0,
@@ -4587,6 +4648,7 @@
       "venue": "Mexico City",
       "phase": "group",
       "group": "Group K",
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 3,
@@ -4662,6 +4724,7 @@
       "venue": "Houston",
       "phase": "group",
       "group": "Group K",
+      "points_multiplier": 1,
       "prediction": {
         "home": 3,
         "away": 0,
@@ -4737,6 +4800,7 @@
       "venue": "Guadalajara (Zapopan)",
       "phase": "group",
       "group": "Group K",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -4812,6 +4876,7 @@
       "venue": "Miami (Miami Gardens)",
       "phase": "group",
       "group": "Group K",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 2,
@@ -4887,6 +4952,7 @@
       "venue": "Atlanta",
       "phase": "group",
       "group": "Group K",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -4962,6 +5028,7 @@
       "venue": "Dallas (Arlington)",
       "phase": "group",
       "group": "Group L",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -5037,6 +5104,7 @@
       "venue": "Toronto",
       "phase": "group",
       "group": "Group L",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -5112,6 +5180,7 @@
       "venue": "Boston (Foxborough)",
       "phase": "group",
       "group": "Group L",
+      "points_multiplier": 1,
       "prediction": {
         "home": 2,
         "away": 0,
@@ -5187,6 +5256,7 @@
       "venue": "Toronto",
       "phase": "group",
       "group": "Group L",
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 3,
@@ -5262,6 +5332,7 @@
       "venue": "New York/New Jersey (East Rutherford)",
       "phase": "group",
       "group": "Group L",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 3,
@@ -5337,6 +5408,7 @@
       "venue": "Philadelphia",
       "phase": "group",
       "group": "Group L",
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -5412,6 +5484,7 @@
       "venue": "Los Angeles (Inglewood)",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 1,
@@ -5487,6 +5560,7 @@
       "venue": "Boston (Foxborough)",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 2,
         "away": 0,
@@ -5562,6 +5636,7 @@
       "venue": "Monterrey (Guadalupe)",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 2,
         "away": 1,
@@ -5637,6 +5712,7 @@
       "venue": "Houston",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 2,
         "away": 1,
@@ -5712,6 +5788,7 @@
       "venue": "New York/New Jersey (East Rutherford)",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 2,
         "away": 0,
@@ -5787,6 +5864,7 @@
       "venue": "Dallas (Arlington)",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 2,
@@ -5862,6 +5940,7 @@
       "venue": "Mexico City",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -5937,6 +6016,7 @@
       "venue": "Atlanta",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 2,
         "away": 0,
@@ -6012,6 +6092,7 @@
       "venue": "San Francisco Bay Area (Santa Clara)",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 2,
         "away": 0,
@@ -6087,6 +6168,7 @@
       "venue": "Seattle",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -6162,6 +6244,7 @@
       "venue": "Toronto",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -6237,6 +6320,7 @@
       "venue": "Los Angeles (Inglewood)",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -6312,6 +6396,7 @@
       "venue": "Vancouver",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -6387,6 +6472,7 @@
       "venue": "Miami (Miami Gardens)",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 3,
         "away": 0,
@@ -6462,6 +6548,7 @@
       "venue": "Kansas City",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 2,
         "away": 0,
@@ -6537,6 +6624,7 @@
       "venue": "Dallas (Arlington)",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 1,
@@ -6612,6 +6700,7 @@
       "venue": "Philadelphia",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 2,
@@ -6687,6 +6776,7 @@
       "venue": "Houston",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 1,
@@ -6762,6 +6852,7 @@
       "venue": "New York/New Jersey (East Rutherford)",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 2,
         "away": 1,
@@ -6837,6 +6928,7 @@
       "venue": "Mexico City",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -6912,6 +7004,7 @@
       "venue": "Dallas (Arlington)",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 2,
@@ -6987,6 +7080,7 @@
       "venue": "Seattle",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 2,
         "away": 1,
@@ -7062,6 +7156,7 @@
       "venue": "Atlanta",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 2,
         "away": 0,
@@ -7137,6 +7232,7 @@
       "venue": "Vancouver",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 0,
         "away": 1,
@@ -7212,6 +7308,7 @@
       "venue": "Boston (Foxborough)",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 2,
         "away": 0,
@@ -7287,6 +7384,7 @@
       "venue": "Los Angeles (Inglewood)",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 2,
         "away": 0,
@@ -7362,6 +7460,7 @@
       "venue": "Miami (Miami Gardens)",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 2,
@@ -7437,6 +7536,7 @@
       "venue": "Kansas City",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 1,
       "prediction": {
         "home": 1,
         "away": 0,
@@ -7512,25 +7612,26 @@
       "venue": "Dallas (Arlington)",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 2,
       "prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 1.6649,
+        "expected_pts": 3.3297,
         "top3": [
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.6649
+            "expected_pts": 3.3297
           },
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.5582
+            "expected_pts": 3.1163
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.4898
+            "expected_pts": 2.9796
           }
         ],
         "modal": {
@@ -7557,7 +7658,7 @@
       "ipf_prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 1.6649
+        "expected_pts": 3.3297
       },
       "probabilities": {
         "home_win": 0.4364,
@@ -7587,25 +7688,26 @@
       "venue": "Atlanta",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 2,
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.5999,
+        "expected_pts": 3.1998,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.5999
+            "expected_pts": 3.1998
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.5727
+            "expected_pts": 3.1454
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.4559
+            "expected_pts": 2.9119
           }
         ],
         "modal": {
@@ -7632,7 +7734,7 @@
       "ipf_prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.5999
+        "expected_pts": 3.1998
       },
       "probabilities": {
         "home_win": 0.4095,
@@ -7662,25 +7764,26 @@
       "venue": "Miami (Miami Gardens)",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 2,
       "prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 2.0106,
+        "expected_pts": 4.0211,
         "top3": [
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 2.0106
+            "expected_pts": 4.0211
           },
           {
             "home": 3,
             "away": 1,
-            "expected_pts": 1.9278
+            "expected_pts": 3.8556
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.8113
+            "expected_pts": 3.6226
           }
         ],
         "modal": {
@@ -7707,7 +7810,7 @@
       "ipf_prediction": {
         "home": 2,
         "away": 1,
-        "expected_pts": 2.0106
+        "expected_pts": 4.0211
       },
       "probabilities": {
         "home_win": 0.5778,
@@ -7737,25 +7840,26 @@
       "venue": "New York/New Jersey (East Rutherford)",
       "phase": "knockout",
       "group": null,
+      "points_multiplier": 2,
       "prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7508,
+        "expected_pts": 3.5016,
         "top3": [
           {
             "home": 1,
             "away": 0,
-            "expected_pts": 1.7508
+            "expected_pts": 3.5016
           },
           {
             "home": 2,
             "away": 1,
-            "expected_pts": 1.7195
+            "expected_pts": 3.439
           },
           {
             "home": 2,
             "away": 0,
-            "expected_pts": 1.6751
+            "expected_pts": 3.3502
           }
         ],
         "modal": {
@@ -7782,7 +7886,7 @@
       "ipf_prediction": {
         "home": 1,
         "away": 0,
-        "expected_pts": 1.7508
+        "expected_pts": 3.5016
       },
       "probabilities": {
         "home_win": 0.4705,

@@ -16,7 +16,7 @@ RESULTS_PATH  = ROOT / "site" / "data" / "results.json"
 
 DEGENERATE_SCORE      = (5, 5)
 MIN_EPTS              = 0.5   # any upcoming match below this is suspicious
-MAX_EPTS              = 5.1   # group stage max is 5
+MAX_EPTS              = 5.1   # base max is 5; doubled rounds allow up to 10.1
 RESULT_DELAY_GROUP    = 120   # minutes — must match results.py
 RESULT_DELAY_KNOCKOUT = 210
 
@@ -85,8 +85,9 @@ def check(pred_path: Path, lock_path: Path) -> list[str]:
         if 1e-6 < ep < MIN_EPTS:
             warnings.append(f"{label}: low expected_pts={ep:.4f}")
 
-        # Hard: expected pts out of range
-        if ep > MAX_EPTS:
+        # Hard: expected pts out of range (doubled rounds allow 2x)
+        max_ep = MAX_EPTS * m.get("points_multiplier", 1)
+        if ep > max_ep:
             errors.append(f"{label}: expected_pts={ep:.4f} exceeds maximum")
 
         # Hard: probabilities don't sum to ~1

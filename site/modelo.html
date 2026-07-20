@@ -62,8 +62,7 @@
 
   <h3>Ronda eliminatoria</h3>
   <p>Solo se cuentan los goles en tiempo reglamentario + prórroga (120 min). Si el partido se define por penales,
-  se considera empate para efectos de la quiniela. La estructura de puntos es la misma que en la fase de grupos
-  (posiblemente escalada por un factor constante según la ronda, lo cual no altera la predicción óptima).</p>
+  se considera empate para efectos de la quiniela. La estructura de puntos es la misma que en la fase de grupos.</p>
   <table>
     <thead><tr><th>Acierto</th><th>Puntos base</th></tr></thead>
     <tbody>
@@ -71,6 +70,24 @@
       <tr><td>Ganador/empate correcto <em>y</em> goles de un equipo correctos</td><td><strong>3 pts</strong></td></tr>
       <tr><td>Ganador/empate correcto (sin goles correctos)</td><td><strong>2 pts</strong></td></tr>
       <tr><td>Goles de un equipo correctos, ganador equivocado</td><td><strong>1 pt</strong></td></tr>
+      <tr><td>Ningún acierto</td><td><strong>0 pts</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Puntaje doble: semifinales, tercer puesto y final</h3>
+  <p>
+    Las semifinales, el partido por el tercer puesto y la final valen <strong>el doble de puntos</strong>
+    (×2) sobre la tabla anterior — el único caso en que el puntaje difiere del resto del torneo.
+    Multiplicar por una constante no cambia la predicción óptima (el argmax es invariante a escala),
+    así que el modelo predice igual; solo cambian los puntos que efectivamente se ganan.
+  </p>
+  <table>
+    <thead><tr><th>Acierto</th><th>Puntos (×2)</th></tr></thead>
+    <tbody>
+      <tr><td>Marcador exacto en 120 min</td><td><strong>10 pts</strong></td></tr>
+      <tr><td>Ganador/empate correcto <em>y</em> goles de un equipo correctos</td><td><strong>6 pts</strong></td></tr>
+      <tr><td>Ganador/empate correcto (sin goles correctos)</td><td><strong>4 pts</strong></td></tr>
+      <tr><td>Goles de un equipo correctos, ganador equivocado</td><td><strong>2 pts</strong></td></tr>
       <tr><td>Ningún acierto</td><td><strong>0 pts</strong></td></tr>
     </tbody>
   </table>

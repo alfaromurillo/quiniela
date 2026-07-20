@@ -381,6 +381,17 @@ main { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
 .pts-earned.p1 { background: #fff8e1; color: #e65100; }
 .pts-earned.p0 { background: #fce4ec; color: #b71c1c; }
 
+.pts-multiplier {
+  display: inline-block;
+  font-size: .68rem;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 20px;
+  margin-left: 3px;
+  background: #fff3e0;
+  color: #e65100;
+}
+
 /* ── Responsive ── */
 @media (max-width: 640px) {
   .match-card {

@@ -44,6 +44,10 @@ const MONTHS_ES = ["enero","febrero","marzo","abril","mayo","junio","julio","ago
 const RESULT_DELAY_GROUP    = 120;
 const RESULT_DELAY_KNOCKOUT = 210;
 
+// Semifinals, third-place match, and final score double points.
+const DOUBLE_POINTS_ROUNDS = new Set(["Semi-final", "Match for third place", "Final"]);
+function pointsMultiplier(round) { return DOUBLE_POINTS_ROUNDS.has(round) ? 2 : 1; }
+
 function flag(name) { return FLAGS[name] || "🏳️"; }
 function tname(name) { return NAMES_ES[name] || name; }
 
@@ -64,22 +68,15 @@ function matchStatus(timeUtc, phase) {
   return diff < window ? "live" : "past-pending";
 }
 
-function quinielaPoints(predH, predA, actH, actA, phase) {
-  if (phase === "group") {
-    if (predH === actH && predA === actA) return 5;
-    const pw = Math.sign(predH - predA), aw = Math.sign(actH - actA);
-    if (pw === aw && (predH === actH || predA === actA)) return 3;
-    if (pw === aw) return 2;
-    if (predH === actH || predA === actA) return 1;
-    return 0;
-  } else {
-    if (predH === actH && predA === actA) return 5;
-    const pw = Math.sign(predH - predA), aw = Math.sign(actH - actA);
-    if (pw === aw && (predH === actH || predA === actA)) return 3;
-    if (pw === aw) return 2;
-    if (predH === actH || predA === actA) return 1;
-    return 0;
-  }
+// Base 5/3/2/1/0 scale (same for group and knockout matches); apply
+// pointsMultiplier(round) separately to get the actual points awarded.
+function quinielaPoints(predH, predA, actH, actA) {
+  if (predH === actH && predA === actA) return 5;
+  const pw = Math.sign(predH - predA), aw = Math.sign(actH - actA);
+  if (pw === aw && (predH === actH || predA === actA)) return 3;
+  if (pw === aw) return 2;
+  if (predH === actH || predA === actA) return 1;
+  return 0;
 }
 
 function eptsBadgeClass(ep) {
@@ -135,8 +132,11 @@ function renderCard(m, filter, locked, result) {
   } else if (hasResult) {
     // Completed match: show result + locked prediction + points
     const lp  = locked;
-    const pts = lp ? quinielaPoints(lp.home, lp.away, result.home_score, result.away_score, m.phase) : null;
-    const ptsHtml = pts !== null ? `<span class="pts-earned p${pts}">+${pts} pts</span>` : "";
+    const mult    = pointsMultiplier(m.round);
+    const rawPts  = lp ? quinielaPoints(lp.home, lp.away, result.home_score, result.away_score) : null;
+    const pts     = rawPts !== null ? rawPts * mult : null;
+    const multTag = mult > 1 ? `<span class="pts-multiplier">×${mult}</span>` : "";
+    const ptsHtml = pts !== null ? `<span class="pts-earned p${rawPts}">+${pts} pts</span>${multTag}` : "";
     const predHtml = lp
       ? `<div class="score-pred-row">Pred: <strong>${lp.home}-${lp.away}</strong></div>`
       : "";
@@ -264,7 +264,8 @@ async function init() {
     const lp = lockedMap[String(m.id)];
     const rs = resultsMap[String(m.id)];
     if (lp && rs && rs.status === "final") {
-      totalPts += quinielaPoints(lp.home, lp.away, rs.home_score, rs.away_score, m.phase);
+      const raw = quinielaPoints(lp.home, lp.away, rs.home_score, rs.away_score);
+      totalPts += raw * pointsMultiplier(m.round);
       gamesPlayed++;
     }
   }

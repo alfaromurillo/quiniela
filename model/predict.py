@@ -27,6 +27,9 @@ LOCKED_PATH    = ROOT / "site" / "data" / "locked_predictions.json"
 RESULTS_PATH   = ROOT / "site" / "data" / "results.json"
 LEARNING_PATH  = ROOT / "site" / "data" / "learning.json"
 
+# Semifinals, third-place match, and final score double points.
+DOUBLE_POINTS_ROUNDS = {"Semi-final", "Match for third place", "Final"}
+
 
 def _is_tbd(name: str) -> bool:
     return not name or name[0].isdigit() or name.startswith("W") or name.startswith("L")
@@ -84,6 +87,7 @@ def run():
         # All phases use 5/3/2/1/0. Later knockout rounds scale by a
         # constant (×2, ×4, …) which does not affect the argmax.
         scoring_phase = "group"
+        points_multiplier = 2 if match["round"] in DOUBLE_POINTS_ROUNDS else 1
         home = match["home"]
         away = match["away"]
 
@@ -103,6 +107,7 @@ def run():
                 "venue": match.get("venue", ""),
                 "phase": phase,
                 "group": match.get("group"),
+                "points_multiplier": points_multiplier,
                 "tbd": True,
             })
             continue
@@ -158,8 +163,8 @@ def run():
             )
 
         # Find best prediction
-        best     = best_prediction(score_dist, scoring_phase)
-        best_ipf = best_prediction(ipf_dist,   scoring_phase)
+        best     = best_prediction(score_dist, scoring_phase, points_multiplier)
+        best_ipf = best_prediction(ipf_dist,   scoring_phase, points_multiplier)
         modal    = modal_prediction(score_dist)
         bh       = baseline_by_phase[scoring_phase]
 
@@ -221,6 +226,7 @@ def run():
             "venue": match.get("venue", ""),
             "phase": phase,
             "group": match.get("group"),
+            "points_multiplier": points_multiplier,
             "prediction": {
                 "home": best["home"],
                 "away": best["away"],

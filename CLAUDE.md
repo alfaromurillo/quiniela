@@ -59,9 +59,14 @@ the updated PDF together with the source changes.**
 | Correct goals of one team, wrong winner | 1 |
 
 **Knockout** (goals in 90+30 min; penalty shootout → predict draw):
-Same 5/3/2/1/0 structure as group stage. Later rounds may scale all
-points by a constant (×2, ×4, …); this does not affect the argmax.
-TODO: confirm exact multipliers per round with organizers.
+Same 5/3/2/1/0 structure as group stage. **Semifinals, the third-place
+match, and the final score double points (×2)** — the only rounds with
+a different scale. `DOUBLE_POINTS_ROUNDS` in `model/predict.py` (and
+its JS mirror in `site/assets/main.js`) holds the exact round names
+("Semi-final", "Match for third place", "Final") that trigger the
+multiplier. Multiplying by a constant does not change the argmax, so
+`best_prediction()` in `model/optimizer.py` takes a `points_multiplier`
+that only scales the reported `expected_pts`, not the predicted score.
 
 ## Architecture
 

@@ -8,9 +8,11 @@ Scoring rules (all phases):
     1 pt   - wrong winner/draw, but correct goals of one team
     0 pts  - nothing correct
 
-Later knockout rounds may scale all points by a constant (×2, ×4, …).
-Multiplying by a constant does not change the argmax, so _points_group
-is used for every phase.
+Semifinals, the third-place match, and the final score double points
+(×2), applied as a multiplier on top of the scale above. Multiplying
+by a constant does not change the argmax, so _points_group is used
+for every phase; the multiplier only affects the reported
+expected_pts.
 """
 
 MAX_GOALS = 5
@@ -69,9 +71,12 @@ def modal_prediction(score_probs: dict) -> dict:
     return {"home": best_h, "away": best_k, "prob": round(best_p, 4)}
 
 
-def best_prediction(score_probs: dict, phase: str) -> dict:
+def best_prediction(score_probs: dict, phase: str, points_multiplier: int = 1) -> dict:
     """
     Return the prediction (a, b) maximising E[points], along with top-3 alternatives.
+
+    points_multiplier scales the reported expected_pts (e.g. 2 for
+    semifinals/third-place/final). It does not affect the argmax.
 
     Returns:
       {
@@ -90,13 +95,13 @@ def best_prediction(score_probs: dict, phase: str) -> dict:
     best_ep, best_a, best_b = candidates[0]
 
     top3 = [
-        {"home": a, "away": b, "expected_pts": round(ep, 4)}
+        {"home": a, "away": b, "expected_pts": round(ep * points_multiplier, 4)}
         for ep, a, b in candidates[:3]
     ]
 
     return {
         "home": best_a,
         "away": best_b,
-        "expected_pts": round(best_ep, 4),
+        "expected_pts": round(best_ep * points_multiplier, 4),
         "top3": top3,
     }
