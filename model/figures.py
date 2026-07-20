@@ -112,10 +112,10 @@ def _load_gamma() -> float:
     return 0.84
 
 
-def _load_wc2026_group_real() -> tuple[np.ndarray, int]:
+def _load_wc2026_real(phase: str = "group") -> tuple[np.ndarray, int]:
     """
-    Canonical count matrix + total for completed WC 2026 group-stage matches,
-    read from site/data/results.json + data/schedule.json.
+    Canonical count matrix + total for completed WC 2026 matches of the
+    given phase, read from site/data/results.json + data/schedule.json.
     """
     schedule_data = json.loads((ROOT / "data" / "schedule.json").read_text())
     results_path  = ROOT / "site" / "data" / "results.json"
@@ -129,7 +129,7 @@ def _load_wc2026_group_real() -> tuple[np.ndarray, int]:
         if r.get("status") != "final":
             continue
         m = by_id.get(int(mid_str))
-        if not m or m["phase"] != "group":
+        if not m or m["phase"] != phase:
             continue
         h, a = r.get("home_score"), r.get("away_score")
         if h is None or a is None:
@@ -140,12 +140,12 @@ def _load_wc2026_group_real() -> tuple[np.ndarray, int]:
     return _to_canonical(raw), total
 
 
-def _end_of_group_estimate_matrix(gamma: float, delta: float) -> np.ndarray:
+def _end_of_phase_estimate_matrix(gamma: float, delta: float, phase: str = "group") -> np.ndarray:
     """
-    Canonical probability matrix for the group phase using the model as it
-    stood at the end of the group stage: γ-weighted historical data plus the
-    72 completed WC 2026 group matches, weighted (1+δ), neutral 1/3-1/3-1/3
-    outcome probabilities (no Kalshi reweighting).
+    Canonical probability matrix for the given phase using the model as it
+    stood after all WC 2026 matches of that phase were played: γ-weighted
+    historical data plus the completed WC 2026 matches, weighted (1+δ),
+    neutral 1/3-1/3-1/3 outcome probabilities (no Kalshi reweighting).
     """
     from model.learn import load_canonical, count_2026
     from model.historical import build_distributions, scoreline_probs
@@ -158,7 +158,7 @@ def _end_of_group_estimate_matrix(gamma: float, delta: float) -> np.ndarray:
 
     dist = build_distributions(gamma=gamma, delta=delta,
                                 extra_wins=extra_wins, extra_draws=extra_draws)
-    sp = scoreline_probs(1/3, 1/3, 1/3, "group", dist=dist)
+    sp = scoreline_probs(1/3, 1/3, 1/3, phase, dist=dist)
     raw = np.zeros((MG+1, MG+1))
     for (h, a), p in sp.items():
         if h <= MG and a <= MG:
@@ -182,15 +182,17 @@ def fig1_historical_overview():
       Col 2: Eliminación dir.— historical WC 2014/2018/2022
       Col 3: Eliminación dir.— model estimate (row 0) + placeholders
 
-    Placeholders in model columns (rows 1–2):
-      [row 1, col 1] = "WC 2026 Grp real"       (fill after ~jul 3)
-      [row 2, col 1] = "Estimado fin de grupos"  (fill after ~jul 3)
-      [row 1, col 3] = "Estimado fin del mundial"(fill after ~jul 19)
-      [row 2, col 3] = "WC 2026 KO real"         (fill after ~jul 19)
+    Model columns (rows 1–2), all filled now that the tournament is over:
+      [row 1, col 1] = "Estimado fin de grupos"   (model after group stage)
+      [row 2, col 1] = "WC 2026 Grp real"         (72 real group results)
+      [row 1, col 3] = "Estimado fin del mundial" (model after full tournament)
+      [row 2, col 3] = "WC 2026 KO real"          (32 real knockout results)
 
     Single Blues colormap; one shared colorbar on the right.
     """
     gamma = _load_gamma()
+    learning_path = ROOT / "site" / "data" / "learning.json"
+    learning = json.loads(learning_path.read_text()) if learning_path.exists() else {}
 
     WC_FILES = [
         (2014, ROOT / "data" / "wc2014.json"),
@@ -204,6 +206,20 @@ def fig1_historical_overview():
 
     model_mats = {ph: _model_matrix(ph, gamma) for ph in phases}
 
+    # Precompute the four "later" panels (end-of-phase model estimate +
+    # real results, for both group and knockout) so they can feed vmax.
+    delta_final = learning.get("delta", 0.0)
+    later_mats = {
+        ("group",    "model"): _end_of_phase_estimate_matrix(gamma, 0.1, phase="group"),
+        ("group",    "real"):  _load_wc2026_real(phase="group")[0],
+        ("knockout", "model"): _end_of_phase_estimate_matrix(gamma, delta_final, phase="knockout"),
+        ("knockout", "real"):  _load_wc2026_real(phase="knockout")[0],
+    }
+    later_totals = {
+        ("group",    "real"): _load_wc2026_real(phase="group")[1],
+        ("knockout", "real"): _load_wc2026_real(phase="knockout")[1],
+    }
+
     # Shared vmax across historical proportions and model probabilities
     vmax = 0.0
     for _yr, counts, totals in wc_data:
@@ -213,6 +229,12 @@ def fig1_historical_overview():
                 vmax = max(vmax, float(np.nanmax(counts[ph] / tot)))
     for ph in phases:
         vmax = max(vmax, float(np.nanmax(model_mats[ph])))
+    vmax = max(vmax, float(np.nanmax(later_mats[("group", "model")])))
+    vmax = max(vmax, float(np.nanmax(later_mats[("knockout", "model")])))
+    for ph in ["group", "knockout"]:
+        tot = later_totals[(ph, "real")]
+        if tot > 0:
+            vmax = max(vmax, float(np.nanmax(later_mats[(ph, "real")])) / tot)
     vmax = round(vmax * 1.10, 2)   # 10 % headroom
 
     # ── Layout ────────────────────────────────────────────────
@@ -293,63 +315,51 @@ def fig1_historical_overview():
                 transform=ax.transAxes, fontsize=6.5, color="#555555",
                 va="top", ha="left", linespacing=1.5)
 
-    # ── Row 1, col 1: end-of-group-stage model estimate (δ > 0) ────
-    delta_eog = 0.1   # δ estimated when the 72nd (last) group match locked
-    ax = axes[1, 1]
-    mat_eog = _end_of_group_estimate_matrix(gamma, delta_eog)
-    _draw_heatmap(ax, mat_eog, "Estimado fin de grupos", "Goles perdedor")
-    for loser in GOALS:
-        for winner in GOALS:
-            p = mat_eog[loser, winner]
-            if np.isnan(p) or p < 0.004:
-                continue
-            txt   = f"({p*100:.1f}%)"
-            color = "white" if p > vmax * 0.55 else "black"
-            ax.text(winner, loser, txt, ha="center", va="center",
-                    fontsize=5.5, color=color)
-    ax.text(0.04, 0.97, f"$\\gamma \\approx {gamma:.2f}$\n$\\delta \\approx {delta_eog:.2f}$",
-            transform=ax.transAxes, fontsize=6.5, color="#555555",
-            va="top", ha="left", linespacing=1.5)
+    def _draw_model_estimate(ax, phase, delta, title):
+        mat = later_mats[(phase, "model")]
+        _draw_heatmap(ax, mat, title, "Goles perdedor")
+        for loser in GOALS:
+            for winner in GOALS:
+                p = mat[loser, winner]
+                if np.isnan(p) or p < 0.004:
+                    continue
+                txt   = f"({p*100:.1f}%)"
+                color = "white" if p > vmax * 0.55 else "black"
+                ax.text(winner, loser, txt, ha="center", va="center",
+                        fontsize=5.5, color=color)
+        ax.text(0.04, 0.97, f"$\\gamma \\approx {gamma:.2f}$\n$\\delta \\approx {delta:.2f}$",
+                transform=ax.transAxes, fontsize=6.5, color="#555555",
+                va="top", ha="left", linespacing=1.5)
+
+    def _draw_real_results(ax, phase, title):
+        counts, total = later_mats[(phase, "real")], later_totals[(phase, "real")]
+        prop = (np.where(np.isnan(counts), np.nan, counts / total)
+                if total > 0 else counts.copy())
+        _draw_heatmap(ax, prop, title, "Goles perdedor")
+        for loser in GOALS:
+            for winner in GOALS:
+                n = counts[loser, winner]
+                if np.isnan(n) or n == 0:
+                    continue
+                frc = n / total if total > 0 else 0.0
+                txt = f"n={int(n)}\n({frc*100:.1f}%)"
+                color = "white" if frc > vmax * 0.55 else "black"
+                ax.text(winner, loser, txt, ha="center", va="center",
+                        fontsize=4.5, color=color, linespacing=1.3)
+
+    # ── Row 1, col 1: end-of-group-stage model estimate ─────────
+    # δ ≈ 0.1, estimated when the 72nd (last) group match locked.
+    _draw_model_estimate(axes[1, 1], "group", 0.1, "Estimado fin de grupos")
 
     # ── Row 2, col 1: real WC 2026 group-stage results (72 matches) ─
-    ax = axes[2, 1]
-    real_counts, real_total = _load_wc2026_group_real()
-    prop = (np.where(np.isnan(real_counts), np.nan, real_counts / real_total)
-            if real_total > 0 else real_counts.copy())
-    _draw_heatmap(ax, prop, "WC 2026 — datos reales", "Goles perdedor")
-    for loser in GOALS:
-        for winner in GOALS:
-            n = real_counts[loser, winner]
-            if np.isnan(n) or n == 0:
-                continue
-            frc = n / real_total if real_total > 0 else 0.0
-            txt = f"n={int(n)}\n({frc*100:.1f}%)"
-            color = "white" if frc > vmax * 0.55 else "black"
-            ax.text(winner, loser, txt, ha="center", va="center",
-                    fontsize=4.5, color=color, linespacing=1.3)
+    _draw_real_results(axes[2, 1], "group", "WC 2026 — datos reales")
 
-    # ── Placeholders: knockout model column (tournament in progress) ─
-    # (r, c, bold_label, italic_note)
-    placeholders = [
-        (1, 3,
-         "Estimado fin\ndel mundial",
-         "Completar al final\ndel torneo (~jul 19)"),
-        (2, 3,
-         "WC 2026 KO real",
-         "Completar al final\ndel torneo (~jul 19)"),
-    ]
-    for r, c, bold_lbl, italic_note in placeholders:
-        ax = axes[r, c]
-        ax.set_facecolor("#efefef")
-        ax.set_xticks([]); ax.set_yticks([])
-        for sp in ax.spines.values():
-            sp.set_edgecolor("#bbbbbb")
-        ax.text(0.5, 0.57, bold_lbl, ha="center", va="center",
-                transform=ax.transAxes, fontsize=9, color="#444444",
-                fontweight="bold", multialignment="center")
-        ax.text(0.5, 0.28, italic_note, ha="center", va="center",
-                transform=ax.transAxes, fontsize=7.5, color="#999999",
-                style="italic", multialignment="center")
+    # ── Row 1, col 3: end-of-tournament model estimate ──────────
+    _draw_model_estimate(axes[1, 3], "knockout", delta_final,
+                          "Estimado fin\ndel mundial")
+
+    # ── Row 2, col 3: real WC 2026 knockout results (32 matches) ─
+    _draw_real_results(axes[2, 3], "knockout", "WC 2026 KO — datos reales")
 
     # ── Phase block headers (span two columns each) ────────────
     left_cx  = (axes[0, 0].get_position().x0
@@ -580,14 +590,14 @@ def fig3_kalshi_reweight():
 # ── Figure 4: Delta evolution ──────────────────────────────────
 # Jornada boundaries (cumulative games after each jornada ends)
 _JORNADA_LABELS = [
-    (16,  "MD1"),   # Matchday 1: 16 games
-    (32,  "MD2"),   # Matchday 2: 16 games
-    (48,  "MD3"),   # Matchday 3: 16 games
-    (64,  "R32"),   # Round of 32: 16 games
-    (72,  "R16"),   # Round of 16: 8 games
-    (76,  "QF"),    # Quarter-finals: 4 games
-    (78,  "SF"),    # Semi-finals: 2 games
-    (80,  "F"),     # Final + 3rd place: 2 games
+    (24,  "G1"),    # Group stage, first third: 24 games
+    (48,  "G2"),    # Group stage, second third: 24 games
+    (72,  "G3"),    # Group stage, final third: 24 games (72 total)
+    (88,  "R32"),   # Round of 32: 16 games (88 cumulative)
+    (96,  "R16"),   # Round of 16: 8 games (96 cumulative)
+    (100, "QF"),    # Quarter-finals: 4 games (100 cumulative)
+    (102, "SF"),    # Semi-finals: 2 games (102 cumulative)
+    (104, "F"),     # Third place + final: 2 games (104 cumulative)
 ]
 
 
@@ -639,15 +649,15 @@ def fig4_delta_evolution():
         "$\\delta > 0$: WC 2026 pesa más)",
         fontsize=11,
     )
-    ax.set_xlim(left=-1, right=82)
+    ax.set_xlim(left=-1, right=max(n_last, 82) + 2)
     ax.axhline(0, color="gray", linewidth=0.8, linestyle="--", zorder=2)
     ax.grid(axis="y", alpha=0.3)
 
     if n_last > 0:
         ax.annotate(
-            f"Actual: $\\delta = {delta_last:.2f}$ ({n_last} partidos)",
+            f"Final: $\\delta = {delta_last:.2f}$ ({n_last} partidos)",
             xy=(n_last, delta_last),
-            xytext=(min(n_last + 4, 70), delta_last + 0.04),
+            xytext=(max(n_last - 28, 5), delta_last + 0.08),
             arrowprops=dict(arrowstyle="->", color="gray"),
             fontsize=9,
         )
