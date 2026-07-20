@@ -3,24 +3,9 @@ name: Actualizar predicciones
 on:
   push:
     branches: [main]
-  schedule:
-    # Two fetches per match: 2h15m and 1h30m before kickoff.
-    # CACHE_TTL=40min ensures the -1:30 run always re-fetches after the -2:15 run.
-    # Cache locks 10 min before kickoff; result windows covered by the :30 runs.
-    #
-    # -1:30 before kickoff (matches at :00 and :30 UTC):
-    - cron: '30 14-23 * * *'    # 14:30–23:30  (-1:30 before 16:00–01:00)
-    - cron: '30 0,1,2 * * *'    # 00:30–02:30  (-1:30 before 02:00–04:00; result windows)
-    - cron: '0 0 * * *'          # 00:00        (-1:30 before 01:30)
-    - cron: '0 19 * * *'         # 19:00        (-1:30 before 20:30)
-    - cron: '0 22 * * *'         # 22:00        (-1:30 before 23:30)
-    - cron: '0 23 * * *'         # 23:00        (-1:30 before 00:30)
-    # -2:15 before kickoff (mostly :45; :15 for 20:30 and 01:30 kickoffs):
-    - cron: '45 13-23 * * *'    # 13:45–23:45  (-2:15 before 16:00–02:00)
-    - cron: '45 0 * * *'         # 00:45        (-2:15 before 03:00)
-    - cron: '15 18,23 * * *'    # 18:15, 23:15 (-2:15 before 20:30 and 01:30)
-    # Final daily update — midnight Costa Rica (UTC-6 = 06:00 UTC)
-    - cron: '0 6 * * *'
+  # Cron schedule removed 2026-07-20: WC 2026 ended on 2026-07-19 (final),
+  # so there are no more matches to fetch from Kalshi/ESPN. Push and
+  # manual triggers are kept so site-only edits still deploy to Pages.
   workflow_dispatch:  # allow manual trigger
 
 concurrency:

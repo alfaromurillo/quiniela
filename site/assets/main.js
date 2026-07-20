@@ -297,7 +297,7 @@ async function init() {
     chip.addEventListener("click", () => applyFilter(chip.dataset.filter));
   });
 
-  applyFilter("upcoming");
+  applyFilter("all");
 }
 
 document.addEventListener("DOMContentLoaded", init);

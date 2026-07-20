@@ -104,7 +104,8 @@ site/
     results.json       # Final scores for completed matches (from ESPN)
     learning.json      # Current γ and δ estimates
 
-.github/workflows/update.yml  # Triggers: push to main (skip bot commits) + cron schedule
+.github/workflows/update.yml  # Triggers: push to main (skip bot commits) + manual dispatch
+                               # (cron schedule removed 2026-07-20: WC 2026 ended, nothing left to fetch)
 ```
 
 ## Kalshi API details
