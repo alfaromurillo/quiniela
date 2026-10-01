@@ -1,5 +1,17 @@
 # CLAUDE.md
 
+## Contents
+
+- Project purpose
+- Commands
+- Scoring rules (quiniela)
+- Architecture
+- Kalshi API details
+- Historical model
+- Data pipeline flow
+- Known issues / TODO
+- Gotchas
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project purpose
