@@ -199,9 +199,8 @@ marcador de cada partido de un torneo y acumula puntos según la
 cercanía de su pronóstico al resultado real.
 La regla de puntuación premia de manera desigual los distintos tipos
 de acierto.
-En la quiniela que estudiamos, el marcador exacto vale cinco puntos,
-el ganador con los goles de un equipo vale tres, y el ganador solo
-vale dos.
+En la quiniela que estudiamos, el marcador exacto valía cinco puntos,
+el ganador con los goles de un equipo, tres, y el ganador solo, dos.
 Con una regla así, el marcador más probable no es necesariamente el
 que más puntos rinde en promedio.
 
@@ -242,7 +241,7 @@ las que se pronostica qué equipo gana cada partido
 Sin embargo, los mercados de predicción no determinan la distribución
 de marcadores.
 Para el Mundial 2026, la plataforma Kalshi
-(\href{https://kalshi.com}{kalshi.com}) cotiza por partido el
+(\href{https://kalshi.com}{kalshi.com}) cotizó por partido el
 resultado, el total de goles y la ventaja de goles.
 Esos precios determinan las distribuciones marginales del total
 $T = h + k$ y de la diferencia $M = h - k$, pero no su distribución
@@ -284,13 +283,13 @@ crédito parcial.
 \section{Métodos}
 \label{sec:metodos}
 
-El pronóstico de cada partido se obtiene en tres pasos.
-Primero se construye una distribución de referencia de marcadores a
+El pronóstico de cada partido se obtuvo en tres pasos.
+Primero se construyó una distribución de referencia de marcadores a
 partir de los Mundiales 2014, 2018 y 2022 y de los resultados ya
 disputados del Mundial 2026 (Sección~\ref{sec:historico}).
-Luego esa distribución se ajusta para que reproduzca los precios de
+Luego esa distribución se ajustó para que reprodujera los precios de
 Kalshi del partido (Secciones~\ref{sec:kalshi} y~\ref{sec:knockout}).
-Por último se elige el marcador que maximiza los puntos esperados
+Por último se eligió el marcador que maximiza los puntos esperados
 (Sección~\ref{sec:optimizacion}).
 La Sección~\ref{sec:metricas} describe cómo se evalúan los pronósticos.
 
@@ -316,7 +315,7 @@ consultó tras cada partido.
 \paragraph{Mercados de Kalshi.}
 Kalshi es una plataforma de mercados de predicción regulada por la
 Commodity Futures Trading Commission (CFTC) de Estados Unidos.
-Para cada partido del Mundial 2026 ofrece hasta cinco mercados, todos
+Para cada partido del Mundial 2026 ofreció hasta cinco mercados, todos
 de contratos binarios:
 \begin{enumerate}
   \item \textbf{Resultado} (\texttt{KXWCGAME}): victoria del
@@ -331,19 +330,19 @@ de contratos binarios:
   \item \textbf{Clasificación} (\texttt{KXWCADVANCE}): qué equipo
     pasa a la siguiente ronda; solo en la fase eliminatoria.
 \end{enumerate}
-Los cuatro primeros se resuelven con el marcador a los 90~minutos,
-también en la fase eliminatoria; solo el de clasificación incluye la
+Los cuatro primeros se resolvían con el marcador a los 90~minutos,
+también en la fase eliminatoria; solo el de clasificación incluía la
 prórroga y los penales.
-El precio de cada contrato se toma como el punto medio entre la mejor
-oferta de compra y la mejor de venta, y el contrato se descarta si
-esa diferencia supera \$0,30.
+El precio de cada contrato se tomó como el punto medio entre la mejor
+oferta de compra y la mejor de venta, y el contrato se descartaba si
+esa diferencia superaba \$0,30.
 En los mercados de total, ventaja y goles por equipo, un contrato
-descartado se sustituye por su último precio negociado cuando este
-está entre \$0,02 y \$0,98.
-Los precios de resultado se normalizan para sumar uno, y las
-probabilidades acumuladas (``más de~$n$'') se convierten en
+descartado se sustituyó por su último precio negociado cuando este
+estaba entre \$0,02 y \$0,98.
+Los precios de resultado se normalizaron para sumar uno, y las
+probabilidades acumuladas (``más de~$n$'') se convirtieron en
 probabilidades puntuales por diferencias sucesivas, tras forzar que
-sean decrecientes.
+fueran decrecientes.
 
 Los precios se consultaron en ejecuciones programadas del sistema;
 la última antes de cada partido ocurría 90~minutos antes del inicio.
@@ -367,7 +366,7 @@ La distribución de referencia se expresa en forma canónica: una
 distribución $Q_V(w, l)$ de los marcadores de victoria, con $w > l$
 goles del ganador y del perdedor, y una distribución $Q_E(g)$ de los
 marcadores de empate $g$-$g$.
-Como en el Mundial casi todos los partidos se juegan en sede neutral,
+Como en el Mundial casi todos los partidos se jugaron en sede neutral,
 ambos equipos comparten la misma $Q_V$.
 Dadas las probabilidades $p_A$, $p_E$ y $p_B$ de victoria del
 Equipo~A, empate y victoria del Equipo~B, la distribución de
@@ -416,15 +415,15 @@ uno del 2014 con peso~$\gamma^2$, con $\gamma \in (0, 1]$.
 El tamaño efectivo de la muestra de fase de grupos es
 $48\,(1 + \gamma + \gamma^2)$, y el de la eliminatoria,
 $16\,(1 + \gamma + \gamma^2)$.
-El parámetro $\gamma$ se estima por validación hacia adelante: con
+El parámetro $\gamma$ se estimó por validación hacia adelante: con
 cada valor de una cuadrícula de paso 0,01 en $[0.10;\, 1]$, se
-predicen los marcadores del Mundial 2018 a partir del 2014, y los del
-2022 a partir de los dos anteriores, y se suma la log-verosimilitud
+predijeron los marcadores del Mundial 2018 a partir del 2014, y los del
+2022 a partir de los dos anteriores, y se sumó la log-verosimilitud
 predictiva de ambos.
-A esa suma se agrega el logaritmo de una distribución a priori
+A esa suma se agregó el logaritmo de una distribución a priori
 $\gamma \sim \mathcal{N}(1;\, 0.3^2)$ truncada a $(0, 1]$, que regulariza
 hacia el caso sin decaimiento.
-El máximo está en $\hat{\gamma} = 0.84$, que da tamaños efectivos de
+El máximo estuvo en $\hat{\gamma} = 0.84$, que da tamaños efectivos de
 122 partidos de grupos y 41 eliminatorios.
 La Figura~\ref{fig:gamma} muestra el efecto de $\gamma$ sobre la
 distribución del total de goles.
@@ -465,20 +464,20 @@ y análogamente para $Q_E$.
 
 \paragraph{Adaptación al torneo en curso: parámetro $\delta$.}
 \label{sec:delta}
-Los resultados del Mundial 2026 se suman a las frecuencias
-históricas con peso $1 + \delta$, con $\delta \geq 0$, y los
-promedios $\lambda$ se recalculan con ellos.
+Los resultados del Mundial 2026 se sumaron a las frecuencias
+históricas, conforme se jugaban, con peso $1 + \delta$, con
+$\delta \geq 0$, y los promedios $\lambda$ se recalcularon con ellos.
 Con $\delta = 0$, cada partido del Mundial 2026 pesa lo mismo que uno
 del 2022; con $\delta > 0$, pesa más.
-El parámetro $\delta$ se estima por máximo a posteriori con validación
-hacia adelante por jornadas: cada jornada (las tres rondas de grupos,
+El parámetro $\delta$ se reestimó en cada ejecución del sistema, por
+máximo a posteriori con validación hacia adelante por jornadas: cada jornada (las tres rondas de grupos,
 dieciseisavos, octavos, cuartos, semifinales, y tercer puesto con la
 final) se predice con las jornadas anteriores, y se suman las
 log-verosimilitudes predictivas.
 La distribución a priori $\delta \sim \text{Semi-Normal}(\sigma = 1)$
 favorece el historial cuando hay pocos datos del torneo, y la búsqueda
-se hace en una cuadrícula de paso 0,05 en $[0, 8]$.
-Mientras no se ha completado la primera jornada, $\hat\delta = 0$.
+se hizo en una cuadrícula de paso 0,05 en $[0, 8]$.
+Mientras no se completó la primera jornada, $\hat\delta$ fue 0.
 La Figura~\ref{fig:delta} muestra $\hat\delta$ a lo largo del
 torneo.\footnote{Durante el torneo, la asignación de partidos a
 jornadas tuvo un error; la trayectoria de la
@@ -538,14 +537,14 @@ $p_A^0, p_E^0, p_B^0$ se corrigen con una transformación de potencia
 \end{equation}
 donde $\alpha > 1$ traslada probabilidad de los resultados improbables
 a los probables.
-El parámetro se estima por máximo a posteriori con los partidos ya
-disputados que tienen precios de Kalshi: la log-verosimilitud es
+El parámetro se reestimó en cada ejecución, por máximo a posteriori
+con los partidos ya disputados que tienen precios de Kalshi: la log-verosimilitud es
 $\ell(\alpha) = \sum_i \log p_{r_i}(\alpha)$, donde $r_i$ es el
 resultado observado del partido~$i$, y la distribución a priori es
 $\alpha \sim \mathcal{N}(1.10;\, 0.20^2)$, centrada en el valor que
 \citet{whelan2024} estima para mercados de apuestas competitivos.
-La búsqueda se hace en una cuadrícula de paso 0,02 en $[0.5;\, 2.5]$;
-con menos de dos partidos, $\hat\alpha = 1.10$.
+La búsqueda se hizo en una cuadrícula de paso 0,02 en $[0.5;\, 2.5]$;
+con menos de dos partidos, se usó $\hat\alpha = 1.10$.
 
 \paragraph{Ajuste iterativo proporcional.}
 \label{sec:ipf}
@@ -592,10 +591,14 @@ $T$ y $M$.
 Los mercados de Kalshi, sin embargo, se cotizan por separado y no
 son exactamente compatibles entre sí sobre la cuadrícula truncada.
 El resultado final reproduce exactamente las probabilidades de
-ventaja, pero no las de total: en los 66 partidos de grupos con
-mercados, la mayor discrepancia en $\Prob(T = t)$ tuvo una mediana de
-0,9 puntos porcentuales (máximo 4,6), y no disminuye con más
-iteraciones.
+ventaja, que se ajustan al final de cada iteración, pero solo
+aproximadamente las de resultado y total: en los 66 partidos de grupos
+con mercados, la mayor discrepancia tuvo una mediana de 1,0 puntos
+porcentuales en las de resultado (máximo 2,9) y de 0,9 en las de total
+(máximo 4,6), y no disminuye con más iteraciones.
+Por la misma razón, la distribución final suma entre 0,97 y 1,03; no
+se renormaliza, lo que no altera el pronóstico óptimo ni el marcador
+modal, que no cambian al multiplicar $P$ por una constante.
 La Figura~\ref{fig:kalshi} muestra el efecto del ajuste en un partido.
 
 \begin{figure}[tb]
@@ -641,13 +644,13 @@ la fase de grupos completa.
 \subsection{Fase eliminatoria: modelo de dos etapas}
 \label{sec:knockout}
 
-En la quiniela, un partido eliminatorio cuenta los goles de los
-90~minutos y de la prórroga, y uno definido por penales cuenta como
+En la quiniela, un partido eliminatorio contaba los goles de los
+90~minutos y de la prórroga, y uno definido por penales contaba como
 empate.
 Los mercados de resultado, total, ventaja y goles por equipo, en
-cambio, se resuelven a los 90~minutos, y solo el de clasificación
-incluye prórroga y penales.
-Por eso la distribución se construye en dos etapas: primero la de
+cambio, se resolvían a los 90~minutos, y solo el de clasificación
+incluía prórroga y penales.
+Por eso la distribución se construyó en dos etapas: primero la de
 90~minutos, ajustada a los mercados, y luego la prórroga, modelada
 con el historial.
 
@@ -662,7 +665,7 @@ El resultado es la distribución $P_{\mathrm{reg}}(h, k)$.
 Sea $\pi_{\mathrm{pen}}$ la probabilidad de que un partido empatado a
 los 90~minutos llegue a penales, es decir, que la prórroga también
 termine empatada.
-Se estima con los 18 partidos eliminatorios con prórroga de los tres
+Se estimó con los 18 partidos eliminatorios con prórroga de los tres
 Mundiales anteriores, ponderados por $\gamma$:
 \[
   \hat\pi_{\mathrm{pen}}
@@ -696,10 +699,10 @@ goles de cada equipo en la prórroga:
   P_{\mathrm{fin}}(g + \Delta_A,\; g + \Delta_B)
   \mathrel{+}= P_{\mathrm{reg}}(g, g) \, K(\Delta_A, \Delta_B).
 \]
-El núcleo se estima con los mismos 18 partidos ponderados por
+El núcleo se estimó con los mismos 18 partidos ponderados por
 $\gamma$, repartiendo cada victoria en prórroga por igual entre ambos
-equipos (Tabla~\ref{tab:nucleo}), y se actualiza con las prórrogas
-del Mundial 2026, con peso $1 + \delta$.
+equipos (Tabla~\ref{tab:nucleo}), y se actualizó con las prórrogas
+del Mundial 2026, con peso $1 + \delta$, conforme se jugaban.
 Finalmente, $P_{\mathrm{fin}}$ se reescala para que sus regiones de
 victoria, empate y derrota sumen $p^q_A$, $p^q_E$ y $p^q_B$.
 
@@ -726,17 +729,17 @@ ponderados con $\hat\gamma = 0.84$.}
 \label{sec:optimizacion}
 
 \paragraph{Regla de puntuación.}
-La quiniela estudiada asigna puntos según la primera condición que se
-cumpla (Tabla~\ref{tab:reglas}).
-En la fase eliminatoria se cuentan los goles de los 90~minutos y de la
-prórroga, y una definición por penales cuenta como empate.
-Las semifinales, el partido por el tercer puesto y la final valen el
+La quiniela estudiada asignaba puntos según la primera condición que
+se cumpliera (Tabla~\ref{tab:reglas}).
+En la fase eliminatoria se contaban los goles de los 90~minutos y de
+la prórroga, y una definición por penales contaba como empate.
+Las semifinales, el partido por el tercer puesto y la final valían el
 doble.
 
 \begin{table}[tb]
 \centering
 \caption{Regla de puntuación de la quiniela. La primera condición que
-se cumple determina los puntos.}
+se cumplía determinaba los puntos.}
 \label{tab:reglas}
 \begin{tabular}{lcc}
   \toprule
@@ -1022,6 +1025,11 @@ debió a un marcador modal (0-1, contra el favorito) producido por la
 versión del sistema anterior al 19 de junio
 (Apéndice~\ref{app:version}); sin ese partido, la ventaja del óptimo
 es de 7 puntos.
+Según el propio modelo, la ventaja esperada era mucho menor: recalculados
+con los parámetros finales, el pronóstico óptimo y el modal difieren en
+26 de los 98 partidos con mercados, y en ellos el óptimo espera en
+promedio 0,06 puntos más (mediana 0,03; máximo 0,26), unos 1,5 puntos
+esperados en 90 partidos.
 
 \begin{table}[tb]
 \centering
@@ -1105,7 +1113,8 @@ de la trayectoria.
 \label{sec:empates}
 
 El sistema pronosticó empate en solo 2 de los 104 partidos, aunque
-hubo 20 empates en los 72 partidos de grupos.
+hubo 20 empates en los 72 partidos de grupos; en los 90 partidos
+comparables, el marcador modal habría pronosticado empate en 11.
 Ambos pronósticos fueron 0-0: Paraguay-Australia, que terminó 0-0 (5 puntos), y
 Argelia-Austria, que terminó 3-3 (2 puntos).
 En esos dos partidos Kalshi asignó al empate probabilidades de 0,393 y
@@ -1116,176 +1125,154 @@ $\Prob(T = 0) \approx 0{,}21$ en ambos.
 \section{Discusión}
 \label{sec:discusion}
 
-\subsection{Aportación de los mercados de predicción}
+La pregunta de este trabajo era cómo convertir los precios de un
+mercado de predicción en un marcador exacto que maximice los puntos
+esperados de una quiniela.
+Nuestros resultados indican que la respuesta tiene dos partes de peso
+muy desigual.
+Casi todo el valor proviene de las probabilidades de resultado del
+mercado: con ellas, los pronósticos obtuvieron más del doble de puntos
+que con el historial solo.
+La reconstrucción de la distribución de marcadores y la elección del
+máximo de los puntos esperados son correctas en principio, pero en un
+torneo su aporte es pequeño frente a la variación entre partidos: el
+pronóstico óptimo superó al marcador modal por 12 puntos en 90
+partidos, una diferencia que los datos no distinguen de cero y que
+el propio modelo esperaba aún menor.
 
-La pregunta central es si los precios de Kalshi añaden valor sobre
-la distribución histórica pura.
-La comparación $1 \to 2$ de la Tabla~\ref{tab:ablacion}
-(Sección~\ref{sec:comparacion}) responde afirmativamente: incorporar
-únicamente la dirección de Kalshi —sin corrección de sesgo ni ajuste
-de goles y ventaja— más que duplica el promedio de puntos frente a una
-distribución uniforme (1,04 a 2,21 puntos por partido sobre 90
-partidos).
-Esto confirma que los mercados de predicción contienen información
-específica del partido que el historial de Mundiales, por sí solo, no
-captura.
+\subsection{Los mercados como fuente de información}
 
-El modelo incluye además la corrección por sesgo favorito-longshot
-descrita en la Sección~\ref{sec:alpha}: los precios brutos de Kalshi
-se transforman mediante la ecuación~\eqref{eq:alpha} con el exponente
-$\hat{\alpha}$ estimado por MAP sobre los partidos completados con
-datos de Kalshi.
-Al inicio del torneo, $\hat{\alpha} = \alpha_0 = 1.10$
-(valor de referencia para mercados de intercambio competitivos;
-\citealp{whelan2024}).
-Tras los 98 partidos del torneo completo con datos de Kalshi y
-resultado final, $\hat{\alpha} \approx 1.14$: cercano al valor de
-referencia, aunque algo más alejado que la estimación de mitad de
-torneo ($\approx 1.106$).
-Pese a ese movimiento, la corrección no cambió ningún punto en todo el
-torneo respecto a usar las probabilidades brutas (comparación
-$2 \to 3$ en Tabla~\ref{tab:ablacion}) ni mejoró de forma apreciable
-el score de Brier (0,468 sin corregir vs.\ 0,466 corregido,
-Sección~\ref{sec:brier}).
-Esto sugiere que el sesgo favorito-longshot de los usuarios de Kalshi
-durante el WC 2026 no difiere sustancialmente del observado en
-mercados de intercambio competitivos en general \citep{whelan2024}, en
-lugar de reflejar un perfil de calibración distinto atribuible al
-público específico del Mundial.
-La ganancia de aplicar el reajuste completo de goles y ventaja
-($2 \to 4$ en Tabla~\ref{tab:ablacion}) fue mayor en la fase
-eliminatoria (2,28 a 2,63 puntos) que en la de grupos (2,17 a 2,19),
-consistente con la disponibilidad de mercados adicionales
-(\texttt{KXWCTEAMTOTAL-}) exclusivos de la fase eliminatoria.
+Que las probabilidades de Kalshi dupliquen los puntos del historial
+concuerda con la evidencia de que los mercados de predicción
+pronostican resultados deportivos al menos tan bien como las casas de
+apuestas \citep{spann2009, forrest2005}: el precio resume información
+específica de cada partido, como la fuerza relativa de los equipos o
+las bajas, que la distribución histórica de marcadores no contiene.
+La calibración de Kalshi fue buena (puntaje de Brier
+de 0,468, frente a 0,667 de un pronóstico uniforme), y la corrección
+por sesgo favorito-longshot apenas la cambió.
+El valor estimado $\hat\alpha = 1{,}14$, cercano al de los mercados de
+apuestas competitivos \citep{whelan2024}, sugiere que el sesgo de
+Kalshi en el Mundial 2026 fue del mismo orden que el documentado en
+otros mercados, incluido el propio Kalshi \citep{burgi2026}.
+Con un sesgo así de pequeño, la corrección no alcanzó a cambiar ningún
+pronóstico.
+Los mercados de total y ventaja aportaron menos que los de resultado:
+sus 12 puntos se concentraron en la fase eliminatoria, donde el ajuste
+incluye además los mercados de goles por equipo y el modelo de
+prórroga.
 
-\subsection{Adaptación bayesiana: el parámetro \texorpdfstring{$\delta$}{delta}}
+\subsection{Por qué la optimización gana poco}
 
-El parámetro $\delta$ modela la hipótesis de que el WC 2026 puede
-diferir sistemáticamente de los Mundiales anteriores en el número y
-distribución de goles.
-A lo largo del torneo completo, $\hat\delta$ osciló entre 0 y 0,5
-(media 0,12, desviación estándar 0,11; Figura~\ref{fig:delta}), con
-una trayectoria en dos etapas claramente distinguibles.
-Durante buena parte de la fase de grupos y la primera mitad de la
-eliminatoria (aproximadamente hasta cuartos de final) $\hat\delta$ se
-mantuvo consistentemente positivo, alcanzando su máximo (0,5) a mitad
-de la fase de grupos: la validación cruzada leave-one-jornada-out rara
-vez favoreció $\delta = 0$ de forma sostenida en ese tramo, lo que
-respaldó incluir el término adaptativo en lugar de depender
-exclusivamente del historial fijo.
-En la fase eliminatoria tardía —semifinales, tercer puesto y
-final— $\hat\delta$ colapsó a 0 y permaneció ahí hasta el cierre del
-torneo.
-Esta caída no indica que el término adaptativo haya sido un error de
-diseño, sino que refleja su propósito: con las 104 observaciones del
-WC 2026 ya incorporadas al historial combinado, la evidencia disponible
-al final del torneo no distinguía sistemáticamente la distribución de
-goles del WC 2026 de la de los tres Mundiales anteriores, de modo que
-el estimador de máxima verosimilitud penalizada convergió de vuelta al
-peso neutral $\delta = 0$.
-En otras palabras, $\delta$ capturó una desviación real pero
-transitoria a mitad de torneo —posiblemente ruido muestral de las
-primeras jornadas— que se disolvió conforme se acumuló evidencia
-adicional, un comportamiento consistente con lo esperado de un
-estimador bayesiano bien especificado frente a una muestra que crece.
+Bajo esta regla de puntuación, el marcador que maximiza los puntos
+esperados y el más probable son casi equivalentes.
+Según el propio modelo, ambos difirieron en 26 de los 98 partidos con
+mercados, y en esos partidos el óptimo esperaba ganar en promedio
+0,06 puntos más que el modal: unos 1,5 puntos esperados en 90
+partidos (Sección~\ref{sec:comparacion}).
+La diferencia observada, 12 puntos, es mucho mayor que esa expectativa,
+y su intervalo incluye el cero; la atribuimos sobre todo a la
+variación de pocos partidos con marcadores distintos y al marcador
+modal anómalo de México-Corea del Sur.
+El argumento de la Introducción, que el marcador más probable no es
+el más rentable, sigue siendo cierto, pero su consecuencia práctica
+depende de la regla: con 5, 3 y 2 puntos, la penalización por elegir
+el marcador modal es pequeña.
 
-\subsection{Ausencia (casi total) de predicciones de empate}
+La desventaja estructural de los empates (Observación~\ref{obs:nodraw})
+es la excepción en que optimizar sí cambia el pronóstico de forma
+sistemática.
+El sistema pronosticó empate en 2 de los 104 partidos, aunque 20 de los
+72 partidos de grupos terminaron empatados y el marcador modal habría
+pronosticado empate en 11 de los 90 partidos comparables.
+No es un error de calibración: aun con la probabilidad de empate
+correcta, cada marcador de empate por separado es poco probable, y un
+empate pronosticado solo obtiene 3 puntos si acierta el marcador
+exacto.
+Los dos empates pronosticados, ambos 0-0, ocurrieron cuando el mercado
+dio al empate y a un partido sin goles probabilidades muy por encima
+de lo habitual, y los dos desenlaces ilustran las dos ramas
+de~\eqref{eq:edraw}: Paraguay-Australia terminó 0-0 (5 puntos) y
+Argelia-Austria 3-3 (2 puntos).
+Para un participante humano, la consecuencia es concreta: bajo esta
+regla, pronosticar el empate más probable en un partido parejo rinde
+algo menos en promedio que pronosticar una victoria por un gol, aunque
+la diferencia sea pequeña (1,518 frente a 1,539 puntos esperados en el
+ejemplo de la Tabla~\ref{tab:ejkorcze}).
 
-La Observación~\ref{obs:nodraw} muestra que la tier de 3 puntos es
-estructuralmente inalcanzable para cualquier predicción de empate, y
-argumenta que este umbral rara vez se alcanza en la práctica.
-Los datos confirman que las predicciones de empate son, en efecto,
-excepcionales: de los 104 partidos del torneo completo, el modelo
-predijo empate ($0$-$0$) en solo 2 (Paraguay vs.\ Australia y Argelia
-vs.\ Austria), ambos en fase de grupos.
-En ambos casos, Kalshi asignó una probabilidad de empate inusualmente
-alta ($p_E = 0.393$ y $p_E = 0.467$, respectivamente, frente a un
-25\,\% típico) junto con una distribución de goles totales sesgada
-hacia marcadores bajos ($\Prob(T=0) \approx 0.21$ en ambos partidos),
-exactamente la combinación que la Observación~\ref{obs:nodraw}
-identifica como necesaria para que un empate supere el umbral de
-puntos esperados.
-Los dos casos ilustran las dos ramas posibles de la
-ecuación~\eqref{eq:edraw}.
-Paraguay vs.\ Australia terminó $0$-$0$: la predicción de empate,
-aunque estructuralmente en desventaja frente a la tier de 3 puntos,
-resultó óptima y acertó el marcador exacto (5 puntos).
-Argelia vs.\ Austria, en cambio, terminó $3$-$3$ —un resultado
-inusualmente alto para un empate—: el modelo acertó la dirección
-(empate) pero no los goles de ningún equipo, obteniendo solo 2 puntos,
-exactamente el término intermedio de la ecuación~\eqref{eq:edraw} para
-$c \neq a$.
-Ninguno de los dos resultados contradice la Observación~\ref{obs:nodraw};
-juntos ilustran su condición de frontera: el modelo predice empates
-únicamente cuando la evidencia de mercado lo justifica con suficiente
-margen, y aun así el resultado exacto no está garantizado, como para
-cualquier otra predicción.
-En el resto de los 102 partidos (98,1\,\%) el modelo propuso la
-victoria de uno de los dos equipos.
-Un participante humano intuitivo que predijera empates en todo
-partido muy parejo estaría actuando de forma subóptima con más
-frecuencia que el modelo, incluso si su estimación de
-$P(\text{empate})$ fuera correcta.
+\subsection{El ajuste a los mercados}
+
+El IPF y el reajuste por razones dieron casi los mismos puntos en la
+fase de grupos (154 y 153), de modo que la elección entre ambos no se
+justifica por el resultado de un torneo.
+La preferimos por sus propiedades: ajusta todas las marginales a la vez
+en lugar de una tras otra, es la modificación mínima de
+la distribución histórica en el sentido de Kullback--Leibler cuando las
+restricciones son compatibles \citep{csiszar1975}, y no produce
+marcadores extremos como los 5-1 del reajuste por razones.
+Que las restricciones de Kalshi no sean del todo compatibles entre sí
+(Sección~\ref{sec:ipf}) indica que los mercados de total y de ventaja,
+cotizados por separado, no forman una distribución conjunta
+coherente; el IPF reparte esa inconsistencia en lugar de amplificarla.
+
+\subsection{La adaptación al torneo en curso}
+
+El Mundial 2026 tuvo en la fase de grupos más empates y más goles que
+los tres anteriores, y $\hat\delta$ respondió con valores positivos pero
+moderados, entre 0 y 0,5.
+Un valor final de 0,10 significa que un partido del Mundial 2026 pesó
+solo un 10\,\% más que uno del 2022: la evidencia del torneo en curso
+favoreció darle algo más de peso, pero no apartarse del historial.
+Los tramos en que $\hat\delta$ volvió a 0, como entre los partidos 45 y
+61, muestran que con una o dos jornadas de datos la estimación es
+inestable, como cabe esperar de una validación hacia adelante con
+pocos pliegues.
+El cambio de formato del Mundial 2026, con 48 selecciones en lugar de
+32, es una explicación plausible de la diferencia en goles y empates,
+pero un solo torneo no permite separarla de la variación muestral.
 
 \subsection{Limitaciones}
 
-\textbf{Muestra histórica pequeña.}
-Con solo tres Mundiales (192 partidos), la distribución histórica
-tiene alta incertidumbre para marcadores infrecuentes.
-El suavizado Poisson mitiga este problema pero no lo elimina.
+La principal limitación es que la evaluación descansa en un solo
+torneo.
+Las diferencias entre estrategias, salvo la de usar los precios del
+mercado, tienen intervalos que incluyen el cero, y los promedios por
+ronda eliminatoria, con entre 1 y 16 partidos, no permiten afirmar que
+el modelo funcione mejor o peor en alguna ronda.
+Además, los pronósticos congelados provienen de versiones sucesivas
+del sistema (Apéndice~\ref{app:version}), de modo que la evaluación
+mide el sistema tal como se usó y no una versión única.
 
-\textbf{Truncación de la cuadrícula de marcadores.}
-La optimización se realiza sobre $\{0,\ldots,5\}^2$, ignorando la
-posibilidad de marcadores con 6 o más goles.
-En el historial de los tres Mundiales, aproximadamente el 0,5\% de
-los partidos terminaron con 6 o más goles en total.
+El modelo optimiza los puntos esperados, no la probabilidad de ganar
+la quiniela.
+Cuando el premio depende de la posición frente a otros participantes,
+puede convenir apartarse de los pronósticos más populares
+\citep{clair2007}; nuestro modelo no considera a los demás
+participantes.
 
-\textbf{Variables contextuales omitidas.}
-El modelo no incorpora variables específicas del partido como
-lesiones, sanciones, condiciones climáticas, historial directo entre
-selecciones o el contexto de clasificación dentro del grupo.
-Estas variables pueden ser relevantes en algunos partidos.
+La distribución histórica se basa en 192 partidos, y el núcleo de
+prórroga en solo 18; el suavizado de Poisson y la actualización con
+el torneo en curso atenúan, pero no eliminan, esa incertidumbre.
+La cuadrícula de marcadores llega hasta 5 goles por equipo, y en los
+Mundiales 2014--2022, 5 de los 192 partidos (2,6\,\%) tuvieron un
+equipo con 6 o más goles.
+El modelo no usa variables del partido como lesiones, sanciones o la
+situación del grupo; sin embargo, en la medida en que los
+participantes del mercado las conocen, ya están reflejadas en los
+precios de Kalshi.
 
-\textbf{Kernel de prórroga con muestra pequeña.}
-El kernel de transición de goles en tiempo extra se estima de solo
-18~partidos eliminatorios de tres Mundiales.
-Con tan pocos datos, la incertidumbre sobre las probabilidades
-condicionales es alta.
-El kernel se actualizaba con los partidos de ET del WC~2026 conforme
-avanzaba el torneo, pero los partidos que llegaron a prórroga en la
-fase eliminatoria de un único Mundial fueron insuficientes para
-reducir sustancialmente esa incertidumbre.
+\subsection{Extensiones}
 
-\textbf{Varianza muestral por ronda eliminatoria.}
-Cada ronda de la fase eliminatoria tiene pocos partidos (16 en la
-ronda de 32, 8 en octavos, 4 en cuartos, y apenas 2, 1 y 1 en
-semifinales, tercer puesto y final respectivamente; Tabla~\ref{tab:rondas}),
-por lo que el promedio de puntos observado en una ronda específica
-está sujeto a alta varianza muestral.
-El efecto es más marcado precisamente en las rondas de puntaje
-doble: con $n=1$ o $n=2$, el promedio de la ronda es esencialmente
-binario (el partido por el tercer puesto obtuvo 0 puntos; la final,
-el máximo de 10) y no debe interpretarse como una medida estable del
-desempeño del modelo en esas rondas.
-De manera similar, la diferencia entre la ronda de 32 (2,94 puntos
-por partido) y octavos de final (1,38) es consistente con varianza
-muestral y no debe interpretarse como evidencia de que el modelo se
-deteriora sistemáticamente en rondas avanzadas.
-
-\subsection{Extensiones posibles}
-
-La arquitectura del modelo es extensible en varias direcciones.
-El marco bayesiano adoptado aquí es afín a modelos que incorporan
-datos de eventos dentro del partido para actualizar probabilidades
-en tiempo real \citep{divekar2024}; aunque los concursos de predicción
-deportiva requieren pronósticos previos al partido, esa línea de
-trabajo es relevante para aplicaciones donde las predicciones pueden
-ajustarse durante el juego.
-El framework es aplicable a otros concursos con distintas reglas de
-puntuación simplemente cambiando la función $f$.
-Finalmente, el uso de mercados de predicción como fuente de prior
-bayesiano es aplicable a otros torneos con menor historial que el
-Mundial, donde la información histórica es más escasa.
+El método se aplica sin cambios a cualquier otra regla de puntuación,
+pues solo depende de la función~$f$, y a cualquier torneo con mercados
+de resultado, total y ventaja.
+Con reglas que premien más el marcador exacto frente al ganador, la
+distancia entre el pronóstico óptimo y el modal sería mayor, y
+cuantificar esa relación entre la regla y el valor de optimizar es una
+pregunta abierta.
+La misma reconstrucción de marcadores desde las marginales del mercado
+podría actualizarse durante el partido, en la línea de los modelos
+bayesianos de pronóstico en tiempo real \citep{divekar2024}.
 
 % ─────────────────────────────────────────────────────────────
 \section{Conclusiones}
