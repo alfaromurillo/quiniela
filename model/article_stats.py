@@ -6,9 +6,9 @@ late-round multiplier: some pools multiply points in later rounds,
 which does not change the argmax, so the article evaluates on the
 base scale.
 
-The operational record uses the frozen predictions; the analyses of
-the method use the final method's pseudo-prospective picks
-(prospective.py, via final_rows()).
+The main text uses the final method's pseudo-prospective picks
+(prospective.py, via final_rows()); the predictions published during
+the tournament (frozen predictions) appear only in Appendix A.
 
 Run from repo root:
     python model/article_stats.py            # prints a summary
@@ -113,6 +113,8 @@ def summary(rows):
         rs = [r for r in rows if r["round"] == rd]
         out["rounds"][rd] = {"n": len(rs), "total": sum(r["pts"][6] for r in rs)}
     ex = [r for r in rows if r["exp"] is not None]
+    if not ex:
+        return out
     # expected_pts of the double-points rounds was logged ×2 only after the
     # tournament; all logged values predate that change, so they are base.
     out["ex_ante"] = {"n": len(ex), "expected": st.mean(r["exp"] for r in ex),
@@ -359,10 +361,11 @@ def _opt_vs_modal(rows):
 
 
 def main():
-    rows = match_rows()           # frozen predictions (operational record)
+    rows = match_rows()           # published predictions (Appendix A)
     fin = final_rows()            # final method, pseudo-prospective
     stats = {
         "summary": summary(rows),
+        "summary_method": summary(fin),
         "strategies_frozen": strategies(rows),
         "pred_vs_obs": {k: {f"{a}-{b}": n for (a, b), n in v.items()}
                         for k, v in predicted_vs_observed(fin).items()},

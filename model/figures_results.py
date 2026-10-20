@@ -59,21 +59,18 @@ def _save(fig, name):
 
 # ── Fig 5: cumulative points ───────────────────────────────────
 def fig5_cumulative():
-    """Pseudo-prospective strategies (prospective.py) plus the frozen record."""
+    """Pseudo-prospective strategies (prospective.py)."""
     from model.prospective import run
     rows = run()
-    frozen = {r["id"]: r["pts"][6] for r in match_rows()}
-    series = [("final", "Óptimo (método final)", BLUE, 2.2, "-"),
+    series = [("final", "Método (óptimo)", BLUE, 2.2, "-"),
               ("modal", "Marcador modal", "#5b8db8", 1.3, "-"),
-              ("frozen", "Pronósticos congelados", INK, 1.0, "--"),
               ("fav10", "Favorito gana 1-0", ORANGE, 1.3, "-"),
               ("hist", "Solo historial (casi siempre 1-1)", MUTED, 1.3, "-")]
-    dys = {"final": 9, "modal": 2, "frozen": -5, "fav10": -12, "hist": 0}
+    dys = {"final": 6, "modal": -2, "fav10": -9, "hist": 0}
     x = np.arange(1, len(rows) + 1)
     fig, ax = plt.subplots(figsize=(7.5, 4.2))
     for key, label, color, lw, ls in series:
-        pts = [frozen[r["id"]] if key == "frozen" else r["pts"][key]
-               for r in rows]
+        pts = [r["pts"][key] for r in rows]
         y = np.cumsum(pts)
         ax.plot(x, y, color=color, lw=lw, ls=ls)
         ax.text(x[-1] + 1.5, y[-1] + dys[key], f"{label}: {y[-1]}",
@@ -89,6 +86,50 @@ def fig5_cumulative():
     ax.set_ylabel("Puntos acumulados")
     _clean(ax)
     _save(fig, "fig5_puntos_acumulados")
+
+
+# ── Fig A3: published predictions vs the method ───────────────
+def figA3_published():
+    """Cumulative points of the published predictions and of the method."""
+    from model.prospective import run
+    rows = run()
+    published = {r["id"]: r["pts"][6] for r in match_rows()}
+    x = np.arange(1, len(rows) + 1)
+    pub = np.cumsum([published[r["id"]] for r in rows])
+    met = np.cumsum([r["pts"]["final"] for r in rows])
+    dates = [r["date"] for r in sorted(
+        json.loads((ROOT / "data/schedule.json").read_text())["matches"],
+        key=lambda m: m["time_utc"])]
+    # code changes that affected the published predictions (Appendix A)
+    changes = [("2026-06-12", "α"), ("2026-06-19", "IPF en paralelo"),
+               ("2026-06-27", "eliminatoria en dos etapas")]
+
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(7.5, 6.2), sharex=True,
+                                   gridspec_kw={"height_ratios": [3, 2]})
+    ax1.plot(x, met, color=BLUE, lw=2.0)
+    ax1.plot(x, pub, color=INK, lw=1.2, ls="--")
+    ax1.text(x[-1] + 1.5, met[-1] + 5, f"Método: {met[-1]}", color=BLUE,
+             va="center", fontsize=9)
+    ax1.text(x[-1] + 1.5, pub[-1] - 5, f"Publicados: {pub[-1]}", color=INK,
+             va="center", fontsize=9)
+    ax1.set_ylabel("Puntos acumulados")
+    ax1.set_ylim(0, None)
+    diff = met - pub
+    ax2.step(x, diff, where="mid", color=INK, lw=1.2)
+    ax2.axhline(0, color="#cccccc", lw=0.8)
+    for d, label in changes:
+        i = next(k for k, dd in enumerate(dates) if dd >= d)
+        for ax in (ax1, ax2):
+            ax.axvline(i + 0.5, color="#cccccc", lw=0.8, ls=":")
+        ax2.text(i + 1.5, diff.max() + 1, label, fontsize=8, color=MUTED,
+                 va="top")
+    ax2.set_ylabel("Método menos\npublicados")
+    ax2.set_xlabel("Partidos, en orden cronológico")
+    ax2.set_xlim(0, len(rows) + 1)
+    for ax in (ax1, ax2):
+        _clean(ax)
+    fig.tight_layout()
+    _save(fig, "figA3_publicados")
 
 
 # ── Fig 6: predicted vs observed scorelines ────────────────────
@@ -293,7 +334,7 @@ def fig8_calibration():
     xs = np.arange(len(bf))
     ax2.plot(xs, [b["model"] for b in bf], "o-", color=BLUE, lw=1.6)
     ax2.plot(xs, [b["fav10"] for b in bf], "o--", color=ORANGE, lw=1.2, ms=4)
-    ax2.text(xs[-1] + 0.1, bf[-1]["model"], "Óptimo", color=BLUE,
+    ax2.text(xs[-1] + 0.1, bf[-1]["model"], "Método", color=BLUE,
              va="center", fontsize=9)
     ax2.text(xs[-1] + 0.1, bf[-1]["fav10"] + 0.08, "Favorito 1-0",
              color=ORANGE, va="center", fontsize=9)
@@ -486,7 +527,7 @@ def fig10_surprises():
     ax2.set_xlim(min(b["lo"] for b in bins) - 0.15,
                  max(b["hi"] for b in bins) + 0.15)
     ax2.set_ylim(-0.6, 5.9)
-    ax2.set_xlabel("Puntos por partido: método final menos “favorito 1-0”")
+    ax2.set_xlabel("Puntos por partido: método menos “favorito 1-0”")
     _clean(ax2)
     ax2.spines["left"].set_visible(False)
     ax2.tick_params(axis="y", length=0)
@@ -500,6 +541,7 @@ def fig10_surprises():
 if __name__ == "__main__":
     print("Generating results figures...")
     fig5_cumulative()
+    figA3_published()
     fig6_predicted_observed()
     fig11_poisson_map()
     fig7_decision_map()

@@ -119,7 +119,7 @@ model/
   predict.py           # Full pipeline: schedule → Kalshi → dist → predict → JSON
   sanity.py            # Validates predictions.json before commit (hard fails on degenerate output)
   figures.py           # Methods/appendix figures (fig1–fig4) → articulo/figures/
-  figures_results.py   # Results figures (fig5–fig11, PDF); final method via prospective.py
+  figures_results.py   # Results figures (fig5–fig11, figA3; PDF); final method via prospective.py
   article_stats.py     # All Results numbers; the article scores on the base rule
   marginals.py         # Final fit: censored market tables, compatibility projection + IPF
   prospective.py       # Re-predicts every match with the final method using only
@@ -254,10 +254,13 @@ incompatible and the operational `scoreline_probs_ipf` gives zero mass to
 open "3 or more" bin. The live pipeline (`predict.py`) still uses the legacy
 fits; it was left untouched because pushing triggers the CI rerun.
 
-**Article: operational record vs final method**: Results section 3.1 scores
-the frozen predictions (222 points); everything else in Results uses the
-final method's pseudo-prospective picks (`article_stats.final_rows()`,
-235 points).
+**Article: one method in the main text**: the main text presents only
+"el método" (the final method), evaluated pseudo-prospectively
+(`article_stats.final_rows()`, 235 points). Everything about the
+version used during the tournament (published/frozen predictions, 222
+points, the ratio re-weighting, the operational IPF, the private pool)
+lives in Appendix A (`app:operativo`), with Fig. A.1
+(`figA3_publicados.pdf`) comparing both.
 
 **ESPN team name aliases**: ESPN uses different display names from our schedule. Known mismatches: `"Czechia"` (not `"Czech Republic"`), `"Bosnia-Herzegovina"` (not `"Bosnia & Herzegovina"`). Add new aliases to `ESPN_ALIASES` in `model/results.py` as they appear. Symptom: `results.py` prints `"No result yet"` for a match that already finished. Fix: add the ESPN name to the alias list and re-run.
 
