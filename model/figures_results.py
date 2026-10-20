@@ -334,42 +334,69 @@ def fig9_world_cup():
 
 
 # ── Fig 10: surprises ──────────────────────────────────────────
+ES_SURPRISE = {"England": "Inglaterra", "Ghana": "Ghana",
+               "Paraguay": "Paraguay", "Uruguay": "Uruguay",
+               "Turkey": "Turquía", "USA": "EE. UU.", "Algeria": "Argelia",
+               "Austria": "Austria", "Ecuador": "Ecuador"}
+
+# match → label offset in points (dx, dy) and horizontal alignment
+SURPRISE_LABELS = {
+    ("Spain", "Cape Verde"):    ((6, -9), "left"),
+    ("Ecuador", "Curaçao"):     ((4, 11), "left"),
+    ("England", "Ghana"):       ((8, 3), "left"),
+    ("Qatar", "Switzerland"):   ((-5, 7), "right"),
+    ("Germany", "Paraguay"):    ((6, -9), "left"),
+    ("Brazil", "Norway"):       ((-5, 8), "right"),
+    ("Ecuador", "Germany"):     ((6, -9), "left"),
+    ("Uruguay", "Cape Verde"):  ((-10, 14), "center"),
+    ("Turkey", "USA"):          ((4, 12), "left"),
+    ("France", "England"):      ((8, -2), "left"),
+    ("Germany", "Curaçao"):     ((-6, 8), "right"),
+    ("Algeria", "Austria"):     ((8, 4), "left"),
+}
+
+
 def fig10_surprises():
     rows = surprise_rows(match_rows())
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 4.6),
-                                   gridspec_kw={"width_ratios": [1.25, 1]})
-    ax1.axvline(0.3, color="#cccccc", lw=0.8, ls="--")
+    # Fixed axes positions: panel b's long tick labels must not narrow a.
+    fig = plt.figure(figsize=(10, 9.2))
+    ax1 = fig.add_axes([0.08, 0.43, 0.76, 0.53])
+    ax2 = fig.add_axes([0.42, 0.06, 0.42, 0.26])
+    ax1.axvline(0.3, color="#bbbbbb", lw=0.8, ls="--")
     for y in (-1, 1):
-        ax1.axhline(y, color="#cccccc", lw=0.8, ls="--")
+        ax1.axhline(y, color="#bbbbbb", lw=0.8, ls="--")
     colors = {1: BLUE, -1: ORANGE, 0: "#c8c8c8"}
     for r in rows:
         d = r["pts"][6] - r["pts"]["fav10"]
-        ax1.scatter(r["p_out"], r["d_goals"], s=22, lw=0, zorder=3,
+        ax1.scatter(r["p_out"], r["d_goals"], s=24, lw=0, zorder=3,
                     color=colors[(d > 0) - (d < 0)])
-    notable = {("France", "England"): (0.42, 6.3),
-               ("Germany", "Curaçao"): (0.80, 5.2),
-               ("Spain", "Cape Verde"): (0.75, -3.2),
-               ("USA", "Belgium"): (0.20, 3.9),
-               ("Algeria", "Austria"): (0.47, 5.3),
-               ("Mexico", "England"): (0.13, 2.9)}
-    es = dict(ES, **{"France": "Francia", "England": "Inglaterra",
-                     "USA": "EE. UU.", "Algeria": "Argelia",
-                     "Austria": "Austria", "Mexico": "México"})
+    es = dict(ES, **ES_SURPRISE)
     for r in rows:
-        pos = notable.get((r["home"], r["away"]))
-        if pos:
-            a, b = r["result"]
-            ax1.annotate(f"{es.get(r['home'], r['home'])} {a}-{b} "
-                         f"{es.get(r['away'], r['away'])}",
-                         (r["p_out"], r["d_goals"]), xytext=pos,
-                         ha="center", va="center", fontsize=8, color=INK,
-                         arrowprops=dict(arrowstyle="-", color=MUTED, lw=0.6))
-    ax1.text(0.02, -3.6, "sorpresa en\nel resultado", color=MUTED, fontsize=8)
-    ax1.text(0.98, 6.6, "más goles de lo esperado", color=MUTED, fontsize=8,
-             ha="right")
-    ax1.text(0.98, -3.6, "menos goles", color=MUTED, fontsize=8, ha="right")
+        lab = SURPRISE_LABELS.get((r["home"], r["away"]))
+        if not lab:
+            continue
+        (dx, dy), ha = lab
+        a, b = r["result"]
+        ax1.annotate(f"{es.get(r['home'], r['home'])} {a}-{b} "
+                     f"{es.get(r['away'], r['away'])}",
+                     (r["p_out"], r["d_goals"]), xytext=(dx, dy),
+                     textcoords="offset points", ha=ha, va="center",
+                     fontsize=7.5, color=INK,
+                     arrowprops=dict(arrowstyle="-", color=MUTED, lw=0.5,
+                                     shrinkA=0, shrinkB=2))
     ax1.set_xlim(0, 1)
-    ax1.set_xlabel("Probabilidad que Kalshi daba al resultado ocurrido")
+    ax1.set_ylim(-4.6, 7.4)
+    # zone labels: outcome along the top, goals along the right margin
+    kw = dict(color="#777777", fontsize=8.5, style="italic")
+    ax1.text(0.29, 7.6, "← resultado sorpresivo", ha="right", va="bottom", **kw)
+    ax1.text(0.31, 7.6, "resultado esperado →", ha="left", va="bottom", **kw)
+    for y, txt in ((4.2, "más goles\nde lo esperado"),
+                   (0.0, "goles como\nse esperaba"),
+                   (-2.8, "menos goles\nde lo esperado")):
+        ax1.text(1.015, y, txt, transform=ax1.get_yaxis_transform(),
+                 ha="left", va="center", **kw)
+    ax1.set_xlabel("Probabilidad que Kalshi daba al resultado que ocurrió\n"
+                   "(a la victoria del ganador real, o al empate)")
     ax1.set_ylabel("Goles del partido menos goles esperados")
     _clean(ax1)
 
@@ -380,20 +407,24 @@ def fig10_surprises():
         color = BLUE if b["lo"] > 0 else ORANGE if b["hi"] < 0 else INK
         ax2.plot([b["lo"], b["hi"]], [y, y], color=color, lw=1.4)
         ax2.scatter([b["diff"]], [y], color=color, s=28, zorder=3)
+    names = ["resultado sorpresivo (menos de 30 %)",
+             "resultado de 30 a 50 %", "resultado esperado (50 % o más)",
+             "menos goles de lo esperado (más de 1)",
+             "goles como se esperaba (a 1 o menos)",
+             "más goles de lo esperado (más de 1)"]
     ax2.set_yticks(ypos)
-    ax2.set_yticklabels([f"{b['label'].split(': ')[1]} (n = {b['n']})"
-                         for b in bins], fontsize=8.5)
-    ax2.text(-1.55, 6.0, "Probabilidad del resultado ocurrido", fontsize=9,
-             color=INK, fontweight="bold")
-    ax2.text(-1.55, 2.6, "Goles frente a lo esperado", fontsize=9,
-             color=INK, fontweight="bold")
-    ax2.set_xlim(-1.6, 0.8)
-    ax2.set_ylim(-0.6, 6.4)
-    ax2.set_xlabel("Puntos por partido:\nmodelo menos «favorito 1-0»")
+    ax2.set_yticklabels([f"{n} (n = {b['n']})" for n, b in zip(names, bins)],
+                        fontsize=8.5)
+    ax2.set_xlim(-1.6, 0.9)
+    ax2.set_ylim(-0.6, 5.9)
+    ax2.set_xlabel("Puntos por partido: modelo menos «favorito 1-0»")
     _clean(ax2)
     ax2.spines["left"].set_visible(False)
     ax2.tick_params(axis="y", length=0)
-    fig.tight_layout()
+    for ax, tag in ((ax1, "a"), (ax2, "b")):
+        ax.text(-0.06 if tag == "a" else -0.72, 1.04, tag,
+                transform=ax.transAxes, fontsize=12, fontweight="bold",
+                va="bottom", ha="right")
     _save(fig, "fig10_sorpresas")
 
 

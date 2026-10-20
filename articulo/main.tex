@@ -1116,6 +1116,9 @@ por partido o menos del modelo en todos los intervalos.
 
 Las sorpresas fueron frecuentes, y en ellas el modelo rindió peor que
 la regla ``el favorito gana 1-0'' (Figura~\ref{fig:sorpresas}).
+Para medirlas se usan dos cantidades del mercado: la probabilidad que
+Kalshi daba al resultado que ocurrió y la diferencia entre los goles
+del partido y los que esperaba (Figura~\ref{fig:sorpresas}a).
 En 28 de los 98 partidos con mercados (29\,\%), Kalshi daba menos de
 30\,\% al resultado que ocurrió, y en 22 el total de goles se apartó
 en más de 2 del esperado.
@@ -1124,9 +1127,15 @@ Inglaterra: el mercado daba 25\,\% a la victoria inglesa y el
 partido tuvo 6,7 goles más de los esperados; en el otro extremo,
 España 0-0 Cabo Verde tenía un empate de 6,5\,\% y 3,7 goles menos
 de los esperados.
+De las 28 sorpresas de resultado, 20 fueron empates, como Catar 1-1
+Suiza o Alemania 1-1 Paraguay en dieciseisavos, y 6 de ellos 0-0, como
+los de España, Ecuador e Inglaterra ante Cabo Verde, Curazao y Ghana;
+como el modelo casi nunca pronostica empate, en esos partidos la regla,
+que con 1-0 obtiene un punto en cualquier 1-1, rescata más puntos.
 Cuando el resultado ocurrido tenía menos de 30\,\% de probabilidad,
-el modelo sumó 0,25 puntos por partido menos que la regla (intervalo
-del 95\,\%: $-0{,}46$ a $-0{,}04$), y cuando hubo más de un gol menos
+el modelo sumó 0,25 puntos por partido menos que la regla
+(Figura~\ref{fig:sorpresas}b; intervalo del 95\,\%: $-0{,}46$ a
+$-0{,}04$), y cuando hubo más de un gol menos
 de lo esperado, 0,77 menos ($-1{,}47$ a $-0{,}05$).
 En cambio, cuando los goles fueron los esperados o más, el modelo sumó
 0,30 ($0{,}01$ a $0{,}65$) y 0,23 ($0{,}03$ a $0{,}46$) puntos más por
@@ -1137,14 +1146,20 @@ partido.
   \includegraphics[width=\textwidth]{figures/fig10_sorpresas}
   \caption{El modelo gana cuando el partido sigue lo que espera el
     mercado y pierde en las sorpresas.
-    Izquierda: probabilidad que Kalshi daba al resultado ocurrido y
-    diferencia entre los goles del partido y los esperados por el
-    mercado, en los 98 partidos con mercados; en azul, los partidos en
-    que el modelo sumó más puntos que la regla ``el favorito gana
-    1-0'', en naranja los que sumó menos y en gris los empates.
-    Derecha: diferencia de puntos por partido entre el modelo y esa
-    regla, por tipo de partido, con intervalos de credibilidad del
-    95\,\% (\textit{bootstrap} bayesiano).}
+    (a)~Cada punto es uno de los 98 partidos con mercados: en el eje
+    horizontal, la probabilidad que Kalshi daba al resultado que
+    ocurrió (a la victoria del equipo que ganó, o al empate si lo hubo);
+    en el vertical, los goles del partido menos los que esperaba el
+    mercado.
+    Las líneas punteadas separan las zonas: a la izquierda de 0,3, los
+    resultados sorpresivos; arriba de $+1$ y abajo de $-1$, los partidos
+    con más o menos goles de lo esperado.
+    En azul, los partidos en que el modelo sumó más puntos que la regla
+    ``el favorito gana 1-0''; en naranja, los que sumó menos; en gris,
+    los que sumaron lo mismo.
+    (b)~Diferencia de puntos por partido entre el modelo y esa regla en
+    cada zona, con intervalos de credibilidad del 95\,\%
+    (\textit{bootstrap} bayesiano).}
   \label{fig:sorpresas}
 \end{figure}
 
