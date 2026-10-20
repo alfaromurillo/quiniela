@@ -912,6 +912,10 @@ El pronóstico óptimo terminó con 207 puntos, 12 más que el marcador
 modal ($-8$ a 33) y 15 más que la regla ``el favorito gana 1-0''
 ($-9$ a 40), aunque esa regla fue por delante durante casi toda la
 fase de grupos.
+En los 104 partidos, el modelo y la regla difirieron en 56, en que el
+modelo eligió sobre todo 2-1, 2-0 o 3-0, y la regla obtuvo menos
+aciertos exactos y de 3 puntos (11 y 22, frente a 14 y 28 del modelo)
+pero también menos partidos sin puntos (13, frente a 20).
 La mayor ventaja sobre el modal en un partido, 5 puntos en
 México-Corea del Sur, se debió a un marcador modal (0-1, contra el
 favorito) de la versión del sistema anterior al 19 de junio
@@ -1232,6 +1236,33 @@ Que 1-1 ocurriera 12 veces sin pronosticarse nunca
 costo esperado de esa desventaja: en un partido parejo, pronosticar
 1-1 rinde algo menos en promedio que pronosticar 1-0 (1,518 frente a
 1,539 puntos en el ejemplo de la Tabla~\ref{tab:ejkorcze}).
+
+\subsection{Por qué funciona ``el favorito gana 1-0''}
+
+Que una regla sin modelo quede a 9 puntos del sistema
+(Figura~\ref{fig:acumulados}) se explica por la propia regla de
+puntuación.
+Pronosticar 1-0 al favorito acierta el ganador siempre que el favorito
+gana, y obtiene 3 puntos en cualquier victoria del favorito sin goles
+en contra, que fueron 33 de sus 67 victorias en el Mundial 2026 y 78
+de las 146 victorias de 2014--2022.
+Cuando el favorito no gana, la regla aún suele rescatar un punto: si
+el partido termina 1-1, o si el favorito pierde marcando un gol,
+coincide el gol del favorito.
+Por eso se quedó sin puntos en solo 13 partidos, frente a 20 del
+modelo.
+Es también el pronóstico óptimo en la mayor parte del mapa de decisión
+(Figura~\ref{fig:mapa}): el modelo eligió 1-0 en 51 partidos y se
+apartó de él sobre todo hacia 2-0, 2-1 y 3-0 cuando el mercado
+esperaba más goles o un favorito más claro.
+Esos cambios suben la probabilidad de acertar 3 o 5 puntos a cambio de
+más partidos en blanco, y en este torneo sumaron 9 puntos netos, dos
+tercios de ellos en la fase eliminatoria.
+La regla del favorito 1-0 no es, entonces, una alternativa al modelo,
+sino su aproximación más simple: recoge el valor del mercado, que
+elige el ganador, y el de la regla de puntuación, cuyo nivel de
+3 puntos premia las victorias sin goles en contra, y deja al modelo
+solo el ajuste fino según los goles esperados.
 
 \subsection{Cómo jugar una quiniela con esta regla}
 
