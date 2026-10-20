@@ -626,17 +626,8 @@ def fig3_kalshi_reweight():
                     color="#e63946", fontweight="bold")
         plt.colorbar(im, ax=ax, label="Probabilidad (%)")
 
-    # Readable match label
-    match_label = ("Corea del Sur vs. Chequia"
-                   if ticker_key == preferred
-                   else ticker_key[:24])
-    fig.suptitle(
-        f"Reajuste IPF por mercados de predicción de Kalshi\n"
-        f"{match_label} — "
-        f"$p_A={_mnum(ph_val, 2)}$, $p_E={_mnum(pd_val, 2)}$, $p_B={_mnum(pa_val, 2)}$",
-        fontsize=11,
-    )
-    fig.tight_layout(rect=[0, 0, 1, 0.90])
+    # Match and probabilities go in the article's caption, not a title.
+    fig.tight_layout()
     out = OUT_DIR / "fig3_kalshi_reweight.png"
     fig.savefig(out, format="png", dpi=150, bbox_inches="tight")
     plt.close(fig)
@@ -676,19 +667,22 @@ def fig4_delta_evolution():
     # Jornada boundary lines — always show all to give tournament context
     y_top = max(max(deltas) * 1.15, 0.08)
     ax.set_ylim(bottom=-0.05, top=y_top)
+    prev = 0
     for n_boundary, label in _JORNADA_LABELS:
         ax.axvline(n_boundary, color="#cccccc", linewidth=0.9,
                    linestyle="--", zorder=1)
-        ax.text(n_boundary, y_top * 0.97, label,
-                ha="center", va="top", fontsize=7.5, color="#888888")
+        # label each jornada at its midpoint; the last three rounds are
+        # too short to label separately
+        if label in ("QF", "SF"):
+            continue
+        mid = (prev + n_boundary) / 2 if label != "F" else 100
+        text = "QF–F" if label == "F" else label
+        ax.text(mid, y_top * 0.97, text,
+                ha="center", va="top", fontsize=8, color="#888888")
+        prev = n_boundary
 
-    ax.set_xlabel("Partidos del WC 2026 disputados", fontsize=11)
+    ax.set_xlabel("Partidos del Mundial 2026 disputados", fontsize=11)
     ax.set_ylabel("Estimación de $\\delta$", fontsize=11)
-    ax.set_title(
-        "Adaptación bayesiana al torneo en curso\n"
-        "($\\delta = 0$: cada partido del WC 2026 pesa como uno del WC 2022)",
-        fontsize=11,
-    )
     ax.set_xlim(left=-1, right=max(n_last, 82) + 2)
     ax.axhline(0, color="gray", linewidth=0.8, linestyle="--", zorder=2)
     ax.grid(axis="y", alpha=0.3)
