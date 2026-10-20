@@ -529,9 +529,14 @@ def fig3_kalshi_reweight():
     preferred = "KXWCGAME-26JUN11KORCZE"
     ticker_key = preferred if preferred in cache else next(iter(cache))
     entry  = _clean_entry(cache[ticker_key])
-    ph_val = entry.get("home_win", 0.40)
-    pd_val = entry.get("draw", 0.25)
-    pa_val = entry.get("away_win", 0.35)
+    # Correct with the prior centre α₀, as in the article's example
+    # (Table tab:ejkorcze), so figure and table show the same model.
+    from model.kalshi import _correct_bias
+    from model.learn import ALPHA_0
+    ph_val, pd_val, pa_val = _correct_bias(entry.get("home_win", 0.40),
+                                           entry.get("draw", 0.25),
+                                           entry.get("away_win", 0.35),
+                                           ALPHA_0)
     tg     = entry.get("total_goals")
     sh     = entry.get("spread_home")
     sa     = entry.get("spread_away")
@@ -563,7 +568,7 @@ def fig3_kalshi_reweight():
     vmax = max(mat_b.max(), mat_a.max()) * 100
 
     if ticker_key == preferred:
-        xlabel_str = "Goles Rep. Checa"
+        xlabel_str = "Goles Chequia"
         ylabel_str = "Goles Corea del Sur"
     else:
         xlabel_str = "Goles Equipo B"
@@ -573,7 +578,7 @@ def fig3_kalshi_reweight():
     for ax, mat, title, mark_opt in zip(
         axes,
         [mat_b, mat_a],
-        ["Sin Kalshi (solo histórico)", "Con Kalshi (IPF)"],
+        ["Solo resultado de Kalshi", "Resultado, total y ventaja (IPF)"],
         [False, True],
     ):
         im = ax.imshow(mat * 100, origin="lower", aspect="equal",
@@ -603,7 +608,7 @@ def fig3_kalshi_reweight():
         plt.colorbar(im, ax=ax, label="Probabilidad (%)")
 
     # Readable match label
-    match_label = ("Corea del Sur vs. Rep. Checa"
+    match_label = ("Corea del Sur vs. Chequia"
                    if ticker_key == preferred
                    else ticker_key[:24])
     fig.suptitle(
