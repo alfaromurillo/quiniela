@@ -250,7 +250,7 @@ def fig1_historical_overview():
     wc_data = [(yr, *_load_wc_matrices(p)) for yr, p in WC_FILES]
 
     phases      = ["group", "knockout"]
-    phase_names = {"group": "Fase de grupos", "knockout": "Eliminación directa"}
+    phase_names = {"group": "Fase de grupos", "knockout": "Fase eliminatoria"}
 
     model_mats = {ph: _model_matrix(ph, gamma) for ph in phases}
 
@@ -328,7 +328,7 @@ def fig1_historical_overview():
             arr = counts[ph]   # canonical, NaN for impossible cells
             prop = np.where(np.isnan(arr), np.nan, arr / tot) if tot > 0 else arr.copy()
 
-            ylabel = f"WC {yr}\nGoles perdedor" if col == 0 else "Goles perdedor"
+            ylabel = f"Mundial {yr}\nGoles perdedor" if col == 0 else "Goles perdedor"
             im_last = _draw_heatmap(ax, prop, "Datos históricos", ylabel)
 
             for loser in GOALS:
@@ -403,14 +403,15 @@ def fig1_historical_overview():
                           "Estimado fin de grupos")
 
     # ── Row 2, col 1: real WC 2026 group-stage results (72 matches) ─
-    _draw_real_results(axes[2, 1], "group", "WC 2026 — datos reales")
+    _draw_real_results(axes[2, 1], "group", "Mundial 2026: datos reales")
 
     # ── Row 1, col 3: end-of-tournament model estimate ──────────
     _draw_model_estimate(axes[1, 3], "knockout", delta_final,
                           "Estimado fin\ndel mundial")
 
     # ── Row 2, col 3: real WC 2026 knockout results (32 matches) ─
-    _draw_real_results(axes[2, 3], "knockout", "WC 2026 KO — datos reales")
+    _draw_real_results(axes[2, 3], "knockout",
+                      "Mundial 2026 (elim.): datos reales")
 
     # ── Phase block headers (span two columns each) ────────────
     left_cx  = (axes[0, 0].get_position().x0
@@ -419,7 +420,7 @@ def fig1_historical_overview():
                 + axes[0, 3].get_position().x1) / 2
     fig.text(left_cx,  0.915, "Fase de grupos",
              ha="center", va="bottom", fontsize=10, fontweight="bold")
-    fig.text(right_cx, 0.915, "Eliminación directa",
+    fig.text(right_cx, 0.915, "Fase eliminatoria",
              ha="center", va="bottom", fontsize=10, fontweight="bold")
 
     # ── Single shared colorbar ─────────────────────────────────
@@ -444,7 +445,7 @@ def fig2_gamma_effect():
 
     totals_range = list(range(0, 9))
     phases = [("group",    "Fase de grupos"),
-              ("knockout", "Eliminación directa")]
+              ("knockout", "Fase eliminatoria")]
 
     fig, axes = plt.subplots(1, 2, figsize=(12, 5.0), sharey=False)
     plt.subplots_adjust(wspace=0.35)
@@ -514,12 +515,7 @@ def fig2_gamma_effect():
         for sp in inset.spines.values():
             sp.set_linewidth(0.5)
 
-    fig.suptitle(
-        "Efecto de $\\gamma$ sobre la distribución de goles totales\n"
-        "(WC 2014+2018+2022, ponderación geométrica por torneo)",
-        fontsize=12,
-    )
-    fig.tight_layout(rect=[0, 0, 1, 0.92])
+    fig.tight_layout()
     out = OUT_DIR / "fig2_gamma_effect.png"
     fig.savefig(out, format="png", dpi=150, bbox_inches="tight")
     plt.close(fig)
@@ -620,10 +616,7 @@ def fig3_kalshi_reweight():
                 (opt_a - 0.5, opt_h - 0.5), 1, 1,
                 linewidth=2.5, edgecolor="#e63946", facecolor="none",
             )
-            ax.add_patch(rect)
-            ax.text(opt_a, opt_h - 0.42, "óptimo",
-                    ha="center", va="top", fontsize=7,
-                    color="#e63946", fontweight="bold")
+            ax.add_patch(rect)   # the caption names the red box
         plt.colorbar(im, ax=ax, label="Probabilidad (%)")
 
     # Match and probabilities go in the article's caption, not a title.

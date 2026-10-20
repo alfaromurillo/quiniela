@@ -60,7 +60,7 @@ def fig5_cumulative():
     series = [(6, "Óptimo (modelo)", BLUE, 2.2),
               (5, "Marcador modal", "#5b8db8", 1.3),
               ("fav10", "Favorito gana 1-0", ORANGE, 1.3),
-              (1, "Solo historial (siempre 0-0)", MUTED, 1.3)]
+              (1, "Solo historial (casi siempre 0-0)", MUTED, 1.3)]
     x = np.arange(1, len(rows) + 1)
     fig, ax = plt.subplots(figsize=(7.5, 4.2))
     for key, label, color, lw in series:
@@ -105,7 +105,7 @@ def fig6_predicted_observed():
     ax.text(obs[(1, 0)], top + 0.55, "ocurrido", color=INK,
             ha="center", fontsize=9)
     ax.set_xlabel("Número de partidos (de 104)")
-    ax.set_ylabel("Marcador (goles del ganador primero)")
+    ax.set_ylabel("Marcador (goles del ganador, real o\npronosticado, primero)")
     ax.set_xlim(-1, max(pred.values()) + 3)
     ax.set_ylim(-0.7, len(scores) - 0.2)
     _clean(ax)
@@ -417,7 +417,7 @@ def fig10_surprises():
                         fontsize=8.5)
     ax2.set_xlim(-1.6, 0.9)
     ax2.set_ylim(-0.6, 5.9)
-    ax2.set_xlabel("Puntos por partido: modelo menos «favorito 1-0»")
+    ax2.set_xlabel("Puntos por partido: modelo menos “favorito 1-0”")
     _clean(ax2)
     ax2.spines["left"].set_visible(False)
     ax2.tick_params(axis="y", length=0)
