@@ -192,86 +192,91 @@ on GitHub.
 La quiniela de fútbol es un fenómeno cultural ampliamente arraigado
 en América Latina y España \citep{aguero2024, lopez2022, bravo2026,
 lanacion2026arg}.
-En su variante de marcador exacto, los participantes pronostican el
-resultado preciso de cada partido de un torneo, acumulando puntos
-según la cercanía de su predicción al resultado real.
-La regla de puntuación habitual premia de manera desigual los distintos
-tipos de acierto, por ejemplo: acertar el marcador exacto vale cinco puntos,
-mientras que acertar únicamente al ganador vale solo dos.
-Esta asimetría introduce un problema de optimización que va más allá de
-simplemente predecir el resultado más probable: el marcador modal
-puede diferir del marcador que maximiza los puntos esperados.
+En su variante de marcador exacto, cada participante pronostica el
+marcador de cada partido de un torneo y acumula puntos según la
+cercanía de su pronóstico al resultado real.
+La regla de puntuación premia de manera desigual los distintos tipos
+de acierto.
+En la quiniela que estudiamos, el marcador exacto vale cinco puntos,
+el ganador con los goles de un equipo vale tres, y el ganador solo
+vale dos.
+Con una regla así, el marcador más probable no es necesariamente el
+que más puntos rinde en promedio.
 
-Formalicemos el problema.
-Sea $P(h, k)$ la distribución de probabilidad sobre los marcadores
-posibles de un partido, donde $h$ es el número de goles de un equipo
-y $k$ el del otro.
-Dado un sistema de puntuación $f(a, b, h, k)$ que asigna puntos
-cuando se predice $(a, b)$ y el marcador real es $(h, k)$, la
-predicción óptima es
+El problema admite una formulación precisa.
+Sea $P(h, k)$ la distribución de probabilidad de los marcadores de un
+partido, donde $h$ y $k$ son los goles de cada equipo, y sea
+$f(a, b, h, k)$ el puntaje que recibe el pronóstico $(a, b)$ cuando
+el marcador real es $(h, k)$.
+El pronóstico óptimo es
 \[
   (\hat{a}, \hat{b})
-  = \arg\max_{(a,b)} \E[\text{pts} \mid \text{predicción}(a,b)]
-  = \arg\max_{(a,b)} \sum_{h,k} f(a, b, h, k) \cdot P(h, k).
+  = \arg\max_{(a,b)} \E[\text{pts} \mid \text{pronóstico } (a,b)]
+  = \arg\max_{(a,b)} \sum_{h,k} f(a, b, h, k) \, P(h, k).
 \]
-El desafío central es estimar $P(h, k)$ con precisión para cada
-partido del torneo.
+Dada $f$, el cálculo del máximo es directo; la dificultad está en
+estimar $P(h,k)$ para cada partido del torneo.
 
-\subsection*{Fuentes de información}
+Dos fuentes de información sirven para esa estimación.
+La primera son los modelos estadísticos de marcadores, que describen
+los goles de cada equipo con distribuciones de Poisson
+\citep{maher1982}, corregidas para marcadores bajos
+\citep{dixon1997}, bivariadas \citep{karlis2003} o jerárquicas
+bayesianas \citep{baio2010}, y que se han aplicado a la predicción de
+Mundiales \citep{groll2015}.
+La segunda son los mercados de predicción, cuyos precios agregan
+información dispersa \citep{arrow2008} y pronostican resultados
+deportivos al menos con la misma precisión que las casas de apuestas
+y mejor que los pronosticadores individuales
+\citep{spann2009, forrest2005}.
+Ambas fuentes ya se han combinado, incorporando las cuotas de casas
+de apuestas a un modelo de Poisson ajustado con datos históricos
+\citep{egidi2018}.
+Por su parte, la elección de pronósticos bajo la regla de una
+quiniela se ha estudiado para quinielas de llaves eliminatorias, en
+las que se pronostica qué equipo gana cada partido
+\citep{kaplan2001, clair2007}.
 
-Dos fuentes de información son naturalmente complementarias para
-este propósito:
+Sin embargo, los mercados de predicción no determinan la distribución
+de marcadores.
+Para el Mundial 2026, la plataforma Kalshi
+(\href{https://kalshi.com}{kalshi.com}) cotiza por partido el
+resultado, el total de goles y la ventaja de goles.
+Esos precios determinan las distribuciones marginales del total
+$T = h + k$ y de la diferencia $M = h - k$, pero no su distribución
+conjunta, que es justamente $P(h,k)$.
+Reconstruirla a partir de las marginales exige suponer cómo dependen
+$T$ y $M$, y el supuesto más simple, la independencia, es falso: en
+los Mundiales 2014, 2018 y 2022, los empates promediaron 1.6 goles
+y las victorias 2.9.
+Los trabajos sobre quinielas de llaves tampoco tratan el crédito
+parcial por acertar los goles de un solo equipo.
+Un participante con probabilidades de mercado bien calibradas carece,
+por tanto, de una regla fundamentada para convertirlas en un marcador
+exacto.
 
-\textbf{Historial de Mundiales.}
-Las ediciones recientes del Mundial de Fútbol (2014, 2018 y 2022)
-proveen 192 partidos cuyos marcadores capturan la distribución
-estadística del juego entre selecciones nacionales de primer nivel.
-Esta distribución refleja la estructura del fútbol de alto rendimiento:
-la predominancia de marcadores bajos, la asimetría entre goles en
-tiempo regular y tiempo extra, y la diferencia entre la fase de grupos
-y la fase eliminatoria.
-
-\textbf{Mercados de predicción.}
-Los mercados de predicción son plataformas donde los participantes
-negocian contratos cuyo valor depende del resultado de eventos futuros.
-Su eficiencia descansa en un argumento de arbitraje: si el precio
-difiere de la probabilidad verdadera, los agentes racionales explotan
-esa discrepancia hasta eliminarla \citep{arrow2008}.
-La evidencia empírica confirma que estos mercados son al menos tan
-precisos como las cuotas de casas de apuestas y superan a los
-pronosticadores individuales \citep{spann2009, forrest2005}.
-
-Para el Mundial 2026 utilizamos \textbf{Kalshi}
-(\href{https://kalshi.com}{kalshi.com}), una plataforma regulada en
-Estados Unidos que ofrece varios tipos de mercados por partido:
-resultado (victoria/empate/derrota en tiempo reglamentario),
-total de goles, ventaja de goles, total de goles por equipo y
-clasificación (esta última incluye prórroga y penales).
-Kalshi es la opción más adecuada para este trabajo por su liquidez
-en mercados deportivos, su regulación formal y la disponibilidad
-de una API pública sin autenticación.
-
-\subsection*{Contribución}
-
-Este artículo hace tres contribuciones.
-Primero, integra precios de mercados de predicción de Kalshi con un
-modelo bayesiano de distribución de marcadores para obtener
-estimaciones $P(h,k)$ más precisas que cualquiera de las dos fuentes
-por separado.
-Segundo, aplica un argumento de optimización explícito bajo la regla
-de puntuación de quiniela para identificar la predicción de marcador
-que maximiza los puntos esperados.
-Tercero, implementa el modelo completo en una plataforma web pública
-con actualizaciones automáticas, y documenta el papel que jugó
-Claude Code —una herramienta de programación asistida por inteligencia
-artificial— en el desarrollo del sistema.
-
-Hasta donde sabemos, esta es la primera publicación académica que
-combina explícitamente precios de mercados de predicción con modelos
-bayesianos informados por datos históricos de torneos anteriores y
-actualizados secuencialmente conforme avanza el torneo en curso,
-con el objetivo de optimizar pronósticos en concursos de predicción
-deportiva con reglas de puntuación asimétricas.
+En este artículo presentamos un modelo que estima $P(h,k)$ para cada
+partido del Mundial 2026 y elige el marcador que maximiza los puntos
+esperados de la quiniela.
+El modelo parte de la distribución de marcadores de los tres
+Mundiales anteriores, ponderada por antigüedad y actualizada con los
+resultados del torneo en curso.
+Luego la ajusta, por ajuste iterativo proporcional, para que reproduzca
+los precios de Kalshi corregidos por sesgo favorito-longshot.
+Así, la estructura de dependencia entre $T$ y $M$ proviene del
+historial, y la información específica de cada partido, del mercado.
+Evaluamos los pronósticos congelados antes de cada uno de los 104
+partidos del torneo y los comparamos con cinco estrategias de
+referencia.
+El pronóstico óptimo obtuvo 2.19 puntos por partido y superó en
+6\,\% al marcador más probable.
+El modelo funcionó durante todo el torneo en una plataforma web
+pública con actualización automática, desarrollada con asistencia de
+inteligencia artificial (Claude Code), cuyo papel documentamos.
+Hasta donde sabemos, este es el primer trabajo que reconstruye la
+distribución de marcadores a partir de mercados de total y ventaja de
+goles para optimizar pronósticos bajo una regla de puntuación con
+crédito parcial.
 
 % ─────────────────────────────────────────────────────────────
 \section{Métodos}
