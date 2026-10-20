@@ -205,6 +205,63 @@ def fig7_decision_map():
 
 
 # ── Fig 8: calibration and points by favourite strength ────────
+def fig11_poisson_map():
+    """Optimal prediction under independent Poisson goals (Proposition 2)."""
+    from model.prospective import run, poisson_pick
+    lam = np.arange(0.01, 3.6, 0.01)
+    mu = np.arange(0.01, 2.4, 0.01)
+    labels, g = {}, np.full((len(mu), len(lam)), -1)
+    for j, x in enumerate(lam):
+        for i, y in enumerate(mu):
+            if y < x:
+                a, b = poisson_pick(x, y)
+                g[i, j] = labels.setdefault(f"{a}-{b}", len(labels))
+    names = {v: k for k, v in labels.items()}
+    palette = {"0-0": "#d9d9d9", "1-0": "#c6dbef", "2-0": "#fdd0a2",
+               "2-1": "#c7e9c0", "3-0": "#fdae6b", "3-1": "#a1d99b",
+               "3-2": "#dadaeb"}
+    cmap = ListedColormap([palette[names[k]] for k in range(len(names))])
+    cmap.set_under("white")
+
+    # matches: expected goals of each team under the final method
+    pts = []
+    goals = np.arange(6)
+    for r in run():
+        P = np.array(r["P_final"])
+        lh, lk = float(P.sum(1) @ goals), float(P.sum(0) @ goals)
+        pick = tuple(r["pick"]["final"])
+        same = pick == poisson_pick(lh, lk)
+        pts.append((max(lh, lk), min(lh, lk), same))
+
+    fig, ax = plt.subplots(figsize=(7.0, 4.6))
+    ax.imshow(np.ma.masked_less(g, 0), origin="lower", aspect="auto",
+              cmap=cmap, vmin=0, vmax=len(labels) - 1,
+              extent=[lam[0], lam[-1], mu[0], mu[-1]],
+              interpolation="nearest")
+    for v in (1, 2, 3):
+        ax.axvline(v, color="white", lw=0.8)
+        if v < 2.4:
+            ax.axhline(v, color="white", lw=0.8)
+    # labels below the cloud of matches, which sits near μ ≈ 0.9
+    where = {"0-0": (0.5, 0.2), "1-0": (1.45, 0.3), "2-0": (2.5, 0.3),
+             "3-0": (3.3, 0.3), "2-1": (2.5, 1.6), "3-1": (3.3, 1.5),
+             "3-2": (3.3, 2.2)}
+    for name in names.values():
+        ax.text(*where[name], name, ha="center", va="center", fontsize=11,
+                color=INK, fontweight="bold")
+    ax.scatter([p[0] for p in pts if p[2]], [p[1] for p in pts if p[2]],
+               s=12, color=INK, alpha=0.75, lw=0)
+    ax.scatter([p[0] for p in pts if not p[2]], [p[1] for p in pts if not p[2]],
+               s=30, facecolor="none", edgecolor=INK, lw=1.1)
+    ax.set_xlim(0, 3.6)
+    ax.set_ylim(0, 2.4)
+    ax.set_xlabel("Goles esperados del favorito, $\\lambda$")
+    ax.set_ylabel("Goles esperados del rival, $\\mu$")
+    _clean(ax)
+    fig.tight_layout()
+    _save(fig, "fig11_mapa_poisson")
+
+
 def fig8_calibration():
     rows = [r for r in final_rows() if r["source"] == "kalshi"]
     pairs = []
@@ -444,6 +501,7 @@ if __name__ == "__main__":
     print("Generating results figures...")
     fig5_cumulative()
     fig6_predicted_observed()
+    fig11_poisson_map()
     fig7_decision_map()
     fig8_calibration()
     fig9_world_cup()

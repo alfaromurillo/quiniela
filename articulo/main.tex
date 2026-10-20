@@ -30,6 +30,9 @@
 \usepackage{xurl}
 
 % ── Entornos matemáticos ───────────────────────────────────────
+\theoremstyle{plain}
+\newtheorem{proposicion}{Proposición}
+\newtheorem{corolario}{Corolario}
 \theoremstyle{remark}
 \newtheorem{observacion}{Observación}
 
@@ -86,6 +89,10 @@ ajustando la distribución histórica de los Mundiales 2014, 2018 y
 precios del mercado Kalshi corregidos por sesgo favorito-longshot,
 mediante ajuste iterativo proporcional, y que elige el marcador que
 maximiza los puntos esperados.
+Mostramos que, con esta regla, los puntos esperados son el doble de la
+probabilidad del resultado más las probabilidades de los goles de cada
+equipo y del marcador, lo que explica por qué el óptimo casi nunca es
+un empate y, con goles de Poisson, por qué suele ser 1-0.
 Los pronósticos, publicados en tiempo real y congelados antes de cada
 uno de los 104 partidos del Mundial 2026, obtuvieron 2,13
 puntos por partido y acertaron el marcador exacto en el 13,5\,\% de
@@ -94,7 +101,9 @@ Recalculado solo con la información previa a cada partido, el método
 final obtuvo 2,26 puntos por partido.
 Frente a usar solo el historial, las probabilidades de resultado del
 mercado sumaron 91 puntos (intervalo de credibilidad del 95\,\%: 44
-a 136), y los mercados de total y ventaja, 20 más (3 a 38).
+a 136), y las de un rating Elo, sin mercado, casi lo mismo (88),
+aunque con probabilidades menos precisas; los mercados de total y
+ventaja sumaron 20 más (3 a 38).
 Maximizar los puntos esperados en lugar de elegir el marcador más
 probable cambió el pronóstico en 25 partidos, casi siempre cambiando
 un empate por una victoria, y sumó 8 puntos ($-14$ a 31); la regla
@@ -103,8 +112,9 @@ Modelos de Poisson ajustados a los mismos mercados asignaron más
 probabilidad a los marcadores ocurridos, pero obtuvieron menos
 puntos.
 Con esta regla de puntuación, el valor del pronóstico proviene sobre
-todo del mercado; la optimización está bien fundamentada, pero su ganancia es
-pequeña y se concentra en evitar los empates.
+todo de saber quién es el favorito; la optimización está bien
+fundamentada, pero su ganancia es pequeña y se concentra en evitar los
+empates.
 \end{abstract}
 
 \bigskip
@@ -124,6 +134,10 @@ Cups, updated with the results of the ongoing tournament, to Kalshi
 market prices corrected for favorite-longshot bias, using iterative
 proportional fitting, and that picks the scoreline maximizing
 expected points.
+We show that, under this rule, expected points equal twice the
+probability of the outcome plus the probabilities of each team's goals
+and of the scoreline, which explains why the optimum is almost never a
+draw and, with Poisson goals, why it is usually 1-0.
 Predictions, published in real time and frozen before each of the 104
 matches of the 2026 World Cup, earned 2.13 points per match and
 hit the exact scoreline in 13.5\,\% of matches, including the 1-0
@@ -131,17 +145,19 @@ final.
 Recomputed using only information available before each match, the
 final method earned 2.26 points per match.
 Compared with using history alone, the market's outcome probabilities
-added 91 points (95\,\% credible interval: 44 to 136), and the total
-and margin markets 20 more (3 to 38).
+added 91 points (95\,\% credible interval: 44 to 136), and those of an
+Elo rating, without the market, almost as many (88), although they
+were less accurate; the total and margin markets added 20 more (3 to
+38).
 Maximizing expected points instead of picking the most likely
 scoreline changed the prediction in 25 matches, almost always turning
 a draw into a win, and added 8 points ($-14$ to 31); the rule ``the
 favorite wins 1-0'' finished 22 points behind (0 to 46).
 Poisson models fitted to the same markets gave more probability to
 the observed scorelines but earned fewer points.
-Under this scoring rule, predictive value comes mostly from the
-market; optimization is well founded, but its gain is small and comes
-mainly from avoiding draws.
+Under this scoring rule, predictive value comes mostly from knowing
+the favorite; optimization is well founded, but its gain is small and
+comes mainly from avoiding draws.
 \end{otherlanguage}
 
 \bigskip\hrule
@@ -231,12 +247,21 @@ historial, y la información específica de cada partido, del mercado.
 Evaluamos los pronósticos congelados antes de cada uno de los 104
 partidos del torneo y, como provinieron de versiones sucesivas del
 sistema, evaluamos además el método final de forma pseudoprospectiva,
-frente a seis estrategias de referencia y a modelos de Poisson
+frente a estrategias de referencia, entre ellas una basada en el
+rating Elo, que no usa el mercado, y frente a modelos de Poisson
 ajustados a los mismos mercados.
+Mostramos además que la regla de puntuación es aditiva: los puntos
+esperados de un pronóstico son el doble de la probabilidad de su
+resultado más las probabilidades de los goles de cada equipo y del
+marcador.
+Esa descomposición explica por qué el pronóstico óptimo casi nunca es
+un empate y, con goles de Poisson, por qué 1-0 es el óptimo en el
+rango típico de un partido de Mundial.
 Los pronósticos congelados obtuvieron 2,13 puntos por partido, y el
-método final 2,26; casi todo ese valor provino de las probabilidades
-del mercado, y la optimización sumó una ventaja pequeña e incierta
-sobre el marcador más probable.
+método final 2,26; casi todo ese valor provino de saber quién era el
+favorito, que el rating Elo indicaba casi tan bien como el mercado, y
+la optimización sumó una ventaja pequeña e incierta sobre el marcador
+más probable.
 El modelo funcionó durante todo el torneo en una plataforma web
 pública con actualización automática, desarrollada con asistencia de
 inteligencia artificial (Claude Code), cuyo papel documentamos.
@@ -381,6 +406,18 @@ $\gamma \sim \mathcal{N}(1;\, 0.3^2)$ truncada a $(0, 1]$, que regulariza
 hacia el caso sin decaimiento.
 El máximo estuvo en $\hat{\gamma} = 0.84$, que da tamaños efectivos de
 122 partidos de grupos y 41 eliminatorios.
+Solo la predicción del 2022 depende de $\gamma$: la del 2018 se hace
+con un único Mundial, cuyo peso no depende de $\gamma$.
+Esa log-verosimilitud varía poco: su máximo, en $\gamma = 0{,}62$,
+supera en solo 0,54 al valor sin decaimiento, y el intervalo de
+credibilidad del 95\,\% de la distribución posterior va de 0,41 a
+0,99.
+Los datos, por tanto, apenas identifican $\gamma$, y su valor depende
+en buena parte de la distribución a priori.
+Los pronósticos, en cambio, apenas dependen de $\gamma$: con $\gamma$
+fijo entre 0,41 y 1, el método final cambió a lo sumo 1 de los 104
+pronósticos en la evaluación pseudoprospectiva
+(Sección~\ref{sec:metricas}).
 La Figura~\ref{fig:gamma} (Apéndice~\ref{app:figuras}) muestra el
 efecto de $\gamma$ sobre la
 distribución del total de goles.
@@ -403,6 +440,11 @@ $N_V = \sum n_V$, la distribución suavizada es
   Q_V(w, l) = \frac{n_V(w, l) + \kappa \, \pi_V(w, l)}{N_V + \kappa},
 \end{equation}
 y análogamente para $Q_E$.
+El valor $\kappa = 5$ se fijó a priori, y los resultados dependen
+poco de él: con $\kappa$ entre 1 y 20, y $\gamma$ y $\delta$
+reestimados en cada caso, el método final cambió a lo sumo 3 de los
+104 pronósticos y obtuvo entre 232 y 235 puntos en la evaluación
+pseudoprospectiva (Sección~\ref{sec:metricas}).
 
 \paragraph{Adaptación al torneo en curso: parámetro $\delta$.}
 \label{sec:delta}
@@ -740,35 +782,125 @@ El pronóstico óptimo puede diferir del \emph{marcador modal},
   (\tilde{a}, \tilde{b}) = \arg\max_{(a,b) \in \{0,\ldots,5\}^2} P(a, b),
   \label{eq:modal}
 \end{equation}
-porque la regla da 3 puntos por acertar el ganador y los goles de un
-equipo, y ese nivel premia los pronósticos de victoria.
+porque la regla da puntos por el resultado y por los goles de cada
+equipo aunque el marcador no sea exacto.
+La proposición siguiente precisa esa diferencia.
 
-\begin{observacion}[Los empates están en desventaja estructural]
-\label{obs:nodraw}
-Un pronóstico de empate $(a, a)$ nunca obtiene 3 puntos.
-Ese nivel exige acertar el resultado y los goles de un solo equipo;
-si el marcador es un empate $(c, c)$, los goles coinciden solo cuando
-$c = a$, y entonces el acierto es exacto (5 puntos).
-Para $c \neq a$ no coincide ningún gol y se obtienen 2 puntos.
-Por tanto,
+\paragraph{Descomposición de los puntos esperados.}
+Sean $H$ y $K$ los goles del Equipo~A y del Equipo~B,
+$P_H(a) = P(H = a)$ y $P_K(b) = P(K = b)$ sus distribuciones
+marginales, y $R(a, b) \in \{A, E, B\}$ el resultado del marcador
+$(a, b)$: victoria del Equipo~A, empate o victoria del Equipo~B.
+Escribimos $P_A$, $P_E$ y $P_B$ para las probabilidades de cada
+resultado.
+
+\begin{proposicion}[La regla es aditiva]
+\label{prop:aditiva}
+Para todo pronóstico $(a, b)$ y todo marcador $(h, k)$,
 \begin{equation}
-  V(a, a)
-  = 5\,P(a,a)
-  + 2\!\!\sum_{c \neq a} P(c,c)
-  + 1 \cdot \!\!\!\!\sum_{\substack{h \neq k \\ h = a \text{ o } k = a}}
-    \!\!\!\!P(h,k).
-  \label{eq:edraw}
+  f(a, b, h, k) = 2 \cdot \mathbf{1}\{R(h, k) = R(a, b)\}
+  + \mathbf{1}\{h = a\} + \mathbf{1}\{k = b\}
+  + \mathbf{1}\{(h, k) = (a, b)\},
+  \label{eq:aditiva}
 \end{equation}
-En cambio, un pronóstico de victoria $(a, b)$ con $a > b$ obtiene
-3 puntos con cualquier otra victoria del Equipo~A que comparta los
-goles de un equipo: $(h, b)$ con $h > b$ y $h \neq a$, o $(a, k)$ con
-$k < a$ y $k \neq b$.
-Un empate solo puede ser óptimo si la probabilidad de empate es
-suficientemente alta para compensar la falta de ese término.
+y, por tanto,
+\begin{equation}
+  V(a, b) = 2\,P_{R(a, b)} + g(a, b),
+  \qquad
+  g(a, b) = P_H(a) + P_K(b) + P(a, b).
+  \label{eq:descomposicion}
+\end{equation}
+\end{proposicion}
+
+\begin{proof}
+Si coinciden el resultado y los goles de ambos equipos, el marcador
+es exacto y el lado derecho de~\eqref{eq:aditiva} vale
+$2 + 1 + 1 + 1 = 5$.
+Si coinciden el resultado y los goles de un solo equipo, vale
+$2 + 1 = 3$, y si solo el resultado, 2.
+Si el resultado no coincide, coinciden a lo sumo los goles de un
+equipo, pues con los de ambos el marcador sería el pronosticado, y el
+lado derecho vale 1 o~0.
+Estos son los puntos de la Tabla~\ref{tab:reglas}.
+La ecuación~\eqref{eq:descomposicion} es la esperanza
+de~\eqref{eq:aditiva}.
+\end{proof}
+
+Según~\eqref{eq:descomposicion}, el pronóstico óptimo pondera con
+peso~2 la probabilidad del resultado, y con peso~1 la de los goles de
+cada equipo y la del marcador; el marcador modal~\eqref{eq:modal}
+solo considera este último término.
+El mismo argumento vale para cualquier regla que dé $w$ puntos por el
+resultado, $w + c$ por el resultado y los goles de un equipo, $c$ por
+los goles de un equipo y $e$ por el marcador exacto:
+$V(a, b) = w\,P_{R(a,b)} + c\,[P_H(a) + P_K(b)] + (e - w - 2c)\,P(a,b)$.
+
+\begin{corolario}
+\label{cor:g}
+Sea $(a^*, b^*)$ un maximizador de~$g$.
+Si su resultado es el más probable, $(a^*, b^*)$ es un pronóstico
+óptimo.
+Si un empate $(c, c)$ es óptimo y $(a^*, b^*)$ es una victoria del
+favorito, entonces $P_E \geq 1/3$.
+\end{corolario}
+
+\begin{proof}
+La primera afirmación sigue de~\eqref{eq:descomposicion}, porque
+$(a^*, b^*)$ maximiza ambos sumandos.
+Para la segunda, si el favorito es el Equipo~A,
+$V(c, c) \geq V(a^*, b^*)$ y $g(c, c) \leq g(a^*, b^*)$ dan
+$P_E \geq P_A$, y como $P_A \geq P_B$,
+$P_E \geq P_A \geq (1 - P_E)/2$.
+\end{proof}
+
 En la fase de grupos de los Mundiales 2014--2022, el 19\,\% de los
-partidos terminó empatado (28 de 144), y cada marcador de empate por
-separado es aún menos probable, de modo que el umbral rara vez se
-alcanza (Sección~\ref{sec:discusion}).
+partidos terminó empatado (28 de 144), así que un empate rara vez
+alcanza ese umbral.
+
+\begin{proposicion}[Goles de Poisson independientes]
+\label{prop:poisson}
+Sean $H \sim \mathrm{Poisson}(\lambda)$ y
+$K \sim \mathrm{Poisson}(\mu)$ independientes, con $\lambda > \mu$ no
+enteros, y sean $m = \lfloor \lambda \rfloor$ y
+$n = \lfloor \mu \rfloor$ sus modas.
+\begin{enumerate}
+  \item[(a)] Si $m > n$ y $P_A \geq P_E$, el pronóstico óptimo es
+    $(m, n)$.
+  \item[(b)] Si $m = n$, el mejor pronóstico de empate es $(m, m)$, y
+    la mejor victoria del Equipo~A es $(m + 1, m)$ o $(m, m - 1)$.
+\end{enumerate}
+\end{proposicion}
+
+\begin{proof}
+Sean $p$ y $q$ las funciones de probabilidad de $H$ y de~$K$.
+Por independencia, $g(a, b) = (1 + p(a))(1 + q(b)) - 1$, que crece
+con $p(a)$ y con $q(b)$, y la distribución de Poisson es unimodal.
+(a) $g$ se maximiza en las modas, $(m, n)$, que es una victoria del
+Equipo~A.
+Como $\lambda > \mu$, $H$ es estocásticamente mayor que~$K$, de modo
+que $P_A \geq P_B$; con $P_A \geq P_E$, la victoria del Equipo~A es
+el resultado más probable, y el Corolario~\ref{cor:g} concluye.
+(b) Entre los empates, $p(c)$ y $q(c)$ se maximizan en $c = m$.
+Entre las victorias $(a, b)$ con $a > b$: si $b \geq m$, $p$ decrece
+desde $m$, así que conviene $a = b + 1$, y como $p(b + 1)$ y $q(b)$
+decrecen en $b$, conviene $b = m$; si $b < m$, conviene $a = m$, y
+como $q$ crece hasta $m$, conviene $b = m - 1$.
+\end{proof}
+
+\begin{observacion}
+\label{obs:poisson}
+En una cuadrícula de $\lambda \leq 6$ y $\mu < \lambda$, se cumple
+$P_A - P_E \geq 0{,}037$ siempre que $\lambda \geq 1$, de modo que la
+condición $P_A \geq P_E$ de~(a) se cumple siempre que $m > n$.
+En el caso~(b) con $m \geq 1$, la mejor victoria del favorito supera
+siempre al empate, y con $m = 0$, el empate 0-0 es óptimo salvo
+cuando $\lambda > 0{,}8$; en ningún punto conviene una victoria del
+rival.
+Con goles de Poisson independientes, por tanto, un empate solo es
+óptimo si ambos equipos esperan menos de un gol, y 1-0 es el
+pronóstico óptimo en buena parte del rango típico de un Mundial: un
+favorito que espera entre 1 y 2 goles frente a un rival que espera
+menos de 1 (Figura~\ref{fig:poisson}).
 \end{observacion}
 
 \paragraph{Ejemplo: Corea del Sur vs.\ Chequia.}
@@ -780,9 +912,14 @@ $3.5\,\%$ para 0, 1, 2, 3, 4, 5 y 6 o más goles.
 Con el modelo descrito ($\hat\gamma = 0.84$, $\delta = 0$), el
 marcador modal es 1-1 ($P = 0{,}145$), pero el pronóstico óptimo es 1-0
 ($V = 1{,}537$; Tabla~\ref{tab:ejkorcze}).
-La diferencia se debe a que 1-0 también obtiene 3 puntos si el
-partido termina 2-0, 3-0, 4-0 o 5-0, mientras que 1-1 nunca alcanza
-ese nivel (Observación~\ref{obs:nodraw}).
+La descomposición~\eqref{eq:descomposicion} muestra por qué.
+El empate 1-1 tiene el mayor $g$, $0{,}868$ frente a $0{,}791$ de 1-0,
+porque 1 es el número de goles más probable de ambos equipos y 1-1 el
+marcador más probable.
+Pero la victoria de Corea del Sur era más probable que el empate
+($0{,}373$ frente a $0{,}308$), y con peso~2 esa diferencia compensa
+la de~$g$: $V(1, 0) = 2 \cdot 0{,}373 + 0{,}791 = 1{,}537$ y
+$V(1, 1) = 2 \cdot 0{,}308 + 0{,}868 = 1{,}484$.
 El partido terminó 2-1.
 El pronóstico congelado de este partido, generado el primer día con
 una versión preliminar del sistema (Apéndice~\ref{app:version}), fue
@@ -870,6 +1007,35 @@ Como referencia sin modelo se agrega además la regla ``el favorito
 gana 1-0'', con el favorito según las probabilidades de resultado de
 Kalshi.
 
+\paragraph{Referencia sin mercado: rating Elo.}
+Para separar el valor del mercado del de saber quién es el favorito,
+se agrega una estrategia con información de los equipos que no viene
+del mercado: el rating Elo de selecciones \citep{eloratings}, que
+predice resultados de fútbol tan bien como otros ratings más
+elaborados \citep{hvattum2010}.
+Para cada partido se usa el rating de cada equipo antes del partido,
+$r_A$ y $r_B$, y se define
+$x = (r_A - r_B + 100\,s_A - 100\,s_B)/400$, donde $s_A = 1$ si el
+Equipo~A jugó en casa (México, Estados Unidos o Canadá en su país) y
+0 si no, y análogamente $s_B$.
+Las probabilidades de resultado siguen un modelo logístico ordenado,
+\begin{equation}
+  p_A = \sigma(\beta x - \theta), \qquad
+  p_B = \sigma(-\beta x - \theta), \qquad
+  p_E = 1 - p_A - p_B,
+  \label{eq:elo}
+\end{equation}
+con $\sigma(z) = 1/(1 + e^{-z})$ y un umbral $\theta$ para la fase de
+grupos y otro para la eliminatoria, donde el empate es una definición
+por penales.
+Los parámetros se estiman por máxima verosimilitud con los 192
+partidos de los Mundiales 2014--2022 y con los del Mundial 2026 ya
+terminados, como $\hat\alpha$ y $\hat\delta$.
+La estrategia~E combina estas probabilidades con la distribución de
+referencia, como la estrategia~3, pero en la eliminatoria usa
+directamente la distribución de marcadores finales, como la
+estrategia~1, porque Elo no separa los 90~minutos de la prórroga.
+
 \begin{table}[tb]
 \centering
 \caption{Estrategias de pronóstico comparadas.}
@@ -885,6 +1051,7 @@ Kalshi.
   5 & Modal                     & Kalshi         & \checkmark & \checkmark & $\max P$ \\
   6 & \textbf{Óptimo}           & Kalshi         & \checkmark & \checkmark & $\max V$ \\
   \midrule
+  E & Elo (sin mercado)         & Elo            & --- & --- & $\max V$ \\
   F & Favorito gana 1-0         & Kalshi         & --- & --- & regla fija \\
   \bottomrule
 \end{tabular}
@@ -898,7 +1065,8 @@ partidos con precios.
 Es una regla de puntuación estrictamente propia \citep{gneiting2007},
 y un valor más alto es mejor.
 El método final se compara con la distribución de referencia ajustada
-solo al resultado (estrategia~3), con las dos versiones operativas
+solo al resultado de Kalshi (estrategia~3) o de Elo (estrategia~E),
+con las dos versiones operativas
 (Sección~\ref{sec:razones}) y con dos modelos paramétricos ajustados a
 las mismas tablas del mercado, con los parámetros que
 maximizan~\eqref{eq:proyeccion}: goles de cada equipo independientes
@@ -985,7 +1153,7 @@ Total               & 104 & 222 & 2,13 & 14 & 68 \\
 \end{table}
 
 \FloatBarrier
-\subsection{El mercado frente al historial}
+\subsection{El mercado, el historial y Elo}
 \label{sec:comparacion}
 
 Las probabilidades de Kalshi separaron al método del historial desde
@@ -1016,6 +1184,21 @@ El método y la regla difirieron en 57 partidos, en que el método
 eligió sobre todo 2-0, 2-1 o 3-0, y la regla obtuvo menos aciertos
 exactos y de 3 puntos (11 y 22, frente a 18 y 26 del método) pero
 también menos partidos sin puntos (13, frente a 19).
+
+Buena parte de esa ventaja sobre el historial no requería el
+mercado.
+Con las probabilidades del rating Elo en lugar de las de Kalshi, la
+estrategia~E obtuvo 212 puntos, 88 más que el historial (41 a 133) y
+solo 3 menos que la estrategia~3 ($-23$ a 28), y la regla ``el
+favorito gana 1-0'' con el favorito según Elo obtuvo 218, 5 más que
+con el de Kalshi (Tabla~\ref{tab:ablacion}).
+Elo y Kalshi coincidieron en el favorito en 87 de los 98 partidos con
+mercados.
+Las probabilidades de Kalshi sí fueron mejores: su puntaje de Brier
+fue 0,468 frente a 0,518 del modelo Elo (diferencia $-0{,}050$;
+$-0{,}081$ a $-0{,}017$), y el método final superó a la estrategia~E
+por 23 puntos, aunque con un intervalo que incluye el cero ($-5$ a
+51).
 
 \begin{figure}[!htb]
   \centering
@@ -1054,7 +1237,9 @@ Estrategia & Puntos & Prom. & Puntos & Prom. & Puntos & Prom. \\
 5. Modal                     & 152 & 2,11 & 75 & 2,34 & 227 & 2,18 \\
 6. \textbf{Óptimo}           & \textbf{154} & \textbf{2,14} & \textbf{81} & \textbf{2,53} & \textbf{235} & \textbf{2,26} \\
 \midrule
+E. Elo (sin mercado)         & 138 & 1,92 & 74 & 2,31 & 212 & 2,04 \\
 F. Favorito gana 1-0         & 140 & 1,94 & 73 & 2,28 & 213 & 2,05 \\
+\phantom{F. }Favorito según Elo & 138 & 1,92 & 80 & 2,50 & 218 & 2,10 \\
 Pronósticos congelados       & 143 & 1,99 & 79 & 2,47 & 222 & 2,13 \\
 \bottomrule
 \end{tabular}
@@ -1064,7 +1249,47 @@ Pronósticos congelados       & 143 & 1,99 & 79 & 2,47 & 222 & 2,13 \\
 \subsection{Qué marcador pronostica el modelo}
 \label{sec:mapa}
 
-El pronóstico óptimo depende sobre todo de dos cantidades: cuánto
+Con goles de Poisson independientes, el pronóstico óptimo depende solo
+de los goles esperados de cada equipo, y el plano se divide casi en
+los rectángulos de sus modas (Figura~\ref{fig:poisson},
+Proposición~\ref{prop:poisson}).
+El óptimo es 1-0 cuando el favorito espera entre 1 y 2 goles y el
+rival menos de uno, 2-0 o 3-0 cuando el favorito espera más, y 2-1,
+3-1 o 3-2 cuando el rival espera uno o más; el empate 1-1 no aparece,
+y 0-0 solo cuando ambos esperan menos de un gol.
+Según la distribución del método final, en el partido mediano del
+Mundial 2026 el favorito esperaba 1,82 goles y el rival 0,87, en
+plena región de 1-0, y la mayoría de los partidos cayó en las
+regiones de 1-0 y 2-0.
+Evaluado en los goles esperados de cada partido, el mapa de Poisson
+coincidió con el pronóstico del método en 86 de los 104 partidos.
+En 16 de los 18 restantes, el método eligió más goles que el mapa:
+en 9, más goles del favorito, como 2-0 en lugar de 1-0, y en 7, un
+gol del rival, como 2-1 en lugar de 1-0 o 2-0.
+Con las mismas medias, la distribución del método, que proviene del
+historial y de los mercados de total y ventaja, no es de Poisson.
+En los otros 2, Paraguay-Australia y Egipto-Irán, el método eligió el
+empate, porque el mercado daba al empate más probabilidad que la que
+implican los goles esperados.
+
+\begin{figure}[!htb]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figures/fig11_mapa_poisson}
+  \caption{Con goles de Poisson independientes, 1-0 es el pronóstico
+    óptimo en el rango típico de un partido de Mundial, y el empate
+    solo con muy pocos goles.
+    Pronóstico óptimo según los goles esperados del favorito
+    ($\lambda$) y del rival ($\mu$); las líneas blancas marcan los
+    valores enteros, donde cambian las modas
+    (Proposición~\ref{prop:poisson}).
+    Los puntos son los 104 partidos del Mundial 2026, con los goles
+    esperados de la distribución del método final; los círculos, los
+    18 en que el pronóstico del método difirió del mapa.}
+  \label{fig:poisson}
+\end{figure}
+
+Con la distribución del método, el pronóstico óptimo depende sobre
+todo de dos cantidades: cuánto
 favorece el mercado a un equipo y cuántos goles espera
 (Figura~\ref{fig:mapa}).
 Con pocos o medianos goles esperados, el óptimo es 1-0 para el
@@ -1147,11 +1372,20 @@ apenas 0,032 puntos más por partido, unos 3 en total
 (Tabla~\ref{tab:reglas-alt}).
 De los 25 partidos en que difirieron, en 17 un empate pasó a ser una
 victoria, y en 8 cambió solo el marcador del mismo ganador.
+La descomposición~\eqref{eq:descomposicion} explica ese patrón.
+En 82 partidos, el maximizador de~$g$ tenía el resultado más probable
+y fue el pronóstico óptimo (Corolario~\ref{cor:g}); en los 22
+restantes, el maximizador de~$g$ era 1-1, pero una victoria era más
+probable que el empate, y el método eligió la victoria: 1-0 en 15,
+2-1 en 5 y 1-2 en 2.
 La ganancia de optimizar depende de la regla: con más crédito parcial
 (4 puntos por el ganador y los goles de un equipo) los pronósticos
 difieren en 60 partidos y la ganancia esperada casi se triplica,
 aunque en este torneo la observada fue negativa, mientras que si el
 marcador exacto vale 10 puntos el óptimo casi coincide con el modal.
+Esta última regla también es aditiva, pero con peso~6 para $P(a,b)$
+frente a~2 para el resultado, de modo que el término del modal
+domina; las reglas 5-4-2-1 y 3-2-2-1 no son aditivas.
 
 \begin{table}[!htb]
 \centering
@@ -1192,6 +1426,13 @@ una medida dentro de la muestra.
 Estimado solo con los partidos ya terminados, $\hat\alpha$ bajó de
 1,10 a 0,88 tras los primeros 16 partidos, en que los favoritos
 ganaron menos de lo que daba el mercado, y subió luego hasta 1,12 al final del torneo.
+Con los 98 partidos, la distribución posterior de $\alpha$ tuvo media
+1,14 e intervalo de credibilidad del 95\,\% de 0,88 a 1,41 (de 0,83 a
+1,56 con una distribución a priori plana), y la probabilidad
+posterior de $\alpha > 1$ fue 0,85: un torneo no basta para
+distinguir el sesgo favorito-longshot de su ausencia, y el valor
+de~$\alpha$ se apoya sobre todo en la distribución a priori, tomada
+de otros mercados.
 Los puntos crecieron con la claridad del favorito
 (Figura~\ref{fig:calibracion}, derecha): 1,92 por partido cuando el
 favorito tenía menos de 45\,\% de probabilidad de ganar, 1,83 entre 45
@@ -1350,6 +1591,9 @@ subió el puntaje logarítmico de $-2{,}938$ a $-2{,}806$ (+0,13; 0,03 a
 0,26), una mejora concentrada en la fase de grupos; en la
 eliminatoria, el ajuste solo al resultado obtuvo un puntaje
 ligeramente mejor.
+Con las probabilidades de Elo en lugar de las de Kalshi, la misma
+distribución de referencia obtuvo $-3{,}038$, entre el historial y el
+resultado de Kalshi.
 El método final superó al reajuste por razones por poco y con
 incertidumbre: 0,03 en puntaje ($-0{,}03$ a 0,10) y 8 puntos de
 quiniela ($-6$ a 24).
@@ -1395,6 +1639,7 @@ lo que su puntaje no es finito.}
 Modelo & Grupos & Eliminatoria & Total & Puntos \\
 \midrule
 Solo historial                    & $-3{,}278$ & $-3{,}190$ & $-3{,}249$ & 118 \\
+Elo, sin mercado (estrategia E)   & $-3{,}139$ & $-2{,}830$ & $-3{,}038$ & 194 \\
 Solo resultado (estrategia 3)     & $-3{,}025$ & $-2{,}757$ & $-2{,}938$ & 204 \\
 Reajuste por razones (operativo)  & $-2{,}860$ & $-2{,}798$ & $-2{,}840$ & 216 \\
 IPF operativo                     & ---        & $-2{,}835$ & ---        & 223 \\
@@ -1417,9 +1662,10 @@ mercado de predicción en un marcador exacto que maximice los puntos
 esperados de una quiniela.
 Nuestros resultados indican que la respuesta tiene dos partes de peso
 muy desigual.
-Casi todo el valor proviene de las probabilidades de resultado del
-mercado: con ellas, los pronósticos obtuvieron más del doble de puntos
-que con el historial solo.
+Casi todo el valor proviene de saber quién es el favorito: con las
+probabilidades de resultado del mercado, los pronósticos obtuvieron
+casi el doble de puntos que con el historial solo, y con las de un
+rating Elo público, casi lo mismo que con las del mercado.
 La reconstrucción de la distribución de marcadores a partir de los
 mercados de total y ventaja aporta algo más, unos 20 puntos en el
 torneo, y la elección del máximo de los puntos esperados aporta poco
@@ -1430,21 +1676,29 @@ por 22, con un intervalo que apenas excluye el cero.
 
 \subsection{Los mercados como fuente de información}
 
-Que las probabilidades de Kalshi dupliquen los puntos del historial
-concuerda con la evidencia de que los mercados de predicción
+Que las probabilidades de Kalshi casi dupliquen los puntos del
+historial concuerda con la evidencia de que los mercados de predicción
 pronostican resultados deportivos al menos tan bien como las casas de
 apuestas \citep{spann2009, forrest2005}: el precio resume información
 específica de cada partido, como la fuerza relativa de los equipos o
 las bajas, que la distribución histórica de marcadores no contiene.
+La comparación con Elo, sin embargo, muestra que casi todos esos puntos
+vienen de la fuerza relativa de los equipos, que un rating público ya
+contiene: Elo y Kalshi coincidieron en el favorito en 87 de 98
+partidos, y la estrategia con Elo quedó a solo 3 puntos de la que usa
+el resultado de Kalshi.
+Las probabilidades del mercado sí fueron mejores, por su puntaje de
+Brier y por el puntaje logarítmico del marcador, pero con esta regla
+de puntuación y 104 partidos esa ventaja apenas se tradujo en puntos.
 La calibración de Kalshi fue buena en todo el rango de probabilidades
 (Figura~\ref{fig:calibracion}), y la corrección por sesgo
 favorito-longshot apenas la cambió.
-El valor estimado al final, $\hat\alpha = 1{,}12$, cercano al de los
-mercados de apuestas competitivos \citep{whelan2024}, sugiere que el
-sesgo de Kalshi en el Mundial 2026 fue del mismo orden que el
-documentado en otros mercados, incluido el propio Kalshi
-\citep{burgi2026}; con un sesgo así de pequeño, la corrección cambió
-solo 3 pronósticos.
+El valor estimado al final, $\hat\alpha = 1{,}12$, es cercano al de
+los mercados de apuestas competitivos \citep{whelan2024} y al
+documentado para el propio Kalshi \citep{burgi2026}, pero su intervalo
+de credibilidad incluye $\alpha = 1$: los datos de un torneo son
+compatibles con ese sesgo y con su ausencia.
+Con un sesgo así de pequeño, la corrección cambió solo 3 pronósticos.
 Los mercados de total y ventaja aportaron menos que los de resultado,
 20 puntos, pero son los que deciden entre 1-0, 2-0 y 2-1
 (Figura~\ref{fig:mapa}).
@@ -1463,22 +1717,30 @@ desenlaces; si el marcador exacto vale mucho más que el resto, lo
 mejor es apostar por el más probable.
 Con 5, 3 y 2 puntos, la quiniela estudiada está cerca de este segundo
 caso.
+La Proposición~\ref{prop:aditiva} da la razón: el marcador modal
+maximiza solo el último término de~\eqref{eq:descomposicion}, y el
+óptimo agrega la probabilidad del resultado y la de los goles de cada
+equipo.
+Los tres términos suelen señalar el mismo marcador, y solo difieren
+de forma sistemática cuando el marcador más probable es un empate y
+una victoria es el resultado más probable.
 El argumento de la Introducción, que el marcador más probable no es
 el más rentable, sigue siendo cierto, pero cuánto importa depende de
 la regla.
 
-La desventaja estructural de los empates (Observación~\ref{obs:nodraw})
-es donde optimizar cambia el pronóstico de forma sistemática.
+La desventaja de los empates (Corolario~\ref{cor:g}) es donde
+optimizar cambia el pronóstico de forma sistemática.
 El método pronosticó 3 empates frente a los 20 del marcador modal,
 aunque 20 de los 72 partidos de grupos terminaron empatados.
 No es un error de calibración: aun con la probabilidad de empate
 correcta, cada marcador de empate por separado es poco probable, y un
 empate pronosticado nunca obtiene 3 puntos.
 Los tres empates pronosticados ocurrieron cuando el mercado dio al
-empate probabilidades muy por encima de lo habitual, y sus desenlaces
-ilustran las dos ramas de~\eqref{eq:edraw}: Paraguay-Australia 0-0 y
-Egipto-Irán 1-1 dieron 5 puntos cada uno, y Argelia-Austria 3-3,
-frente al 0-0 pronosticado, 2.
+empate probabilidades muy por encima de lo habitual, mayores o iguales
+que las de cada victoria, y sus desenlaces muestran que un empate
+pronosticado obtiene 5 o 2 puntos con cualquier empate, nunca 3:
+Paraguay-Australia 0-0 y Egipto-Irán 1-1 dieron 5 puntos cada uno, y
+Argelia-Austria 3-3, frente al 0-0 pronosticado, 2.
 Que 1-1 ocurriera 12 veces y se pronosticara una sola
 (Figura~\ref{fig:pronosticados}) no es un fallo del método, sino el
 costo esperado de esa desventaja: en un partido parejo, pronosticar
@@ -1501,7 +1763,12 @@ coincide el gol del favorito.
 Por eso se quedó sin puntos en solo 13 partidos, frente a 19 del
 método.
 Es también el pronóstico óptimo en la mayor parte del mapa de decisión
-(Figura~\ref{fig:mapa}): el método eligió 1-0 en 47 partidos y se
+(Figuras~\ref{fig:poisson} y~\ref{fig:mapa}), y la
+Proposición~\ref{prop:poisson} explica por qué: 1-0 combina el número
+de goles más probable de un favorito que espera entre 1 y 2 goles con
+el de un rival que espera menos de uno, el caso típico de un Mundial,
+y con la victoria del favorito, el resultado más probable.
+El método eligió 1-0 en 47 partidos y se
 apartó de él sobre todo hacia 2-0, 2-1 y 3-0 cuando el mercado
 esperaba más goles o un favorito más claro.
 Esos cambios suben la probabilidad de acertar 3 o 5 puntos a cambio de
@@ -1626,6 +1893,10 @@ participantes, aunque el premio dependa de superarlos
 La distribución histórica se basa en 192 partidos, y el núcleo de
 prórroga en solo 18; el suavizado de Poisson y la actualización con
 el torneo en curso atenúan, pero no eliminan, esa incertidumbre.
+Por la misma escasez de datos, $\gamma$ y $\alpha$ quedan poco
+identificados, con intervalos de credibilidad amplios, y sus valores
+dependen en buena parte de las distribuciones a priori; los
+pronósticos, sin embargo, cambian poco con ellos.
 La cuadrícula de marcadores llega hasta 5 goles por equipo, y en los
 Mundiales 2014--2022, 5 de los 192 partidos (2,6\,\%) tuvieron un
 equipo con 6 o más goles.
@@ -1639,9 +1910,11 @@ precios de Kalshi.
 El método se aplica sin cambios a cualquier otra regla de puntuación,
 pues solo depende de la función~$f$, y a cualquier torneo con mercados
 de resultado, total y ventaja.
-La Tabla~\ref{tab:reglas-alt} sugiere que el valor esperado de
-optimizar crece con el crédito parcial; caracterizar esa relación para
-una familia de reglas, y no solo para cuatro, es una pregunta abierta.
+La Proposición~\ref{prop:aditiva} caracteriza las reglas aditivas,
+en que el valor de optimizar depende de cuánto pesa el marcador exacto
+frente al resultado y a los goles de cada equipo; extenderla a reglas
+no aditivas, como 5-4-2-1, cuyo valor esperado de optimizar es mayor
+(Tabla~\ref{tab:reglas-alt}), es una pregunta abierta.
 Otra es combinar las dos referencias de la Sección~\ref{sec:modelos}:
 partir de una distribución de Dixon--Coles en lugar de la histórica,
 o mezclar ambas, podría conservar la forma central de la histórica y
@@ -1668,15 +1941,20 @@ acertaron el marcador exacto en el 13,5\,\% de los partidos, incluido
 el 1-0 con que España ganó la final; el método final, evaluado solo
 con la información previa a cada partido, obtuvo 2,26.
 Casi toda la ventaja sobre el historial provino de las probabilidades
-de resultado del mercado, que sumaron 91 puntos, y los mercados de
-total y ventaja sumaron 20 más; la regla ``el favorito gana 1-0''
-quedó 22 puntos por debajo del método.
+de resultado del mercado, que sumaron 91 puntos, aunque un rating Elo
+sin mercado sumó casi lo mismo, y los mercados de total y ventaja
+sumaron 20 más; la regla ``el favorito gana 1-0'' quedó 22 puntos por
+debajo del método.
 La optimización aportó poco, como el propio modelo anticipaba: con la
 regla de 5, 3 y 2 puntos, el marcador óptimo y el más probable
 difieren en uno de cada cuatro partidos y por pocas centésimas de
 punto esperado,
 y la diferencia más sistemática entre ambos es que el óptimo casi
 nunca pronostica empate.
+La razón es que la regla es aditiva: los puntos esperados suman, con
+peso doble, la probabilidad del resultado, que rara vez favorece al
+empate, y con peso simple la de los goles de cada equipo y la del
+marcador, que es lo único que mira el marcador modal.
 
 Para quien juega una quiniela con esta regla, la recomendación
 práctica es tomar del mercado el ganador probable y, en los partidos
@@ -1688,9 +1966,9 @@ exactos, aplicable a cualquier regla de puntuación y a cualquier
 torneo con mercados de total y ventaja de goles, siempre que los
 mercados no cotizados se traten como categorías abiertas y no como
 probabilidades nulas.
-Optimizar vale más cuanto más crédito parcial da la regla, y casi nada
-cuando el marcador exacto domina; caracterizar esa relación es el paso
-siguiente.
+Entre las reglas aditivas, optimizar vale casi nada cuando el marcador
+exacto domina; caracterizar su valor en reglas no aditivas, con más
+crédito parcial, es el paso siguiente.
 
 % ─────────────────────────────────────────────────────────────
 \section*{Disponibilidad del código}
@@ -1710,8 +1988,11 @@ cada pronóstico se publicó antes del partido.
 Las cifras de la Sección~\ref{sec:resultados} y sus figuras se
 reproducen con \path{model/article_stats.py},
 \path{model/prospective.py} (evaluación pseudoprospectiva y
-comparación de modelos) y \path{model/figures_results.py}; el
-ajuste final está en \path{model/marginals.py}.
+comparación de modelos), \path{model/sensitivity.py} (incertidumbre y
+sensibilidad de $\alpha$, $\gamma$ y $\kappa$) y
+\path{model/figures_results.py}; el ajuste final está en
+\path{model/marginals.py}, y la referencia Elo, con los ratings
+descargados (\path{data/elo/}), en \path{model/elo.py}.
 Las predicciones se pueden consultar en:
 \begin{center}
   \url{https://alfaromurillo.github.io/quiniela/}

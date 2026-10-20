@@ -61,8 +61,12 @@ python model/figures_results.py
 python model/article_stats.py
 
 # Pseudo-prospective evaluation of the final method, model comparison
-# (log score, Poisson/Dixon-Coles) and market-compatibility diagnostics
+# (log score, Poisson/Dixon-Coles, Elo baseline), the decomposition of
+# expected points and market-compatibility diagnostics
 python model/prospective.py
+
+# Uncertainty of α and γ, sensitivity to κ and γ (~4 min)
+python model/sensitivity.py
 ```
 
 **Always recompile `articulo/main.pdf` after any change to `articulo/main.tex`
@@ -103,6 +107,8 @@ data/
   wc2022.json          # WC 2022 results (openfootball)
   schedule.json        # WC 2026 full schedule (104 matches)
   kalshi_cache.json    # Kalshi API cache (per-match, locked at kickoff)
+  elo/                 # eloratings.net WC 2014-2026 results with pre-match
+                       # ratings (downloaded 2026-10-20) + team names
 
 model/
   historical.py        # Multi-tournament distributions with γ decay + Poisson prior
@@ -113,11 +119,13 @@ model/
   predict.py           # Full pipeline: schedule → Kalshi → dist → predict → JSON
   sanity.py            # Validates predictions.json before commit (hard fails on degenerate output)
   figures.py           # Methods/appendix figures (fig1–fig4) → articulo/figures/
-  figures_results.py   # Results figures (fig5–fig10, PDF); final method via prospective.py
+  figures_results.py   # Results figures (fig5–fig11, PDF); final method via prospective.py
   article_stats.py     # All Results numbers; the article scores on the base rule
   marginals.py         # Final fit: censored market tables, compatibility projection + IPF
   prospective.py       # Re-predicts every match with the final method using only
-                       # pre-kickoff info; log score vs Poisson/Dixon-Coles
+                       # pre-kickoff info; log score vs Poisson/Dixon-Coles/Elo
+  elo.py               # Non-market baseline: Elo ratings → ordered logit
+  sensitivity.py       # α/γ posterior intervals; κ and γ sensitivity
 
 articulo/
   main.tex              # Scientific article (LaTeX, tracked in git)
