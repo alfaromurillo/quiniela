@@ -1,5 +1,7 @@
 """
-Results figures for the article (fig5–fig9), from the frozen predictions.
+Results figures for the article (fig5–fig10).  Fig 5 shows the frozen
+predictions next to the final method; the others use the final method's
+pseudo-prospective picks (prospective.py) or the data alone.
 Output: articulo/figures/
 
 Run from repo root:
@@ -21,11 +23,12 @@ ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT))
 
 from model.figures import OUT_DIR, _num   # style, locale, decimal comma
-from model.article_stats import (match_rows, by_favourite, surprises,
-                                  surprise_rows, rounds_compare,
-                                  ROUND_ORDER, GAMMA, DELTA)
-from model.historical import build_distributions, scoreline_probs_ipf
+from model.article_stats import (match_rows, final_rows, final_dist,
+                                  by_favourite, surprises, surprise_rows,
+                                  rounds_compare, ROUND_ORDER)
+from model.historical import scoreline_probs
 from model.optimizer import best_prediction
+from model import marginals as mg
 
 INK   = "#222222"
 MUTED = "#9a9a9a"
@@ -56,18 +59,24 @@ def _save(fig, name):
 
 # ── Fig 5: cumulative points ───────────────────────────────────
 def fig5_cumulative():
-    rows = [r for r in match_rows() if 5 in r["pts"]]
-    series = [(6, "Óptimo (modelo)", BLUE, 2.2),
-              (5, "Marcador modal", "#5b8db8", 1.3),
-              ("fav10", "Favorito gana 1-0", ORANGE, 1.3),
-              (1, "Solo historial (casi siempre 0-0)", MUTED, 1.3)]
+    """Pseudo-prospective strategies (prospective.py) plus the frozen record."""
+    from model.prospective import run
+    rows = run()
+    frozen = {r["id"]: r["pts"][6] for r in match_rows()}
+    series = [("final", "Óptimo (método final)", BLUE, 2.2, "-"),
+              ("modal", "Marcador modal", "#5b8db8", 1.3, "-"),
+              ("frozen", "Pronósticos congelados", INK, 1.0, "--"),
+              ("fav10", "Favorito gana 1-0", ORANGE, 1.3, "-"),
+              ("hist", "Solo historial (casi siempre 1-1)", MUTED, 1.3, "-")]
+    dys = {"final": 9, "modal": 2, "frozen": -5, "fav10": -12, "hist": 0}
     x = np.arange(1, len(rows) + 1)
     fig, ax = plt.subplots(figsize=(7.5, 4.2))
-    for key, label, color, lw in series:
-        y = np.cumsum([r["pts"][key] for r in rows])
-        ax.plot(x, y, color=color, lw=lw)
-        dy = {6: 6, 5: -4, "fav10": -12, 1: 0}[key]
-        ax.text(x[-1] + 1.5, y[-1] + dy, f"{label}: {y[-1]}",
+    for key, label, color, lw, ls in series:
+        pts = [frozen[r["id"]] if key == "frozen" else r["pts"][key]
+               for r in rows]
+        y = np.cumsum(pts)
+        ax.plot(x, y, color=color, lw=lw, ls=ls)
+        ax.text(x[-1] + 1.5, y[-1] + dys[key], f"{label}: {y[-1]}",
                 color=color, va="center", fontsize=9)
     n_group = sum(r["phase"] == "group" for r in rows)
     ax.axvline(n_group + 0.5, color="#cccccc", lw=0.8, ls="--")
@@ -76,7 +85,7 @@ def fig5_cumulative():
             ha="center", color=MUTED, fontsize=9)
     ax.set_xlim(0, len(rows) + 1)
     ax.set_ylim(0, None)
-    ax.set_xlabel("Partidos comparables, en orden cronológico")
+    ax.set_xlabel("Partidos, en orden cronológico")
     ax.set_ylabel("Puntos acumulados")
     _clean(ax)
     _save(fig, "fig5_puntos_acumulados")
@@ -84,7 +93,7 @@ def fig5_cumulative():
 
 # ── Fig 6: predicted vs observed scorelines ────────────────────
 def fig6_predicted_observed():
-    rows = match_rows()
+    rows = final_rows()
     canon = lambda p: (max(p), min(p))
     pred = Counter(canon(r["pred"]) for r in rows)
     obs  = Counter(canon(r["result"]) for r in rows)
@@ -121,7 +130,7 @@ def _poisson_totals(mu):
 
 
 def fig7_decision_map():
-    dist = build_distributions(gamma=GAMMA, delta=DELTA)
+    dist = final_dist()
     pf = np.arange(0.25, 0.96, 0.005)
     pe = np.arange(0.03, 0.52, 0.005)
     # Expected totals near the 15th, 50th and 85th percentiles of the
@@ -139,7 +148,9 @@ def fig7_decision_map():
                 u = 1 - x - e
                 if u < 0.02 or u > x - 0.01:   # favourite must lead
                     continue
-                sp = scoreline_probs_ipf(x, e, u, "group", tg, None, None, dist=dist)
+                P0 = mg.to_array(scoreline_probs(x, e, u, "group", dist=dist))
+                sp = mg.to_dict(mg.fit_compatible(
+                    P0, mg.market_tables(x, e, u, tg, None, None)))
                 b = best_prediction(sp, "group")
                 lab = f"{b['home']}-{b['away']}"
                 g[i, j] = labels.setdefault(lab, len(labels))
@@ -151,12 +162,12 @@ def fig7_decision_map():
     cmap.set_under("white")
 
     # matches: corrected probabilities, placed by their expected total
-    rows = [r for r in match_rows() if r["source"] == "kalshi"]
+    rows = [r for r in final_rows() if r["source"] == "kalshi"]
     from model.kalshi import _correct_bias
     pts = []
     for r in rows:
         p = r["probs"]
-        h, d, a = _correct_bias(p["home_win"], p["draw"], p["away_win"], 1.14)
+        h, d, a = _correct_bias(p["home_win"], p["draw"], p["away_win"], 1.12)
         tg = p.get("total_goals") or {}
         et = sum(int(k) * v for k, v in tg.items()) if tg else 2.6
         pts.append((max(h, a), d, et, r["pred"][0] == r["pred"][1]))
@@ -195,7 +206,7 @@ def fig7_decision_map():
 
 # ── Fig 8: calibration and points by favourite strength ────────
 def fig8_calibration():
-    rows = [r for r in match_rows() if r["source"] == "kalshi"]
+    rows = [r for r in final_rows() if r["source"] == "kalshi"]
     pairs = []
     for r in rows:
         a, b = r["result"]
@@ -357,7 +368,7 @@ SURPRISE_LABELS = {
 
 
 def fig10_surprises():
-    rows = surprise_rows(match_rows())
+    rows = surprise_rows(final_rows())
     # Fixed axes positions: panel b's long tick labels must not narrow a.
     fig = plt.figure(figsize=(10, 9.2))
     ax1 = fig.add_axes([0.08, 0.43, 0.76, 0.53])
@@ -400,7 +411,7 @@ def fig10_surprises():
     ax1.set_ylabel("Goles del partido menos goles esperados")
     _clean(ax1)
 
-    bins = surprises(match_rows())["bins"]
+    bins = surprises(final_rows())["bins"]
     ypos = [5.4, 4.4, 3.4, 2.0, 1.0, 0.0]
     ax2.axvline(0, color="#cccccc", lw=0.8)
     for b, y in zip(bins, ypos):
@@ -415,9 +426,10 @@ def fig10_surprises():
     ax2.set_yticks(ypos)
     ax2.set_yticklabels([f"{n} (n = {b['n']})" for n, b in zip(names, bins)],
                         fontsize=8.5)
-    ax2.set_xlim(-1.6, 0.9)
+    ax2.set_xlim(min(b["lo"] for b in bins) - 0.15,
+                 max(b["hi"] for b in bins) + 0.15)
     ax2.set_ylim(-0.6, 5.9)
-    ax2.set_xlabel("Puntos por partido: modelo menos “favorito 1-0”")
+    ax2.set_xlabel("Puntos por partido: método final menos “favorito 1-0”")
     _clean(ax2)
     ax2.spines["left"].set_visible(False)
     ax2.tick_params(axis="y", length=0)

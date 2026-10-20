@@ -90,15 +90,18 @@ Los pronósticos, publicados en tiempo real y congelados antes de cada
 uno de los 104 partidos del Mundial 2026, obtuvieron 2,13
 puntos por partido y acertaron el marcador exacto en el 13,5\,\% de
 los partidos, incluido el 1-0 de la final.
-Frente a usar solo el historial, las probabilidades del mercado
-sumaron 105 puntos en 90 partidos (intervalo de credibilidad del
-95\,\%: 62 a 144).
+Recalculado solo con la información previa a cada partido, el método
+final obtuvo 2,26 puntos por partido.
+Frente a usar solo el historial, las probabilidades de resultado del
+mercado sumaron 91 puntos (intervalo de credibilidad del 95\,\%: 44
+a 136), y los mercados de total y ventaja, 20 más (3 a 38).
 Maximizar los puntos esperados en lugar de elegir el marcador más
-probable cambió el pronóstico en 28 de esos partidos, casi siempre
-conservando el ganador o cambiando un empate por una victoria, y sumó
-12 puntos ($-8$ a 33), cuando el propio modelo esperaba apenas 1,5, y
-la regla ``el favorito gana 1-0'' quedó a solo 9 puntos del modelo en
-los 104 partidos.
+probable cambió el pronóstico en 25 partidos, casi siempre cambiando
+un empate por una victoria, y sumó 8 puntos ($-14$ a 31); la regla
+``el favorito gana 1-0'' quedó 22 puntos por debajo (0 a 46).
+Modelos de Poisson ajustados a los mismos mercados asignaron más
+probabilidad a los marcadores ocurridos, pero obtuvieron menos
+puntos.
 Con esta regla de puntuación, el valor del pronóstico proviene sobre
 todo del mercado; la optimización está bien fundamentada, pero su ganancia es
 pequeña y se concentra en evitar los empates.
@@ -125,14 +128,17 @@ Predictions, published in real time and frozen before each of the 104
 matches of the 2026 World Cup, earned 2.13 points per match and
 hit the exact scoreline in 13.5\,\% of matches, including the 1-0
 final.
-Compared with using history alone, market probabilities added 105
-points over 90 matches (95\,\% credible interval: 62 to 144).
+Recomputed using only information available before each match, the
+final method earned 2.26 points per match.
+Compared with using history alone, the market's outcome probabilities
+added 91 points (95\,\% credible interval: 44 to 136), and the total
+and margin markets 20 more (3 to 38).
 Maximizing expected points instead of picking the most likely
-scoreline changed the prediction in 28 of those matches, almost always
-keeping the winner or turning a draw into a win, and added
-12 points ($-8$ to 33), where the model itself expected only 1.5,
-and the rule ``the favorite wins 1-0'' finished only 9 points behind
-the model over the 104 matches.
+scoreline changed the prediction in 25 matches, almost always turning
+a draw into a win, and added 8 points ($-14$ to 31); the rule ``the
+favorite wins 1-0'' finished 22 points behind (0 to 46).
+Poisson models fitted to the same markets gave more probability to
+the observed scorelines but earned fewer points.
 Under this scoring rule, predictive value comes mostly from the
 market; optimization is well founded, but its gain is small and comes
 mainly from avoiding draws.
@@ -223,11 +229,14 @@ sobrevaloración de los resultados improbables).
 Así, la estructura de dependencia entre $T$ y $M$ proviene del
 historial, y la información específica de cada partido, del mercado.
 Evaluamos los pronósticos congelados antes de cada uno de los 104
-partidos del torneo y los comparamos con seis estrategias de
-referencia.
-Los pronósticos obtuvieron 2,13 puntos por partido; casi todo ese
-valor provino de las probabilidades del mercado, y la optimización
-sumó una ventaja pequeña e incierta sobre el marcador más probable.
+partidos del torneo y, como provinieron de versiones sucesivas del
+sistema, evaluamos además el método final de forma pseudoprospectiva,
+frente a seis estrategias de referencia y a modelos de Poisson
+ajustados a los mismos mercados.
+Los pronósticos congelados obtuvieron 2,13 puntos por partido, y el
+método final 2,26; casi todo ese valor provino de las probabilidades
+del mercado, y la optimización sumó una ventaja pequeña e incierta
+sobre el marcador más probable.
 El modelo funcionó durante todo el torneo en una plataforma web
 pública con actualización automática, desarrollada con asistencia de
 inteligencia artificial (Claude Code), cuyo papel documentamos.
@@ -426,13 +435,19 @@ Sea $T = h + k$ el total de goles y $M = h - k$ la diferencia.
 El mercado de total determina $\Prob(T = t)$ para $t = 0, \ldots, 5$
 y $\Prob(T \geq 6)$.
 Los mercados de resultado y de ventaja determinan, por diferencias
-sucesivas, $\Prob(M = m)$ para $m = \pm 1, \pm 2, \pm 3$ y
-$\Prob(M = 0)$, y las colas $\Prob(M \geq 4)$ y $\Prob(M \leq -4)$.
+sucesivas, $\Prob(M = 0)$, $\Prob(M = m)$ para $m = \pm 1, \pm 2$, y
+las colas $\Prob(M \geq 3)$ y $\Prob(M \leq -3)$.
+Kalshi cotiza victorias por más de 1,5, 2,5 y 3,5 goles, pero en 185
+de los 196 casos (dos por partido) no hubo mercado de más de 3,5; solo
+en los 11 restantes la cola de ese equipo se divide en una ventaja de
+exactamente 3 goles y una de 4 o más.
 Como cada par $(T, M)$ con $T \geq |M|$ y $T + M$ par corresponde a un
 único marcador, $P(h, k) = \Prob(T = h + k,\, M = h - k)$: conocer la
 distribución conjunta de $(T, M)$ equivale a conocer la de marcadores.
-Pero los mercados dan solo sus dos marginales: 14 ecuaciones
-independientes para los 35 grados de libertad de la cuadrícula $\{0, \ldots, 5\}^2$.
+Pero los mercados dan solo sus dos marginales: 12 ecuaciones
+independientes (14 si se cotiza la ventaja de más de 3,5 goles) para
+los 35 grados de libertad de la cuadrícula $\{0, \ldots, 5\}^2$, en
+la que la celda de 5 goles representa 5 o más.
 El único marcador que los mercados determinan por sí solos es el~0-0,
 pues $P(0, 0) = \Prob(T = 0)$.
 Las marginales tampoco son independientes (los empates tienen menos
@@ -466,68 +481,87 @@ $\alpha \sim \mathcal{N}(1.10;\, 0.20^2)$, centrada en el valor que
 La búsqueda se hizo en una cuadrícula de paso 0,02 en $[0.5;\, 2.5]$;
 con menos de dos partidos, se usó $\hat\alpha = 1.10$.
 
-\paragraph{Ajuste iterativo proporcional.}
+\paragraph{Ajuste a las marginales del mercado.}
 \label{sec:ipf}
 La distribución de referencia~\eqref{eq:referencia}, evaluada con las
 probabilidades corregidas $p_A, p_E, p_B$, ya reproduce el mercado de
 resultado; falta ajustarla a los de total y ventaja.
-Para ello se usa el ajuste iterativo proporcional (IPF, por sus
-siglas en inglés), un procedimiento clásico para ajustar una tabla de
-frecuencias a márgenes conocidos \citep{deming1940}.
-Sobre la cuadrícula $\{0, \ldots, 5\}^2$ se definen los conjuntos de
-celdas y sus objetivos:
+Cada mercado define una tabla marginal: una partición de la
+cuadrícula en conjuntos de celdas, cada uno con una probabilidad
+objetivo.
 \begin{itemize}
-  \item por resultado, $\mathcal{A} = \{h > k\}$, $\mathcal{E} =
-    \{h = k\}$ y $\mathcal{B} = \{h < k\}$, con objetivos $p_A$,
-    $p_E$ y $p_B$;
-  \item por total, $\mathcal{T}_t = \{h + k = t\}$ para
+  \item Por ventaja, $\mathcal{E} = \{h = k\}$, $\mathcal{S}^A_m =
+    \{h - k = m\}$ para $m = 1, 2$ y $\mathcal{S}^A_3 = \{h - k \geq
+    3\}$, y los conjuntos análogos $\mathcal{S}^B_m$ con $k - h$, con
+    objetivos $p_E$, $p_A\, s^A_m$ y $p_B\, s^B_m$, donde $s^A_m$ es la
+    probabilidad, según Kalshi, de que el Equipo~A gane por $m$ goles
+    (o por 3 o más) dado que gana.
+    Cuando se cotiza la ventaja de más de 3,5 goles, $\mathcal{S}^A_3$
+    se divide en $\{h - k = 3\}$ y $\{h - k \geq 4\}$.
+    Esta tabla contiene la de resultado, que es su suma por signos.
+  \item Por total, $\mathcal{T}_t = \{h + k = t\}$ para
     $t = 0, \ldots, 5$ y $\mathcal{T}_6 = \{h + k \geq 6\}$, con
-    objetivo $\Prob(T = t)$ (o $\Prob(T \geq 6)$) según Kalshi;
-  \item por ventaja, $\mathcal{S}^A_m = \{h - k = m\}$ y
-    $\mathcal{S}^B_m = \{k - h = m\}$ para $m = 1, 2, 3$, y
-    $\mathcal{S}^A_4 = \{h - k \geq 4\}$, $\mathcal{S}^B_4 =
-    \{k - h \geq 4\}$, con objetivos $p_A\, s^A_m$ y $p_B\, s^B_m$,
-    donde $s^A_m$ es la probabilidad, según Kalshi, de que el
-    Equipo~A gane por $m$ goles dado que gana;
-  \item en la fase eliminatoria, por goles de cada equipo,
-    $\mathcal{G}^A_g = \{h = g\}$ y $\mathcal{G}^B_g = \{k = g\}$,
-    con objetivos tomados del mercado de goles por equipo.
+    objetivo $\Prob(T = t)$ (o $\Prob(T \geq 6)$) según Kalshi.
 \end{itemize}
+Un mercado no cotizado no es una probabilidad nula: si falta el de
+más de 3,5 goles, la última categoría queda abierta (3 o más), en vez
+de suponer que nadie gana por 4.
+
+El ajuste iterativo proporcional (IPF, por sus siglas en inglés) es un
+procedimiento clásico para ajustar una tabla de frecuencias a márgenes
+conocidos \citep{deming1940}.
 Partiendo de $P^{(0)} = \tilde{P}$, cada iteración recorre los
-conjuntos en ese orden y, para cada conjunto $\mathcal{C}$ con
+conjuntos de ambas tablas y, para cada conjunto $\mathcal{C}$ con
 objetivo $c$, reescala sus celdas:
 \begin{equation}
   P(h, k) \leftarrow P(h, k) \,
     \frac{c}{\sum_{(h', k') \in \mathcal{C}} P(h', k')}
   \qquad \text{para } (h, k) \in \mathcal{C}.
+  \label{eq:ipf}
 \end{equation}
-El proceso se detiene cuando ninguna celda cambia más de $10^{-8}$
-entre iteraciones, o tras 20 iteraciones.
-Cuando las restricciones son compatibles, el IPF converge a la
-distribución que las cumple y que está más cerca de $\tilde{P}$ en
-divergencia de Kullback--Leibler \citep{csiszar1975}; así, el
-resultado conserva tanto como puede la dependencia histórica entre
-$T$ y $M$.
-Los mercados de Kalshi, sin embargo, se cotizan por separado y casi
-nunca son compatibles entre sí.
-Una distribución de marcadores exige, por ejemplo, que
+Si las tablas son compatibles, es decir, si alguna distribución en la
+cuadrícula las reproduce todas, el IPF converge a la que las reproduce
+y está más cerca de $\tilde{P}$ en divergencia de Kullback--Leibler
+\citep{csiszar1975}; así, el resultado conserva tanto como puede la
+dependencia histórica entre $T$ y $M$.
+
+\paragraph{Proyección de compatibilidad.}
+Los mercados se cotizan por separado y nada garantiza que sean
+compatibles.
+Cualquier distribución de marcadores cumple, por ejemplo,
 $\Prob(T \text{ par}) = \Prob(M \text{ par})$, porque $T$ y $M$
-tienen la misma paridad, y unos precios cotizados por separado no
-tienen por qué cumplirlo.
-El resultado final reproduce exactamente las probabilidades de ventaja,
-que se ajustan al final de cada iteración, y con ellas las de victoria
-de cada equipo, que son su suma; la discrepancia queda en la del
-empate y en las de total: en los 66 partidos de grupos con mercados,
-la mayor discrepancia tuvo una mediana de 1,0 puntos porcentuales en
-la de empate (máximo 2,9) y de 0,9 en las de total (máximo 4,6), y no
-disminuye con más iteraciones.
-Por la misma razón, la distribución final suma entre 0,97 y 1,03; no
-se renormaliza, lo que no altera el pronóstico óptimo ni el marcador
-modal, que no cambian al multiplicar $P$ por una constante.
+tienen la misma paridad, y $\Prob(T = 0) \leq \Prob(M = 0)$.
+Con tablas incompatibles, el IPF no converge: oscila, y su resultado
+depende del orden en que se recorren los conjuntos.
+Por eso, antes del IPF, las tablas del mercado $t_1, t_2$ se
+reemplazan por las tablas compatibles más cercanas.
+Sea $q_j(Q)$ la tabla $j$ de una distribución $Q$ en la cuadrícula;
+se busca
+\begin{equation}
+  Q^* = \arg\max_Q \sum_{j=1}^{2} \sum_{\mathcal{C} \in t_j}
+    t_j(\mathcal{C}) \log q_j(Q)(\mathcal{C}),
+  \label{eq:proyeccion}
+\end{equation}
+lo que equivale a minimizar $\sum_j \mathrm{KL}(t_j \,\|\, q_j(Q))$.
+El objetivo es cóncavo en $Q$, sus tablas óptimas $q_j(Q^*)$ son
+únicas y coinciden con las del mercado cuando estas son compatibles.
+Se calcula con el algoritmo EM \citep{dempster1977}, que en este caso
+multiplica cada celda por el promedio, entre las dos tablas, del
+cociente entre el objetivo de su conjunto y la probabilidad actual de
+ese conjunto.
+El IPF~\eqref{eq:ipf} parte luego de $\tilde{P}$ hacia las tablas
+$q_j(Q^*)$, que sí son compatibles, y converge a una distribución que
+suma~1.
+El proceso se detiene cuando ninguna celda cambia más de $10^{-12}$
+entre iteraciones.
+Con las categorías no cotizadas abiertas, las tablas del mercado
+fueron compatibles en 97 de los 98 partidos con precios, y en el
+restante la proyección movió los objetivos 1,3 puntos porcentuales
+como máximo.
 La Figura~\ref{fig:kalshi} muestra el efecto del ajuste en un partido:
 la probabilidad del 0-0 bajó de 13,8\,\% a 9,5\,\%, la que el mercado
 daba a un partido sin goles, y la del 1-1 subió de 10,4\,\% a
-14,6\,\%, hasta ser el marcador más probable.
+14,5\,\%, hasta ser el marcador más probable.
 
 \begin{figure}[tb]
   \centering
@@ -536,8 +570,8 @@ daba a un partido sin goles, y la del 1-1 subió de 10,4\,\% a
     (Equipo~A) vs.\ Chequia (Equipo~B), primera jornada del Mundial
     2026, antes (izquierda: distribución de
     referencia~\eqref{eq:referencia} con las probabilidades de
-    resultado de Kalshi) y después (derecha) del ajuste iterativo
-    proporcional a los mercados de total y ventaja.
+    resultado de Kalshi) y después (derecha) del ajuste a los mercados
+    de total y ventaja.
     Probabilidades de resultado corregidas con $\alpha = 1.10$:
     $p_A = 0.37$, $p_E = 0.31$, $p_B = 0.32$.
     El recuadro rojo marca el pronóstico óptimo (1-0); el partido
@@ -545,28 +579,30 @@ daba a un partido sin goles, y la del 1-1 subió de 10,4\,\% a
   \label{fig:kalshi}
 \end{figure}
 
-\paragraph{Versión usada en la fase de grupos.}
+\paragraph{Versiones usadas durante el torneo.}
 \label{sec:razones}
-El IPF se incorporó al sistema el 19 de junio de 2026, cuando ya se
-habían jugado 28 de los 72 partidos de grupos.
-Antes y durante el resto de la fase de grupos, los pronósticos
-publicados usaron un reajuste secuencial por razones, que multiplica
-cada diagonal de total por la razón entre su probabilidad según
-Kalshi y su probabilidad actual, luego hace lo mismo con cada
+El método descrito es la versión final, revisada después del torneo.
+Durante el torneo, los pronósticos publicados usaron dos versiones
+anteriores (Apéndice~\ref{app:version}).
+En toda la fase de grupos, un reajuste secuencial por razones, que
+multiplica cada diagonal de total por la razón entre su probabilidad
+según Kalshi y su probabilidad actual, luego hace lo mismo con cada
 antidiagonal de ventaja (con un factor máximo de~4), y al final
 restaura las probabilidades de resultado (desde el 19 de junio; antes,
 el reajuste podía alterarlas).
-Ese reajuste reproduce el mercado de resultado pero solo
-aproximadamente los de total y ventaja, y puede inflar los marcadores
-extremos cuando el mercado se aparta del historial.
 Desde el 19 de junio, el sistema calculó en paralelo el pronóstico
 con IPF, que en una reconstrucción de los 28 partidos ya jugados
 habría obtenido 45 puntos frente a 40, y lo adoptó como método
 operativo en la fase eliminatoria.
-Los pronósticos congelados de la fase de grupos que se evalúan en la
-Sección~\ref{sec:resultados} son, por tanto, los del reajuste por
-razones; la Sección~\ref{sec:resultados} compara ambos métodos sobre
-la fase de grupos completa.
+Ambas versiones leían las categorías de ventaja no cotizadas como
+probabilidad nula: en 53 de los 98 partidos las tablas resultaban
+incompatibles, y el IPF, sin proyección previa, daba probabilidad nula
+a las victorias por 4 o más goles cuando faltaba ese mercado, y acumulaba la del total de 6 o más
+en 5-2 y 2-5 (más del 5\,\% en 25 partidos, y hasta el 22\,\% en
+Nueva Zelanda-Bélgica).
+La versión operativa usaba además, en la fase eliminatoria, los
+mercados de goles por equipo, que la versión final omite
+(Sección~\ref{sec:modelos}).
 
 % ─────────────────────────────────────────────────────────────
 \subsection{Fase eliminatoria: modelo de dos etapas}
@@ -584,10 +620,13 @@ con el historial.
 
 \paragraph{Etapa 1: distribución a 90 minutos.}
 Con las probabilidades de resultado a 90~minutos $p^r_A, p^r_E,
-p^r_B$, corregidas con~\eqref{eq:alpha}, y los mercados de total,
-ventaja y goles por equipo, se aplica el IPF sobre la distribución
-histórica de marcadores eliminatorios a 90~minutos.
+p^r_B$, corregidas con~\eqref{eq:alpha}, y los mercados de total y
+ventaja, se aplica el ajuste de la Sección~\ref{sec:ipf} a la
+distribución histórica de marcadores eliminatorios a 90~minutos.
 El resultado es la distribución $P_{\mathrm{reg}}(h, k)$.
+Como no se registraron los marcadores a 90~minutos de los partidos
+eliminatorios del Mundial 2026, esta distribución de referencia no se
+actualizó con el torneo en curso.
 
 \paragraph{Probabilidades de resultado de quiniela.}
 Sea $\rho$ la probabilidad de que un partido empatado a
@@ -629,8 +668,8 @@ goles de cada equipo en la prórroga:
 \end{equation}
 El núcleo se estimó con los mismos 18 partidos ponderados por
 $\gamma$, repartiendo cada victoria en prórroga por igual entre ambos
-equipos (Tabla~\ref{tab:nucleo}), y se actualizó con las prórrogas
-del Mundial 2026, con peso $1 + \delta$, conforme se jugaban.
+equipos (Tabla~\ref{tab:nucleo}), y por la misma razón no se
+actualizó con las prórrogas del Mundial 2026.
 Finalmente, $P_{\mathrm{fin}}$ se reescala para que sus regiones de
 victoria, empate y derrota sumen $p^q_A$, $p^q_E$ y $p^q_B$.
 
@@ -739,8 +778,8 @@ $\alpha = 1.10$) y una distribución del total de goles de
 $9.5\,\%$, $21\,\%$, $29\,\%$, $20\,\%$, $12\,\%$, $5\,\%$ y
 $3.5\,\%$ para 0, 1, 2, 3, 4, 5 y 6 o más goles.
 Con el modelo descrito ($\hat\gamma = 0.84$, $\delta = 0$), el
-marcador modal es 1-1 ($P = 0{,}146$), pero el pronóstico óptimo es 1-0
-($V = 1{,}539$; Tabla~\ref{tab:ejkorcze}).
+marcador modal es 1-1 ($P = 0{,}145$), pero el pronóstico óptimo es 1-0
+($V = 1{,}537$; Tabla~\ref{tab:ejkorcze}).
 La diferencia se debe a que 1-0 también obtiene 3 puntos si el
 partido termina 2-0, 3-0, 4-0 o 5-0, mientras que 1-1 nunca alcanza
 ese nivel (Observación~\ref{obs:nodraw}).
@@ -760,15 +799,15 @@ vs.\ Chequia (Equipo~B), con el modelo completo. El marcador modal
 \toprule
 Pronóstico $(a,b)$ & $P(a,b)$ & $V(a,b)$ & \\
 \midrule
-$\mathbf{1\text{-}0}$ & 0,112 & $\mathbf{1.539}$ & óptimo \\
-$1\text{-}1$ & 0,146 & 1,518 & modal \\
-$2\text{-}1$ & 0,079 & 1,454 & \\
-$2\text{-}0$ & 0,081 & 1,403 & \\
-$0\text{-}1$ & 0,106 & 1,397 & \\
-$0\text{-}0$ & 0,095 & 1,333 & \\
-$1\text{-}2$ & 0,075 & 1,309 & \\
-$3\text{-}1$ & 0,028 & 1,225 & \\
-$0\text{-}2$ & 0,058 & 1,212 & \\
+$\mathbf{1\text{-}0}$ & 0,108 & $\mathbf{1.537}$ & óptimo \\
+$1\text{-}1$ & 0,145 & 1,484 & modal \\
+$2\text{-}1$ & 0,083 & 1,440 & \\
+$2\text{-}0$ & 0,084 & 1,401 & \\
+$0\text{-}1$ & 0,102 & 1,392 & \\
+$0\text{-}0$ & 0,095 & 1,324 & \\
+$1\text{-}2$ & 0,078 & 1,293 & \\
+$3\text{-}1$ & 0,023 & 1,206 & \\
+$0\text{-}2$ & 0,061 & 1,205 & \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -777,13 +816,26 @@ $0\text{-}2$ & 0,058 & 1,212 & \\
 \subsection{Evaluación}
 \label{sec:metricas}
 
-\paragraph{Pronósticos congelados.}
-Cada partido se evalúa con el último pronóstico publicado antes de
-congelar sus precios, no con uno recalculado después con los
-parámetros finales.
-Así, los puntos reportados son los que habría obtenido un participante
-que jugara los pronósticos del sistema en tiempo real, con la regla
-base de la Tabla~\ref{tab:reglas} en todas las rondas.
+\paragraph{Registro operativo.}
+El registro del sistema durante el torneo usa, para cada partido, el
+último pronóstico publicado antes de congelar sus precios.
+Sus puntos son los que habría obtenido un participante que jugara los
+pronósticos del sistema en tiempo real, con la regla base de la
+Tabla~\ref{tab:reglas} en todas las rondas
+(Sección~\ref{sec:puntos}).
+
+\paragraph{Evaluación pseudoprospectiva del método final.}
+Los pronósticos congelados provienen de versiones sucesivas del
+sistema (Sección~\ref{sec:razones}), así que no miden un método único.
+Por eso el método final se evalúa recalculando cada partido, en orden
+cronológico, solo con información disponible antes de su inicio: los
+precios congelados de Kalshi; $\hat\gamma$, estimado con los Mundiales
+anteriores; y $\hat\delta$, los resultados del Mundial 2026 que entran
+en la distribución de referencia y $\hat\alpha$, estimados con los
+partidos terminados antes de ese inicio (se da por terminado un
+partido 3~horas después de empezar).
+Salvo la Sección~\ref{sec:puntos}, los Resultados se basan en esta
+evaluación.
 
 \paragraph{Calibración de los precios de Kalshi.}
 La calibración de las probabilidades de resultado se mide con el
@@ -803,25 +855,20 @@ Un pronóstico perfecto obtiene $\mathrm{BS} = 0$, y uno uniforme
 $(1/3, 1/3, 1/3)$, $\mathrm{BS} = 2/3$.
 
 \paragraph{Comparación de estrategias.}
-Para medir cuánto aporta cada componente del modelo, se comparan seis
+Para medir cuánto aporta cada componente del método, se comparan seis
 estrategias en las que cada una agrega, en lo posible, un solo
 componente a la anterior (Tabla~\ref{tab:estrategias}).
-La estrategia~1 pronostica, en cada fase, el óptimo de la distribución
-histórica con probabilidades de resultado iguales, el mismo marcador
-para todos los partidos.
+La estrategia~1 pronostica el óptimo de la distribución de referencia
+con probabilidades de resultado iguales, que resulta 1-1 en casi todos
+los partidos.
 Las estrategias 1--4 y~6 eligen el máximo de $V(a,b)$ bajo su
 distribución; la~5 elige el marcador modal~\eqref{eq:modal}.
-En la fase de grupos, las estrategias 4--6 usan el reajuste por
-razones con que se generaron los pronósticos congelados
-(Sección~\ref{sec:razones}).
-En la fase eliminatoria, las estrategias 2--4 usan un modelo de una
-sola etapa sobre los marcadores finales, y las 5 y~6, el modelo de dos
-etapas de la Sección~\ref{sec:knockout}.
-Las estrategias de referencia se registraron a partir del 14 de junio,
-de modo que la comparación cubre 90 de los 104 partidos.
+En la fase eliminatoria, las estrategias 2--6 usan el modelo de dos
+etapas de la Sección~\ref{sec:knockout}, y las 2 y~3 omiten en la
+primera etapa los mercados de total y ventaja.
 Como referencia sin modelo se agrega además la regla ``el favorito
 gana 1-0'', con el favorito según las probabilidades de resultado de
-Kalshi, que puede evaluarse en los 104 partidos.
+Kalshi.
 
 \begin{table}[tb]
 \centering
@@ -843,14 +890,33 @@ Kalshi, que puede evaluarse en los 104 partidos.
 \end{tabular}
 \end{table}
 
+\paragraph{Modelos de marcador.}
+Para evaluar la distribución completa de marcadores, y no solo el
+pronóstico elegido, se usa el puntaje logarítmico: el logaritmo de la
+probabilidad asignada al marcador ocurrido, promediado sobre los 98
+partidos con precios.
+Es una regla de puntuación estrictamente propia \citep{gneiting2007},
+y un valor más alto es mejor.
+El método final se compara con la distribución de referencia ajustada
+solo al resultado (estrategia~3), con las dos versiones operativas
+(Sección~\ref{sec:razones}) y con dos modelos paramétricos ajustados a
+las mismas tablas del mercado, con los parámetros que
+maximizan~\eqref{eq:proyeccion}: goles de cada equipo independientes
+y de Poisson \citep{maher1982}, y el mismo modelo con la corrección de
+\citet{dixon1997} para los marcadores bajos.
+Todos usan la misma cuadrícula, con la celda de 5 goles como 5 o más,
+y el mismo modelo de prórroga, y sus distribuciones se normalizan
+antes de evaluarlas.
+
 \paragraph{Incertidumbre.}
-La incertidumbre de la diferencia de puntos entre dos estrategias se
-describe con un intervalo de credibilidad del 95\,\% obtenido por
-\textit{bootstrap} bayesiano \citep{rubin1981}: se generan 10\,000
-vectores de pesos de Dirichlet uniforme sobre los partidos, y para cada
-uno se calcula la diferencia total ponderada entre ambas estrategias
-en los mismos partidos; el intervalo va de los percentiles 2,5 a 97,5
-de esas diferencias.
+La incertidumbre de la diferencia de puntos, o de puntaje
+logarítmico, entre dos estrategias se describe con un intervalo de
+credibilidad del 95\,\% obtenido por \textit{bootstrap} bayesiano
+\citep{rubin1981}: se generan 10\,000 vectores de pesos de Dirichlet
+uniforme sobre los partidos, y para cada uno se calcula la diferencia
+ponderada entre ambas estrategias en los mismos partidos (total, para
+los puntos; media, para el puntaje logarítmico); el intervalo va de
+los percentiles 2,5 a 97,5 de esas diferencias.
 
 \paragraph{Implementación.}
 El sistema está escrito en Python, se ejecutó automáticamente durante
@@ -866,12 +932,16 @@ Los pronósticos congelados del sistema obtuvieron 222 puntos en los
 104 partidos del Mundial 2026, un promedio de 2,13 por partido, y
 acertaron el marcador exacto en 14 partidos (13,5\,\%), incluida la
 final, que España ganó 1-0 a Argentina.
+Recalculados con el método final, solo con la información previa a
+cada partido, los pronósticos habrían obtenido 235 puntos y 18
+marcadores exactos.
 Casi todo ese valor provino de las probabilidades de resultado del
-mercado: frente al historial solo, sumaron 105 puntos en 90 partidos
-(intervalo de credibilidad del 95\,\%: 62 a 144).
-La optimización, en cambio, sumó poco y con incertidumbre: 12 puntos
-frente al marcador más probable ($-8$ a 33) y 9 frente a la regla
-``el favorito gana 1-0'' en los 104 partidos ($-17$ a 35).
+mercado, que sumaron 91 puntos frente al historial solo (intervalo de
+credibilidad del 95\,\%: 44 a 136), y los mercados de total y ventaja
+sumaron 20 más (3 a 38).
+La optimización sumó poco y con incertidumbre: 8 puntos frente al
+marcador más probable ($-14$ a 31) y 22 frente a la regla ``el
+favorito gana 1-0'' (0 a 46).
 
 \FloatBarrier
 \subsection{Puntos por fase y por ronda}
@@ -918,72 +988,74 @@ Total               & 104 & 222 & 2,13 & 14 & 68 \\
 \subsection{El mercado frente al historial}
 \label{sec:comparacion}
 
-Las probabilidades de Kalshi separaron al sistema del historial desde
-los primeros partidos, y las tres estrategias que las usan avanzaron
-casi juntas todo el torneo (Figura~\ref{fig:acumulados}).
-Con probabilidades de resultado iguales, el óptimo histórico es 0-0
-en casi todos los partidos, y esa estrategia sumó 92 puntos en los 90
-partidos comparables, menos de la mitad que cualquiera de las otras.
-La regla ``el favorito gana 1-0'' fue por delante durante casi toda
-la fase de grupos, y el pronóstico óptimo la superó en la
-eliminatoria.
+Las probabilidades de Kalshi separaron al método del historial desde
+los primeros partidos, y las estrategias que las usan avanzaron casi
+juntas todo el torneo (Figura~\ref{fig:acumulados}).
+Con probabilidades de resultado iguales, el óptimo de la distribución
+de referencia es 1-1 en casi todos los partidos, y esa estrategia sumó
+124 puntos, poco más de la mitad que cualquiera de las otras.
+La regla ``el favorito gana 1-0'' fue por delante en los primeros 33
+partidos, y el método final la superó de forma definitiva desde el
+partido 59, en la última jornada de grupos.
+El método final también superó a los pronósticos congelados, sobre
+todo en la fase de grupos (154 frente a 143 puntos), donde estos
+usaron el reajuste por razones.
 
 Por componentes, usar las probabilidades de resultado de Kalshi llevó
-al historial de 92 a 197 puntos (+105; 62 a 144), con más puntos en 64
-partidos y menos en 20 (Tabla~\ref{tab:ablacion}).
+al historial de 124 a 215 puntos (+91; 44 a 136), con más puntos en 68
+partidos y menos en 28 (Tabla~\ref{tab:ablacion}).
 La corrección~$\alpha$ no cambió ningún pronóstico de las estrategias
-que solo usan el resultado (2 y~3), y cambió 3 de los 58 de grupos de
-las estrategias completas (4 y~6); ajustar además a
-los mercados de total y ventaja sumó 8 puntos ($-15$ a 31): 1 en la
-fase de grupos y 7 en la eliminatoria, donde ese ajuste incluye el
-modelo de dos etapas.
-El pronóstico óptimo terminó con 207 puntos, 12 más que el marcador
-modal ($-8$ a 33) y 15 más que la regla ``el favorito gana 1-0''
-($-9$ a 40).
-En los 104 partidos, el modelo y la regla difirieron en 56, en que el
-modelo eligió sobre todo 2-1, 2-0 o 3-0, y la regla obtuvo menos
-aciertos exactos y de 3 puntos (11 y 22, frente a 14 y 28 del modelo)
-pero también menos partidos sin puntos (13, frente a 20).
-La mayor ventaja sobre el modal en un partido, 5 puntos en
-México-Corea del Sur, se debió a un marcador modal (0-1, contra el
-favorito) de la versión del sistema anterior al 19 de junio
-(Apéndice~\ref{app:version}).
+que solo usan el resultado (2 y~3), y cambió 3 de los de las
+estrategias completas (4 y~6), con un punto neto.
+Ajustar además a los mercados de total y ventaja sumó 20 puntos (3 a
+38): 9 en la fase de grupos y 11 en la eliminatoria.
+El pronóstico óptimo terminó con 235 puntos, 8 más que el marcador
+modal ($-14$ a 31) y 22 más que la regla ``el favorito gana 1-0''
+(0 a 46).
+El método y la regla difirieron en 57 partidos, en que el método
+eligió sobre todo 2-0, 2-1 o 3-0, y la regla obtuvo menos aciertos
+exactos y de 3 puntos (11 y 22, frente a 18 y 26 del método) pero
+también menos partidos sin puntos (13, frente a 19).
 
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=\textwidth]{figures/fig5_puntos_acumulados}
-  \caption{Las probabilidades del mercado separan al sistema del
+  \caption{Las probabilidades del mercado separan al método del
     historial desde los primeros partidos, y las estrategias que las
     usan terminan cerca unas de otras.
-    Puntos acumulados en los 90 partidos con estrategias de referencia
-    registradas, en orden cronológico, para el pronóstico óptimo, el
-    marcador modal, la regla ``el favorito gana 1-0'' y el óptimo de
-    la distribución histórica con probabilidades de resultado iguales.}
+    Puntos acumulados en los 104 partidos, en orden cronológico, del
+    pronóstico óptimo y del marcador modal del método final, de la
+    regla ``el favorito gana 1-0'' y del óptimo de la distribución de
+    referencia con probabilidades de resultado iguales, en la
+    evaluación pseudoprospectiva; la línea discontinua son los
+    pronósticos congelados del registro operativo.}
   \label{fig:acumulados}
 \end{figure}
 
 \begin{table}[!htb]
 \centering
 \caption{Puntos de las estrategias de la Tabla~\ref{tab:estrategias}
-en los 90 partidos con estrategias de referencia registradas.}
+en la evaluación pseudoprospectiva de los 104 partidos, y de los
+pronósticos congelados.}
 \label{tab:ablacion}
 \small
 \begin{tabular}{lcccccc}
 \toprule
-& \multicolumn{2}{c}{Grupos ($n=58$)}
+& \multicolumn{2}{c}{Grupos ($n=72$)}
 & \multicolumn{2}{c}{Eliminatoria ($n=32$)}
-& \multicolumn{2}{c}{Total ($n=90$)} \\
+& \multicolumn{2}{c}{Total ($n=104$)} \\
 \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
 Estrategia & Puntos & Prom. & Puntos & Prom. & Puntos & Prom. \\
 \midrule
-1. Solo historial            &  68 & 1,17 & 24 & 0,75 &  92 & 1,02 \\
-2. Resultado (sin $\alpha$)  & 126 & 2,17 & 71 & 2,22 & 197 & 2,19 \\
-3. Resultado (con $\alpha$)  & 126 & 2,17 & 71 & 2,22 & 197 & 2,19 \\
-4. Completo (sin $\alpha$)   & 127 & 2,19 & 78 & 2,44 & 205 & 2,28 \\
-5. Modal                     & 123 & 2,12 & 72 & 2,25 & 195 & 2,17 \\
-6. \textbf{Óptimo}           & \textbf{128} & \textbf{2,21} & \textbf{79} & \textbf{2,47} & \textbf{207} & \textbf{2,30} \\
+1. Solo historial            &  92 & 1,28 & 32 & 1,00 & 124 & 1,19 \\
+2. Resultado (sin $\alpha$)  & 145 & 2,01 & 70 & 2,19 & 215 & 2,07 \\
+3. Resultado (con $\alpha$)  & 145 & 2,01 & 70 & 2,19 & 215 & 2,07 \\
+4. Completo (sin $\alpha$)   & 155 & 2,15 & 79 & 2,47 & 234 & 2,25 \\
+5. Modal                     & 152 & 2,11 & 75 & 2,34 & 227 & 2,18 \\
+6. \textbf{Óptimo}           & \textbf{154} & \textbf{2,14} & \textbf{81} & \textbf{2,53} & \textbf{235} & \textbf{2,26} \\
 \midrule
-F. Favorito gana 1-0         & 119 & 2,05 & 73 & 2,28 & 192 & 2,13 \\
+F. Favorito gana 1-0         & 140 & 1,94 & 73 & 2,28 & 213 & 2,05 \\
+Pronósticos congelados       & 143 & 1,99 & 79 & 2,47 & 222 & 2,13 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1004,12 +1076,12 @@ El empate solo es óptimo en una franja estrecha, con un favorito débil
 y una probabilidad de empate de al menos 0,3 a 0,4 según los goles
 esperados, y 0-0 solo cuando además se esperan muy pocos goles.
 La mayoría de los partidos cayó en las regiones de 1-0 y 2-0, y los de
-muchos goles esperados, en la de 2-1; solo los dos partidos marcados
-con círculos quedaron en la región de empate.
-Los 19 pronósticos de 3-0, 4-1 y 5-1 de la Figura~\ref{fig:pronosticados}
-no aparecen en el mapa, que omite el mercado de ventaja: 18 fueron de
-la fase de grupos, generados con el reajuste por razones, que favorece
-los marcadores amplios (Sección~\ref{sec:ipf-vs-razones}).
+muchos goles esperados, en la de 2-1; los tres partidos marcados con
+círculos son aquellos en que el método pronosticó empate.
+Los 9 pronósticos de 3-0, 4-1 y 5-0 de la Figura~\ref{fig:pronosticados}
+no aparecen en el mapa, que omite el mercado de ventaja: en esos
+partidos, el mercado de ventaja daba una goleada del favorito como
+bastante probable.
 
 \begin{figure}[!htb]
   \centering
@@ -1024,10 +1096,9 @@ los marcadores amplios (Sección~\ref{sec:ipf-vs-razones}).
     probabilidad de ganar que su rival.
     Los puntos son los 98 partidos con mercados, cada uno en el panel
     de su total esperado según Kalshi (menos de 2,3; de 2,3 a 2,9; más
-    de 2,9); los dos círculos
-    son los partidos en que el sistema pronosticó 0-0, cuyo mercado de
-    total daba a un partido sin goles más probabilidad que la
-    distribución de Poisson del panel.}
+    de 2,9); los tres círculos son los partidos en que el método
+    pronosticó empate, cuyo mercado de total daba a los marcadores
+    bajos más probabilidad que la distribución de Poisson del panel.}
   \label{fig:mapa}
 \end{figure}
 
@@ -1037,26 +1108,28 @@ los marcadores amplios (Sección~\ref{sec:ipf-vs-razones}).
 
 Como consecuencia, los pronósticos se concentraron en pocos marcadores,
 mientras que los resultados se repartieron entre muchos
-(Figura~\ref{fig:pronosticados}): el sistema usó 7 marcadores
+(Figura~\ref{fig:pronosticados}): el método usó 8 marcadores
 distintos, y los partidos terminaron en 18.
-El sistema pronosticó 1-0 en 51 de los 104 partidos; fue el marcador
+El método pronosticó 1-0 en 47 de los 104 partidos; fue el marcador
 real más frecuente, pero solo ocurrió 15 veces, apenas una más que
 2-1.
-En cambio, 1-1 y 3-1, que ocurrieron 12 y 9 veces, nunca se
-pronosticaron.
-Solo hubo 2 pronósticos de empate, ambos 0-0, aunque 20 de los 72
-partidos de grupos terminaron empatados; en los 90 partidos
-comparables, el marcador modal habría pronosticado empate en 11.
-Paraguay-Australia terminó 0-0 (5 puntos) y Argelia-Austria 3-3
-(2 puntos); en ambos, Kalshi daba al empate probabilidades de 0,393 y
-0,467, frente a una mediana de 0,22 en la fase de grupos.
+En cambio, 1-1 ocurrió 12 veces y se pronosticó una, y 3-1, que
+ocurrió 9, nunca.
+Solo hubo 3 pronósticos de empate, aunque 20 de los 72 partidos de
+grupos terminaron empatados; el marcador modal habría pronosticado
+empate en 20 partidos.
+Los tres fueron de grupos, y en ellos Kalshi daba al empate
+probabilidades de 0,393, 0,363 y 0,467, frente a una mediana de 0,22
+en la fase de grupos: Paraguay-Australia terminó 0-0 y Egipto-Irán
+1-1, como se pronosticó (5 puntos cada uno), y Argelia-Austria 3-3
+frente al 0-0 pronosticado (2 puntos).
 
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=0.75\textwidth]{figures/fig6_pronosticado_observado}
   \caption{Los pronósticos se concentran en 1-0, mientras que los
     marcadores reales se reparten entre muchos.
-    Número de partidos en que el sistema pronosticó cada marcador
+    Número de partidos en que el método final pronosticó cada marcador
     (puntos azules) y en que ese marcador ocurrió (círculos), sin
     distinguir qué equipo ganó; 104 partidos.}
   \label{fig:pronosticados}
@@ -1068,22 +1141,23 @@ Paraguay-Australia terminó 0-0 (5 puntos) y Argelia-Austria 3-3
 
 Con la regla de la quiniela, el pronóstico óptimo y el modal casi
 siempre rinden lo mismo.
-Con los parámetros finales, ambos difieren en 26 de los 98 partidos
-con mercados, y el óptimo espera en promedio apenas 0,017 puntos más
-por partido, unos 1,5 en 90 partidos (Tabla~\ref{tab:reglas-alt}).
-De los 28 partidos en que los pronósticos congelados difirieron, en
-18 cambió solo el marcador del mismo ganador, en 9 un empate pasó a
-ser una victoria, y en 1 cambió el ganador.
+Con el método final, ambos difirieron en 25 de los 104 partidos (20 de
+los 98 con mercados), y en los 98 el óptimo esperaba en promedio
+apenas 0,032 puntos más por partido, unos 3 en total
+(Tabla~\ref{tab:reglas-alt}).
+De los 25 partidos en que difirieron, en 17 un empate pasó a ser una
+victoria, y en 8 cambió solo el marcador del mismo ganador.
 La ganancia de optimizar depende de la regla: con más crédito parcial
 (4 puntos por el ganador y los goles de un equipo) los pronósticos
-difieren en 64 partidos y la ganancia esperada se multiplica casi
-por cinco, mientras que si el marcador exacto vale 10 puntos el óptimo
-casi coincide con el modal.
+difieren en 60 partidos y la ganancia esperada casi se triplica,
+aunque en este torneo la observada fue negativa, mientras que si el
+marcador exacto vale 10 puntos el óptimo casi coincide con el modal.
 
 \begin{table}[!htb]
 \centering
 \caption{Pronóstico óptimo frente al modal bajo reglas de puntuación
-alternativas, con el modelo final en los 98 partidos con mercados.
+alternativas, con el método final en los 98 partidos con mercados
+(evaluación pseudoprospectiva).
 Las reglas dan los puntos por marcador exacto, ganador y goles de un
 equipo, ganador, y goles de un equipo. La ganancia observada es la
 diferencia total de puntos en los 98 partidos.}
@@ -1092,10 +1166,10 @@ diferencia total de puntos en los 98 partidos.}
 \toprule
 Regla & Partidos en que difieren & \shortstack{Ganancia esperada\\por partido} & \shortstack{Ganancia\\observada} \\
 \midrule
-5-3-2-1 (la quiniela)  & 26 & 0,017 & 13 \\
-10-3-2-1               & 10 & 0,008 & $-6$ \\
-5-4-2-1                & 64 & 0,078 & 7 \\
-3-2-2-1                & 20 & 0,011 & 5 \\
+5-3-2-1 (la quiniela)  & 20 & 0,032 & 4 \\
+10-3-2-1               &  8 & 0,020 & 4 \\
+5-4-2-1                & 60 & 0,088 & $-10$ \\
+3-2-2-1                & 36 & 0,028 & 3 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1115,26 +1189,31 @@ fue 0,468 sin corregir y 0,466 con $\hat\alpha = 1{,}14$, frente a
 fase de grupos (de 0,498 a 0,501) y mejoró la eliminatoria (de 0,405
 a 0,394), y como $\hat\alpha$ se estimó con esos mismos partidos, es
 una medida dentro de la muestra.
-Los puntos dependieron de qué tan claro era el favorito
-(Figura~\ref{fig:calibracion}, derecha): 1,15 por partido cuando el
-favorito tenía menos de 45\,\% de probabilidad de ganar, 2,87 entre 65
-y 75\,\%, y 2,12 por encima de 75\,\%, donde las goleadas hacen difícil
-acertar el marcador.
-La regla ``el favorito gana 1-0'' siguió el mismo patrón, a 0,4 puntos
-por partido o menos del modelo en todos los intervalos.
+Estimado solo con los partidos ya terminados, $\hat\alpha$ bajó de
+1,10 a 0,88 tras los primeros 16 partidos, en que los favoritos
+ganaron menos de lo que daba el mercado, y subió luego hasta 1,12 al final del torneo.
+Los puntos crecieron con la claridad del favorito
+(Figura~\ref{fig:calibracion}, derecha): 1,92 por partido cuando el
+favorito tenía menos de 45\,\% de probabilidad de ganar, 1,83 entre 45
+y 55\,\%, y alrededor de 2,6 por encima de 65\,\%.
+La regla ``el favorito gana 1-0'' siguió el mismo patrón, pero quedó
+por debajo del método en los extremos: 0,69 puntos por partido menos
+con un favorito débil y 0,31 menos con uno muy claro, en que el
+método pronostica victorias más amplias.
 
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=\textwidth]{figures/fig8_calibracion}
   \caption{Kalshi estuvo bien calibrado, y los puntos crecen con la
-    claridad del favorito hasta que las goleadas los reducen.
+    claridad del favorito.
     Izquierda: frecuencia observada de cada resultado (victoria del
     Equipo~A, empate, victoria del Equipo~B) frente a su probabilidad según
     Kalshi, en intervalos de 0,1 (0,2 el último), con el número de
     casos y un intervalo de credibilidad del 95\,\% (distribución beta
     con a priori uniforme); 294 probabilidades de 98 partidos.
-    Derecha: puntos por partido del pronóstico óptimo y de la regla
-    ``el favorito gana 1-0'' según la probabilidad del favorito.}
+    Derecha: puntos por partido del pronóstico óptimo del método final
+    y de la regla ``el favorito gana 1-0'' según la probabilidad del
+    favorito.}
   \label{fig:calibracion}
 \end{figure}
 
@@ -1142,7 +1221,7 @@ por partido o menos del modelo en todos los intervalos.
 \subsection{Sorpresas}
 \label{sec:sorpresas}
 
-Las sorpresas fueron frecuentes, y en ellas el modelo rindió peor que
+Las sorpresas fueron frecuentes, y en ellas el método rindió peor que
 la regla ``el favorito gana 1-0'' (Figura~\ref{fig:sorpresas}).
 Para medirlas se usan dos cantidades del mercado: la probabilidad que
 Kalshi daba al resultado que ocurrió y la diferencia entre los goles
@@ -1158,22 +1237,23 @@ de los esperados.
 De las 28 sorpresas de resultado, 20 fueron empates, como Catar 1-1
 Suiza o Alemania 1-1 Paraguay en dieciseisavos, y 6 de ellos 0-0, como
 los de España, Ecuador e Inglaterra ante Cabo Verde, Curazao y Ghana;
-como el modelo casi nunca pronostica empate, en esos partidos la regla,
+como el método casi nunca pronostica empate, en esos partidos la regla,
 que con 1-0 obtiene un punto en cualquier 1-1, rescata más puntos.
 Cuando el resultado ocurrido tenía menos de 30\,\% de probabilidad,
-el modelo sumó 0,25 puntos por partido menos que la regla
-(Figura~\ref{fig:sorpresas}b; intervalo del 95\,\%: $-0{,}46$ a
-$-0{,}04$), y cuando hubo más de un gol menos
-de lo esperado, 0,77 menos ($-1{,}47$ a $-0{,}05$).
-En cambio, cuando los goles fueron los esperados o más, el modelo sumó
-0,30 ($0{,}01$ a $0{,}65$) y 0,23 ($0{,}03$ a $0{,}46$) puntos más por
-partido.
+el método sumó 0,21 puntos por partido menos que la regla
+(Figura~\ref{fig:sorpresas}b; intervalo del 95\,\%: $-0{,}40$ a
+$-0{,}04$), y cuando hubo más de un gol menos de lo esperado, 0,27
+menos, aunque con un intervalo que incluye el cero ($-0{,}83$ a
+$0{,}36$).
+En cambio, cuando el resultado era el probable o los goles fueron los
+esperados o más, el método sumó entre 0,20 y 0,60 puntos más por
+partido, con intervalos que excluyen el cero.
 
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=\textwidth]{figures/fig10_sorpresas}
-  \caption{El modelo gana cuando el partido sigue lo que espera el
-    mercado y pierde en las sorpresas.
+  \caption{El método gana cuando el partido sigue lo que espera el
+    mercado y pierde en las sorpresas de resultado.
     (a)~Cada punto es uno de los 98 partidos con mercados: en el eje
     horizontal, la probabilidad que Kalshi daba al resultado que
     ocurrió (a la victoria del equipo que ganó, o al empate si lo hubo);
@@ -1182,10 +1262,10 @@ partido.
     Las líneas punteadas separan las zonas: a la izquierda de 0,3, los
     resultados sorpresivos; arriba de $+1$ y abajo de $-1$, los partidos
     con más o menos goles de lo esperado.
-    En azul, los partidos en que el modelo sumó más puntos que la regla
-    ``el favorito gana 1-0''; en naranja, los que sumó menos; en gris,
-    los que sumaron lo mismo.
-    (b)~Diferencia de puntos por partido entre el modelo y esa regla en
+    En azul, los partidos en que el método final sumó más puntos que la
+    regla ``el favorito gana 1-0''; en naranja, los que sumó menos; en
+    gris, los que sumaron lo mismo.
+    (b)~Diferencia de puntos por partido entre el método y esa regla en
     cada zona, con intervalos de credibilidad del 95\,\%
     (\textit{bootstrap} bayesiano).}
   \label{fig:sorpresas}
@@ -1258,22 +1338,72 @@ entre 0,20 y 0,40 hasta los cuartos de final, y terminó el torneo en
 \end{figure}
 
 \FloatBarrier
-\subsection{Reajuste por razones frente a IPF}
-\label{sec:ipf-vs-razones}
+\subsection{Modelos de marcador}
+\label{sec:modelos}
 
-En la fase de grupos, el IPF y el reajuste por razones rindieron casi
-lo mismo.
-Recalculados ambos con los precios congelados y los parámetros
-finales, coincidieron en 53 de los 72 partidos; el IPF obtuvo 154
-puntos y el reajuste por razones 153 (+1; $-10$ a 15), con más puntos
-en 5 partidos y menos en 9.
-Los pronósticos que difieren muestran la tendencia del reajuste por
-razones a marcadores amplios: dio 5-1 en Brasil-Haití,
-Alemania-Curazao y España-Cabo Verde, donde el IPF dio 3-0, 5-0 y
-3-0.
-Ambos totales superan los 143 puntos de los pronósticos congelados de
-grupos, pero esa diferencia no mide el valor del modelo final, porque
-los parámetros finales se estimaron con los mismos resultados.
+Ajustar la distribución de referencia a los mercados de total y
+ventaja mejoró la probabilidad asignada a los marcadores ocurridos,
+pero los modelos paramétricos ajustados a los mismos mercados la
+mejoraron algo más (Tabla~\ref{tab:modelos}).
+Frente a la distribución ajustada solo al resultado, el método final
+subió el puntaje logarítmico de $-2{,}938$ a $-2{,}806$ (+0,13; 0,03 a
+0,26), una mejora concentrada en la fase de grupos; en la
+eliminatoria, el ajuste solo al resultado obtuvo un puntaje
+ligeramente mejor.
+El método final superó al reajuste por razones por poco y con
+incertidumbre: 0,03 en puntaje ($-0{,}03$ a 0,10) y 8 puntos de
+quiniela ($-6$ a 24).
+El IPF operativo, en cambio, dio probabilidad nula a 7 marcadores que
+ocurrieron, todos victorias por 4 o más goles, como Canadá 6-0 Catar
+o Nueva Zelanda 1-5 Bélgica, porque leía como nula la ventaja no
+cotizada (Sección~\ref{sec:razones}); sus pronósticos, sin embargo,
+coincidieron con los del método final en 86 de los 98 partidos y
+sumaron casi lo mismo.
+
+Los modelos de Poisson y de Dixon--Coles obtuvieron un puntaje
+logarítmico mejor que el del método final, en 0,06 por partido, con
+intervalos que incluyen el cero, pero 18 y 14 puntos de quiniela menos
+(5 a 35 y 2 a 29).
+Su ventaja en puntaje vino de los partidos con muchos goles: en los
+34 partidos con 4 o más, el de Dixon--Coles promedió $-3{,}43$ y el
+método final $-3{,}63$, y la mayor diferencia fue el tercer puesto,
+Francia 4-6 Inglaterra.
+Sus pronósticos, en cambio, rindieron menos: por ejemplo, ambos
+eligieron 5-0 en 6 partidos con un favorito muy claro, en que el
+método final eligió casi siempre 3-0 y acertó así Brasil 3-0 Haití y
+Francia 3-0 Irak.
+En la fase eliminatoria, además, agregar al método final los mercados
+de goles por equipo, como hacía la versión operativa, empeoró el
+puntaje logarítmico de $-2{,}83$ a $-2{,}99$, porque con cuatro tablas
+la distribución de referencia eliminatoria, de solo 48 partidos,
+queda sobreajustada; por eso el método final los omite.
+
+\begin{table}[!htb]
+\centering
+\caption{Puntaje logarítmico medio del marcador ocurrido y puntos de
+quiniela del pronóstico óptimo de cada modelo, en los 98 partidos con
+mercados (66 de grupos y 32 eliminatorios), en la evaluación
+pseudoprospectiva. Un puntaje más alto (más cercano a cero) es mejor.
+El IPF operativo dio probabilidad nula a 7 marcadores ocurridos, por
+lo que su puntaje no es finito.}
+\label{tab:modelos}
+\small
+\begin{tabular}{lcccc}
+\toprule
+& \multicolumn{3}{c}{Puntaje logarítmico} & \\
+\cmidrule(lr){2-4}
+Modelo & Grupos & Eliminatoria & Total & Puntos \\
+\midrule
+Solo historial                    & $-3{,}278$ & $-3{,}190$ & $-3{,}249$ & 118 \\
+Solo resultado (estrategia 3)     & $-3{,}025$ & $-2{,}757$ & $-2{,}938$ & 204 \\
+Reajuste por razones (operativo)  & $-2{,}860$ & $-2{,}798$ & $-2{,}840$ & 216 \\
+IPF operativo                     & ---        & $-2{,}835$ & ---        & 223 \\
+Poisson independiente             & $-2{,}776$ & $-2{,}687$ & $-2{,}747$ & 206 \\
+Dixon--Coles                      & $-2{,}772$ & $-2{,}679$ & $-2{,}741$ & 210 \\
+\textbf{Método final}             & $\mathbf{-2{,}794}$ & $\mathbf{-2{,}829}$ & $\mathbf{-2{,}806}$ & \textbf{224} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 % ─────────────────────────────────────────────────────────────
 
@@ -1290,12 +1420,13 @@ muy desigual.
 Casi todo el valor proviene de las probabilidades de resultado del
 mercado: con ellas, los pronósticos obtuvieron más del doble de puntos
 que con el historial solo.
-La reconstrucción de la distribución de marcadores y la elección del
-máximo de los puntos esperados son correctas en principio, pero en un
-torneo su aporte es pequeño frente a la variación entre partidos: el
-pronóstico óptimo superó al marcador modal por 12 puntos en 90
-partidos, y a la regla ``el favorito gana 1-0'' por 9 en 104, dos
-diferencias que los datos no distinguen de cero.
+La reconstrucción de la distribución de marcadores a partir de los
+mercados de total y ventaja aporta algo más, unos 20 puntos en el
+torneo, y la elección del máximo de los puntos esperados aporta poco
+frente a la variación entre partidos: el pronóstico óptimo superó al
+marcador modal por 8 puntos en 104 partidos, una diferencia que los
+datos no distinguen de cero, y a la regla ``el favorito gana 1-0''
+por 22, con un intervalo que apenas excluye el cero.
 
 \subsection{Los mercados como fuente de información}
 
@@ -1308,28 +1439,28 @@ las bajas, que la distribución histórica de marcadores no contiene.
 La calibración de Kalshi fue buena en todo el rango de probabilidades
 (Figura~\ref{fig:calibracion}), y la corrección por sesgo
 favorito-longshot apenas la cambió.
-El valor estimado $\hat\alpha = 1{,}14$, cercano al de los mercados de
-apuestas competitivos \citep{whelan2024}, sugiere que el sesgo de
-Kalshi en el Mundial 2026 fue del mismo orden que el documentado en
-otros mercados, incluido el propio Kalshi \citep{burgi2026}; con un
-sesgo así de pequeño, la corrección cambió solo 3 pronósticos.
+El valor estimado al final, $\hat\alpha = 1{,}12$, cercano al de los
+mercados de apuestas competitivos \citep{whelan2024}, sugiere que el
+sesgo de Kalshi en el Mundial 2026 fue del mismo orden que el
+documentado en otros mercados, incluido el propio Kalshi
+\citep{burgi2026}; con un sesgo así de pequeño, la corrección cambió
+solo 3 pronósticos.
 Los mercados de total y ventaja aportaron menos que los de resultado,
-8 puntos concentrados en la fase eliminatoria, pero son los que
-deciden entre 1-0, 2-0 y 2-1 (Figura~\ref{fig:mapa}).
+20 puntos, pero son los que deciden entre 1-0, 2-0 y 2-1
+(Figura~\ref{fig:mapa}).
 
 \subsection{Por qué la optimización gana poco}
 
 Bajo esta regla de puntuación, el marcador que maximiza los puntos
 esperados y el más probable son casi equivalentes.
-El propio modelo esperaba ganar apenas 0,017 puntos por partido al
-optimizar, y la diferencia observada, 12 puntos en 90 partidos, se
-explica sobre todo por la variación de pocos partidos y por el
-marcador modal anómalo de México-Corea del Sur.
+El propio método esperaba ganar apenas 0,032 puntos por partido al
+optimizar, y la diferencia observada, 8 puntos en 104 partidos, cabe
+en la variación de los pocos partidos en que ambos difieren.
 La Tabla~\ref{tab:reglas-alt} muestra de qué depende: optimizar
-importa cuando la regla da mucho crédito parcial, porque entonces
-conviene un marcador que acierte a medias en muchos desenlaces; si el
-marcador exacto vale mucho más que el resto, lo mejor es apostar por
-el más probable.
+importa, en expectativa, cuando la regla da mucho crédito parcial,
+porque entonces conviene un marcador que acierte a medias en muchos
+desenlaces; si el marcador exacto vale mucho más que el resto, lo
+mejor es apostar por el más probable.
 Con 5, 3 y 2 puntos, la quiniela estudiada está cerca de este segundo
 caso.
 El argumento de la Introducción, que el marcador más probable no es
@@ -1338,27 +1469,27 @@ la regla.
 
 La desventaja estructural de los empates (Observación~\ref{obs:nodraw})
 es donde optimizar cambia el pronóstico de forma sistemática.
-El sistema pronosticó 2 empates frente a los 11 del marcador modal,
+El método pronosticó 3 empates frente a los 20 del marcador modal,
 aunque 20 de los 72 partidos de grupos terminaron empatados.
 No es un error de calibración: aun con la probabilidad de empate
 correcta, cada marcador de empate por separado es poco probable, y un
 empate pronosticado nunca obtiene 3 puntos.
-Los dos empates pronosticados, ambos 0-0, ocurrieron cuando el mercado
-dio al empate y a un partido sin goles probabilidades muy por encima
-de lo habitual, y sus desenlaces ilustran las dos ramas
-de~\eqref{eq:edraw}: Paraguay-Australia terminó 0-0 (5 puntos) y
-Argelia-Austria 3-3 (2 puntos).
-Que 1-1 ocurriera 12 veces sin pronosticarse nunca
-(Figura~\ref{fig:pronosticados}) no es un fallo del modelo, sino el
+Los tres empates pronosticados ocurrieron cuando el mercado dio al
+empate probabilidades muy por encima de lo habitual, y sus desenlaces
+ilustran las dos ramas de~\eqref{eq:edraw}: Paraguay-Australia 0-0 y
+Egipto-Irán 1-1 dieron 5 puntos cada uno, y Argelia-Austria 3-3,
+frente al 0-0 pronosticado, 2.
+Que 1-1 ocurriera 12 veces y se pronosticara una sola
+(Figura~\ref{fig:pronosticados}) no es un fallo del método, sino el
 costo esperado de esa desventaja: en un partido parejo, pronosticar
-1-1 rinde algo menos en promedio que pronosticar 1-0 (1,518 frente a
-1,539 puntos en el ejemplo de la Tabla~\ref{tab:ejkorcze}).
+1-1 rinde algo menos en promedio que pronosticar 1-0 (1,484 frente a
+1,537 puntos en el ejemplo de la Tabla~\ref{tab:ejkorcze}).
 
 \subsection{Por qué funciona ``el favorito gana 1-0''}
 
-Que una regla sin modelo quede a solo 9 puntos del sistema
-(Figura~\ref{fig:acumulados}), una diferencia que además es incierta
-($-17$ a 35), se explica por la propia regla de puntuación.
+Que una regla sin modelo quede a 22 puntos del método final en 104
+partidos, y a solo 9 de los pronósticos congelados, se explica por la
+propia regla de puntuación.
 Pronosticar 1-0 al favorito acierta el ganador siempre que el favorito
 gana, y obtiene 3 puntos en cualquier victoria del favorito sin goles
 en contra: 33 de las 67 victorias del favorito según Kalshi en el
@@ -1367,20 +1498,20 @@ Mundial 2026 fueron sin goles del rival, como 78 de las 146 victorias
 Cuando el favorito no gana, la regla aún suele rescatar un punto: si
 el partido termina 1-1, o si el favorito pierde marcando un gol,
 coincide el gol del favorito.
-Por eso se quedó sin puntos en solo 13 partidos, frente a 20 del
-modelo.
+Por eso se quedó sin puntos en solo 13 partidos, frente a 19 del
+método.
 Es también el pronóstico óptimo en la mayor parte del mapa de decisión
-(Figura~\ref{fig:mapa}): el modelo eligió 1-0 en 51 partidos y se
+(Figura~\ref{fig:mapa}): el método eligió 1-0 en 47 partidos y se
 apartó de él sobre todo hacia 2-0, 2-1 y 3-0 cuando el mercado
 esperaba más goles o un favorito más claro.
 Esos cambios suben la probabilidad de acertar 3 o 5 puntos a cambio de
-más partidos en blanco, y en este torneo sumaron 9 puntos netos, dos
-tercios de ellos en la fase eliminatoria.
+más partidos en blanco, y en este torneo sumaron 22 puntos netos, 14
+en la fase de grupos y 8 en la eliminatoria.
 La Figura~\ref{fig:sorpresas} muestra el precio de esa apuesta: el
 modelo gana cuando el partido sigue lo que espera el mercado, que es
 el escenario para el que optimiza, y pierde frente a la regla en las
-sorpresas, sobre todo en los partidos con menos goles de lo esperado,
-donde un 1-0 acierta el marcador o los goles de un equipo.
+sorpresas de resultado, sobre todo en los empates, donde un 1-0 aún
+acierta los goles de un equipo.
 La regla del favorito 1-0 no es, entonces, una alternativa al modelo,
 sino su aproximación más simple y conservadora: recoge el valor del mercado, que
 elige el ganador, y el de la regla de puntuación, cuyo nivel de
@@ -1420,18 +1551,37 @@ participantes, puede convenir apartarse de ellas en algunos partidos
 
 \subsection{El ajuste a los mercados}
 
-El IPF y el reajuste por razones dieron casi los mismos puntos en la
-fase de grupos (154 y 153), de modo que la elección entre ambos no se
-justifica por el resultado de un torneo.
-Lo preferimos por sus propiedades: ajusta todas las marginales a la vez
-en lugar de una tras otra, es la modificación mínima de
-la distribución histórica en el sentido de Kullback--Leibler cuando las
-restricciones son compatibles \citep{csiszar1975}, y no produce
-marcadores extremos como los 5-1 del reajuste por razones.
-Que las restricciones de Kalshi no sean del todo compatibles entre sí
-(Sección~\ref{sec:ipf}) indica que los mercados de total y de ventaja,
-cotizados por separado, no forman una distribución conjunta
-coherente; el IPF reparte esa inconsistencia en lugar de amplificarla.
+La revisión del ajuste deja dos lecciones.
+La primera es que un mercado que no se cotiza no es una probabilidad
+nula.
+Leídas así, las tablas de Kalshi parecían incompatibles en más de la
+mitad de los partidos, y el IPF operativo, al forzar una probabilidad
+nula para las goleadas, trasladaba esa masa a marcadores como 5-2 y
+daba probabilidad nula a 7 marcadores que ocurrieron.
+Con las categorías no cotizadas abiertas, los mercados fueron
+compatibles en 97 de los 98 partidos, de modo que la proyección
+de compatibilidad casi nunca actuó; es una salvaguarda, y el ajuste
+es en la práctica el IPF clásico, la modificación mínima de la
+distribución histórica en el sentido de Kullback--Leibler
+\citep{csiszar1975}.
+Los pronósticos apenas cambiaron, porque el error afectaba sobre todo
+a marcadores poco probables, pero el puntaje logarítmico, que evalúa
+toda la distribución, sí lo detectó.
+
+La segunda lección es que la mejor distribución de marcadores no
+produce necesariamente los mejores pronósticos.
+Los modelos de Poisson y de Dixon--Coles ajustados a los mismos
+mercados asignaron más probabilidad a los marcadores ocurridos, sobre
+todo en los partidos con muchos goles, pero obtuvieron menos puntos de
+quiniela (Sección~\ref{sec:modelos}).
+Los puntos dependen de cuál de unos pocos marcadores centrales, como
+1-0, 2-0, 2-1 o 3-0, tiene más puntos esperados, una decisión que
+depende de diferencias pequeñas entre sus probabilidades; el puntaje
+logarítmico, en cambio, pesa sobre todo las colas, más gruesas en los
+modelos paramétricos que en la referencia histórica, de modo que
+ambas medidas pueden ordenar los modelos de forma distinta.
+Ambas diferencias tienen intervalos amplios, y con un solo torneo no
+es posible decidir entre una referencia histórica y una paramétrica.
 
 \subsection{La adaptación al torneo en curso}
 
@@ -1458,13 +1608,16 @@ la variación muestral.
 
 La principal limitación es que la evaluación descansa en un solo
 torneo.
-Las diferencias entre estrategias, salvo la de usar los precios del
-mercado, tienen intervalos que incluyen el cero, y los promedios por
-ronda eliminatoria, con entre 1 y 16 partidos, no permiten afirmar que
-el modelo funcione mejor o peor en alguna ronda.
-Además, los pronósticos congelados provienen de versiones sucesivas
-del sistema (Apéndice~\ref{app:version}), de modo que la evaluación
-mide el sistema tal como se usó y no una versión única.
+Las diferencias entre estrategias, salvo las que agregan los precios
+del mercado, tienen intervalos que incluyen o rozan el cero, y los
+promedios por ronda eliminatoria, con entre 1 y 16 partidos, no
+permiten afirmar que el método funcione mejor o peor en alguna ronda.
+La evaluación pseudoprospectiva usa solo información previa a cada
+partido, pero el método mismo se fijó después del torneo: la lectura
+de los mercados no cotizados y la omisión de los mercados de goles
+por equipo se decidieron con estos mismos datos, de modo que la
+ventaja del método final sobre los pronósticos congelados, 13 puntos,
+puede estar sobreestimada.
 
 El modelo optimiza los puntos esperados y no considera a los demás
 participantes, aunque el premio dependa de superarlos
@@ -1486,9 +1639,13 @@ precios de Kalshi.
 El método se aplica sin cambios a cualquier otra regla de puntuación,
 pues solo depende de la función~$f$, y a cualquier torneo con mercados
 de resultado, total y ventaja.
-La Tabla~\ref{tab:reglas-alt} sugiere que el valor de optimizar crece
-con el crédito parcial; caracterizar esa relación para una familia
-de reglas, y no solo para cuatro, es una pregunta abierta.
+La Tabla~\ref{tab:reglas-alt} sugiere que el valor esperado de
+optimizar crece con el crédito parcial; caracterizar esa relación para
+una familia de reglas, y no solo para cuatro, es una pregunta abierta.
+Otra es combinar las dos referencias de la Sección~\ref{sec:modelos}:
+partir de una distribución de Dixon--Coles en lugar de la histórica,
+o mezclar ambas, podría conservar la forma central de la histórica y
+las colas de la paramétrica.
 La misma reconstrucción de marcadores desde las marginales del mercado
 podría actualizarse durante el partido, en la línea de los modelos
 bayesianos de pronóstico en tiempo real \citep{divekar2024}.
@@ -1506,12 +1663,14 @@ Mundiales 2014--2022, actualizada con el torneo en curso, a los
 mercados de resultado, total y ventaja de Kalshi, y elige el marcador
 que maximiza los puntos esperados.
 
-Los pronósticos obtuvieron 2,13 puntos por partido y acertaron el
-marcador exacto en el 13,5\,\% de los partidos, incluido el 1-0 con
-que España ganó la final.
+Los pronósticos congelados obtuvieron 2,13 puntos por partido y
+acertaron el marcador exacto en el 13,5\,\% de los partidos, incluido
+el 1-0 con que España ganó la final; el método final, evaluado solo
+con la información previa a cada partido, obtuvo 2,26.
 Casi toda la ventaja sobre el historial provino de las probabilidades
-de resultado del mercado, que sumaron 105 puntos en 90 partidos; la
-regla ``el favorito gana 1-0'' quedó a solo 9 puntos del modelo.
+de resultado del mercado, que sumaron 91 puntos, y los mercados de
+total y ventaja sumaron 20 más; la regla ``el favorito gana 1-0''
+quedó 22 puntos por debajo del método.
 La optimización aportó poco, como el propio modelo anticipaba: con la
 regla de 5, 3 y 2 puntos, el marcador óptimo y el más probable
 difieren en uno de cada cuatro partidos y por pocas centésimas de
@@ -1526,7 +1685,9 @@ Para quien modela, ajustar una distribución histórica de referencia a
 las marginales del mercado mediante ajuste iterativo proporcional es
 un procedimiento general para obtener probabilidades de marcadores
 exactos, aplicable a cualquier regla de puntuación y a cualquier
-torneo con mercados de total y ventaja de goles.
+torneo con mercados de total y ventaja de goles, siempre que los
+mercados no cotizados se traten como categorías abiertas y no como
+probabilidades nulas.
 Optimizar vale más cuanto más crédito parcial da la regla, y casi nada
 cuando el marcador exacto domina; caracterizar esa relación es el paso
 siguiente.
@@ -1541,14 +1702,16 @@ disponibles en:
 \end{center}
 bajo licencia MIT.
 El repositorio archiva también los datos de la evaluación: los precios
-de Kalshi congelados de cada partido (\texttt{data/kalshi\_cache.json}),
+de Kalshi congelados de cada partido (\path{data/kalshi_cache.json}),
 los pronósticos congelados con la hora en que se registraron
-(\texttt{site/data/locked\_predictions.json}) y los resultados; el
+(\path{site/data/locked_predictions.json}) y los resultados; el
 historial de \textit{commits} del repositorio permite verificar que
 cada pronóstico se publicó antes del partido.
 Las cifras de la Sección~\ref{sec:resultados} y sus figuras se
-reproducen con \texttt{model/article\_stats.py} y
-\texttt{model/figures\_results.py}.
+reproducen con \path{model/article_stats.py},
+\path{model/prospective.py} (evaluación pseudoprospectiva y
+comparación de modelos) y \path{model/figures_results.py}; el
+ajuste final está en \path{model/marginals.py}.
 Las predicciones se pueden consultar en:
 \begin{center}
   \url{https://alfaromurillo.github.io/quiniela/}
@@ -1646,7 +1809,8 @@ Los cambios con efecto sobre los pronósticos fueron:
     paralelo del pronóstico con IPF (Sección~\ref{sec:razones}).
   \item \textbf{27 de junio}: modelo de dos etapas para la fase
     eliminatoria, con IPF y los mercados de 90~minutos, de goles por
-    equipo y de clasificación.
+    equipo y de clasificación; el núcleo de prórroga se quedó con los
+    datos históricos.
   \item \textbf{29 de junio}: precios congelados 10~minutos antes del
     inicio, en vez de al inicio.
 \end{itemize}
@@ -1664,10 +1828,23 @@ final y semifinales compartían jornada con la final.
 Con la asignación correcta, $\hat\delta$ termina el torneo en 0,10;
 con la errónea terminaba en 0.
 Los pronósticos congelados usaron los valores con el error, pero el
-efecto es pequeño: recalcular los pronósticos finales con
-$\delta = 0.10$ en vez de $\delta = 0$ cambia 3 de los 104.
+efecto es pequeño: con el método final y todos los resultados, usar
+$\delta = 0.10$ en vez de $\delta = 0$ no cambia ninguno de los
+pronósticos de los 98 partidos con mercados.
 La Figura~\ref{fig:delta} y el resto del artículo usan la asignación
 correcta.
+
+\paragraph{Revisión del ajuste a los mercados.}
+La misma revisión encontró que el código convertía los precios de
+ventaja en probabilidades suponiendo nula la ventaja de más de 3,5
+goles cuando ese mercado no existía, lo que ocurrió en 185 de los 196
+casos.
+Eso volvía incompatibles las tablas de más de la mitad de los
+partidos y distorsionaba el IPF operativo (Sección~\ref{sec:razones}).
+El método final abre esa categoría, proyecta las tablas a un conjunto
+compatible antes del IPF y omite los mercados de goles por equipo
+(Sección~\ref{sec:modelos}); los Resultados lo evalúan con
+\texttt{model/prospective.py}.
 
 \subsection{Problemas técnicos}
 

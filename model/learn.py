@@ -407,6 +407,19 @@ def estimate_alpha(
             outcome = "draw"
         data.append((float(ph), float(pd), float(pa), outcome))
 
+    return alpha_map(data, prior_center, sigma)
+
+
+def alpha_map(
+    data: list[tuple[float, float, float, str]],
+    prior_center: float = ALPHA_0,
+    sigma: float = SIGMA_ALPHA,
+) -> float:
+    """
+    MAP of α on the grid from (p_home, p_draw, p_away, outcome) tuples,
+    outcome in {"home_win", "draw", "away_win"}.  Returns prior_center
+    with fewer than two matches.
+    """
     if len(data) < 2:
         return prior_center
 

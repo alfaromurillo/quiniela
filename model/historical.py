@@ -581,6 +581,16 @@ def scoreline_probs_knockout(
         dist=dist, team_totals=team_totals,
     )
 
+    return extra_time(reg_dist, (p_q_home, p_q_draw, p_q_away), et_kernel)
+
+
+def extra_time(reg_dist: dict, p_q: tuple, et_kernel: dict) -> dict:
+    """
+    Stages 2-3 of the knockout model: fold the ET kernel into the
+    regulation-time draws of reg_dist, then rescale the win/draw/loss
+    regions to the quiniela outcome probabilities p_q = (home, draw, away).
+    """
+    p_q_home, p_q_draw, p_q_away = p_q
     # Stage 2: fold ET transitions into draw cells
     final_dist: dict[tuple, float] = {}
     for (rh, ra), p_reg in reg_dist.items():

@@ -59,6 +59,10 @@ python model/figures_results.py
 # Print every number reported in the article's Results (base 5/3/2/1/0
 # scoring, no late-round multiplier)
 python model/article_stats.py
+
+# Pseudo-prospective evaluation of the final method, model comparison
+# (log score, Poisson/Dixon-Coles) and market-compatibility diagnostics
+python model/prospective.py
 ```
 
 **Always recompile `articulo/main.pdf` after any change to `articulo/main.tex`
@@ -109,8 +113,11 @@ model/
   predict.py           # Full pipeline: schedule → Kalshi → dist → predict → JSON
   sanity.py            # Validates predictions.json before commit (hard fails on degenerate output)
   figures.py           # Methods/appendix figures (fig1–fig4) → articulo/figures/
-  figures_results.py   # Results figures (fig5–fig9, PDF) from frozen predictions
+  figures_results.py   # Results figures (fig5–fig10, PDF); final method via prospective.py
   article_stats.py     # All Results numbers; the article scores on the base rule
+  marginals.py         # Final fit: censored market tables, compatibility projection + IPF
+  prospective.py       # Re-predicts every match with the final method using only
+                       # pre-kickoff info; log score vs Poisson/Dixon-Coles
 
 articulo/
   main.tex              # Scientific article (LaTeX, tracked in git)
@@ -207,6 +214,20 @@ results.json  ──→ learn.py → estimate_delta()  →  δ = 0..∞
   for reruns and the article; there are no further brackets to resolve.
 
 ## Gotchas
+
+**Unquoted spread markets are not zero probability**: Kalshi almost never
+lists "wins by over 3.5" (185 of 196 spread quotes), and `_parse_spread`
+stores the missing bin as `4: 0.0`. Read literally, the market tables look
+incompatible and the operational `scoreline_probs_ipf` gives zero mass to
+4+ goal wins while piling the 6+ total onto 5-2/2-5. The final method
+(`model/marginals.py`, used by the article) treats trailing zero bins as an
+open "3 or more" bin. The live pipeline (`predict.py`) still uses the legacy
+fits; it was left untouched because pushing triggers the CI rerun.
+
+**Article: operational record vs final method**: Results section 3.1 scores
+the frozen predictions (222 points); everything else in Results uses the
+final method's pseudo-prospective picks (`article_stats.final_rows()`,
+235 points).
 
 **ESPN team name aliases**: ESPN uses different display names from our schedule. Known mismatches: `"Czechia"` (not `"Czech Republic"`), `"Bosnia-Herzegovina"` (not `"Bosnia & Herzegovina"`). Add new aliases to `ESPN_ALIASES` in `model/results.py` as they appear. Symptom: `results.py` prints `"No result yet"` for a match that already finished. Fix: add the ESPN name to the alias list and re-run.
 

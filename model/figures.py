@@ -532,7 +532,7 @@ def fig3_kalshi_reweight():
     Marks the optimal prediction on the 'Con Kalshi' panel.
     """
     from model.kalshi import _load_cache, _clean_entry
-    from model.historical import scoreline_probs, scoreline_probs_ipf, build_distributions
+    from model.historical import scoreline_probs, build_distributions
     from model.optimizer import expected_points, best_prediction
 
     cache = _load_cache()
@@ -563,10 +563,11 @@ def fig3_kalshi_reweight():
                                 total_goals_probs=None,
                                 spread_home=None, spread_away=None,
                                 dist=dist)
-    sp_after  = scoreline_probs_ipf(ph_val, pd_val, pa_val, "group",
-                                    total_goals_probs=tg,
-                                    spread_home=sh, spread_away=sa,
-                                    dist=dist)
+    # Final method: compatibility projection + IPF (model/marginals.py)
+    from model import marginals as mg
+    sp_after = mg.to_dict(mg.fit_compatible(
+        mg.to_array(sp_before),
+        mg.market_tables(ph_val, pd_val, pa_val, tg, sh, sa)))
 
     def to_matrix(sp):
         mat = np.zeros((6, 6))

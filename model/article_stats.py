@@ -6,6 +6,10 @@ late-round multiplier: some pools multiply points in later rounds,
 which does not change the argmax, so the article evaluates on the
 base scale.
 
+The operational record uses the frozen predictions; the analyses of
+the method use the final method's pseudo-prospective picks
+(prospective.py, via final_rows()).
+
 Run from repo root:
     python model/article_stats.py            # prints a summary
     python model/article_stats.py --json F   # also writes all numbers to F
@@ -20,12 +24,8 @@ from pathlib import Path
 ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT))
 
-from model.optimizer import _points_group as points, best_prediction, \
-    modal_prediction, expected_points
-from model.kalshi import (_load_cache, _clean_entry, _date_code,
-                          _correct_bias, TEAM_CODES)
-from model.historical import (build_distributions, build_et_kernel,
-                              scoreline_probs_ipf, scoreline_probs_knockout)
+from model.optimizer import _points_group as points
+from model.historical import build_distributions
 
 GAMMA, DELTA, ALPHA = 0.84, 0.10, 1.14   # final estimates (learning.json)
 N_BOOT = 10_000
@@ -288,35 +288,34 @@ def rounds_compare():
     return out
 
 
-def model_distributions():
-    """Final-parameter scoreline distributions for the 98 Kalshi matches."""
-    schedule, _, _, _ = load()
-    cache = _load_cache()
-    dist = build_distributions(gamma=GAMMA, delta=DELTA)
-    kern = build_et_kernel(GAMMA, delta=DELTA)
-    out = {}
-    for m in schedule:
-        e = cache.get(f"KXWCGAME-{_date_code(m['time_utc'])}"
-                      f"{TEAM_CODES[m['home']]}{TEAM_CODES[m['away']]}")
-        if not e:
-            continue
-        e = _clean_entry(e)
-        if e.get("source") != "kalshi":
-            continue
-        ph, pd, pa = _correct_bias(e["home_win"], e["draw"], e["away_win"], ALPHA)
-        if "reg_home_win" in e:
-            rh, rd, ra = _correct_bias(e["reg_home_win"], e["reg_draw"],
-                                       e["reg_away_win"], ALPHA)
-            sp = scoreline_probs_knockout(
-                ph, pd, pa, rh, rd, ra, e["total_goals"], e["spread_home"],
-                e["spread_away"], dist=dist, et_kernel=kern,
-                team_totals={"home": e.get("team_totals_home"),
-                             "away": e.get("team_totals_away")})
-        else:
-            sp = scoreline_probs_ipf(ph, pd, pa, "group", e["total_goals"],
-                                     e["spread_home"], e["spread_away"], dist=dist)
-        out[m["id"]] = sp
-    return out
+def final_dist():
+    """Reference distribution with the final γ, δ and all WC 2026 results."""
+    from model.learn import load_canonical, count_2026
+    schedule_json = json.loads((ROOT / "data/schedule.json").read_text())
+    results_json = json.loads((ROOT / "site/data/results.json").read_text())
+    w, d = count_2026(load_canonical(results_json, schedule_json))
+    return build_distributions(gamma=GAMMA, extra_wins=w, extra_draws=d,
+                               delta=DELTA)
+
+
+def final_rows():
+    """
+    match_rows() with the final method's pseudo-prospective picks
+    (prospective.py) as strategies 6 (optimal) and 5 (modal); the
+    frozen pick and its points are kept under "frozen".
+    """
+    from model.prospective import run
+    pr = {r["id"]: r for r in run()}
+    rows = match_rows()
+    for r in rows:
+        p = pr[r["id"]]
+        r["frozen"] = {"pred": r["pred"], "pts": r["pts"][6]}
+        r["pred"] = r["picks"][6] = tuple(p["pick"]["final"])
+        r["pts"][6] = p["pts"]["final"]
+        r["picks"][5] = tuple(p["pick"]["modal"])
+        r["pts"][5] = p["pts"]["modal"]
+        r["exp"] = None
+    return rows
 
 
 def rule_points(rule):
@@ -328,41 +327,48 @@ def rule_points(rule):
     return f
 
 
-def rule_sensitivity(rows, dists,
-                     rules=((5, 3, 2, 1), (10, 3, 2, 1), (5, 4, 2, 1),
-                            (3, 2, 2, 1))):
-    """Optimal vs modal under alternative scoring rules (final model)."""
-    res = {r["id"]: r["result"] for r in rows}
-    cells = [(a, b) for a in range(6) for b in range(6)]
-    out = []
-    for rule in rules:
-        f = rule_points(rule)
-        differ, gain_exp, gain_obs = 0, 0.0, 0
-        for mid, sp in dists.items():
-            ev = {c: sum(f(*c, h, k) * p for (h, k), p in sp.items()) for c in cells}
-            opt = max(cells, key=ev.get)
-            mod = max(cells, key=sp.get)
-            if opt != mod:
-                differ += 1
-            gain_exp += ev[opt] - ev[mod]
-            gain_obs += f(*opt, *res[mid]) - f(*mod, *res[mid])
-        out.append({"rule": rule, "n": len(dists), "differ": differ,
-                    "gain_exp_per_match": gain_exp / len(dists),
-                    "gain_obs": gain_obs})
-    return out
+def _opt_vs_modal(rows):
+    """How the optimal pick differs from the modal one."""
+    sign = lambda p: (p[0] > p[1]) - (p[0] < p[1])
+    kinds = Counter()
+    for r in rows:
+        o, m = r["picks"][6], r["picks"][5]
+        if o == m:
+            continue
+        if sign(m) == 0 and sign(o) != 0:
+            kinds["draw_to_win"] += 1
+        elif sign(m) == sign(o):
+            kinds["same_winner"] += 1
+        else:
+            kinds["other"] += 1
+    canon = lambda p: (max(p), min(p))
+    return {"kinds": dict(kinds),
+            "draw_picks": {"optimal": sum(sign(r["picks"][6]) == 0 for r in rows),
+                           "modal": sum(sign(r["picks"][5]) == 0 for r in rows)},
+            "picks": dict(Counter(f"{a}-{b}" for a, b in
+                                  (canon(r["picks"][6]) for r in rows))),
+            "zero_pts": {"optimal": sum(r["pts"][6] == 0 for r in rows),
+                         "fav10": sum(r["pts"]["fav10"] == 0 for r in rows)},
+            "exact": {"optimal": sum(r["pts"][6] == 5 for r in rows),
+                      "fav10": sum(r["pts"]["fav10"] == 5 for r in rows)},
+            "three": {"optimal": sum(r["pts"][6] == 3 for r in rows),
+                      "fav10": sum(r["pts"]["fav10"] == 3 for r in rows)},
+            "differ_fav10": sum(
+                r["picks"][6] != ((1, 0) if favourite_is_home(r["probs"])
+                                  else (0, 1)) for r in rows)}
 
 
 def main():
-    rows = match_rows()
-    dists = model_distributions()
+    rows = match_rows()           # frozen predictions (operational record)
+    fin = final_rows()            # final method, pseudo-prospective
     stats = {
         "summary": summary(rows),
-        "strategies": strategies(rows),
+        "strategies_frozen": strategies(rows),
         "pred_vs_obs": {k: {f"{a}-{b}": n for (a, b), n in v.items()}
-                        for k, v in predicted_vs_observed(rows).items()},
-        "by_favourite": by_favourite(rows),
-        "rules": rule_sensitivity(rows, dists),
-        "surprises": surprises(rows),
+                        for k, v in predicted_vs_observed(fin).items()},
+        "by_favourite": by_favourite(fin),
+        "surprises": surprises(fin),
+        "opt_vs_modal": _opt_vs_modal(fin),
         "rounds": rounds_compare(),
     }
     print(json.dumps(stats, indent=1, default=str))
