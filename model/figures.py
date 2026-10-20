@@ -523,87 +523,37 @@ def fig2_gamma_effect():
 
 
 # ── Figure 3: Kalshi reweighting for a sample match ────────────
+EXAMPLE_MATCH = 27      # Germany 2-1 Ivory Coast, group stage
+
+
 def fig3_kalshi_reweight():
     """
-    Show before/after Kalshi reweighting for South Korea vs Czech Republic
-    (WC 2026 group stage, jornada 1) — the same match used in Section 5.
-    Falls back to the first available cached match if not found.
-    Uses home×away (not canonical) to show asymmetric reweighting clearly.
-    Marks the optimal prediction on the 'Con Kalshi' panel.
+    Before/after the fit to the total and spread markets for Germany vs
+    Ivory Coast, as the pseudo-prospective evaluation saw it (α, δ from
+    the matches ended before kickoff).  The fit moves the optimal
+    prediction from 1-0 to 2-1, the final score.  Red boxes mark the
+    optimal prediction in each panel.
     """
-    from model.kalshi import _load_cache, _clean_entry
-    from model.historical import scoreline_probs, build_distributions
-    from model.optimizer import expected_points, best_prediction
-
-    cache = _load_cache()
-    if not cache:
-        print("  fig3: no Kalshi cache found — skipping")
-        return
-
-    # Prefer Korea vs Czech (cross-references Section 5 example)
-    preferred = "KXWCGAME-26JUN11KORCZE"
-    ticker_key = preferred if preferred in cache else next(iter(cache))
-    entry  = _clean_entry(cache[ticker_key])
-    # Correct with the prior centre α₀, as in the article's example
-    # (Table tab:ejkorcze), so figure and table show the same model.
-    from model.kalshi import _correct_bias
-    from model.learn import ALPHA_0
-    ph_val, pd_val, pa_val = _correct_bias(entry.get("home_win", 0.40),
-                                           entry.get("draw", 0.25),
-                                           entry.get("away_win", 0.35),
-                                           ALPHA_0)
-    tg     = entry.get("total_goals")
-    sh     = entry.get("spread_home")
-    sa     = entry.get("spread_away")
-
-    gamma = _load_gamma()
-    dist  = build_distributions(gamma=gamma, delta=0.0)
-
-    sp_before = scoreline_probs(ph_val, pd_val, pa_val, "group",
-                                total_goals_probs=None,
-                                spread_home=None, spread_away=None,
-                                dist=dist)
-    # Final method: compatibility projection + IPF (model/marginals.py)
+    from model.prospective import match_detail
+    from model.optimizer import best_prediction
     from model import marginals as mg
-    sp_after = mg.to_dict(mg.fit_compatible(
-        mg.to_array(sp_before),
-        mg.market_tables(ph_val, pd_val, pa_val, tg, sh, sa)))
 
-    def to_matrix(sp):
-        mat = np.zeros((6, 6))
-        for (h, a), p in sp.items():
-            if h < 6 and a < 6:
-                mat[h][a] = p
-        return mat
-
-    mat_b = to_matrix(sp_before)
-    mat_a = to_matrix(sp_after)
-    best  = best_prediction(sp_after, "group")
-    opt_h, opt_a = best["home"], best["away"]
-
-    vmax = max(mat_b.max(), mat_a.max()) * 100
-
-    if ticker_key == preferred:
-        xlabel_str = "Goles Chequia"
-        ylabel_str = "Goles Corea del Sur"
-    else:
-        xlabel_str = "Goles Equipo B"
-        ylabel_str = "Goles Equipo A"
+    d = match_detail(EXAMPLE_MATCH)
+    mats = [d["models"]["out"], d["models"]["final"]]
+    vmax = max(m.max() for m in mats) * 100
 
     fig, axes = plt.subplots(1, 2, figsize=(11, 4.8))
-    for ax, mat, title, mark_opt in zip(
-        axes,
-        [mat_b, mat_a],
+    for ax, mat, title in zip(
+        axes, mats,
         ["Solo resultado de Kalshi", "Resultado, total y ventaja (IPF)"],
-        [False, True],
     ):
         im = ax.imshow(mat * 100, origin="lower", aspect="equal",
                        cmap="Blues", vmin=0, vmax=vmax)
         ax.set_xticks(GOALS); ax.set_yticks(GOALS)
         ax.set_xticklabels(GOALS, fontsize=9)
         ax.set_yticklabels(GOALS, fontsize=9)
-        ax.set_xlabel(xlabel_str, fontsize=11)
-        ax.set_ylabel(ylabel_str, fontsize=11)
+        ax.set_xlabel("Goles Costa de Marfil", fontsize=11)
+        ax.set_ylabel("Goles Alemania", fontsize=11)
         ax.set_title(title, fontsize=12)
         for h in GOALS:
             for a in GOALS:
@@ -612,12 +562,10 @@ def fig3_kalshi_reweight():
                     color = "white" if val > vmax * 0.60 else "black"
                     ax.text(a, h, _num(val, 1), ha="center", va="center",
                             fontsize=7.5, color=color)
-        if mark_opt:
-            rect = plt.Rectangle(
-                (opt_a - 0.5, opt_h - 0.5), 1, 1,
-                linewidth=2.5, edgecolor="#e63946", facecolor="none",
-            )
-            ax.add_patch(rect)   # the caption names the red box
+        best = best_prediction(mg.to_dict(mat), "group")
+        ax.add_patch(plt.Rectangle(
+            (best["away"] - 0.5, best["home"] - 0.5), 1, 1,
+            linewidth=2.5, edgecolor="#e63946", facecolor="none"))
         plt.colorbar(im, ax=ax, label="Probabilidad (%)")
 
     # Match and probabilities go in the article's caption, not a title.

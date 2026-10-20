@@ -599,24 +599,35 @@ Con las categorías no cotizadas abiertas, las tablas del mercado
 fueron compatibles en 97 de los 98 partidos con precios, y en el
 restante la proyección movió los objetivos 1,3 puntos porcentuales
 como máximo.
-La Figura~\ref{fig:kalshi} muestra el efecto del ajuste en un partido:
-la probabilidad del 0-0 bajó de 13,8\,\% a 9,5\,\%, la que el mercado
-daba a un partido sin goles, y la del 1-1 subió de 10,4\,\% a
-14,5\,\%, hasta ser el marcador más probable.
+La Figura~\ref{fig:kalshi} muestra el efecto del ajuste en
+Alemania-Costa de Marfil, de la fase de grupos.
+Kalshi daba a Alemania un 67\,\% de probabilidad de ganar, y su
+mercado de total esperaba 3,1 goles, con solo un 4,5\,\% para un
+partido sin goles.
+Ajustada solo al resultado, la distribución de referencia tenía su
+máximo en 1-0 (17,9\,\%), que era también el pronóstico óptimo.
+El ajuste trasladó probabilidad hacia los marcadores con más goles:
+el 0-0 bajó de 6,3\,\% a 4,5\,\%, lo que daba el mercado, el 1-0 a
+9,5\,\%, y el pronóstico óptimo pasó a ser 2-1 (12,3\,\%).
+El partido terminó 2-1, de modo que el ajuste convirtió un pronóstico
+de 2 puntos en un marcador exacto.
 
 \begin{figure}[tb]
   \centering
   \includegraphics[width=\textwidth]{figures/fig3_kalshi_reweight}
-  \caption{Distribución de marcadores $P(h,k)$ para Corea del Sur
-    (Equipo~A) vs.\ Chequia (Equipo~B), primera jornada del Mundial
-    2026, antes (izquierda: distribución de
+  \caption{El ajuste a los mercados de total y ventaja cambió el
+    pronóstico óptimo de 1-0 a 2-1, el marcador final.
+    Distribución de marcadores $P(h,k)$ para Alemania (Equipo~A)
+    vs.\ Costa de Marfil (Equipo~B), fase de grupos del Mundial 2026,
+    antes (izquierda: distribución de
     referencia~\eqref{eq:referencia} con las probabilidades de
-    resultado de Kalshi) y después (derecha) del ajuste a los mercados
-    de total y ventaja.
-    Probabilidades de resultado corregidas con $\alpha = 1.10$:
-    $p_A = 0.37$, $p_E = 0.31$, $p_B = 0.32$.
-    El recuadro rojo marca el pronóstico óptimo (1-0); el partido
-    terminó 2-1.}
+    resultado de Kalshi) y después (derecha) del ajuste, como en la
+    evaluación pseudoprospectiva (Sección~\ref{sec:metricas}).
+    Probabilidades de resultado corregidas con $\hat\alpha = 0{,}98$,
+    estimado con los partidos ya terminados: $p_A = 0{,}669$,
+    $p_E = 0{,}195$, $p_B = 0{,}136$.
+    Los recuadros rojos marcan el pronóstico óptimo de cada
+    distribución.}
   \label{fig:kalshi}
 \end{figure}
 
@@ -1309,7 +1320,9 @@ frente al 0-0 pronosticado (2 puntos).
     marcadores reales se reparten entre muchos.
     Número de partidos en que el método pronosticó cada marcador
     (puntos azules) y en que ese marcador ocurrió (círculos), sin
-    distinguir qué equipo ganó; 104 partidos.}
+    distinguir qué equipo ganó; 104 partidos.
+    El pronóstico es el que maximiza los puntos esperados, no el
+    marcador más probable.}
   \label{fig:pronosticados}
 \end{figure}
 

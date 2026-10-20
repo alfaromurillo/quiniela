@@ -226,6 +226,36 @@ def _run():
     return rows
 
 
+def match_detail(mid: int) -> dict:
+    """
+    One match as the pseudo-prospective evaluation saw it: its entry,
+    α and δ from the matches ended before kickoff, and every model's
+    distribution (for the article's worked example).
+    """
+    schedule_json, matches, results, entries = load()
+    m = next(x for x in matches if x["id"] == mid)
+    gamma = estimate_gamma()
+    ended = [j["id"] for j in matches
+             if _kickoff(j) + ENDED_AFTER <= _kickoff(m)]
+    canon = load_canonical({"matches": {str(i): results[str(i)]
+                                        for i in ended}}, schedule_json)
+    delta = estimate_delta(canon, gamma=gamma)
+    w26, d26 = count_2026(canon)
+    dist = build_distributions(gamma=gamma, extra_wins=w26,
+                               extra_draws=d26, delta=delta)
+    data = [(entries[i]["home_win"], entries[i]["draw"], entries[i]["away_win"],
+             _outcome(results[str(i)]["home_score"], results[str(i)]["away_score"]))
+            for i in ended if entries[i].get("source") == "kalshi"]
+    alpha = alpha_map(data)
+    e = entries[mid]
+    return {"match": m, "entry": e, "alpha": alpha, "delta": delta,
+            "gamma": gamma,
+            "p": _correct_bias(e["home_win"], e["draw"], e["away_win"], alpha),
+            "result": (results[str(mid)]["home_score"],
+                       results[str(mid)]["away_score"]),
+            "models": match_models(m, e, dist, build_et_kernel(gamma), alpha)}
+
+
 def compatibility():
     """
     How far the market tables are from compatible, read literally (legacy)
