@@ -27,7 +27,7 @@
 \usepackage{multirow}
 
 % URLs en referencias
-\usepackage{url}
+\usepackage{xurl}
 
 % ── Entornos matemáticos ───────────────────────────────────────
 \theoremstyle{remark}
@@ -65,68 +65,43 @@
 \noindent\textbf{MSC 2020:} 62F15, 62P25, 60G25, 91B82.
 
 \noindent\textbf{Palabras clave:} mercados de predicción,
-inferencia bayesiana, distribución de Poisson, predicción de
-marcadores, fútbol, Mundial 2026, quiniela, optimización.
+predicción de marcadores, ajuste iterativo proporcional, inferencia
+bayesiana, fútbol, Mundial 2026, quiniela, puntos esperados.
 
-\noindent\textbf{Keywords:} prediction markets, Bayesian inference,
-Poisson distribution, scoreline prediction, soccer, World Cup 2026,
-betting pool, optimization.
+\noindent\textbf{Keywords:} prediction markets, scoreline prediction,
+iterative proportional fitting, Bayesian inference, soccer, World Cup
+2026, betting pool, expected points.
 
 \bigskip\hrule\bigskip
 
 % ─────────────────────────────────────────────────────────────
 \begin{abstract}
-En una quiniela de fútbol, acertar el marcador exacto puede valer
-hasta cinco veces más que simplemente predecir el ganador.
-Esta asimetría en la regla de puntuación convierte la predicción
-de marcadores en un problema de optimización matemático no trivial:
-el marcador más probable no es necesariamente el más rentable.
-
-Este artículo presenta un modelo estadístico para el Mundial de
-Fútbol 2026 que maximiza los puntos esperados en una quiniela de
-marcadores exactos mediante la integración de dos fuentes de
-información complementarias.
-La primera fuente son los \emph{mercados de predicción}:
-Kalshi, una plataforma estadounidense regulada donde miles de
-participantes negocian contratos sobre cada resultado del torneo.
-Los precios de mercado agregan información dispersa de manera
-eficiente, ofreciendo estimaciones de probabilidad que superan
-en calibración a los pronósticos individuales de expertos.
-La segunda fuente son tres ediciones del Mundial (2014, 2018 y 2022),
-cuya distribución histórica de marcadores captura la estructura
-estadística del juego a nivel de selecciones nacionales.
-
-Ambas fuentes se integran mediante un modelo bayesiano adaptativo.
-Los parámetros de decaimiento temporal~$\gamma$ ---que mide cuánto
-pesa el historial reciente sobre el antiguo--- y de adaptación al
-torneo en curso~$\delta$ ---que mide cuánto peso adicional reciben
-los resultados del propio WC 2026--- se estiman por validación cruzada:
-$\gamma \approx 0.84$ pondera más el historial reciente,
-mientras que~$\delta$ crece conforme se acumulan resultados del
-propio Mundial 2026, reflejando las características propias del
-presente mundial como el número de equipos, el formato de grupos
-y el nivel general de los seleccionados participantes.
-Sobre la distribución resultante de marcadores se aplica un argumento
-de optimización explícito para encontrar la predicción que maximiza
-los puntos esperados bajo la regla de puntuación de la quiniela.
-
-Evaluamos el modelo de forma retrospectiva sobre los 104 partidos
-completos del Mundial 2026 (72 de fase de grupos y 32 de eliminatoria).
-La predicción óptima obtuvo en promedio 2,19 puntos por partido
-(1,99 en fase de grupos, 2,66 en eliminatoria bajo la regla de puntaje
-doble de semifinales, tercer puesto y final) y acertó el marcador
-exacto en el 13,5\,\% de los partidos, superando consistentemente al
-marcador modal.
-Los precios de Kalshi, corregidos por sesgo favorito-longshot con
-$\hat\alpha \approx 1.14$ (cercano al valor de referencia
-$\alpha_0 = 1.10$), obtuvieron un score de Brier de 0,466, muy por
-debajo del 0,667 de una predicción uniforme.
-España se coronó campeona al vencer a Argentina 1-0 en la final,
-marcador que el modelo predijo exactamente, obteniendo el máximo de
-10 puntos bajo la regla de puntaje doble.
-
-El código fuente del modelo y la plataforma web de seguimiento
-están disponibles públicamente en GitHub.
+En una quiniela de marcadores exactos, acertar el marcador vale más
+que acertar solo el ganador, de modo que el marcador más probable no
+es necesariamente el que más puntos rinde.
+Los mercados de predicción dan probabilidades bien calibradas para
+cada partido, pero solo del resultado, del total de goles y de la
+ventaja, no de cada marcador.
+Presentamos un modelo que reconstruye la distribución de marcadores
+ajustando la distribución histórica de los Mundiales 2014, 2018 y
+2022, actualizada con los resultados del torneo en curso, a los
+precios del mercado Kalshi corregidos por sesgo favorito-longshot,
+mediante ajuste iterativo proporcional, y que elige el marcador que
+maximiza los puntos esperados.
+Los pronósticos, publicados en tiempo real y congelados antes de cada
+uno de los 104 partidos del Mundial 2026, obtuvieron 2,19
+puntos por partido y acertaron el marcador exacto en el 13,5\,\% de
+los partidos, incluido el 1-0 de la final.
+Frente a usar solo el historial, las probabilidades del mercado
+sumaron 105 puntos en 90 partidos (intervalo de credibilidad del
+95\,\%: 61 a 146).
+Maximizar los puntos esperados en lugar de elegir el marcador más
+probable cambió el pronóstico en 28 de esos partidos, casi siempre
+conservando el ganador o cambiando un empate por una victoria, y sumó
+12 puntos ($-9$ a 33), cuando el propio modelo esperaba apenas 1,5.
+Con esta regla de puntuación, el valor del pronóstico proviene sobre
+todo del mercado; la optimización está bien fundamentada, pero su ganancia es
+pequeña y se concentra en evitar los empates.
 \end{abstract}
 
 \bigskip
@@ -134,55 +109,31 @@ están disponibles públicamente en GitHub.
 % ── Abstract en inglés ────────────────────────────────────────
 \begin{otherlanguage}{english}
 \noindent\textbf{Abstract.}
-In a soccer quiniela, predicting the exact scoreline can be worth
-up to five times more than simply predicting the winner.
-This scoring-rule asymmetry turns scoreline prediction into a
-non-trivial mathematical optimization problem: the most likely
-scoreline is not necessarily the most valuable one.
-
-This paper presents a statistical model for the 2026 FIFA World Cup
-that maximizes expected points in an exact-scoreline betting pool
-by integrating two complementary information sources.
-The first is \emph{prediction markets}: Kalshi, a regulated
-U.S.\ platform where thousands of participants trade contracts on each
-tournament match.
-Market prices efficiently aggregate dispersed information, providing
-probability estimates that outperform individual expert forecasts
-in calibration.
-The second source is three editions of the World Cup (2014, 2018,
-2022), whose historical scoreline distributions capture the
-statistical structure of international tournament soccer.
-
-Both sources are integrated via an adaptive Bayesian model.
-Temporal decay $\gamma$ ---measuring how much recent tournaments
-outweigh older ones--- and current-tournament adaptation $\delta$
----measuring the additional weight given to WC 2026 results---
-are estimated by cross-validation: $\gamma \approx 0.84$
-upweights recent history, while $\delta$ grows as 2026 results
-accumulate, reflecting the specific characteristics of the current
-tournament such as the number of teams, group format, and overall
-level of the participating squads.
-An explicit optimization argument then identifies the scoreline
-prediction that maximizes expected points under the quiniela scoring
-rule.
-
-We evaluate the model retrospectively on all 104 completed WC 2026
-matches (72 group-stage and 32 knockout).
-The optimal prediction averaged 2.19 points per match (1.99 in the
-group stage, 2.66 in the knockout rounds under the double-points rule
-for semifinals, the third-place match, and the final), and matched
-the exact scoreline in 13.5\,\% of matches, consistently outperforming
-the modal scoreline.
-Kalshi prices, corrected for favourite-longshot bias with
-$\hat\alpha \approx 1.14$ (close to the reference value
-$\alpha_0 = 1.10$), achieved a Brier score of 0.466, well below the
-0.667 obtained by a uniform prediction.
-Spain won the tournament, beating Argentina 1-0 in the final — a
-scoreline the model predicted exactly, earning the maximum 10 points
-under the double-points rule.
-
-Model source code and live tracking website are publicly available
-on GitHub.
+In an exact-scoreline betting pool, predicting the exact score is
+worth more than predicting only the winner, so the most likely
+scoreline is not necessarily the one that earns the most points.
+Prediction markets give well-calibrated probabilities for each match,
+but only for the outcome, the total goals and the goal margin, not
+for each scoreline.
+We present a model that reconstructs the scoreline distribution by
+fitting the historical distribution of the 2014, 2018 and 2022 World
+Cups, updated with the results of the ongoing tournament, to Kalshi
+market prices corrected for favourite-longshot bias, using iterative
+proportional fitting, and that picks the scoreline maximizing
+expected points.
+Predictions, published in real time and frozen before each of the 104
+matches of the 2026 World Cup, earned 2.19 points per match and
+hit the exact scoreline in 13.5\,\% of matches, including the 1-0
+final.
+Compared with using history alone, market probabilities added 105
+points over 90 matches (95\,\% credible interval: 61 to 146).
+Maximizing expected points instead of picking the most likely
+scoreline changed the prediction in 28 of those matches, almost always
+keeping the winner or turning a draw into a one-goal win, and added
+12 points ($-9$ to 33), where the model itself expected only 1.5.
+Under this scoring rule, predictive value comes mostly from the
+market; optimization is well founded, but its gain is small and comes
+mainly from avoiding draws.
 \end{otherlanguage}
 
 \bigskip\hrule
@@ -1278,66 +1229,37 @@ bayesianos de pronóstico en tiempo real \citep{divekar2024}.
 \section{Conclusiones}
 \label{sec:conclusiones}
 
-Este artículo presenta un modelo estadístico para la predicción de
-marcadores exactos en el Mundial 2026 que combina dos fuentes de
-información: el historial de tres ediciones del torneo (WC 2014,
-2018, 2022) y los precios en tiempo real de los mercados de predicción
-de Kalshi.
-La integración se realiza mediante un modelo bayesiano adaptativo
-con tres parámetros estimados por validación cruzada: el decaimiento
-temporal $\gamma \approx 0.84$, la adaptación al torneo en curso
-$\delta$, y el exponente de corrección de sesgo favorito-longshot
-$\alpha$ para los precios de Kalshi.
+Este trabajo presentó un sistema que convierte los precios de los
+mercados de predicción en pronósticos de marcador exacto para una
+quiniela, y lo evaluó en tiempo real durante los 104 partidos del
+Mundial 2026.
+El sistema ajusta la distribución histórica de marcadores de los
+Mundiales 2014--2022, actualizada con el torneo en curso, a los
+mercados de resultado, total y ventaja de Kalshi, y elige el marcador
+que maximiza los puntos esperados.
 
-La predicción resultante maximiza explícitamente los puntos esperados
-bajo la regla de puntuación de la quiniela, que es asimétrica y
-distingue varios niveles de acierto.
-Esta optimización es el elemento que diferencia el modelo de un
-sistema de predicción de probabilidades: no busca el marcador más
-probable, sino el que rinde más en promedio bajo esa regla de puntuación
-específica.
+Los pronósticos obtuvieron 2,19 puntos por partido y acertaron el
+marcador exacto en el 13,5\,\% de los partidos, incluido el 1-0 con
+que España ganó la final.
+Casi toda la ventaja sobre el historial provino de las probabilidades
+de resultado del mercado, que sumaron 105 puntos en 90 partidos.
+La optimización aportó poco, como el propio modelo anticipaba: con la
+regla de 5, 3 y 2 puntos, el marcador óptimo y el más probable
+difieren en pocos partidos y por pocas centésimas de punto esperado,
+y la diferencia más sistemática entre ambos es que el óptimo casi
+nunca pronostica empate.
 
-Evaluado retrospectivamente sobre los 104 partidos del WC 2026 —el
-torneo completo—, el modelo obtuvo un promedio de 2,19 puntos por
-partido y una tasa de acierto exacto del 13,5\,\%, superando de forma
-consistente tanto a una línea base uniforme (1,04 puntos,
-Sección~\ref{sec:comparacion}) como al marcador modal (2,23 puntos).
-Los precios de Kalshi resultaron bien calibrados durante todo el
-torneo (score de Brier 0,466 frente a 0,667 de una predicción
-uniforme), y el sesgo favorito-longshot observado
-($\hat\alpha \approx 1.14$) se mantuvo cercano al valor de referencia
-reportado para mercados de intercambio competitivos, sin evidencia de
-un perfil de calibración distintivo entre los usuarios de Kalshi
-durante el Mundial.
-El parámetro adaptativo $\delta$ osciló entre 0 y 0,5 a lo largo del
-torneo y convergió de vuelta a 0 en la recta final, indicando que la
-evidencia acumulada del WC 2026 no distinguía sistemáticamente al
-torneo en curso del historial de tres Mundiales anteriores una vez
-observado en su totalidad.
-
-El Mundial 2026 concluyó con España como campeona, tras vencer 1-0 a
-Argentina en la final del 19 de julio de 2026.
-El modelo predijo ese marcador exacto para la final, obteniendo el
-máximo de 10 puntos bajo la regla de puntaje doble que rige
-semifinales, tercer puesto y final.
-Este resultado puntual no debe sobreinterpretarse —con un solo
-partido, es tan consistente con habilidad predictiva como con suerte—
-pero ilustra de forma concreta el argumento central del artículo: la
-predicción que maximiza los puntos esperados, y no necesariamente el
-marcador más probable a priori, es la que un participante racional de
-la quiniela debería jugar.
-
-El código fuente y la plataforma web están disponibles públicamente, y
-se actualizaron automáticamente durante todo el torneo, desde el
-partido inaugural hasta la final.
-Esperamos que este trabajo motive desarrollos similares para otras
-competiciones y contribuya a la incipiente literatura académica en
-español sobre mercados de predicción aplicados al deporte.
-
-% ─────────────────────────────────────────────────────────────
-\section*{Agradecimientos}
-
-\TODO{Añadir agradecimientos si corresponde.}
+Para quien juega una quiniela con esta regla, la recomendación
+práctica es tomar del mercado el ganador probable y, en los partidos
+parejos, preferir una victoria por un gol al empate.
+Para quien modela, ajustar una distribución histórica de referencia a
+las marginales del mercado mediante ajuste iterativo proporcional es
+un procedimiento general para obtener probabilidades de marcadores
+exactos, aplicable a cualquier regla de puntuación y a cualquier
+torneo con mercados de total y ventaja de goles.
+Es de esperar que el valor de optimizar crezca cuanto más premie la
+regla el marcador exacto frente al ganador; cuantificar esa relación
+es el paso siguiente.
 
 % ─────────────────────────────────────────────────────────────
 \section*{Disponibilidad del código}
