@@ -112,6 +112,35 @@ def _load_gamma() -> float:
     return 0.84
 
 
+_DELTA_TRAJ = None
+
+def _delta_trajectory() -> list[float]:
+    """
+    δ re-estimated after each WC 2026 match, in kickoff order:
+    element n is δ̂ given the first n results (n = 0..104).
+    Recomputed here rather than read from learning.json's
+    delta_history, which logged δ with the jornada-fold bug fixed
+    in model/learn.py after the tournament.
+    """
+    global _DELTA_TRAJ
+    if _DELTA_TRAJ is None:
+        from model.learn import load_canonical, estimate_delta
+        schedule = json.loads((ROOT / "data" / "schedule.json").read_text())
+        results  = json.loads((ROOT / "site" / "data" / "results.json").read_text())
+        order = [str(m["id"]) for m in
+                 sorted(schedule["matches"], key=lambda m: m["time_utc"])
+                 if str(m["id"]) in results["matches"]]
+        gamma = _load_gamma()
+        _DELTA_TRAJ = []
+        for n in range(len(order) + 1):
+            ids = set(order[:n])
+            sub = {"matches": {k: v for k, v in results["matches"].items()
+                               if k in ids}}
+            _DELTA_TRAJ.append(estimate_delta(load_canonical(sub, schedule),
+                                              gamma=gamma))
+    return _DELTA_TRAJ
+
+
 def _load_wc2026_real(phase: str = "group") -> tuple[np.ndarray, int]:
     """
     Canonical count matrix + total for completed WC 2026 matches of the
@@ -208,9 +237,11 @@ def fig1_historical_overview():
 
     # Precompute the four "later" panels (end-of-phase model estimate +
     # real results, for both group and knockout) so they can feed vmax.
-    delta_final = learning.get("delta", 0.0)
+    traj = _delta_trajectory()
+    delta_groups = traj[min(72, len(traj) - 1)]
+    delta_final  = traj[-1]
     later_mats = {
-        ("group",    "model"): _end_of_phase_estimate_matrix(gamma, 0.1, phase="group"),
+        ("group",    "model"): _end_of_phase_estimate_matrix(gamma, delta_groups, phase="group"),
         ("group",    "real"):  _load_wc2026_real(phase="group")[0],
         ("knockout", "model"): _end_of_phase_estimate_matrix(gamma, delta_final, phase="knockout"),
         ("knockout", "real"):  _load_wc2026_real(phase="knockout")[0],
@@ -348,8 +379,9 @@ def fig1_historical_overview():
                         fontsize=4.5, color=color, linespacing=1.3)
 
     # ── Row 1, col 1: end-of-group-stage model estimate ─────────
-    # δ ≈ 0.1, estimated when the 72nd (last) group match locked.
-    _draw_model_estimate(axes[1, 1], "group", 0.1, "Estimado fin de grupos")
+    # δ re-estimated after the 72nd (last) group match.
+    _draw_model_estimate(axes[1, 1], "group", delta_groups,
+                          "Estimado fin de grupos")
 
     # ── Row 2, col 1: real WC 2026 group-stage results (72 matches) ─
     _draw_real_results(axes[2, 1], "group", "WC 2026 — datos reales")
@@ -604,33 +636,18 @@ _JORNADA_LABELS = [
 def fig4_delta_evolution():
     """
     Plot estimated δ vs cumulative WC 2026 matches played.
-    Reads delta_history from learning.json for full trajectory.
+    Uses _delta_trajectory() (δ re-estimated after each match).
     Jornada boundaries are marked with vertical dashed lines.
     """
-    path = ROOT / "site" / "data" / "learning.json"
-    if not path.exists():
-        print("  fig4: learning.json not found — skipping")
-        return
-
-    data    = json.loads(path.read_text())
-    history = data.get("delta_history", [])
-
-    # Build (n_games, delta) series; always start at (0, 0)
-    if history:
-        ns     = [0] + [h["n_games"] for h in history]
-        deltas = [0.0] + [h["delta"]  for h in history]
-    else:
-        n_now     = data.get("n_games_2026", 0)
-        delta_now = data.get("delta", 0.0)
-        ns     = [0, n_now] if n_now > 0 else [0]
-        deltas = [0.0, delta_now] if n_now > 0 else [0.0]
+    deltas = _delta_trajectory()
+    ns     = list(range(len(deltas)))
 
     n_last     = ns[-1]
     delta_last = deltas[-1]
 
     fig, ax = plt.subplots(figsize=(8, 4))
-    ax.plot(ns, deltas, marker="o", color="#1f77b4", linewidth=2,
-            markersize=5, zorder=3)
+    ax.step(ns, deltas, where="post", color="#1f77b4", linewidth=2,
+            zorder=3)
 
     # Jornada boundary lines — always show all to give tournament context
     y_top = max(max(deltas) * 1.15, 0.08)
@@ -645,8 +662,7 @@ def fig4_delta_evolution():
     ax.set_ylabel("Estimación de $\\delta$", fontsize=11)
     ax.set_title(
         "Adaptación bayesiana al torneo en curso\n"
-        "($\\delta = 0$: solo historial; "
-        "$\\delta > 0$: WC 2026 pesa más)",
+        "($\\delta = 0$: cada partido del WC 2026 pesa como uno del WC 2022)",
         fontsize=11,
     )
     ax.set_xlim(left=-1, right=max(n_last, 82) + 2)

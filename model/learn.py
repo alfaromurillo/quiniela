@@ -11,8 +11,11 @@ Adaptive learning: γ decay for historical WCs, δ weight for WC 2026.
   Each WC 2026 result counts as (1+δ) × a historical result.
   Estimated by leave-one-jornada-out MAP with HalfNormal(σ=1) prior.
 
-Jornada sequence: Matchday 1→2→3 (groups), Round of 32, Round of 16,
-Quarter-finals, Semi-finals, Third place / Final.
+Jornada sequence: group rounds 1→2→3, Round of 32, Round of 16,
+Quarter-finals, Semi-finals, Third place / Final.  The schedule's
+"Matchday N" labels number calendar days (1–17), not group rounds, so
+a group match's round is its position within its group (two matches
+per round), not its label.
 """
 import json
 import math
@@ -40,20 +43,36 @@ ALPHA_STEPS  = 100    # grid step ≈ 0.02
 _PREDICTIONS_PATH = ROOT / "site" / "data" / "predictions.json"
 _RESULTS_PATH_ALPHA = ROOT / "site" / "data" / "results.json"
 
-JORNADA_ORDER = [
-    "Matchday 1", "Matchday 2", "Matchday 3",
-    "Round of 32", "Round of 16",
-    "Quarter-finals", "Semi-finals",
-    "Third place", "Final",
-]
+# Jornada index of each knockout round; group rounds are 0, 1, 2.
+KNOCKOUT_JORNADA = {
+    "Round of 32":           3,
+    "Round of 16":           4,
+    "Quarter-final":         5,
+    "Semi-final":            6,
+    "Match for third place": 7,
+    "Final":                 7,
+}
 
 
-def _jornada_idx(round_name: str) -> int:
-    rn = round_name.lower()
-    for i, name in enumerate(JORNADA_ORDER):
-        if name.lower() in rn:
-            return i
-    return -1
+def _jornada_map(schedule_json: dict) -> dict[str, int]:
+    """
+    Map match id (str) → jornada index.
+    Group matches: position within their group in kickoff order, two
+    matches per round (0, 1, 2).  Knockout matches: KNOCKOUT_JORNADA,
+    -1 for unknown round names.
+    """
+    out: dict[str, int] = {}
+    by_group: dict[str, list] = {}
+    for m in schedule_json["matches"]:
+        if m["phase"] == "group":
+            by_group.setdefault(m["group"], []).append(m)
+        else:
+            out[str(m["id"])] = KNOCKOUT_JORNADA.get(m["round"], -1)
+    for matches in by_group.values():
+        matches.sort(key=lambda m: m["time_utc"])
+        for i, m in enumerate(matches):
+            out[str(m["id"])] = i // 2
+    return out
 
 
 def _canonical(home: int, away: int) -> tuple:
@@ -72,6 +91,7 @@ def load_canonical(results_json: dict, schedule_json: dict) -> list[dict]:
     """
     from model.historical import MAX_GOALS
     by_id = {str(m["id"]): m for m in schedule_json["matches"]}
+    jornada = _jornada_map(schedule_json)
     out = []
     for mid_str, r in results_json.get("matches", {}).items():
         if r.get("status") != "final":
@@ -86,7 +106,7 @@ def load_canonical(results_json: dict, schedule_json: dict) -> list[dict]:
         rt, canon = _canonical(int(hs), int(as_))
         out.append({
             "id":          int(mid_str),
-            "jornada_idx": _jornada_idx(m["round"]),
+            "jornada_idx": jornada[mid_str],
             "phase":       m["phase"],
             "result_type": rt,
             "canonical":   canon,
