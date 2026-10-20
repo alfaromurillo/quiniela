@@ -400,11 +400,10 @@ La distribución a priori $\delta \sim \text{Semi-Normal}(\sigma = 1)$
 favorece el historial cuando hay pocos datos del torneo, y la búsqueda
 se hizo en una cuadrícula de paso 0,05 en $[0, 8]$.
 Mientras no se completó la primera jornada, $\hat\delta$ fue 0.
-La Figura~\ref{fig:delta} (Sección~\ref{sec:resultados-delta})
-muestra $\hat\delta$ a lo largo del
-torneo.\footnote{Durante el torneo, la asignación de partidos a
-jornadas tuvo un error; la trayectoria de la
-Figura~\ref{fig:delta} usa la asignación correcta. El
+La Sección~\ref{sec:resultados-delta} describe la trayectoria de
+$\hat\delta$ a lo largo del torneo.\footnote{Durante el torneo, la
+asignación de partidos a jornadas tuvo un error; la trayectoria que
+se reporta usa la asignación correcta. El
 Apéndice~\ref{app:version} describe el error y su efecto.}
 
 % ─────────────────────────────────────────────────────────────
@@ -509,7 +508,10 @@ porcentuales en las de resultado (máximo 2,9) y de 0,9 en las de total
 Por la misma razón, la distribución final suma entre 0,97 y 1,03; no
 se renormaliza, lo que no altera el pronóstico óptimo ni el marcador
 modal, que no cambian al multiplicar $P$ por una constante.
-La Figura~\ref{fig:kalshi} muestra el efecto del ajuste en un partido.
+La Figura~\ref{fig:kalshi} muestra el efecto del ajuste en un partido:
+la probabilidad del 0-0 bajó de 13,8\,\% a 9,5\,\%, la que el mercado
+daba a un partido sin goles, y la del 1-1 subió de 10,4\,\% a
+14,6\,\%, hasta ser el marcador más probable.
 
 \begin{figure}[tb]
   \centering
@@ -898,20 +900,25 @@ Total               & 104 & 222 & 2,13 & 14 & 68 \\
 \label{sec:comparacion}
 
 Las probabilidades de Kalshi separaron al sistema del historial desde
-la primera jornada (Figura~\ref{fig:acumulados}).
+los primeros partidos, y las tres estrategias que las usan avanzaron
+casi juntas todo el torneo (Figura~\ref{fig:acumulados}).
 Con probabilidades de resultado iguales, el óptimo histórico es 0-0
 en casi todos los partidos, y esa estrategia sumó 92 puntos en los 90
-partidos comparables; usar las probabilidades de resultado de Kalshi
-la llevó a 197 (+105; 62 a 144), con más puntos en 64 partidos y menos
-en 20 (Tabla~\ref{tab:ablacion}).
+partidos comparables, menos de la mitad que cualquiera de las otras.
+La regla ``el favorito gana 1-0'' fue por delante durante casi toda
+la fase de grupos, y el pronóstico óptimo la superó en la
+eliminatoria.
+
+Por componentes, usar las probabilidades de resultado de Kalshi llevó
+al historial de 92 a 197 puntos (+105; 62 a 144), con más puntos en 64
+partidos y menos en 20 (Tabla~\ref{tab:ablacion}).
 La corrección~$\alpha$ no cambió ningún pronóstico, y ajustar además a
 los mercados de total y ventaja sumó 8 puntos ($-15$ a 31): 1 en la
 fase de grupos y 7 en la eliminatoria, donde ese ajuste incluye el
 modelo de dos etapas.
 El pronóstico óptimo terminó con 207 puntos, 12 más que el marcador
 modal ($-8$ a 33) y 15 más que la regla ``el favorito gana 1-0''
-($-9$ a 40), aunque esa regla fue por delante durante casi toda la
-fase de grupos.
+($-9$ a 40).
 En los 104 partidos, el modelo y la regla difirieron en 56, en que el
 modelo eligió sobre todo 2-1, 2-0 o 3-0, y la regla obtuvo menos
 aciertos exactos y de 3 puntos (11 y 22, frente a 14 y 28 del modelo)
@@ -925,8 +932,8 @@ favorito) de la versión del sistema anterior al 19 de junio
   \centering
   \includegraphics[width=\textwidth]{figures/fig5_puntos_acumulados}
   \caption{Las probabilidades del mercado separan al sistema del
-    historial desde el inicio, y las estrategias que las usan
-    terminan cerca unas de otras.
+    historial desde los primeros partidos, y las estrategias que las
+    usan terminan cerca unas de otras.
     Puntos acumulados en los 90 partidos con estrategias de referencia
     registradas, en orden cronológico, para el pronóstico óptimo, el
     marcador modal, la regla ``el favorito gana 1-0'' y el óptimo de
@@ -968,14 +975,16 @@ El pronóstico óptimo depende sobre todo de dos cantidades: cuánto
 favorece el mercado a un equipo y cuántos goles espera
 (Figura~\ref{fig:mapa}).
 Con pocos o medianos goles esperados, el óptimo es 1-0 para el
-favorito en casi todo el rango, y pasa a 2-0 cuando el favorito supera
-el 60 o 70\,\% de probabilidad de ganar.
+favorito, y pasa a 2-0 cuando el favorito supera entre el 55 y el
+75\,\% de probabilidad de ganar, según los goles esperados.
 Con muchos goles esperados, 1-0 desaparece: el óptimo es 2-1 en los
 partidos más parejos y 2-0 con un favorito muy claro.
 El empate solo es óptimo en una franja estrecha, con un favorito débil
 y una probabilidad de empate de al menos 0,3 a 0,4 según los goles
-esperados, y 0-0 solo
-cuando además se esperan muy pocos goles.
+esperados, y 0-0 solo cuando además se esperan muy pocos goles.
+Casi todos los partidos del torneo cayeron en las regiones de 1-0 y
+2-0, y los de muchos goles esperados, en la de 2-1; solo los dos
+partidos marcados con círculos quedaron en la región de empate.
 
 \begin{figure}[!htb]
   \centering
@@ -998,10 +1007,15 @@ cuando además se esperan muy pocos goles.
 \subsection{Pronosticado frente a ocurrido}
 \label{sec:empates}
 
-Como consecuencia, los pronósticos se concentraron en pocos marcadores
-que no coinciden con los más frecuentes (Figura~\ref{fig:pronosticados}).
-El sistema pronosticó 1-0 en 51 de los 104 partidos, y ese marcador
-ocurrió 15 veces; 1-1 ocurrió 12 veces y nunca se pronosticó.
+Como consecuencia, los pronósticos se concentraron en pocos marcadores,
+mientras que los resultados se repartieron entre muchos
+(Figura~\ref{fig:pronosticados}): el sistema usó 7 marcadores
+distintos, y los partidos terminaron en 18.
+El sistema pronosticó 1-0 en 51 de los 104 partidos; fue el marcador
+real más frecuente, pero solo ocurrió 15 veces, apenas una más que
+2-1.
+En cambio, 1-1 y 3-1, que ocurrieron 12 y 9 veces, nunca se
+pronosticaron.
 Solo hubo 2 pronósticos de empate, ambos 0-0, aunque 20 de los 72
 partidos de grupos terminaron empatados; en los 90 partidos
 comparables, el marcador modal habría pronosticado empate en 11.
@@ -1012,8 +1026,8 @@ Paraguay-Australia terminó 0-0 (5 puntos) y Argelia-Austria 3-3
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=0.75\textwidth]{figures/fig6_pronosticado_observado}
-  \caption{Los pronósticos se concentran en 1-0, que no es el
-    marcador más frecuente por un margen tan amplio.
+  \caption{Los pronósticos se concentran en 1-0, mientras que los
+    marcadores reales se reparten entre muchos.
     Número de partidos en que el sistema pronosticó cada marcador
     (puntos azules) y en que ese marcador ocurrió (círculos), sin
     distinguir qué equipo ganó; 104 partidos.}
@@ -1043,7 +1057,8 @@ casi coincide con el modal.
 \caption{Pronóstico óptimo frente al modal bajo reglas de puntuación
 alternativas, con el modelo final en los 98 partidos con mercados.
 Las reglas dan los puntos por marcador exacto, ganador y goles de un
-equipo, ganador, y goles de un equipo.}
+equipo, ganador, y goles de un equipo. La ganancia observada es la
+diferencia total de puntos en los 98 partidos.}
 \label{tab:reglas-alt}
 \begin{tabular}{lccc}
 \toprule
@@ -1062,7 +1077,10 @@ Regla & Partidos en que difieren & \shortstack{Ganancia esperada\\por partido} &
 \label{sec:brier}
 
 Las probabilidades de resultado de Kalshi estuvieron bien calibradas
-(Figura~\ref{fig:calibracion}, izquierda).
+(Figura~\ref{fig:calibracion}, izquierda): en todo el rango, la
+frecuencia observada quedó cerca de la probabilidad del mercado, y la
+mayor desviación, los resultados con probabilidad entre 0,6 y 0,7, que
+ocurrieron en 18 de 22 casos, cabe en su intervalo de credibilidad.
 En los 98 partidos con precios, el puntaje de Brier~\eqref{eq:brier}
 fue 0,468 sin corregir y 0,466 con $\hat\alpha = 1{,}14$, frente a
 0,667 de un pronóstico uniforme; la corrección empeoró ligeramente la
@@ -1074,6 +1092,8 @@ Los puntos dependieron de qué tan claro era el favorito
 favorito tenía menos de 45\,\% de probabilidad de ganar, 2,87 entre 65
 y 75\,\%, y 2,12 por encima de 75\,\%, donde las goleadas hacen difícil
 acertar el marcador.
+La regla ``el favorito gana 1-0'' siguió el mismo patrón, a 0,4 puntos
+por partido o menos del modelo en todos los intervalos.
 
 \begin{figure}[!htb]
   \centering
@@ -1134,11 +1154,12 @@ partido.
 
 El Mundial 2026, el primero con 48 selecciones, tuvo en la fase de
 grupos más goles y más empates que los tres anteriores
-(Figura~\ref{fig:mundial}).
+(Figura~\ref{fig:mundial}a).
 Hubo 2,99 goles por partido, frente a 2,62 en 2014--2022, con más
 partidos de cuatro a seis goles, y 20 empates en 72 partidos (28\,\%,
 frente a 19\,\%).
-El formato ampliado trajo partidos muy desiguales: en 18 partidos de
+El formato ampliado trajo partidos muy desiguales
+(Figura~\ref{fig:mundial}b): en 18 partidos de
 grupos el favorito tenía más del 75\,\% de probabilidad de ganar, y
 entre ellos hubo goleadas como Alemania 7-1 Curazao y sorpresas como
 España 0-0 Cabo Verde y Ecuador 0-0 Curazao.
@@ -1478,6 +1499,10 @@ Las predicciones actualizadas se pueden consultar en:
 
 % ─────────────────────────────────────────────────────────────
 \appendix
+% Appendix floats numbered by appendix (A.1, B.1, ...), so that citing
+% them from the Methods does not disturb the main-text numbering.
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
 
 \section{Implementación, plataforma web y desarrollo asistido}
 \label{app:implementacion}
