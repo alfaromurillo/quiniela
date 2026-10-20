@@ -12,7 +12,9 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[english,spanish,es-tabla]{babel}
-\usepackage{natbib}
+\usepackage[backend=bibtex, style=numeric, sorting=nyt, natbib=true,
+            maxbibnames=20, minbibnames=10]{biblatex}
+\addbibresource{refs.bib}
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage{booktabs}
 \usepackage{hyperref}
@@ -50,8 +52,8 @@
 
 \author{%
   Jorge A.\ Alfaro-Murillo\\
-  \small Centro de Investigación en Matemática Pura y Aplicada (CIMPA)\\
-  \small Universidad de Costa Rica\\
+  \small Universidad de Costa Rica, Centro de Investigación en
+  Matemática Pura y Aplicada (CIMPA),\\
   \small San José, Costa Rica\\
   \small \href{mailto:jorge.alfaro@ucr.ac.cr}{jorge.alfaro@ucr.ac.cr}
 }
@@ -1129,6 +1131,9 @@ total, sumaron 6 puntos, 5 de ellos por el 1-0 exacto de la final.
 El total coincidió con lo que el propio sistema anticipaba: en los 103
 partidos en que registró los puntos esperados de su pronóstico, estos
 promediaron 2,06, y los obtenidos, 2,13.
+Jugados en una quiniela privada de 28 participantes, a la que el autor
+se sumó desde el segundo partido, estos pronósticos empataron el primer
+lugar.
 
 \begin{table}[!htb]
 \centering
@@ -1462,33 +1467,21 @@ método pronostica victorias más amplias.
 \subsection{Sorpresas}
 \label{sec:sorpresas}
 
-Las sorpresas fueron frecuentes, y en ellas el método rindió peor que
-la regla ``el favorito gana 1-0'' (Figura~\ref{fig:sorpresas}).
-Para medirlas se usan dos cantidades del mercado: la probabilidad que
-Kalshi daba al resultado que ocurrió y la diferencia entre los goles
-del partido y los que esperaba (Figura~\ref{fig:sorpresas}a).
-En 28 de los 98 partidos con mercados (29\,\%), Kalshi daba menos de
-30\,\% al resultado que ocurrió, y en 52 el total de goles se apartó
-en más de uno del esperado (22 con menos goles y 30 con más).
-La mayor sorpresa fue el partido por el tercer puesto, Francia 4-6
-Inglaterra: el mercado daba 25\,\% a la victoria inglesa y el
-partido tuvo 6,7 goles más de los esperados; en el otro extremo,
-España 0-0 Cabo Verde tenía un empate de 6,5\,\% y 3,7 goles menos
-de los esperados.
-De las 28 sorpresas de resultado, 20 fueron empates, como Catar 1-1
-Suiza o Alemania 1-1 Paraguay en dieciseisavos, y 6 de ellos 0-0, como
-los de España, Ecuador e Inglaterra ante Cabo Verde, Curazao y Ghana;
-como el método casi nunca pronostica empate, en esos partidos la regla,
-que con 1-0 obtiene un punto en cualquier 1-1, rescata más puntos.
-Cuando el resultado ocurrido tenía menos de 30\,\% de probabilidad,
-el método sumó 0,21 puntos por partido menos que la regla
-(Figura~\ref{fig:sorpresas}b; intervalo del 95\,\%: $-0{,}40$ a
-$-0{,}04$), y cuando hubo más de un gol menos de lo esperado, 0,27
-menos, aunque con un intervalo que incluye el cero ($-0{,}83$ a
-$0{,}36$).
-En cambio, cuando el resultado era el probable o los goles fueron los
-esperados o más, el método sumó entre 0,20 y 0,60 puntos más por
-partido, con intervalos que excluyen el cero.
+Las sorpresas fueron frecuentes (Figura~\ref{fig:sorpresas}a): en 28
+de los 98 partidos con mercados, Kalshi daba menos de 30\,\% al
+resultado que ocurrió, 20 de ellos empates, y en 52 el total de goles
+se apartó en más de uno del esperado.
+La mayor fue el tercer puesto, Francia 4-6 Inglaterra, con 25\,\%
+para la victoria inglesa y 6,7 goles más de los esperados.
+Como cabe esperar de un método que optimiza para lo que espera el
+mercado, rindió más que la regla ``el favorito gana 1-0'' cuando el
+partido siguió esas expectativas, y menos en las sorpresas de
+resultado, 0,21 puntos por partido (Figura~\ref{fig:sorpresas}b): en
+un empate inesperado, el 1-0 de la regla suele acertar los goles de un
+equipo, y las victorias más amplias del método, no.
+Las zonas de la figura se definieron después de ver los datos, y sus
+intervalos no corrigen por comparaciones múltiples, así que la figura
+es descriptiva.
 
 \begin{figure}[!htb]
   \centering
@@ -1774,11 +1767,8 @@ esperaba más goles o un favorito más claro.
 Esos cambios suben la probabilidad de acertar 3 o 5 puntos a cambio de
 más partidos en blanco, y en este torneo sumaron 22 puntos netos, 14
 en la fase de grupos y 8 en la eliminatoria.
-La Figura~\ref{fig:sorpresas} muestra el precio de esa apuesta: el
-modelo gana cuando el partido sigue lo que espera el mercado, que es
-el escenario para el que optimiza, y pierde frente a la regla en las
-sorpresas de resultado, sobre todo en los empates, donde un 1-0 aún
-acierta los goles de un equipo.
+El precio de esa apuesta se paga en las sorpresas de resultado
+(Figura~\ref{fig:sorpresas}).
 La regla del favorito 1-0 no es, entonces, una alternativa al modelo,
 sino su aproximación más simple y conservadora: recoge el valor del mercado, que
 elige el ganador, y el de la regla de puntuación, cuyo nivel de
@@ -2022,11 +2012,8 @@ los pronósticos congelados y los parámetros estimados en archivos
 JSON.
 
 Durante el torneo, el sistema se ejecutó en GitHub Actions, el
-servicio de integración continua de GitHub, con dos disparadores: cada
-cambio en el repositorio y un calendario de ejecuciones programadas
-1~h~30~min antes de cada horario de inicio (desde el 29 de junio,
-también 2~h~15~min antes), más una ejecución diaria a medianoche de
-Costa Rica.
+servicio de integración continua de GitHub, con cada cambio en el
+repositorio y en horarios programados antes de cada partido.
 Cada ejecución consultaba los precios de los partidos pendientes,
 reestimaba los parámetros, recalculaba los pronósticos, los validaba
 (abortando si alguno era degenerado), descargaba los resultados nuevos
@@ -2127,32 +2114,13 @@ compatible antes del IPF y omite los mercados de goles por equipo
 (Sección~\ref{sec:modelos}); los Resultados lo evalúan con
 \texttt{model/prospective.py}.
 
-\subsection{Problemas técnicos}
-
-Cuatro errores, típicos de los sistemas que procesan datos en tiempo
-real, se detectaron y corrigieron durante el torneo:
-\begin{itemize}
-  \item \textbf{Claves numéricas en JSON.} Las distribuciones de goles
-    usan enteros como claves, pero JSON solo admite cadenas; al
-    recargar la caché, las búsquedas fallaban y todos los pronósticos
-    colapsaban a 5-5. Se corrigió convirtiendo las claves al cargar,
-    y la validación previa a la publicación detecta desde entonces ese
-    síntoma.
-  \item \textbf{Nombres y fechas en ESPN.} ESPN usa nombres de equipos
-    distintos de los oficiales (``Czechia'', ``Bosnia-Herzegovina'')
-    e indexa los partidos por fecha local, que para los partidos
-    nocturnos difiere de la fecha UTC. Se agregó una tabla de alias,
-    una alerta para partidos sin resultado tras su ventana esperada y
-    la consulta por fecha local.
-  \item \textbf{Concurrencia en el repositorio.} Las ejecuciones
-    automáticas podían coincidir con cambios manuales y fallar al
-    publicar; cada ejecución sincroniza el repositorio antes de
-    publicar.
-  \item \textbf{Fórmulas en el navegador.} El carácter ``$<$'' dentro
-    de las fórmulas de la página de metodología se interpretaba como
-    inicio de una etiqueta HTML; se reemplazó por la entidad
-    \texttt{\&lt;}.
-\end{itemize}
+\paragraph{Problemas técnicos.}
+Durante el torneo se corrigieron además errores de procesamiento sin
+efecto sobre el método, como claves numéricas que se convertían en
+texto al guardar la caché de precios (y colapsaban todos los
+pronósticos a 5-5, síntoma que la validación previa a la publicación
+detecta desde entonces) o nombres de equipos distintos en la fuente de
+resultados.
 
 \subsection{Desarrollo asistido por inteligencia artificial}
 
@@ -2161,9 +2129,12 @@ programación de Anthropic basada en modelos de lenguaje, que lee,
 escribe, ejecuta y corrige código a partir de instrucciones en
 lenguaje natural.
 Con ella se concretó el diseño del flujo de datos (precios, distribución,
-pronóstico, sitio web), se diagnosticaron los errores de la sección
-anterior a partir de la descripción de sus síntomas, se construyó la
-plataforma web y se mantuvo la documentación del repositorio.
+pronóstico, sitio web), se diagnosticaron los errores descritos en este
+apéndice a partir de sus síntomas, se construyó la plataforma web y se
+mantuvo la documentación del repositorio.
+También se usó después del torneo, en el código de la evaluación y en
+la revisión del manuscrito; el autor revisó todo el contenido y es
+responsable de él.
 Las decisiones de modelado, la regla de puntuación y los criterios de
 validación de los pronósticos requirieron nuestra revisión, y
 esa revisión no es infalible: el error en la asignación de jornadas
@@ -2211,8 +2182,7 @@ y permitió dedicar más tiempo al diseño estadístico.
 \FloatBarrier
 
 % ─────────────────────────────────────────────────────────────
-\bibliographystyle{plainnat}
-\bibliography{refs}
+\printbibliography
 
 \end{document}
 

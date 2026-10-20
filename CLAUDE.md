@@ -221,6 +221,28 @@ results.json  ──→ learn.py → estimate_delta()  →  δ = 0..∞
   resolved. `model/resolve_bracket.py`, `kalshi.py` and `results.py` are kept
   for reruns and the article; there are no further brackets to resolve.
 
+## Target journal (article)
+
+*Revista de Matemática: Teoría y Aplicaciones* (UCR/CIMPA), new portal
+https://revistas.ucr.ac.cr/index.php/rmatematica (checked 2026-10-20).
+No page limit. Scope excludes "aplicaciones de las matemáticas
+básicas", so the article must state its mathematical contribution
+(Propositions 1–2, the compatibility projection).
+- **First submission:** PDF, 12 pt, single spacing, figures in the
+  text; title and abstract in Spanish and English; affiliation as
+  Institution, Department, City, Country; cover letter signed by all
+  authors; keywords and MSC 2020 entered as metadata; references
+  complete, with DOIs. Numbered citations, alphabetical list (the
+  article uses biblatex `style=numeric, sorting=nyt` with
+  `backend=bibtex`, since biber is not installed).
+- **Final version, if accepted:** journal class `RMTA.cls` (template
+  zip at `.../rmatematica/libraryFiles/downloadPublic/41`), figures
+  as PNG in color and grayscale, tables with double rules above the
+  header and at the end and a vertical rule after the stub column,
+  `references.bib` with only article, book, inbook, inproceedings,
+  thesis, unpublished and online entries, manual Spanish
+  `\hyphenation`.
+
 ## Gotchas
 
 **Unquoted spread markets are not zero probability**: Kalshi almost never
