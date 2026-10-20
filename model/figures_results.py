@@ -21,7 +21,9 @@ ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT))
 
 from model.figures import OUT_DIR, _num   # style, locale, decimal comma
-from model.article_stats import match_rows, by_favourite, GAMMA, DELTA
+from model.article_stats import (match_rows, by_favourite, surprises,
+                                  surprise_rows, rounds_compare,
+                                  ROUND_ORDER, GAMMA, DELTA)
 from model.historical import build_distributions, scoreline_probs_ipf
 from model.optimizer import best_prediction
 
@@ -256,8 +258,9 @@ def fig9_world_cup():
     h, nh = _hist_group_totals()
     c = Counter(min(sum(r["result"]), 7) for r in rows)
     ts = np.arange(8)
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4.2),
-                                   gridspec_kw={"width_ratios": [1, 1.3]})
+    fig, axes = plt.subplots(2, 2, figsize=(10, 8),
+                             gridspec_kw={"width_ratios": [1, 1.3]})
+    (ax1, ax2), (ax3, ax4) = axes
     ax1.plot(ts, [100 * h[t] / nh for t in ts], "o-", color=MUTED, lw=1.4)
     ax1.plot(ts, [100 * c[t] / len(rows) for t in ts], "o-", color=BLUE, lw=1.8)
     ax1.text(1.2, 100 * h[1] / nh + 3.5, "2014–2022", color=MUTED, fontsize=9)
@@ -279,7 +282,7 @@ def fig9_world_cup():
     ax2.axhline(0, color="#cccccc", lw=0.8)
     ax2.scatter(pf, gd, s=18, color=BLUE, alpha=0.8, lw=0)
     # label → text position (data coordinates)
-    notable = {("Germany", "Curaçao"): (0.78, 6.0),
+    notable = {("Germany", "Curaçao"): (0.62, 6.7),
                ("New Zealand", "Belgium"): (0.70, 4.6),
                ("Spain", "Cape Verde"): (0.95, -1.0),
                ("Ecuador", "Curaçao"): (0.88, -1.6),
@@ -293,11 +296,105 @@ def fig9_world_cup():
                          (x, y), xytext=pos, ha="right", va="center",
                          fontsize=8, color=INK,
                          arrowprops=dict(arrowstyle="-", color=MUTED, lw=0.6))
+    ax2.set_ylim(-2.6, 7.2)
     ax2.set_xlabel("Probabilidad de que gane el favorito (Kalshi)")
     ax2.set_ylabel("Diferencia de goles a favor del favorito")
     _clean(ax2)
+
+    # (c, d) goals per match and draws by round, 2026 vs 2014–2022
+    rc = rounds_compare()
+    labels = {"G1": "Grupos 1", "G2": "Grupos 2", "G3": "Grupos 3",
+              "R32": "Dieciseisavos", "R16": "Octavos", "QF": "Cuartos",
+              "SF-F": "Semis a final"}
+    keys = ROUND_ORDER
+    x = np.arange(len(keys))
+    for ax, field, scale, ylab in [
+            (ax3, "goals", 1, "Goles por partido"),
+            (ax4, "draws", 100, "Empates (%)")]:
+        for name, color, dx in (("hist", MUTED, -0.12), ("2026", BLUE, 0.12)):
+            xs = [i + dx for i, k in enumerate(keys) if k in rc[name]]
+            ys = [scale * rc[name][k][field] for k in keys if k in rc[name]]
+            ax.scatter(xs, ys, s=30, color=color, zorder=3)
+            ax.vlines(xs, 0, ys, color=color, lw=1.2, alpha=0.6)
+        ax.set_xticks(x)
+        ax.set_xticklabels([labels[k] for k in keys], rotation=30, ha="right",
+                           fontsize=9)
+        ax.set_ylabel(ylab)
+        ax.set_ylim(0, None)
+        _clean(ax)
+    ax3.text(0.02, 0.97, "2014–2022", color=MUTED, transform=ax3.transAxes,
+             va="top", fontsize=9)
+    ax3.text(0.02, 0.90, "2026", color=BLUE, transform=ax3.transAxes,
+             va="top", fontsize=9)
+    for ax, tag in zip(axes.flat, "abcd"):
+        ax.text(0.0, 1.03, tag, transform=ax.transAxes, fontsize=12,
+                fontweight="bold", va="bottom", ha="left")
     fig.tight_layout()
     _save(fig, "fig9_mundial_distinto")
+
+
+# ── Fig 10: surprises ──────────────────────────────────────────
+def fig10_surprises():
+    rows = surprise_rows(match_rows())
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 4.6),
+                                   gridspec_kw={"width_ratios": [1.25, 1]})
+    ax1.axvline(0.3, color="#cccccc", lw=0.8, ls="--")
+    for y in (-1, 1):
+        ax1.axhline(y, color="#cccccc", lw=0.8, ls="--")
+    colors = {1: BLUE, -1: ORANGE, 0: "#c8c8c8"}
+    for r in rows:
+        d = r["pts"][6] - r["pts"]["fav10"]
+        ax1.scatter(r["p_out"], r["d_goals"], s=22, lw=0, zorder=3,
+                    color=colors[(d > 0) - (d < 0)])
+    notable = {("France", "England"): (0.42, 6.3),
+               ("Germany", "Curaçao"): (0.80, 5.2),
+               ("Spain", "Cape Verde"): (0.75, -3.2),
+               ("USA", "Belgium"): (0.20, 3.9),
+               ("Algeria", "Austria"): (0.47, 5.3),
+               ("Mexico", "England"): (0.13, 2.9)}
+    es = dict(ES, **{"France": "Francia", "England": "Inglaterra",
+                     "USA": "EE. UU.", "Algeria": "Argelia",
+                     "Austria": "Austria", "Mexico": "México"})
+    for r in rows:
+        pos = notable.get((r["home"], r["away"]))
+        if pos:
+            a, b = r["result"]
+            ax1.annotate(f"{es.get(r['home'], r['home'])} {a}-{b} "
+                         f"{es.get(r['away'], r['away'])}",
+                         (r["p_out"], r["d_goals"]), xytext=pos,
+                         ha="center", va="center", fontsize=8, color=INK,
+                         arrowprops=dict(arrowstyle="-", color=MUTED, lw=0.6))
+    ax1.text(0.02, -3.6, "sorpresa en\nel resultado", color=MUTED, fontsize=8)
+    ax1.text(0.98, 6.6, "más goles de lo esperado", color=MUTED, fontsize=8,
+             ha="right")
+    ax1.text(0.98, -3.6, "menos goles", color=MUTED, fontsize=8, ha="right")
+    ax1.set_xlim(0, 1)
+    ax1.set_xlabel("Probabilidad que Kalshi daba al resultado ocurrido")
+    ax1.set_ylabel("Goles del partido menos goles esperados")
+    _clean(ax1)
+
+    bins = surprises(match_rows())["bins"]
+    ypos = [5.4, 4.4, 3.4, 2.0, 1.0, 0.0]
+    ax2.axvline(0, color="#cccccc", lw=0.8)
+    for b, y in zip(bins, ypos):
+        color = BLUE if b["lo"] > 0 else ORANGE if b["hi"] < 0 else INK
+        ax2.plot([b["lo"], b["hi"]], [y, y], color=color, lw=1.4)
+        ax2.scatter([b["diff"]], [y], color=color, s=28, zorder=3)
+    ax2.set_yticks(ypos)
+    ax2.set_yticklabels([f"{b['label'].split(': ')[1]} (n = {b['n']})"
+                         for b in bins], fontsize=8.5)
+    ax2.text(-1.55, 6.0, "Probabilidad del resultado ocurrido", fontsize=9,
+             color=INK, fontweight="bold")
+    ax2.text(-1.55, 2.6, "Goles frente a lo esperado", fontsize=9,
+             color=INK, fontweight="bold")
+    ax2.set_xlim(-1.6, 0.8)
+    ax2.set_ylim(-0.6, 6.4)
+    ax2.set_xlabel("Puntos por partido:\nmodelo menos «favorito 1-0»")
+    _clean(ax2)
+    ax2.spines["left"].set_visible(False)
+    ax2.tick_params(axis="y", length=0)
+    fig.tight_layout()
+    _save(fig, "fig10_sorpresas")
 
 
 if __name__ == "__main__":
@@ -307,4 +404,5 @@ if __name__ == "__main__":
     fig7_decision_map()
     fig8_calibration()
     fig9_world_cup()
+    fig10_surprises()
     print("Done.")

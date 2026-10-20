@@ -1091,6 +1091,44 @@ acertar el marcador.
 \end{figure}
 
 \FloatBarrier
+\subsection{Sorpresas}
+\label{sec:sorpresas}
+
+Las sorpresas fueron frecuentes, y en ellas el modelo rindió peor que
+la regla ``el favorito gana 1-0'' (Figura~\ref{fig:sorpresas}).
+En 28 de los 98 partidos con mercados (29\,\%), Kalshi daba menos de
+30\,\% al resultado que ocurrió, y en 22 el total de goles se apartó
+en más de 2 del esperado.
+La mayor sorpresa fue el partido por el tercer puesto, Francia 4-6
+Inglaterra: el mercado daba 25\,\% a la victoria inglesa y el
+partido tuvo 6,7 goles más de los esperados; en el otro extremo,
+España 0-0 Cabo Verde tenía un empate de 6,5\,\% y 3,7 goles menos
+de los esperados.
+Cuando el resultado ocurrido tenía menos de 30\,\% de probabilidad,
+el modelo sumó 0,25 puntos por partido menos que la regla (intervalo
+del 95\,\%: $-0{,}46$ a $-0{,}04$), y cuando hubo más de un gol menos
+de lo esperado, 0,77 menos ($-1{,}47$ a $-0{,}05$).
+En cambio, cuando los goles fueron los esperados o más, el modelo sumó
+0,30 ($0{,}01$ a $0{,}65$) y 0,23 ($0{,}03$ a $0{,}46$) puntos más por
+partido.
+
+\begin{figure}[!htb]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig10_sorpresas}
+  \caption{El modelo gana cuando el partido sigue lo que espera el
+    mercado y pierde en las sorpresas.
+    Izquierda: probabilidad que Kalshi daba al resultado ocurrido y
+    diferencia entre los goles del partido y los esperados por el
+    mercado, en los 98 partidos con mercados; en azul, los partidos en
+    que el modelo sumó más puntos que la regla ``el favorito gana
+    1-0'', en naranja los que sumó menos y en gris los empates.
+    Derecha: diferencia de puntos por partido entre el modelo y esa
+    regla, por tipo de partido, con intervalos de credibilidad del
+    95\,\% (\textit{bootstrap} bayesiano).}
+  \label{fig:sorpresas}
+\end{figure}
+
+\FloatBarrier
 \subsection{Un Mundial distinto}
 \label{sec:resultados-delta}
 
@@ -1104,17 +1142,29 @@ El formato ampliado trajo partidos muy desiguales: en 18 partidos de
 grupos el favorito tenía más del 75\,\% de probabilidad de ganar, y
 entre ellos hubo goleadas como Alemania 7-1 Curazao y sorpresas como
 España 0-0 Cabo Verde y Ecuador 0-0 Curazao.
+Por ronda, las diferencias se concentraron en la primera y la tercera
+jornada de grupos (Figura~\ref{fig:mundial}c, d): la primera tuvo
+38\,\% de empates, frente a 21\,\%, y la tercera 3,08 goles por
+partido, frente a 2,46.
+En la eliminatoria, en cambio, hubo menos definiciones por penales: 4
+de 32 partidos (12,5\,\%), frente a 13 de 48 (27\,\%) en
+2014--2022.
 
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=\textwidth]{figures/fig9_mundial_distinto}
-  \caption{El Mundial 2026 tuvo más goles en la fase de grupos y
-    partidos muy desiguales.
-    Izquierda: porcentaje de partidos de grupos según el total de
-    goles, en el Mundial 2026 (72 partidos) y en 2014--2022 (144).
-    Derecha: diferencia de goles a favor del favorito frente a su
+  \caption{El Mundial 2026 tuvo más goles en la fase de grupos,
+    partidos muy desiguales y menos penales.
+    (a)~Porcentaje de partidos de grupos según el total de goles, en el
+    Mundial 2026 (72 partidos) y en 2014--2022 (144).
+    (b)~Diferencia de goles a favor del favorito frente a su
     probabilidad de ganar según Kalshi, en los 66 partidos de grupos con
-    mercados.}
+    mercados.
+    (c)~Goles por partido y (d)~porcentaje de empates por ronda, en
+    2026 (azul) y en 2014--2022 (gris); en la eliminatoria se cuentan
+    los goles de la prórroga y un empate es una definición por
+    penales. Dieciseisavos no existía antes de 2026; las rondas
+    eliminatorias tienen entre 4 y 24 partidos.}
   \label{fig:mundial}
 \end{figure}
 
@@ -1258,8 +1308,13 @@ esperaba más goles o un favorito más claro.
 Esos cambios suben la probabilidad de acertar 3 o 5 puntos a cambio de
 más partidos en blanco, y en este torneo sumaron 9 puntos netos, dos
 tercios de ellos en la fase eliminatoria.
+La Figura~\ref{fig:sorpresas} muestra el precio de esa apuesta: el
+modelo gana cuando el partido sigue lo que espera el mercado, que es
+el escenario para el que optimiza, y pierde frente a la regla en las
+sorpresas, sobre todo en los partidos con menos goles de lo esperado,
+donde un 1-0 acierta el marcador o los goles de un equipo.
 La regla del favorito 1-0 no es, entonces, una alternativa al modelo,
-sino su aproximación más simple: recoge el valor del mercado, que
+sino su aproximación más simple y conservadora: recoge el valor del mercado, que
 elige el ganador, y el de la regla de puntuación, cuyo nivel de
 3 puntos premia las victorias sin goles en contra, y deja al modelo
 solo el ajuste fino según los goles esperados.
@@ -1322,9 +1377,14 @@ Los tramos en que $\hat\delta$ volvió a 0, como entre los partidos 45 y
 61, muestran que con una o dos jornadas de datos la estimación es
 inestable, como cabe esperar de una validación hacia adelante con
 pocos pliegues.
-El cambio de formato del Mundial 2026, con 48 selecciones en lugar de
-32, es una explicación plausible de la diferencia en goles y empates,
-pero un solo torneo no permite separarla de la variación muestral.
+El cambio de formato del Mundial 2026 es una explicación plausible de
+esas diferencias.
+Con 48 selecciones hubo más partidos desiguales, con más goleadas, y
+al clasificar 8 de los 12 terceros lugares, menos equipos llegaron a
+la tercera jornada de grupos sin nada en juego, lo que podría explicar
+que esa jornada tuviera más goles (Figura~\ref{fig:mundial}).
+Un solo torneo, sin embargo, no permite separar estas explicaciones de
+la variación muestral.
 
 \subsection{Limitaciones}
 

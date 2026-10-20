@@ -182,6 +182,112 @@ def by_favourite(rows, edges=(0.0, 0.45, 0.55, 0.65, 0.75, 1.0)):
     return out
 
 
+def surprise_rows(rows):
+    """
+    Kalshi-only surprise measures for the matches with markets:
+    p_out = market probability of the observed quiniela outcome,
+    d_goals = observed total goals minus the market's expected total
+    (6+ counted as 6).
+    """
+    out = []
+    for r in rows:
+        if r["source"] != "kalshi":
+            continue
+        a, b = r["result"]
+        p = r["probs"]
+        p_out = p["home_win"] if a > b else p["draw"] if a == b else p["away_win"]
+        e_t = sum(int(k) * v for k, v in p["total_goals"].items())
+        out.append({**r, "p_out": p_out, "d_goals": a + b - e_t})
+    return out
+
+
+SURPRISE_BINS = [
+    ("Resultado: menos de 30 %", lambda r: r["p_out"] < 0.3),
+    ("Resultado: 30 a 50 %",     lambda r: 0.3 <= r["p_out"] < 0.5),
+    ("Resultado: 50 % o más",    lambda r: r["p_out"] >= 0.5),
+    ("Goles: más de 1 por debajo", lambda r: r["d_goals"] < -1),
+    ("Goles: a 1 o menos",         lambda r: abs(r["d_goals"]) <= 1),
+    ("Goles: más de 1 por encima", lambda r: r["d_goals"] > 1),
+]
+
+
+def surprises(rows):
+    """Model minus 'favourite wins 1-0' points per match, by surprise bin."""
+    sr = surprise_rows(rows)
+    out = {"n": len(sr),
+           "upsets": sum(r["p_out"] < 0.3 for r in sr),
+           "goals_off_2": sum(abs(r["d_goals"]) > 2 for r in sr),
+           "bins": []}
+    for label, keep in SURPRISE_BINS:
+        g = [r for r in sr if keep(r)]
+        d = [r["pts"][6] - r["pts"]["fav10"] for r in g]
+        tot, lo, hi = bayes_boot(d)
+        out["bins"].append({"label": label, "n": len(g),
+                            "model": st.mean(r["pts"][6] for r in g),
+                            "fav10": st.mean(r["pts"]["fav10"] for r in g),
+                            "diff": tot / len(g), "lo": lo / len(g),
+                            "hi": hi / len(g)})
+    return out
+
+
+ROUND_ORDER = ["G1", "G2", "G3", "R32", "R16", "QF", "SF-F"]
+
+
+def _round_key(m: dict) -> str | None:
+    """Round label of a non-group match (both data sources)."""
+    r = m["round"].lower()
+    if "round of 32" in r:
+        return "R32"
+    if "round of 16" in r:
+        return "R16"
+    if "quarter" in r:
+        return "QF"
+    if "semi" in r or "third" in r or "final" in r:
+        return "SF-F"
+    return None
+
+
+def _by_round(matches: list[dict], score) -> dict[str, list]:
+    """Final scores grouped by round; group rounds by order within group."""
+    out: dict[str, list] = {}
+    groups: dict[str, list] = {}
+    for m in matches:
+        if m.get("group") and "Matchday" in m["round"]:
+            groups.setdefault(m["group"], []).append(m)
+        else:
+            k = _round_key(m)
+            if k:
+                out.setdefault(k, []).append(score(m))
+    for lst in groups.values():
+        lst.sort(key=lambda m: m.get("time_utc") or (m["date"], m.get("time", "")))
+        for i, m in enumerate(lst):
+            out.setdefault(f"G{i // 2 + 1}", []).append(score(m))
+    return out
+
+
+def rounds_compare():
+    """
+    Goals per match and share of draws by round, 2026 vs 2014-2022.
+    Scores include extra time, so a knockout draw is a penalty shootout.
+    """
+    hist: dict[str, list] = {}
+    for y in (2014, 2018, 2022):
+        ms = json.loads((ROOT / f"data/wc{y}.json").read_text())["matches"]
+        for k, v in _by_round(
+                ms, lambda m: tuple(m["score"].get("et") or m["score"]["ft"])).items():
+            hist.setdefault(k, []).extend(v)
+    schedule, results, _, _ = load()
+    new = _by_round(schedule, lambda m: (results[str(m["id"])]["home_score"],
+                                         results[str(m["id"])]["away_score"]))
+    out = {}
+    for name, d in (("hist", hist), ("2026", new)):
+        out[name] = {k: {"n": len(v),
+                         "goals": st.mean(a + b for a, b in v),
+                         "draws": sum(a == b for a, b in v) / len(v)}
+                     for k, v in d.items()}
+    return out
+
+
 def model_distributions():
     """Final-parameter scoreline distributions for the 98 Kalshi matches."""
     schedule, _, _, _ = load()
@@ -256,6 +362,8 @@ def main():
                         for k, v in predicted_vs_observed(rows).items()},
         "by_favourite": by_favourite(rows),
         "rules": rule_sensitivity(rows, dists),
+        "surprises": surprises(rows),
+        "rounds": rounds_compare(),
     }
     print(json.dumps(stats, indent=1, default=str))
     if "--json" in sys.argv:
