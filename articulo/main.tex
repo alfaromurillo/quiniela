@@ -12,7 +12,7 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[spanish,es-nodecimaldot,es-tabla]{babel}
+\usepackage[english,spanish,es-tabla]{babel}
 \usepackage{natbib}
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage{booktabs}
@@ -112,15 +112,15 @@ los puntos esperados bajo la regla de puntuación de la quiniela.
 
 Evaluamos el modelo de forma retrospectiva sobre los 104 partidos
 completos del Mundial 2026 (72 de fase de grupos y 32 de eliminatoria).
-La predicción óptima obtuvo en promedio 2.19 puntos por partido
-(1.99 en fase de grupos, 2.66 en eliminatoria bajo la regla de puntaje
+La predicción óptima obtuvo en promedio 2,19 puntos por partido
+(1,99 en fase de grupos, 2,66 en eliminatoria bajo la regla de puntaje
 doble de semifinales, tercer puesto y final) y acertó el marcador
-exacto en el 13.5\,\% de los partidos, superando consistentemente al
+exacto en el 13,5\,\% de los partidos, superando consistentemente al
 marcador modal.
 Los precios de Kalshi, corregidos por sesgo favorito-longshot con
 $\hat\alpha \approx 1.14$ (cercano al valor de referencia
-$\alpha_0 = 1.10$), obtuvieron un score de Brier de 0.466, muy por
-debajo del 0.667 de una predicción uniforme.
+$\alpha_0 = 1.10$), obtuvieron un score de Brier de 0,466, muy por
+debajo del 0,667 de una predicción uniforme.
 España se coronó campeona al vencer a Argentina 1-0 en la final,
 marcador que el modelo predijo exactamente, obteniendo el máximo de
 10 puntos bajo la regla de puntaje doble.
@@ -132,6 +132,7 @@ están disponibles públicamente en GitHub.
 \bigskip
 
 % ── Abstract en inglés ────────────────────────────────────────
+\begin{otherlanguage}{english}
 \noindent\textbf{Abstract.}
 In a soccer quiniela, predicting the exact scoreline can be worth
 up to five times more than simply predicting the winner.
@@ -182,6 +183,7 @@ under the double-points rule.
 
 Model source code and live tracking website are publicly available
 on GitHub.
+\end{otherlanguage}
 
 \bigskip\hrule
 
@@ -247,8 +249,8 @@ $T = h + k$ y de la diferencia $M = h - k$, pero no su distribución
 conjunta, que es justamente $P(h,k)$.
 Reconstruirla a partir de las marginales exige suponer cómo dependen
 $T$ y $M$, y el supuesto más simple, la independencia, es falso: en
-los Mundiales 2014, 2018 y 2022, los empates promediaron 1.6 goles
-y las victorias 2.9.
+los Mundiales 2014, 2018 y 2022, los empates promediaron 1,6 goles
+y las victorias 2,9.
 Los trabajos sobre quinielas de llaves tampoco tratan el crédito
 parcial por acertar los goles de un solo equipo.
 Un participante con probabilidades de mercado bien calibradas carece,
@@ -268,7 +270,7 @@ historial, y la información específica de cada partido, del mercado.
 Evaluamos los pronósticos congelados antes de cada uno de los 104
 partidos del torneo y los comparamos con cinco estrategias de
 referencia.
-El pronóstico óptimo obtuvo 2.19 puntos por partido y superó en
+El pronóstico óptimo obtuvo 2,19 puntos por partido y superó en
 6\,\% al marcador más probable.
 El modelo funcionó durante todo el torneo en una plataforma web
 pública con actualización automática, desarrollada con asistencia de
@@ -334,10 +336,10 @@ también en la fase eliminatoria; solo el de clasificación incluye la
 prórroga y los penales.
 El precio de cada contrato se toma como el punto medio entre la mejor
 oferta de compra y la mejor de venta, y el contrato se descarta si
-esa diferencia supera \$0.30.
+esa diferencia supera \$0,30.
 En los mercados de total, ventaja y goles por equipo, un contrato
 descartado se sustituye por su último precio negociado cuando este
-está entre \$0.02 y \$0.98.
+está entre \$0,02 y \$0,98.
 Los precios de resultado se normalizan para sumar uno, y las
 probabilidades acumuladas (``más de~$n$'') se convierten en
 probabilidades puntuales por diferencias sucesivas, tras forzar que
@@ -353,7 +355,7 @@ ventaja de goles, y los 32 eliminatorios tuvieron además mercados de
 goles por equipo.
 Los 6 partidos restantes, todos de fase de grupos, no tenían precios
 de resultado válidos al congelarse y se pronosticaron con probabilidades
-fijas (0.40, 0.25 y 0.35 para victoria del Equipo~A, empate y
+fijas (0,40; 0,25 y 0,35 para victoria del Equipo~A, empate y
 victoria del Equipo~B) y la distribución histórica de goles.
 
 % ─────────────────────────────────────────────────────────────
@@ -415,12 +417,12 @@ El tamaño efectivo de la muestra de fase de grupos es
 $48\,(1 + \gamma + \gamma^2)$, y el de la eliminatoria,
 $16\,(1 + \gamma + \gamma^2)$.
 El parámetro $\gamma$ se estima por validación hacia adelante: con
-cada valor de una cuadrícula de paso 0.01 en $[0.10, 1]$, se
+cada valor de una cuadrícula de paso 0,01 en $[0.10;\, 1]$, se
 predicen los marcadores del Mundial 2018 a partir del 2014, y los del
 2022 a partir de los dos anteriores, y se suma la log-verosimilitud
 predictiva de ambos.
 A esa suma se agrega el logaritmo de una distribución a priori
-$\gamma \sim \mathcal{N}(1, 0.3^2)$ truncada a $(0, 1]$, que regulariza
+$\gamma \sim \mathcal{N}(1;\, 0.3^2)$ truncada a $(0, 1]$, que regulariza
 hacia el caso sin decaimiento.
 El máximo está en $\hat{\gamma} = 0.84$, que da tamaños efectivos de
 122 partidos de grupos y 41 eliminatorios.
@@ -475,7 +477,7 @@ final) se predice con las jornadas anteriores, y se suman las
 log-verosimilitudes predictivas.
 La distribución a priori $\delta \sim \text{Semi-Normal}(\sigma = 1)$
 favorece el historial cuando hay pocos datos del torneo, y la búsqueda
-se hace en una cuadrícula de paso 0.05 en $[0, 8]$.
+se hace en una cuadrícula de paso 0,05 en $[0, 8]$.
 Mientras no se ha completado la primera jornada, $\hat\delta = 0$.
 La Figura~\ref{fig:delta} muestra $\hat\delta$ a lo largo del
 torneo.\footnote{Durante el torneo, la asignación de partidos a
@@ -540,9 +542,9 @@ El parámetro se estima por máximo a posteriori con los partidos ya
 disputados que tienen precios de Kalshi: la log-verosimilitud es
 $\ell(\alpha) = \sum_i \log p_{r_i}(\alpha)$, donde $r_i$ es el
 resultado observado del partido~$i$, y la distribución a priori es
-$\alpha \sim \mathcal{N}(1.10, 0.20^2)$, centrada en el valor que
+$\alpha \sim \mathcal{N}(1.10;\, 0.20^2)$, centrada en el valor que
 \citet{whelan2024} estima para mercados de apuestas competitivos.
-La búsqueda se hace en una cuadrícula de paso 0.02 en $[0.5, 2.5]$;
+La búsqueda se hace en una cuadrícula de paso 0,02 en $[0.5;\, 2.5]$;
 con menos de dos partidos, $\hat\alpha = 1.10$.
 
 \paragraph{Ajuste iterativo proporcional.}
@@ -592,7 +594,7 @@ son exactamente compatibles entre sí sobre la cuadrícula truncada.
 El resultado final reproduce exactamente las probabilidades de
 ventaja, pero no las de total: en los 66 partidos de grupos con
 mercados, la mayor discrepancia en $\Prob(T = t)$ tuvo una mediana de
-0.9 puntos porcentuales (máximo 4.6), y no disminuye con más
+0,9 puntos porcentuales (máximo 4,6), y no disminuye con más
 iteraciones.
 La Figura~\ref{fig:kalshi} muestra el efecto del ajuste en un partido.
 
@@ -710,10 +712,10 @@ ponderados con $\hat\gamma = 0.84$.}
   \toprule
   $(\Delta_A, \Delta_B)$ & Desenlace & $K$ \\
   \midrule
-  $(0,0)$ & sin goles; penales & 0.562 \\
-  $(1,1)$ & un gol cada equipo; penales & 0.191 \\
-  $(1,0)$ o $(0,1)$ & un equipo gana por un gol & 0.076 cada uno \\
-  $(2,1)$ o $(1,2)$ & un equipo gana 2-1 en la prórroga & 0.048 cada uno \\
+  $(0,0)$ & sin goles; penales & 0,562 \\
+  $(1,1)$ & un gol cada equipo; penales & 0,191 \\
+  $(1,0)$ o $(0,1)$ & un equipo gana por un gol & 0,076 cada uno \\
+  $(2,1)$ o $(1,2)$ & un equipo gana 2-1 en la prórroga & 0,048 cada uno \\
   \bottomrule
 \end{tabular}
 \end{table}
@@ -827,15 +829,15 @@ vs.\ Chequia (Equipo~B), con el modelo completo. El marcador modal
 \toprule
 Pronóstico $(a,b)$ & $P(a,b)$ & $E(a,b)$ & \\
 \midrule
-$\mathbf{1\text{-}0}$ & 0.112 & $\mathbf{1.539}$ & óptimo \\
-$1\text{-}1$ & 0.146 & 1.518 & modal \\
-$2\text{-}1$ & 0.079 & 1.454 & \\
-$2\text{-}0$ & 0.081 & 1.403 & \\
-$0\text{-}1$ & 0.106 & 1.397 & \\
-$0\text{-}0$ & 0.095 & 1.333 & \\
-$1\text{-}2$ & 0.075 & 1.309 & \\
-$3\text{-}1$ & 0.028 & 1.225 & \\
-$0\text{-}2$ & 0.058 & 1.212 & \\
+$\mathbf{1\text{-}0}$ & 0,112 & $\mathbf{1.539}$ & óptimo \\
+$1\text{-}1$ & 0,146 & 1,518 & modal \\
+$2\text{-}1$ & 0,079 & 1,454 & \\
+$2\text{-}0$ & 0,081 & 1,403 & \\
+$0\text{-}1$ & 0,106 & 1,397 & \\
+$0\text{-}0$ & 0,095 & 1,333 & \\
+$1\text{-}2$ & 0,075 & 1,309 & \\
+$3\text{-}1$ & 0,028 & 1,225 & \\
+$0\text{-}2$ & 0,058 & 1,212 & \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -907,7 +909,7 @@ de modo que la comparación cubre 90 de los 104 partidos.
 Las diferencias de puntos entre estrategias se acompañan de un
 intervalo de confianza del 95\,\% obtenido por \textit{bootstrap}
 pareado: se remuestrean los partidos con reemplazo 10\,000 veces y se
-toman los percentiles 2.5 y 97.5 de la diferencia total.
+toman los percentiles 2,5 y 97,5 de la diferencia total.
 
 \paragraph{Implementación.}
 El sistema está escrito en Python, se ejecutó automáticamente durante
@@ -939,13 +941,13 @@ semifinales, tercer puesto y final (Sección~\ref{sec:optimizacion}).
 \label{sec:puntos}
 
 La Tabla~\ref{tab:puntos} resume el desempeño de la predicción óptima.
-En promedio, el modelo obtuvo 2.19 puntos por partido, con una tasa de
-acierto exacto del 13.5\,\% y una tasa de acierto de ganador o mejor
-(2 puntos base o más) del 65.4\,\%.
+En promedio, el modelo obtuvo 2,19 puntos por partido, con una tasa de
+acierto exacto del 13,5\,\% y una tasa de acierto de ganador o mejor
+(2 puntos base o más) del 65,4\,\%.
 El promedio de puntos esperados \emph{ex ante} sobre los 103 partidos
-con ese campo disponible en la predicción congelada fue 2.13, cercano
+con ese campo disponible en la predicción congelada fue 2,13, cercano
 al promedio de puntos realmente obtenidos en esos mismos partidos
-(2.18): el modelo está razonablemente bien calibrado en agregado,
+(2,18): el modelo está razonablemente bien calibrado en agregado,
 aunque esto no garantiza calibración partido a partido.
 
 \begin{table}[h]
@@ -958,24 +960,24 @@ el puntaje doble de semifinales, tercer puesto y final.}
 \toprule
 Fase & $n$ & Total & Promedio & \% exacto & \% ganador o mejor \\
 \midrule
-Grupos      & 72 & 143 & 1.99 &  9.7\,\% & 63.9\,\% \\
-Eliminatoria & 32 &  85 & 2.66 & 21.9\,\% & 68.8\,\% \\
+Grupos      & 72 & 143 & 1,99 &  9,7\,\% & 63,9\,\% \\
+Eliminatoria & 32 &  85 & 2,66 & 21,9\,\% & 68,8\,\% \\
 \midrule
-Total       & 104 & 228 & 2.19 & 13.5\,\% & 65.4\,\% \\
+Total       & 104 & 228 & 2,19 & 13,5\,\% & 65,4\,\% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 La fase eliminatoria muestra un promedio superior a la de grupos, pero
 con alta varianza entre rondas (Tabla~\ref{tab:rondas}): la ronda de 32
-promedió 2.94 puntos por partido ($n=16$), octavos de final apenas 1.38
+promedió 2,94 puntos por partido ($n=16$), octavos de final apenas 1,38
 ($n=8$, sin ninguna predicción exacta y tres partidos en los que el
 equipo visitante ganó por dos o más goles de diferencia: México 2-3
 Inglaterra, Estados Unidos 1-4 Bélgica, Brasil 1-2 Noruega), y cuartos
-de final repuntó a 3.75 ($n=4$).
+de final repuntó a 3,75 ($n=4$).
 En las rondas de puntaje doble el tamaño de muestra es tan pequeño
 ($n=1$ o $n=2$) que el resultado es esencialmente binario: las
-semifinales promediaron apenas 1.00 punto (Francia-España, 0 puntos;
+semifinales promediaron apenas 1,00 punto (Francia-España, 0 puntos;
 Inglaterra-Argentina, 2 puntos), el partido por el tercer puesto
 obtuvo 0 puntos (Francia 4-6 Inglaterra, un resultado atípico y
 lejano de la predicción $2$-$1$), y la final obtuvo el máximo posible,
@@ -991,12 +993,12 @@ puesto y final).}
 \toprule
 Ronda & $n$ & Total & Promedio \\
 \midrule
-Ronda de 32     & 16 & 47 & 2.94 \\
-Octavos de final &  8 & 11 & 1.38 \\
-Cuartos de final &  4 & 15 & 3.75 \\
-Semifinales      &  2 &  2 & 1.00 \\
-Tercer puesto    &  1 &  0 & 0.00 \\
-Final            &  1 & 10 & 10.00 \\
+Ronda de 32     & 16 & 47 & 2,94 \\
+Octavos de final &  8 & 11 & 1,38 \\
+Cuartos de final &  4 & 15 & 3,75 \\
+Semifinales      &  2 &  2 & 1,00 \\
+Tercer puesto    &  1 &  0 & 0,00 \\
+Final            &  1 & 10 & 10,00 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1033,20 +1035,20 @@ incluyendo el puntaje doble de semifinales, tercer puesto y final).}
 & \multicolumn{2}{c}{Total ($n=90$)} \\
 Estrategia & Total & Prom. & Total & Prom. & Total & Prom. \\
 \midrule
-1. Uniforme                        &  68 & 1.17 & 26 & 0.81 &  94 & 1.04 \\
-2. Solo resultado (sin $\alpha$)   & 126 & 2.17 & 73 & 2.28 & 199 & 2.21 \\
-3. Solo resultado (con $\alpha$)   & 126 & 2.17 & 73 & 2.28 & 199 & 2.21 \\
-4. Completo (sin $\alpha$)         & 127 & 2.19 & 84 & 2.63 & 211 & 2.34 \\
-5. Modal completo                  & 123 & 2.12 & 78 & 2.44 & 201 & 2.23 \\
-6. \textbf{Óptimo — nuestro modelo} & \textbf{128} & \textbf{2.21} & \textbf{85} & \textbf{2.66} & \textbf{213} & \textbf{2.37} \\
+1. Uniforme                        &  68 & 1,17 & 26 & 0,81 &  94 & 1,04 \\
+2. Solo resultado (sin $\alpha$)   & 126 & 2,17 & 73 & 2,28 & 199 & 2,21 \\
+3. Solo resultado (con $\alpha$)   & 126 & 2,17 & 73 & 2,28 & 199 & 2,21 \\
+4. Completo (sin $\alpha$)         & 127 & 2,19 & 84 & 2,63 & 211 & 2,34 \\
+5. Modal completo                  & 123 & 2,12 & 78 & 2,44 & 201 & 2,23 \\
+6. \textbf{Óptimo — nuestro modelo} & \textbf{128} & \textbf{2,21} & \textbf{85} & \textbf{2,66} & \textbf{213} & \textbf{2,37} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 Tres comparaciones son relevantes.
 Primero, $1 \to 2$: incorporar la dirección de Kalshi sobre una
-distribución uniforme más que duplica el promedio de puntos (1.04 a
-2.21), confirmando el valor básico del mercado de predicción.
+distribución uniforme más que duplica el promedio de puntos (1,04 a
+2,21), confirmando el valor básico del mercado de predicción.
 Segundo, $2 \to 3$: la corrección por sesgo favorito-longshot no
 cambió ningún punto en todo el torneo ($\hat\alpha \approx 1.14$,
 Sección~\ref{sec:brier}, cercano al valor de referencia
@@ -1054,7 +1056,7 @@ $\alpha_0 = 1.10$, por lo que la corrección apenas mueve las
 probabilidades).
 Tercero, $5 \to 6$: el paso de optimización explícito aporta una
 ganancia modesta pero consistente sobre el marcador modal (201 a 213
-puntos, +6.0\,\%), repartida entre la fase de grupos (123 a 128, +5
+puntos, +6,0\,\%), repartida entre la fase de grupos (123 a 128, +5
 puntos) y la eliminatoria (78 a 85, +7 puntos, incluyendo el efecto
 del puntaje doble en semifinales, tercer puesto y final).
 La Sección~\ref{sec:optimizacion} presenta un ejemplo concreto
@@ -1066,9 +1068,9 @@ solo partido, el máximo observado en todo el torneo.
 
 Para los 98 partidos con probabilidades de Kalshi y resultado final
 disponibles, el score de Brier~\eqref{eq:brier} de las probabilidades
-de resultado fue 0.468 sin corregir y 0.466 corregidas por sesgo
+de resultado fue 0,468 sin corregir y 0,466 corregidas por sesgo
 favorito-longshot con $\hat\alpha \approx 1.14$, ambos muy por debajo
-del 0.667 de una predicción uniforme.
+del 0,667 de una predicción uniforme.
 La mejora marginal de la corrección $\alpha$ refleja que $\hat\alpha$
 se mantuvo cercano al valor de referencia $\alpha_0 = 1.10$
 calibrado en mercados de intercambio competitivos \citep{whelan2024}:
@@ -1082,8 +1084,8 @@ de predicción deportivos.
 El parámetro $\delta$ se reestimó en cada ejecución del \textit{pipeline}
 conforme llegaban resultados del WC 2026 (Figura~\ref{fig:delta}).
 A lo largo de los 104 partidos del torneo, $\hat\delta$ osciló entre 0
-y 0.5 (media 0.12, desviación estándar 0.11), alcanzando su máximo
-(0.5) a mitad de la fase de grupos y volviendo a 0 en la fase
+y 0,5 (media 0,12, desviación estándar 0,11), alcanzando su máximo
+(0,5) a mitad de la fase de grupos y volviendo a 0 en la fase
 eliminatoria tardía.
 Al finalizar el torneo, $\hat\delta = 0.00$: la validación cruzada
 leave-one-jornada-out ya no encontró evidencia de que el WC 2026, en
@@ -1109,7 +1111,7 @@ La comparación $1 \to 2$ de la Tabla~\ref{tab:ablacion}
 (Sección~\ref{sec:comparacion}) responde afirmativamente: incorporar
 únicamente la dirección de Kalshi —sin corrección de sesgo ni ajuste
 de goles y ventaja— más que duplica el promedio de puntos frente a una
-distribución uniforme (1.04 a 2.21 puntos por partido sobre 90
+distribución uniforme (1,04 a 2,21 puntos por partido sobre 90
 partidos).
 Esto confirma que los mercados de predicción contienen información
 específica del partido que el historial de Mundiales, por sí solo, no
@@ -1130,7 +1132,7 @@ torneo ($\approx 1.106$).
 Pese a ese movimiento, la corrección no cambió ningún punto en todo el
 torneo respecto a usar las probabilidades brutas (comparación
 $2 \to 3$ en Tabla~\ref{tab:ablacion}) ni mejoró de forma apreciable
-el score de Brier (0.468 sin corregir vs.\ 0.466 corregido,
+el score de Brier (0,468 sin corregir vs.\ 0,466 corregido,
 Sección~\ref{sec:brier}).
 Esto sugiere que el sesgo favorito-longshot de los usuarios de Kalshi
 durante el WC 2026 no difiere sustancialmente del observado en
@@ -1139,7 +1141,7 @@ lugar de reflejar un perfil de calibración distinto atribuible al
 público específico del Mundial.
 La ganancia de aplicar el reajuste completo de goles y ventaja
 ($2 \to 4$ en Tabla~\ref{tab:ablacion}) fue mayor en la fase
-eliminatoria (2.28 a 2.63 puntos) que en la de grupos (2.17 a 2.19),
+eliminatoria (2,28 a 2,63 puntos) que en la de grupos (2,17 a 2,19),
 consistente con la disponibilidad de mercados adicionales
 (\texttt{KXWCTEAMTOTAL-}) exclusivos de la fase eliminatoria.
 
@@ -1148,12 +1150,12 @@ consistente con la disponibilidad de mercados adicionales
 El parámetro $\delta$ modela la hipótesis de que el WC 2026 puede
 diferir sistemáticamente de los Mundiales anteriores en el número y
 distribución de goles.
-A lo largo del torneo completo, $\hat\delta$ osciló entre 0 y 0.5
-(media 0.12, desviación estándar 0.11; Figura~\ref{fig:delta}), con
+A lo largo del torneo completo, $\hat\delta$ osciló entre 0 y 0,5
+(media 0,12, desviación estándar 0,11; Figura~\ref{fig:delta}), con
 una trayectoria en dos etapas claramente distinguibles.
 Durante buena parte de la fase de grupos y la primera mitad de la
 eliminatoria (aproximadamente hasta cuartos de final) $\hat\delta$ se
-mantuvo consistentemente positivo, alcanzando su máximo (0.5) a mitad
+mantuvo consistentemente positivo, alcanzando su máximo (0,5) a mitad
 de la fase de grupos: la validación cruzada leave-one-jornada-out rara
 vez favoreció $\delta = 0$ de forma sostenida en ese tramo, lo que
 respaldó incluir el término adaptativo en lugar de depender
@@ -1205,7 +1207,7 @@ juntos ilustran su condición de frontera: el modelo predice empates
 únicamente cuando la evidencia de mercado lo justifica con suficiente
 margen, y aun así el resultado exacto no está garantizado, como para
 cualquier otra predicción.
-En el resto de los 102 partidos (98.1\,\%) el modelo propuso la
+En el resto de los 102 partidos (98,1\,\%) el modelo propuso la
 victoria de uno de los dos equipos.
 Un participante humano intuitivo que predijera empates en todo
 partido muy parejo estaría actuando de forma subóptima con más
@@ -1222,7 +1224,7 @@ El suavizado Poisson mitiga este problema pero no lo elimina.
 \textbf{Truncación de la cuadrícula de marcadores.}
 La optimización se realiza sobre $\{0,\ldots,5\}^2$, ignorando la
 posibilidad de marcadores con 6 o más goles.
-En el historial de los tres Mundiales, aproximadamente el 0.5\% de
+En el historial de los tres Mundiales, aproximadamente el 0,5\% de
 los partidos terminaron con 6 o más goles en total.
 
 \textbf{Variables contextuales omitidas.}
@@ -1252,8 +1254,8 @@ doble: con $n=1$ o $n=2$, el promedio de la ronda es esencialmente
 binario (el partido por el tercer puesto obtuvo 0 puntos; la final,
 el máximo de 10) y no debe interpretarse como una medida estable del
 desempeño del modelo en esas rondas.
-De manera similar, la diferencia entre la ronda de 32 (2.94 puntos
-por partido) y octavos de final (1.38) es consistente con varianza
+De manera similar, la diferencia entre la ronda de 32 (2,94 puntos
+por partido) y octavos de final (1,38) es consistente con varianza
 muestral y no debe interpretarse como evidencia de que el modelo se
 deteriora sistemáticamente en rondas avanzadas.
 
@@ -1296,18 +1298,18 @@ probable, sino el que rinde más en promedio bajo esa regla de puntuación
 específica.
 
 Evaluado retrospectivamente sobre los 104 partidos del WC 2026 —el
-torneo completo—, el modelo obtuvo un promedio de 2.19 puntos por
-partido y una tasa de acierto exacto del 13.5\,\%, superando de forma
-consistente tanto a una línea base uniforme (1.04 puntos,
-Sección~\ref{sec:comparacion}) como al marcador modal (2.23 puntos).
+torneo completo—, el modelo obtuvo un promedio de 2,19 puntos por
+partido y una tasa de acierto exacto del 13,5\,\%, superando de forma
+consistente tanto a una línea base uniforme (1,04 puntos,
+Sección~\ref{sec:comparacion}) como al marcador modal (2,23 puntos).
 Los precios de Kalshi resultaron bien calibrados durante todo el
-torneo (score de Brier 0.466 frente a 0.667 de una predicción
+torneo (score de Brier 0,466 frente a 0,667 de una predicción
 uniforme), y el sesgo favorito-longshot observado
 ($\hat\alpha \approx 1.14$) se mantuvo cercano al valor de referencia
 reportado para mercados de intercambio competitivos, sin evidencia de
 un perfil de calibración distintivo entre los usuarios de Kalshi
 durante el Mundial.
-El parámetro adaptativo $\delta$ osciló entre 0 y 0.5 a lo largo del
+El parámetro adaptativo $\delta$ osciló entre 0 y 0,5 a lo largo del
 torneo y convergió de vuelta a 0 en la recta final, indicando que la
 evidencia acumulada del WC 2026 no distinguía sistemáticamente al
 torneo en curso del historial de tres Mundiales anteriores una vez
@@ -1450,7 +1452,7 @@ tres rondas de grupos; el código asignaba la jornada comparando
 cadenas de texto, de modo que 46 partidos de grupos quedaban en la
 primera jornada, 24 nunca se usaban como validación, y cuartos de
 final y semifinales compartían jornada con la final.
-Con la asignación correcta, $\hat\delta$ termina el torneo en 0.10;
+Con la asignación correcta, $\hat\delta$ termina el torneo en 0,10;
 con la errónea terminaba en 0.
 Los pronósticos congelados usaron los valores con el error, pero el
 efecto es pequeño: recalcular los pronósticos finales con

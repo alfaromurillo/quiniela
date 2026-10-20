@@ -28,6 +28,25 @@ plt.rcParams.update({
     "figure.dpi":     150,
 })
 
+# Spanish decimal comma: tick labels via the locale, labels via _num/_mnum.
+import locale
+try:
+    locale.setlocale(locale.LC_NUMERIC, "es_CR.utf8")
+    plt.rcParams["axes.formatter.use_locale"] = True
+except locale.Error:
+    pass
+
+
+def _num(x: float, nd: int) -> str:
+    """Format x with nd decimals and a decimal comma, for plain text."""
+    return f"{x:.{nd}f}".replace(".", ",")
+
+
+def _mnum(x: float, nd: int) -> str:
+    """Same as _num, for mathtext (braces keep the comma unspaced)."""
+    return f"{x:.{nd}f}".replace(".", "{,}")
+
+
 GOALS = list(range(6))   # 0..5
 MG    = 5                # MAX_GOALS
 
@@ -318,7 +337,7 @@ def fig1_historical_overview():
                     if np.isnan(n) or n == 0:
                         continue
                     frc   = n / tot if tot > 0 else 0.0
-                    txt   = f"n={int(n)}\n({frc*100:.1f}%)"
+                    txt   = f"n={int(n)}\n({_num(frc*100, 1)}%)"
                     color = "white" if frc > vmax * 0.55 else "black"
                     ax.text(winner, loser, txt, ha="center", va="center",
                             fontsize=4.5, color=color, linespacing=1.3)
@@ -336,13 +355,13 @@ def fig1_historical_overview():
                 p = mat[loser, winner]
                 if np.isnan(p) or p < 0.004:
                     continue
-                txt   = f"({p*100:.1f}%)"
+                txt   = f"({_num(p*100, 1)}%)"
                 color = "white" if p > vmax * 0.55 else "black"
                 ax.text(winner, loser, txt, ha="center", va="center",
                         fontsize=5.5, color=color)
 
         # γ/δ annotation in the upper-left white region (loser > winner)
-        ax.text(0.04, 0.97, f"$\\gamma \\approx {gamma:.2f}$\n$\\delta = 0$",
+        ax.text(0.04, 0.97, f"$\\gamma \\approx {_mnum(gamma, 2)}$\n$\\delta = 0$",
                 transform=ax.transAxes, fontsize=6.5, color="#555555",
                 va="top", ha="left", linespacing=1.5)
 
@@ -354,11 +373,11 @@ def fig1_historical_overview():
                 p = mat[loser, winner]
                 if np.isnan(p) or p < 0.004:
                     continue
-                txt   = f"({p*100:.1f}%)"
+                txt   = f"({_num(p*100, 1)}%)"
                 color = "white" if p > vmax * 0.55 else "black"
                 ax.text(winner, loser, txt, ha="center", va="center",
                         fontsize=5.5, color=color)
-        ax.text(0.04, 0.97, f"$\\gamma \\approx {gamma:.2f}$\n$\\delta \\approx {delta:.2f}$",
+        ax.text(0.04, 0.97, f"$\\gamma \\approx {_mnum(gamma, 2)}$\n$\\delta \\approx {_mnum(delta, 2)}$",
                 transform=ax.transAxes, fontsize=6.5, color="#555555",
                 va="top", ha="left", linespacing=1.5)
 
@@ -373,7 +392,7 @@ def fig1_historical_overview():
                 if np.isnan(n) or n == 0:
                     continue
                 frc = n / total if total > 0 else 0.0
-                txt = f"n={int(n)}\n({frc*100:.1f}%)"
+                txt = f"n={int(n)}\n({_num(frc*100, 1)}%)"
                 color = "white" if frc > vmax * 0.55 else "black"
                 ax.text(winner, loser, txt, ha="center", va="center",
                         fontsize=4.5, color=color, linespacing=1.3)
@@ -420,7 +439,7 @@ def fig1_historical_overview():
 def fig2_gamma_effect():
     gammas = [1.0, 0.84]
     labels = ["$\\gamma = 1$ (sin decaimiento)",
-              "$\\gamma \\approx 0.84$ (estimado)"]
+              "$\\gamma \\approx 0{,}84$ (estimado)"]
     colors = ["#1f77b4", "#ff7f0e"]
 
     totals_range = list(range(0, 9))
@@ -594,7 +613,7 @@ def fig3_kalshi_reweight():
                 val = mat[h][a] * 100
                 if val >= 0.5:
                     color = "white" if val > vmax * 0.60 else "black"
-                    ax.text(a, h, f"{val:.1f}", ha="center", va="center",
+                    ax.text(a, h, _num(val, 1), ha="center", va="center",
                             fontsize=7.5, color=color)
         if mark_opt:
             rect = plt.Rectangle(
@@ -614,7 +633,7 @@ def fig3_kalshi_reweight():
     fig.suptitle(
         f"Reajuste IPF por mercados de predicción de Kalshi\n"
         f"{match_label} — "
-        f"$p_A={ph_val:.2f}$, $p_E={pd_val:.2f}$, $p_B={pa_val:.2f}$",
+        f"$p_A={_mnum(ph_val, 2)}$, $p_E={_mnum(pd_val, 2)}$, $p_B={_mnum(pa_val, 2)}$",
         fontsize=11,
     )
     fig.tight_layout(rect=[0, 0, 1, 0.90])
@@ -676,7 +695,7 @@ def fig4_delta_evolution():
 
     if n_last > 0:
         ax.annotate(
-            f"Final: $\\delta = {delta_last:.2f}$ ({n_last} partidos)",
+            f"Final: $\\delta = {_mnum(delta_last, 2)}$ ({n_last} partidos)",
             xy=(n_last, delta_last),
             xytext=(max(n_last - 28, 5), delta_last + 0.08),
             arrowprops=dict(arrowstyle="->", color="gray"),
